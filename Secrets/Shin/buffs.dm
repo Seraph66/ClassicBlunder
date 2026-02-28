@@ -120,7 +120,7 @@ mob/proc/MangOnCD()
             return 1
     return 0
 
-mob/proc/ShinSecretLevel() // This is pretty 
+mob/proc/ShinSecretLevel() // This is currently not in use
         var/secretLevel = src.secretDatum.currentTier
         return secretLevel
 

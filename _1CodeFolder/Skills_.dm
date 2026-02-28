@@ -52,7 +52,7 @@ obj/Skills/proc/Cooldown(var/modify=1, var/Time, mob/p)
 						if(typeString == x)
 							lockedoutSkills+=otherSkills
 							otherSkills.Using=1
-			// p.MangCDSwap(src)
+			p.MangCDSwap(src)
 			Time=src.Cooldown*10*modify*(1+0.33*src.CooldownScalingCounter)
 			if(src.CooldownScaling)
 				src.CooldownScalingCounter++
