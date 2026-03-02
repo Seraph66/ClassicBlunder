@@ -431,16 +431,23 @@ mob/Admin3/verb
 					P.Saga="Keyblade"
 					P.SagaLevel=1
 					P.KeybladeColor=Color
-					var/inp = input(P, "What path of magic will you fall under?") in list("Fire", "Ice", "Thunder")
-					P.KeybladePath = inp
-					switch(KeybladePath)
-						if("Fire")
-							P.AddSkill(new/obj/Skills/Projectile/Magic/Fire)
-						if("Ice")
-							P.AddSkill(new/obj/Skills/AutoHit/Magic/Blizzard)
-						if("Thunder")
-							P.AddSkill(new/obj/Skills/AutoHit/Magic/Thunder)
-					P.AddSkill(new/obj/Skills/Queue/Ars_Arcanum)
+					if(P.KeybladeType=="Shield")
+						var/inp = input(P, "What path of magic will you fall under?") in list("Fire", "Ice", "Thunder")
+						P.KeybladePath = inp
+						switch(KeybladePath)
+							if("Fire")
+								P.AddSkill(new/obj/Skills/Projectile/Magic/Fire)
+							if("Ice")
+								P.AddSkill(new/obj/Skills/AutoHit/Magic/Blizzard)
+							if("Thunder")
+								P.AddSkill(new/obj/Skills/AutoHit/Magic/Thunder)
+					if(P.KeybladeType=="Staff")
+						P.KeybladePath=="Magical"
+						P.AddSkill(new/obj/Skills/AutoHit/Magic/Thunder)
+						P.AddSkill(new/obj/Skills/AutoHit/Magic/Blizzard)
+						P.AddSkill(new/obj/Skills/Projectile/Magic/Fire)
+					if(P.KeybladeType=="Sword")
+						P.AddSkill(new/obj/Skills/Queue/Ars_Arcanum)
 					P << "You've mastered the magical arts of Fire, Blizzard and Thunder, and Ars Arcanum!"
 					switch(P.KeybladeColor)
 						if("Light")
@@ -1611,7 +1618,7 @@ mob
 
 				if("Keyblade")
 					if(src.SagaLevel==2)
-						switch(src.KeybladeType)
+					/*	switch(src.KeybladeType)
 							if("Sword")
 								src.AddSkill(new/obj/Skills/Buffs/NuStyle/SwordStyle/Command/Speed_Rave_Style)
 								src << "You've developed the focus necessary to move with blistering speeds: <b>Speed Rave Style</b>!"
@@ -1620,18 +1627,17 @@ mob
 								src << "You've developed the power necessary to make every blow count: <b>Critical Impact Style</b>!"
 							if("Staff")
 								src.AddSkill(new/obj/Skills/Buffs/NuStyle/SwordStyle/Command/Spell_Weaver_Style)
-								src << "You've developed the flexibility necessary to combine spells with swordplay: <b>Spell Weaver Style</b>!"
-						var/Choice = prompt("You've gained the ability to change your keychain.  Which one do you choose?", "Keychain Ascension", list("Reliability", "Flexibility", "Freedom"))
-						switch(Choice)
-							if("Reliability")
-								src.Keychains.Add("Earthshaker")
-							if("Flexibility")
-								src.Keychains.Add("Rainfell")
-							if("Freedom")
-								src.Keychains.Add("Wayward Wind")
-						src << "You've obtained your foundation keychain! ([Choice])])"
+								src << "You've developed the flexibility necessary to combine spells with swordplay: <b>Spell Weaver Style</b>!"*/
+						var/list/Options=glob.Keychains
+						for(var/o in src.Keychains)
+							Options.Remove(o)
+						var/Choice=input(usr, "You've gained the ability to change your keychain.  Which one do you choose?", "Keychain Ascension") in Options
+						if(Choice=="Cancel")
+							return
+						src.Keychains.Add(Choice)
+						src << "You've obtained your first keychain! ([Choice])])"
 						src.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Attach_Keychain)
-						var/Choice2 = prompt("Your mastery of both keyblades and magical elements allows you to refine your command style.  Which style do you develop?", "Command Style", list("Firestorm", "Diamond Dust", "Thunderbolt"))
+				/*		var/Choice2 = prompt("Your mastery of both keyblades and magical elements allows you to refine your command style.  Which style do you develop?", "Command Style", list("Firestorm", "Diamond Dust", "Thunderbolt"))
 						switch(Choice2)
 							if("Firestorm")
 								src.AddSkill(new/obj/Skills/Buffs/NuStyle/SwordStyle/Command/Firestorm_Style)
@@ -1639,13 +1645,17 @@ mob
 								src.AddSkill(new/obj/Skills/Buffs/NuStyle/SwordStyle/Command/Diamond_Dust_Style)
 							if("Thunderbolt")
 								src.AddSkill(new/obj/Skills/Buffs/NuStyle/SwordStyle/Command/Thunderbolt_Style)
-						src << "You've obtained the [Choice2] command style!"
+						src << "You've obtained the [Choice2] command style!"*/
 						switch(KeybladePath)
 							if("Fire")
 								AddSkill(new/obj/Skills/Projectile/Magic/Fira)
 							if("Ice")
 								AddSkill(new/obj/Skills/AutoHit/Magic/Blizzara)
 							if("Thunder")
+								AddSkill(new/obj/Skills/AutoHit/Magic/Thundara)
+							if("Magical")
+								AddSkill(new/obj/Skills/Projectile/Magic/Fira)
+								AddSkill(new/obj/Skills/AutoHit/Magic/Blizzara)
 								AddSkill(new/obj/Skills/AutoHit/Magic/Thundara)
 
 					if(src.SagaLevel==3)
