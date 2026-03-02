@@ -149,8 +149,8 @@ mob/proc/CanTransform()
 			if(length(race.transformations) >= 2 && race.transformations[2].type == /transformation/saiyan/hellspawn_super_saiyan_2 && transActive+1 == 2)
 				src << "You can't transform into this form like that."
 				return 0
-		if(length(race.transformations) >= 4 && race.transformations[4].type == /transformation/saiyan/super_saiyan_god)
-			if(transActive+1 == 4 && race.transformations[4].first_time)
+		if(length(race.transformations) >= 5 && race.transformations[5].type == /transformation/saiyan/super_saiyan_god)
+			if(transActive+1 == 5 && race.transformations[5].first_time)
 				// first time super saiyan god has special conditions
 				var/num_of_saiyans = 0
 				for(var/mob/player in party)
@@ -169,6 +169,10 @@ mob/proc/CanTransform()
 			return 0
 		if(length(race.transformations) >= 4 && race.transformations[4].type == /transformation/saiyan/super_saiyan_4 && transActive+1 == 4)
 			src << "You can't transform into this form like that."
+			return 0
+		if(length(race.transformations) >= 5 && race.transformations[5].type == /transformation/saiyan/super_saiyan_god && transActive==0 && src.SSJ4FromBase)
+			src.transActive = 4
+			src.race.transformations[5].transform(src, TRUE)
 			return 0
 	return 1
 
