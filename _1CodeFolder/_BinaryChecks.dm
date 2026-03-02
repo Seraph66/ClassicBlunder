@@ -1754,9 +1754,13 @@ mob
 			if(passive_handler.Get("MagnifiedSSJ1"))
 				SaiyanPower1+=passive_handler.Get("MagnifiedSSJ1")
 			var/SaiyanPower2=passive_handler.Get("SaiyanPower2") //it's always at full power
+			if(passive_handler.Get("MagnifiedSSJ2"))
+				SaiyanPower2+=passive_handler.Get("MagnifiedSSJ2")
 			var/SaiyanPower3= passive_handler.Get("SaiyanPower3") 
 			var/SaiyanPower4= passive_handler.Get("SaiyanPower4")
-			var/SaiyanPower=1+(SaiyanPower1+SaiyanPower2+SaiyanPower3+SaiyanPower4) //It's like this because I intend on having Saiyan Unique buffs interact with this specifically. you'll see what i mean when i get to the grades
+			var/SaiyanPowerGod= passive_handler.Get("SaiyanPowerGod")
+			var/SaiyanPowerZenkai= passive_handler.Get("TrueZenkaiPower")
+			var/SaiyanPower=1+(SaiyanPower1+SaiyanPower2+SaiyanPower3+SaiyanPower4+SaiyanPowerZenkai+SaiyanPowerGod) //It's like this because I intend on having Saiyan Unique buffs interact with this specifically. you'll see what i mean when i get to the grades
 			return SaiyanPower
 
 		HasPowerReplacement()
