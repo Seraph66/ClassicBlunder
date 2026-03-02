@@ -6,6 +6,7 @@ ascension
 			intimidation = 4
 			passives = list("Brutalize" = 0.25)
 			strength = 0.25
+			force = 0.25
 			endurance = 0.25
 
 		two
@@ -14,13 +15,15 @@ ascension
 			intimidation = 1.25
 			passives = list("Brutalize" = 0.5)
 			strength = 0.25
+			force = 0.25
 			defense = 0.25
+			offense = 0.25
 			endurance = 0.25
 			onAscension(mob/owner)
 				if(owner.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/zeal)
 					passives += list("Adaptation" = 0.5)
 				if(owner.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/honor)
-					passives += list("AngerAdaptiveForce" = 0.2, "Adrenaline" = 1)
+					passives += list("AngerAdaptiveForce" = 0.2, "Adrenaline" = 1, "PureReduction" = 0.5)
 				if(owner.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/pride)
 					passives += list("Steady" = 1, "PureDamage" = 1)
 				..()
@@ -29,12 +32,13 @@ ascension
 			intimidation = 1.5
 			passives = list("Brutalize" = 0.5)
 			strength = 0.25
+			force = 0.25
 			endurance = 0.25
 			onAscension(mob/owner)
 				if(owner.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/zeal)
 					passives += list("Adaptation" = 0.5, "LikeWater" = 0.5)
 				if(owner.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/honor)
-					passives += list("AngerAdaptiveForce" = 0.2, "Juggernaut" = 1)
+					passives += list("AngerAdaptiveForce" = 0.2, "Juggernaut" = 1, "PureReduction" = 0.5)
 				if(owner.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/pride)
 					passives += list("Steady" = 1, "PureDamage" = 1)
 				..()
@@ -47,7 +51,7 @@ ascension
 				if(owner.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/zeal)
 					passives += list("Adaptation" = 0.5, "LikeWater" = 0.5)
 				if(owner.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/honor)
-					passives += list("AngerAdaptiveForce" = 0.2, "Adrenaline" = 1)
+					passives += list("AngerAdaptiveForce" = 0.2, "Adrenaline" = 1, "PureReduction" = 0.5)
 				if(owner.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/pride)
 					passives += list("Steady" = 1, "PureDamage" = 0.5)
 				..()
@@ -59,7 +63,7 @@ ascension
 				if(owner.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/zeal)
 					passives += list("Adaptation" = 0.5, "LikeWater" = 1)
 				if(owner.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/honor)
-					passives += list("AngerAdaptiveForce" = 0.2, "Adrenaline" = 1)
+					passives += list("AngerAdaptiveForce" = 0.2, "Adrenaline" = 1, "PureReduction" = 1)
 				if(owner.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/pride)
 					passives += list("Steady" = 1, "PureDamage" = 1)
 				..()
@@ -72,7 +76,7 @@ ascension
 				if(owner.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/zeal)
 					passives += list("Adaptation" = 0.5, "LikeWater" = 0.5)
 				if(owner.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/honor)
-					passives += list("AngerAdaptiveForce" = 0.2, "Adrenaline" = 1, "PureReduction" = 2)
+					passives += list("AngerAdaptiveForce" = 0.2, "Adrenaline" = 1, "PureReduction" = 1)
 				if(owner.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/pride)
 					passives += list("Steady" = 1, "PureDamage" = 1)
 				..()
@@ -82,7 +86,7 @@ ascension
 		saiyan
 			honor
 				skills = list(/obj/Skills/Buffs/SlotlessBuffs/Saiyan_Grit)
-				passives = list("Honor" = 1, "Defiance" = 1, "Juggernaut" = 0.5)
+				passives = list("Honor" = 1, "Defiance" = 1, "Juggernaut" = 0.5, "PureReduction" = 0.5)
 
 				onAscension(mob/owner)
 					owner.Class = "Honor"
