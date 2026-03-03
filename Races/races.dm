@@ -8,6 +8,7 @@ This is also done so we can easily check types.
 //normalize the order of stats being Strength, Force, Endurance, Speed, Offense, Defense
 //... everywhere
 #define STAT2INDEX list("strength" = 1, "endurance" = 2, "force" = 3, "offense" = 4, "defense" = 5, "speed" = 6)
+#define STAT3INDEX list("anger" = 1, "learning" = 2, "intellect" = 3, "imagination" = 4, "economy" = 5) //here for posterity, not sure if I'm gonna do it this way yet
 var/list/races = list()
 
 proc
@@ -219,6 +220,11 @@ race
 		getStat(stat)
 			if(length(stats_per_class))
 				return stats_per_class[getClass()][STAT2INDEX[stat]]
+			else
+				return vars[stat]
+		getSecondStat(stat)
+			if(length(secondary_stats_per_class))
+				return stats_per_class[getClass()][STAT3INDEX[stat]]
 			else
 				return vars[stat]
 		onDeselection(mob/user)
