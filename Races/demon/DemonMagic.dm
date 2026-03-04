@@ -9,6 +9,17 @@
 
 /mob/var/hasDemonCasting = FALSE
 
+/mob/proc/isDemonMagicCasting(checkType = null)
+    if(!client?.keyQueue) return FALSE
+    if(!client.keyQueue.TRIGGERED) return FALSE
+    if(checkType)
+        return client.keyQueue.initType == checkType
+    return TRUE
+
+/mob/proc/endDemonMagicCast()
+    if(!client?.keyQueue) return
+    client.keyQueue.clearInfo()
+
 /obj/Skills/Buffs/SlotlessBuffs/DemonMagic
     // VARS
     var/keyMacro = null

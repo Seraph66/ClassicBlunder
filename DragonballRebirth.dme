@@ -503,6 +503,7 @@
 #include "Races\Celestials\ascensions.dm"
 #include "Races\Celestials\CelestialRacials.dm"
 #include "Races\Celestials\race.dm"
+#include "Races\Celestials\StyleRating.dm"
 #include "Races\Celestials\transformations.dm"
 #include "Races\changeling\ascensions.dm"
 #include "Races\changeling\race.dm"

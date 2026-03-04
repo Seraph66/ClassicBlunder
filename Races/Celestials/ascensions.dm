@@ -18,6 +18,11 @@ ascension
 					spawn(5)
 						if(owner && owner.client)
 							owner.ChooseCelestialWeapon()
+				if(owner.CelestialAscension=="Demon")
+					owner.passive_handler.Set("Stylish", 1)
+					if(!applied)
+						owner.demon.selectPassive(owner, "CORRUPTION_PASSIVES", "Buff")
+						owner.demon.selectPassive(owner, "CORRUPTION_DEBUFFS", "Debuff")
 
 		two
 			unlock_potential = ASCENSION_TWO_POTENTIAL
@@ -37,6 +42,10 @@ ascension
 					spawn(5)
 						if(owner && owner.client)
 							owner.ChooseCelestialWeapon()
+				if(owner.CelestialAscension=="Demon")
+					if(!applied)
+						owner.demon.selectPassive(owner, "CORRUPTION_PASSIVES", "Buff")
+						owner.demon.selectPassive(owner, "CORRUPTION_DEBUFFS", "Debuff")
 		three
 			unlock_potential = ASCENSION_THREE_POTENTIAL
 			passives = list("SpiritPower" = 0.5, "TechniqueMastery" = 2)

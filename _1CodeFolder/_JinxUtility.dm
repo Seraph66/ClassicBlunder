@@ -1398,6 +1398,8 @@ mob
 				Mod *= 1+ (src.HealthAnnounce10/5)
 			if(Secret == "Shin" && CheckSlotless("Mang Resonance"))
 				Mod += GetMangStats() // you can find this proc in Secrets\Shin\buff.dm
+			if(src.StyleRating > 0)
+				Mod += 0.1 * src.StyleRating * src.getStyleBonusMult()
 			var/STM=GetStrTransMult()
 			Str*=STM
 			Str*=Mod
@@ -1561,6 +1563,8 @@ mob
 				Mod *= 1+ (src.HealthAnnounce10/5)
 			if(Secret == "Shin" && CheckSlotless("Mang Resonance"))
 				Mod += GetMangStats() // you can find this proc in Secrets\Shin\buff.dm
+			if(src.StyleRating > 0)
+				Mod += 0.1 * src.StyleRating * src.getStyleBonusMult()
 			var/FTM=GetForTransMult()
 			For*=FTM
 			For*=Mod
@@ -1712,6 +1716,8 @@ mob
 				Mod+=(0.02*ManaAmount)
 			if(src.RebirthHeroPath=="Red" && src.SagaLevel>=3)
 				Mod *= 1+ (src.HealthAnnounce10/5)
+			if(src.StyleRating > 0)
+				Mod += 0.1 * src.StyleRating * src.getStyleBonusMult()
 			var/ETM=GetEndTransMult()
 			End*=ETM
 			End*=Mod
@@ -1825,6 +1831,8 @@ mob
 				Mod *= 1+ (src.HealthAnnounce10/10)
 			if(Secret == "Shin" && CheckSlotless("Mang Resonance"))
 				Mod += GetMangStats() // you can find this proc in Secrets\Shin\buff.dm
+			if(src.StyleRating > 0)
+				Mod += 0.1 * src.StyleRating * src.getStyleBonusMult()
 			var/SpTM=GetSpdTransMult()
 			Spd*=SpTM
 			Spd*=Mod
@@ -1917,6 +1925,8 @@ mob
 				Mod+=passive_handler.Get("TensionPowered")
 			if(Secret == "Shin" && CheckSlotless("Mang Resonance"))
 				Mod += GetMangStats() // you can find this proc in Secrets\Shin\buff.dm
+			if(src.StyleRating > 0)
+				Mod += 0.1 * src.StyleRating * src.getStyleBonusMult()
 			var/OTM=GetOffTransMult()
 			Off*=OTM
 			Off*=Mod
@@ -2013,6 +2023,8 @@ mob
 				Mod-=src.DefEroded
 			if(passive_handler.Get("TensionPowered")&&transActive>=2)
 				Mod+=passive_handler.Get("TensionPowered")
+			if(src.StyleRating > 0)
+				Mod += 0.1 * src.StyleRating * src.getStyleBonusMult()
 			var/DTM=GetDefTransMult()
 			Def*=DTM
 			Def*=Mod

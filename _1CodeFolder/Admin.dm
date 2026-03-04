@@ -1164,6 +1164,12 @@ mob/Admin3/verb
 			if(M.isRace(CELESTIAL) && M.CelestialAscension == "Angel" && blah == 1)
 				if(!locate(/transformation/celestial/Master_of_Arms) in M.race.transformations)
 					M.race.transformations += new/transformation/celestial/Master_of_Arms
+			if(M.isRace(CELESTIAL) && M.CelestialAscension == "Demon" && blah == 1)
+				if(!locate(/transformation/celestial/Celestial_Devil_Trigger) in M.race.transformations)
+					M.race.transformations += new/transformation/celestial/Celestial_Devil_Trigger
+			if(M.isRace(CELESTIAL) && M.CelestialAscension == "Demon" && blah == 2)
+				if(!locate(/transformation/celestial/Celestial_Sin_Devil_Trigger) in M.race.transformations)
+					M.race.transformations += new/transformation/celestial/Celestial_Sin_Devil_Trigger
 			if(M.isRace(SAIYAN) && blah == 4)
 				var/godor4 = input("SSJ God or SSJ4?") in list("Daima SSJ4", "GT SSJ4")
 				if(godor4 == "GT SSJ4")

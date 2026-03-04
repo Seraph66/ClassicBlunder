@@ -136,7 +136,7 @@ mob/proc/SkillX(var/Wut,var/obj/Skills/Z,var/bypass=0)
 					src.gatherNames() // should b on load/login
 					reward_auto()
 					src.CheckAscensions()
-					if(isRace(DEMON)||isRace(MAKAIOSHIN)||isRace(CELESTIAL))
+					if(isRace(DEMON)||isRace(MAKAIOSHIN))
 						race?:checkReward(src)
 					if(isRace(BEASTKIN) && race?:Racial == "Monkey King")
 						var/obj/Skills/Buffs/s = findOrAddSkill(/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Racial/Beastkin/Never_Fall/)

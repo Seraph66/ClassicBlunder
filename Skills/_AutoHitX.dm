@@ -1247,6 +1247,19 @@ obj
 									usr.UseProjectile(kb)
 								else
 									return
+						else if(usr.isInnovative(CELESTIAL, "Any"))
+							if(!isInnovationDisable(usr))
+								if(usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic))
+									if(!Using && usr.Energy >= 5)
+										if(!locate(/obj/Skills/Projectile/Magic/DarkMagic/Abyssal_Sphere) in usr)
+											usr.AddSkill(new/obj/Skills/Projectile/Magic/DarkMagic/Abyssal_Sphere)
+										var/obj/Skills/Projectile/Magic/DarkMagic/Abyssal_Sphere/ap = usr.FindSkill(/obj/Skills/Projectile/Magic/DarkMagic/Abyssal_Sphere)
+										ap.adjust(usr)
+										usr.UseProjectile(ap)
+										usr.endDemonMagicCast()
+										usr.gainStyleRating(1)
+									else
+										return
 					usr.Activate(src)
 				verb/Disable_Innovate()
 					set category = "Other"
@@ -1301,6 +1314,7 @@ obj
 					set category="Skills"
 					usr.Activate(src)
 			Spinning_Clothesline
+				Size = 4
 				SkillCost=TIER_4_COST
 				Copyable=5
 				UnarmedOnly=1
@@ -1320,7 +1334,6 @@ obj
 				ActiveMessage="spins like a top, crushing anyone caught in their range!"
 				adjust(mob/p)
 					if(p.isInnovative(HUMAN, "Unarmed") && !isInnovationDisable(p))
-						Size = 4
 						Rounds= 10 + (p.Potential/10)
 						DamageMult = 1 + (p.Potential/100)
 						PullIn = 6
