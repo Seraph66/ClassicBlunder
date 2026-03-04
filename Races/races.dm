@@ -154,6 +154,7 @@ race
 		defense = 1
 		speed = 1
 		stats_per_class = list() //NIEZAAAAANNNNN
+		secondary_stats_per_class = list()
 		anger_message = "becomes angry!"
 		anger_point = 50
 
@@ -203,7 +204,7 @@ race
 		fixAscensions()
 			var/name_typed = replacetext(type, "/race/", "")
 			var/list/ascpaths = subtypesof(text2path(replacetext("/ascension/[name_typed]"," ", "_")))
-			
+
 			for(var/i in ascpaths)
 				ascensions += new i
 		fixTransformations()

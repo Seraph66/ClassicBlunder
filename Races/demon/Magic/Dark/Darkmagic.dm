@@ -36,6 +36,38 @@
 		adjust(usr)
 		usr.UseProjectile(src)
 
+/obj/Skills/Projectile/Magic/DarkMagic/Abyssal_Sphere
+	scalingValues = list("Blasts" = list(2,2,3,3,4,4), "DamageMult" = list(0.75,1.25,1.5,2.5,3,4), "EndRate" = list(0.75, 0.6, 0.45, 0.3, 0.25, 0.2), "IconSize" = list(1, 1.15,1.25,1.5,2))
+	DamageMult = 3
+	AdaptRate = 1
+	IconLock='shadowflameball.dmi'
+	Trail='shadowfire.dmi'
+	TrailDuration=30
+	TrailSize=1
+	TrailX=-8
+	TrailY=-8
+	AccMult = 4
+	Speed = 1.25
+	ManaCost = 5
+	Deviation = 240
+	ZoneAttack = 1
+	ZoneAttackX = 3
+	ZoneAttackY = 3
+	Cooldown = 0
+	CorruptionGain = 1
+	proc/returnToInit()
+		if(!altered)
+			scalingValues = /obj/Skills/Projectile/Magic/DarkMagic/Abyssal_Sphere::scalingValues
+	adjust(mob/p)
+		returnToInit()
+		var/asc = p.AscensionsAcquired ? p.AscensionsAcquired + 1 : 1
+
+		for(var/x in scalingValues)
+			vars[x] = scalingValues[x][asc]
+		if(p.getTotalMagicLevel() >= 10 || p.isRace(CELESTIAL))
+			Homing = 1
+			Speed = 0.75
+
 /obj/Skills/Buffs/SlotlessBuffs/Magic/DarkMagic/Dominate_Mind
 	var/corruptionGain = list(6,8,12,14,16,20)
 	Range = 25

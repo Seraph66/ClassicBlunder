@@ -21,8 +21,8 @@ race
 		stats_per_class = list("Underdog" = list(1, 1, 1, 1, 1, 1), "Heroic" = list(1.75, 1.5, 1.75, 1.25, 1.25, 1.25), "Resourceful" = list(0.5, 0.5, 0.5, 0.75, 0.75, 2.5))
 //		secondary_stats_per_class = list("Underdog" = list(2, 1.35, 2, 1.5, 1), "Heroic" = list(1.5, 1.25, 2, 1.5, 1), "Resourceful" = list(1.25, 1.15, 3, 3, 1.5))
 		onFinalization(mob/user)
-			if(user.Class=="Heroic"||user.Class=="Resourceful")
+			/*if(user.Class=="Heroic"||user.Class=="Resourceful")
 				for(var/transformation/human/HT in o.race.transformations)
 					o.race.transformations -=HT
-					del HT
+					del HT*/
 			..()
