@@ -1,4 +1,4 @@
-/obj/Skills/Buffs/SlotlessBuffs/Falldown_Mode/Makaioshin
+/*/obj/Skills/Buffs/SlotlessBuffs/Falldown_Mode/Makaioshin
 	passives = list("HellPower" = 0.1, "AngerAdaptiveForce" = 0.25, "TechniqueMastery" = 2, "Juggernaut" = 0.5, "FakePeace" = -1, "Incomplete"=-1)
 	Cooldown = -1
 	TimerLimit = 0
@@ -47,7 +47,90 @@
 			else
 				return 0
 		ActiveMessage = "has resolved their contradictory nature! Darkness and light, once wandering through creation, gather together and open the door to  truth! <b>Become as one, [usr.name] and [usr.TrueName]!</b></i>"
-		src.Trigger(usr)
+		src.Trigger(usr)*/
+
+// Satan Mode skills
+/obj/Skills/AutoHit/Purgatorial_Flame
+	Area="Arc"
+	Distance=5
+	StrOffense=1
+	ForOffense=1
+	DamageMult=0.7
+	RoundMovement=0
+	ComboMaster=1
+	Rounds=10
+	Cooldown=120
+	EnergyCost=2
+	Icon='shadowfire.dmi'
+	IconX=0
+	IconY=0
+	Size=1.5
+	HitSparkIcon='shadowfire.dmi'
+	HitSparkX=0
+	HitSparkY=0
+	HitSparkTurns=1
+	HitSparkSize=1
+	HitSparkDispersion=1
+	TurfStrike=1
+	EnergyCost=1
+	Instinct=1
+	ActiveMessage="leaves hellish flames in their wake!"
+	proc/getArcTurfs(mob/user)
+		var/list/turfs = list()
+		var/turf/forward = get_turf(user)
+		if(!forward) return turfs
+		var/left_dir = turn(user.dir, 90)
+		var/right_dir = turn(user.dir, -90)
+		for(var/f = 0; f <= Distance; f++)
+			if(f > 0)
+				forward = get_step(forward, user.dir)
+			if(!forward) break
+			turfs |= forward
+			var/turf/left_turf = forward
+			var/turf/right_turf = forward
+			var/limit = (f == 0) ? 1 : f
+			for(var/s = 1; s <= limit; s++)
+				left_turf = get_step(left_turf, left_dir)
+				if(left_turf) turfs |= left_turf
+				right_turf = get_step(right_turf, right_dir)
+				if(right_turf) turfs |= right_turf
+		return turfs
+	verb/Purgatorial_Flame()
+		set name="Purgatorial Flame"
+		set category="Skills"
+		if(usr.transActive != 2 || !istype(usr.race, /race/makaioshin))
+			usr << "You must be in Satan Mode to use this!"
+			return
+		adjust(usr)
+		var/obj/Skills/Buffs/SlotlessBuffs/Magic/HellFire/Hellstorm/H = new
+		H.icon_to_use = 'shadowfire.dmi'
+		H.states_to_use = list("","1")
+		H.adjust(usr)
+		for(var/turf/T in getArcTurfs(usr))
+			T.applyEffect(H, 500, usr)
+		usr.Activate(src)
+
+/obj/Skills/Projectile/Beams/Divine_Atonement
+	DamageMult=20
+	ChargeRate=2
+	Dodgeable=0
+	Distance=30
+	BeamTime=60
+	Knockback=1
+	IconLock='BeamDodon.dmi'
+	Cooldown=150
+	EnergyCost=5
+	ExcludeFacingDir=1
+	InstantDamageChance=1
+	ChargeMessage="begins channeling Divine Atonement..."
+	ActiveMessage="unleashes Divine Atonement!"
+	verb/Divine_Atonement()
+		set category="Skills"
+		if(usr.transActive != 2 || !istype(usr.race, /race/makaioshin))
+			usr << "You must be in Satan Mode to use this!"
+			return
+		usr.UseProjectile(src)
+
 /*/obj/Skills/Buffs/NuStyle/UnarmedStyle/HalfbreedAngelStyles //weaker versions for Makaioshins and Celestials
 	Selfless_State
 		Copyable=0
