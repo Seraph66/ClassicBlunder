@@ -13,17 +13,17 @@ race
 		force = 1.75
 		regeneration = 3
 		imagination = 3
-		skills = list(/obj/Skills/Buffs/SlotlessBuffs/Devil_Arm2, /obj/Skills/Buffs/SlotlessBuffs/Regeneration, /obj/Skills/Buffs/SlotlessBuffs/Falldown_Mode/Makaioshin)
+		skills = list(/obj/Skills/Buffs/SlotlessBuffs/Devil_Arm2, /obj/Skills/Buffs/SlotlessBuffs/Regeneration)
 		passives = list("HolyMod" = 0.5, "AbyssMod" = 0.5, "HellPower" = 1, "FakePeace"=1, "StaticWalk" = 1, "SpaceWalk" = 1, "SpiritPower" = 1, "MartialMagic" = 1, "BladeFisting" = 1, "Incomplete" = 1)
 		var/devil_arm_upgrades = 1
 		var/sub_devil_arm_upgrades = 0
-		proc/findFalldown(mob/p)
+		/*proc/findFalldown(mob/p)
 			var/obj/Skills/Buffs/SlotlessBuffs/Falldown_Mode/Makaioshin/d = new()
 			d = locate() in p
 			if(!d)
 				world.log << "There was an error finding [p]'s ture form, please fix as their ascension is likely bugged"
 				p << "Please report to the admin or discord that your true form is bugged on asc"
-			return d
+			return d*/
 		proc/checkReward(mob/p)
 			p.checkDevilArmUpgrades();
 		onFinalization(mob/user)

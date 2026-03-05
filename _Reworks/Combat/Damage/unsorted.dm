@@ -15,9 +15,6 @@ globalTracker/var/list/IGNORE_POWER_CLAMP_PASSIVES = list("Wrathful", "LimitBrok
             return TRUE
     if(passive_handler.Get("Kaioken") && Health<=20||passive_handler.Get("Kaioken") && Kaioken>=5)
         return TRUE
-    if(isRace(MAKYO))
-        if((StarPowered || passive_handler.Get("HellPower")) && Health <= 10)
-            return TRUE
     if(isRace(POPO))
         return TRUE
     if(isRace(DEMON))

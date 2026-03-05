@@ -136,7 +136,7 @@ mob/proc/SkillX(var/Wut,var/obj/Skills/Z,var/bypass=0)
 					src.gatherNames() // should b on load/login
 					reward_auto()
 					src.CheckAscensions()
-					if(isRace(DEMON)||isRace(MAKAIOSHIN)||isRace(CELESTIAL))
+					if(isRace(DEMON)||isRace(MAKAIOSHIN))
 						race?:checkReward(src)
 					if(isRace(BEASTKIN) && race?:Racial == "Monkey King")
 						var/obj/Skills/Buffs/s = findOrAddSkill(/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Racial/Beastkin/Never_Fall/)
@@ -843,15 +843,6 @@ mob/proc/SkillX(var/Wut,var/obj/Skills/Z,var/bypass=0)
 				Z.Cooldown()
 				src.OMessage(10,"[src] conjures up a ball of energy into their palm and chucks it into the sky!.","[src]([src.key]) made a false moon!")
 				new/obj/ProjectionMoon(src.loc)
-
-			if("CallStar")
-				if(Z.Using)
-					return
-				if(src.KO)
-					return
-				Z.Cooldown()
-				src.OMessage(10,"[src] invokes the appearance of the crimson Star!","[src]([src.key]) called upon the cursed star!")
-				CallStar(src.z)
 
 			if("Zanzoken")
 				if(!src.Move_Requirements())

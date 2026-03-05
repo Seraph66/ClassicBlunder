@@ -16,22 +16,32 @@ race
 		learning = 1.25
 		intellect = 2
 		imagination = 1.5
-		var/devil_arm_upgrades = 1
-		var/sub_devil_arm_upgrades = 0
-		proc/checkReward(mob/p)
-			if(p.CelestialAscension=="Demon")
-				p.checkDevilArmUpgrades();
+
+		New()
+			..()
+			transformations = list()
 
 		onFinalization(mob/user)
 			var/Choice
 			..()
-			Choice=input(user, "Have you gained the powers of Angels (Master of Arms) or Demons (Devil Arms)?", "Celestial Type") in list("Angel", "Demon")
+			Choice=input(user, "Have you gained the powers of Angels (Master of Arms) or Demons (Demon Magic)?", "Celestial Type") in list("Angel", "Demon")
 			user.CelestialAscension = Choice
 			GiveRacial(user)
 		proc/GiveRacial(mob/p)
 			switch(p.CelestialAscension)
 				if("Angel")
+					transformations += new/transformation/celestial/Master_of_Arms
 					p << "You have embarked upon the path of the Master of Arms."
 				if("Demon")
+					transformations += new/transformation/celestial/Celestial_Devil_Trigger
+					transformations += new/transformation/celestial/Celestial_Sin_Devil_Trigger
 					p.TrueName=input(p, "What is the name of the Demon within?", "Get True Name") as text
-					p.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Devil_Arm2)
+					p.passive_handler.Set("Innovation", 1)
+					p.passive_handler.Set("MartialMagic", 1)
+					p.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic)
+					p.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/HellFire)
+					p.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption)
+					p << "Please set macros for (Dark Magic), (Hell Fire) and (Corruption), your 3 demon magics."
+					p.client.updateCorruption()
+					p.demon.selectPassive(p, "CORRUPTION_PASSIVES", "Buff", TRUE)
+					p.demon.selectPassive(p, "CORRUPTION_DEBUFFS", "Debuff")

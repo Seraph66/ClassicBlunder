@@ -4129,24 +4129,7 @@ obj
 						usr.UseProjectile(src)
 //T4 is above and also in Autohits.
 
-//T5 has damage mult 5, usually.
-				Divine_Atonement
-					DamageMult=5
-					ChargeRate=2
-					Dodgeable=0
-					Distance=30
-					BeamTime=30
-					Knockback=1
-					IconLock='BeamDodon.dmi'
-					Cooldown=150
-					EnergyCost=5
-					ExcludeFacingDir=1
-					InstantDamageChance=1
-					ChargeMessage="begins channeling Divine Atonement..."
-					ActiveMessage="unleashes Divine Atonement!"
-					verb/Divine_Atonement()
-						set category="Skills"
-						usr.UseProjectile(src)
+//T5 has damage mult 5, usually. Divine_Atonement moved to Races/Makaioshins/MakaioshinRacials.dm
 				The_Original_Kamehameha
 					AdaptRate = 1
 					DamageMult=2

@@ -27,7 +27,7 @@
         for(var/p in src.passives)
             devilArmDetail += "<tr><td><b>[p]</b></td><td>[src.passives[p]]</td></tr>"
         devilArmDetail += "<tr><td>Main Passives Used: </td><td>[src.totalEvolvesMain]</td></tr>"
-        if(usr.isRace(DEMON) || usr.isRace(CELESTIAL) || usr.isRace(MAKAIOSHIN))
+        if(usr.isRace(DEMON) || usr.isRace(MAKAIOSHIN))
             devilArmDetail += "<tr><td>Side Passives Used: </td><td>[src.totalEvolvesSecondary]</td></tr>"
         devilArmDetail += "</table></body></html>"
         usr << browse(devilArmDetail, "window=DevilArm;size=350x500");
@@ -78,7 +78,7 @@
     verb/Devil_Arm()
         set category = "Skills"
         if(!usr.BuffOn(src) && checkEvolve(usr) )
-            if(usr.isRace(DEMON) || usr.isRace(MAKAIOSHIN) || usr.isRace(CELESTIAL))
+            if(usr.isRace(DEMON) || usr.isRace(MAKAIOSHIN))
                 evolve(usr)
                 usr << "Activate again after."
                 return

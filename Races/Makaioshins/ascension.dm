@@ -1,13 +1,13 @@
 ascension
 	makaioshin
-		passives = list()
+		/*passives = list()
 		proc/findFalldown(mob/p)
 			var/obj/Skills/Buffs/SlotlessBuffs/Falldown_Mode/Makaioshin/d = new()
 			d = locate() in p
 			if(!d)
 				world.log << "There was an error finding [p]'s Falldown Mode, please fix as their ascension is likely bugged"
 				p << "Please report to the admin or discord that your Falldown Mode is bugged on asc"
-			return d
+			return d*/
 		one
 			unlock_potential = ASCENSION_ONE_POTENTIAL
 			passives = list("HellPower" = 0.25, "AbyssMod" = 0.25, "HolyMod" = 0.25, "SpiritPower" = 0.25, "HellRisen" = 0.25, "Incomplete" = -0.25, "BlurringStrikes"=0.5, "HybridStrike"=0.5,"PureDamage"=1, "PureReduction"=1)

@@ -1402,9 +1402,9 @@ mob/proc/Get_Scouter_Reading(mob/B)
 		EPM-=B.PowerEroded
 	if(B.NanoBoost&&B.Health<25)
 		EPM+=0.25
-	if(B.isRace(MAKYO))
+/*	if(B.isRace(MAKYO))
 		if(B.ActiveBuff&&!B.HasMechanized())
-			EPM*=1+(0.5*B.AscensionsAcquired) * 7
+			EPM*=1+(0.5*B.AscensionsAcquired) * 7 */
 	if(EPM<=0)
 		EPM=0.1
 	if(src.DemonicPower())

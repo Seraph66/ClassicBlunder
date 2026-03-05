@@ -11,7 +11,7 @@ proc/CelestialBodiesLoop()
 		celestialObjectTicks--
 		if(celestialObjectTicks==0)
 			CallMoon()
-			CallStar()
+			// CallStar()
 			celestialObjectTicks = Hour(12)/10
 		sleep(10)
 
@@ -49,7 +49,7 @@ mob
 					for(var/obj/Skills/Buffs/SlotlessBuffs/Werewolf/Full_Moon_Form/F in src)
 						F.Trigger(src)
 			src<<"<font color=yellow>[global.MoonSetMessage]</font color>"
-		MakyoWarning()
+/*		MakyoWarning()
 			if(src.isRace(MAKYO))
 				src << "You feel your blood boiling in anticipation... "
 			if(src.AdvancedTransmissionTechnologyUnlocked>0)
@@ -67,9 +67,9 @@ mob
 						src.PoweringUp=0
 						src.Auraz("Remove")
 						src.UseBuff(KC)
-			src<<"<font color=red>[global.MakyoMessage]</font color>"
+			src<<"<font color=red>[global.MakyoMessage]</font color>" */
 
-		MakyoFade()
+/*		MakyoFade()
 			if(isRace(MAKYO))
 				src.StarPowered=0
 				for(var/obj/Skills/Buffs/ActiveBuffs/Ki_Control/KC in src)
@@ -82,7 +82,7 @@ mob
 				for(var/obj/Skills/Buffs/ActiveBuffs/Ki_Control/KC in src)
 					if(src.BuffOn(KC))
 						src.UseBuff(KC)
-			src<<"<font color=red>[global.MakyoSetMessage]</font color>"
+			src<<"<font color=red>[global.MakyoSetMessage]</font color>" */
 
 proc/CallMoon(var/OnlyZ=null)
 	set waitfor=0
@@ -102,7 +102,7 @@ proc/CallMoon(var/OnlyZ=null)
 			P.MoonTrigger()
 
 
-var/starActive = FALSE
+/* var/starActive = FALSE
 proc/CallStar(var/OnlyZ=null)
 	set waitfor=0
 	set background=1
@@ -127,4 +127,4 @@ proc/CallStar(var/OnlyZ=null)
 			if(P.z==OnlyZ)
 				P.MakyoFade()
 		else
-			P.MakyoFade()
+			P.MakyoFade() */

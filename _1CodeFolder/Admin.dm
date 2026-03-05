@@ -1164,6 +1164,12 @@ mob/Admin3/verb
 			if(M.isRace(CELESTIAL) && M.CelestialAscension == "Angel" && blah == 1)
 				if(!locate(/transformation/celestial/Master_of_Arms) in M.race.transformations)
 					M.race.transformations += new/transformation/celestial/Master_of_Arms
+			if(M.isRace(CELESTIAL) && M.CelestialAscension == "Demon" && blah == 1)
+				if(!locate(/transformation/celestial/Celestial_Devil_Trigger) in M.race.transformations)
+					M.race.transformations += new/transformation/celestial/Celestial_Devil_Trigger
+			if(M.isRace(CELESTIAL) && M.CelestialAscension == "Demon" && blah == 2)
+				if(!locate(/transformation/celestial/Celestial_Sin_Devil_Trigger) in M.race.transformations)
+					M.race.transformations += new/transformation/celestial/Celestial_Sin_Devil_Trigger
 			if(M.isRace(SAIYAN) && blah == 4)
 				var/godor4 = input("SSJ God or SSJ4?") in list("Daima SSJ4", "GT SSJ4")
 				if(godor4 == "GT SSJ4")
@@ -1723,7 +1729,7 @@ mob/Admin3/verb
 			return
 		global.MoonSetMessage=NewSetMsg
 		Log("Admin", "[ExtractInfo(usr)] made the moon setting message: ([global.MoonSetMessage])")
-	Makyo_Toggle(var/Z as num)
+/*	Makyo_Toggle(var/Z as num)
 		set category="Admin"
 		CallStar(Z)
 		Log("Admin", "[ExtractInfo(src)] forced the Makyo Star to shine for z-plane ([Z]).")
@@ -1738,7 +1744,7 @@ mob/Admin3/verb
 		if(!NewSetMsg&&NewSetMsg==null)
 			return
 		global.MakyoSetMessage=NewSetMsg
-		Log("Admin", "[ExtractInfo(usr)] made the Star departure message: ([global.MakyoSetMessage])")
+		Log("Admin", "[ExtractInfo(usr)] made the Star departure message: ([global.MakyoSetMessage])") */
 
 
 	AdminLogz()

@@ -3,7 +3,7 @@
 #define MANG_MANA_COST 10 // Determines the cost of activating a Mang Ring/Level
 
 /obj/Skills/Buffs/SlotlessBuffs/Shin_Radiance
-    passives = list("GiantForm" = 1, "Hardening" = 1, "PureReduction" = 1, "Godspeed" = 1, "Deflection" = 1, "ManaGeneration" = 1, "Unnerve" = 1) // SOME OF THESE GET CHANGED IN THE ADJUST
+    passives = list("GiantForm" = 1, "Harden" = 1, "PureReduction" = 1, "Godspeed" = 1, "Deflection" = 1, "ManaGeneration" = 1, "Unnerve" = 1) // SOME OF THESE GET CHANGED IN THE ADJUST
     ActiveMessage="radiates a soft, warding glow of Light."
     OffMessage="suppresses the glow of the Light, letting their emotions flow on."
     TextColor=rgb(203, 198, 47)
@@ -45,6 +45,8 @@
     TextColor=rgb(203, 198, 167)
     TimerLimit = 30
     Cooldown = 30
+    IconLock = 'Icons/Buffs/SecretBuffs/Mang/MangRing1.dmi'
+   // IconApart = 1
 
      /* All of Mang's passives and stats are scattered across passive procs. This is so that they can scale based off of how many Mang you have
      The passives are as follows: Steady, Godspeed, Brutalize, BlurringStrikes, BuffMastery, PureDamage
@@ -108,11 +110,13 @@ mob/proc/MangManaPay(fullcost = 0) // It's a surprise tool that helps us later
 
 mob/proc/MangManaCost() // Checks if you have the mana before spending it.
     var/MangLevelCost = MANG_MANA_COST * MangManaPay(!MangActive()) // This is later (tl;dr determines if you pay per increment or for all mang)
+    if(GetMangMastery() == GetMangLevel()) return
     if(ManaAmount >= MangLevelCost)
         LoseMana(MangLevelCost)
         return 1
     if(ManaAmount < MangLevelCost)
         return 0
+
 
 mob/proc/MangOnCD()
     for(var/obj/Skills/Buffs/SlotlessBuffs/Mang_Resonance/mr in contents)
@@ -150,6 +154,6 @@ mob/proc/endMangBuff() // Turns Mang off (Oops)
   for(var/obj/Skills/Buffs/SlotlessBuffs/Mang_Resonance/mr in contents)
     if(BuffOn(mr)) mr.Trigger(src, Override=1);
 
-mob/proc/MangCDSwap(obj/Skills/Buffs/SlotlessBuffs/Mang_Resonance/mr) // This also transitions mang but it's only used for when it goes on cooldown and not when it's actually active.
+mob/proc/MangCDSwap(obj/Skills/Buffs/SlotlessBuffs/Mang_Resonance/mr) // This is currently commented out in Skills_.dm because it breaks cooldowns
     if(istype(mr, /obj/Skills/Buffs/SlotlessBuffs/Mang_Resonance))
         startShinBuff()

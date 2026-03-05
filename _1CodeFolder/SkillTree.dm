@@ -500,7 +500,4 @@ mob/proc
 			KC.selectedStats += input(src, "Pick a stat") in stats
 			stats -= KC.selectedStats[length(KC.selectedStats)]
 		KC.init(src)
-		if(src.isRace(MAKYO))
-			KC.icon=src.ExpandBase
-			KC.IconReplace=1
 		src.AddSkill(KC)

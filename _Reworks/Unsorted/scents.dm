@@ -5,7 +5,7 @@
     "Chakardi" = list("Money", "Gold", "Greed"), \
     "ELVES" = list("Society", "Rich", "Noble","Royalty"), \
     "SAIYAN" = list("Musk", "Animalistic", "Sweaty", "Unbathed"), \
-    "MAKYO" = list("Garlic", "Feet", "Alcohol" ), \
+    "MAKYO" = list("Caves", "Mushrooms", "The Woods", "The Sky"), \
     "Alien" = list("Musk", "Incense", "Exotic"), \
     "YOKAI" = list("Incense", "Alcohol "), \
     "ELDRITCH" = list("Ocean", "Alien", "Exotic", "Overwhelming"), \
@@ -31,7 +31,7 @@ mob/proc/setUpScent()
         if(SAIYAN)
             custom_scent=pick("Musk", "Animalistic", "Sweaty", "Unbathed")
         if(MAKYO)
-            custom_scent=pick("Garlic", "Feet", "Alcohol", "The Sky")
+            custom_scent=pick("Caves", "Mushrooms", "The Woods", "The Sky")
         if("Alien")
             if(usr.Target.Class=="Brutality"||usr.Target.Class=="Tenacity")
                 custom_scent="Musk"

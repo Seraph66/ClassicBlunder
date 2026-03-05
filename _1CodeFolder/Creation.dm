@@ -94,7 +94,7 @@ mob/Players
 		for(var/obj/Skills/Buffs/SlotlessBuffs/Devil_Arm2/da in src)
 			if(src.isRace(DEMON))
 				da.name="Devil Arm ([src.TrueName])"
-			if(src.isRace(MAKAIOSHIN)||src.isRace(CELESTIAL))
+			if(src.isRace(MAKAIOSHIN))
 				da.name="Devil Arm ([src.TrueName])"
 
 		checkVerbs()
@@ -184,7 +184,7 @@ mob/Players
 		if(RPPSpendable + RPPSpent > RPPCurrent)
 			AdminMessage("[src] has more rpp than they should.")
 
-		if(isRace(DEMON))
+		if(isRace(DEMON) || (isRace(CELESTIAL) && CelestialAscension == "Demon"))
 			for(var/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/s in src)
 				for(var/ss in s.possible_skills)
 					for(var/obj/Skills/sss in s.possible_skills[ss])
@@ -447,17 +447,14 @@ mob/Players
 					if(PACT_BROKEN_SUBJECT_PENALTY)
 						whoToInflict = PACT_SUBJECT
 				p.breakPact(TRUE, whoToInflict)
-		if(isRace(MAKYO)&&StarPowered&&!starActive)
-			MakyoFade()
-		if(isRace(MAKYO)&&!StarPowered&&starActive)
-			MakyoTrigger()
-
 		initShortcuts();
 		return
 	Logout()
 		players -= src
 		if(dancing) transform=dancing
 		last_online = world.realtime
+		resetStyleRating()
+		StyleRatingDecaying = FALSE
 		gain_loop.Remove(src)
 		//ticking_generic.Remove(src)
 

@@ -1831,9 +1831,9 @@ mob/Player/AI
 			EPM-=src.PowerEroded
 		if(src.NanoBoost&&src.Health<25)
 			EPM+=0.25
-		if(src.isRace(MAKYO))
+	/*	if(src.isRace(MAKYO))
 			if(src.ActiveBuff&&!src.HasMechanized())
-				EPM*=1+(0.5*src.AscensionsAcquired)
+				EPM*=1+(0.5*src.AscensionsAcquired) */
 		if(EPM<=0)
 			EPM=0.1
 //Ratio

@@ -2281,7 +2281,7 @@ obj/Items/Tech
 			if(src.WaveType)
 				usr << "[src] was already configured!"
 				return
-			src.WaveType=alert(usr, "What wave frequency should the projector be configured for?", "EM Wave Type", "Blutz Rays", "Redlight", "Ultraviolet")
+			src.WaveType=alert(usr, "What wave frequency should the projector be configured for?", "EM Wave Type", "Blutz Rays", "Ultraviolet")
 		verb/Activate()
 			set category=null
 			set src in range(1, usr)
@@ -2317,20 +2317,6 @@ obj/Items/Tech
 												b.Trigger(m)
 									for(var/obj/Skills/Buffs/SlotlessBuffs/Werewolf/Full_Moon_Form/F)
 										F.Trigger(m)
-				if("Redlight")
-					view(10,src)<<"<font color=red><small>The projector emits a burst of an eerie light!"
-					for(var/turf/t in Turf_Circle(src, 10))
-						sleep(-1)
-						TurfShift('Flamestorm.dmi', t, 10, src, EFFECTS_LAYER)
-						for(var/mob/m in t)
-							if(m.isRace(MAKYO))
-								m.StarPowered=1
-								for(var/obj/Skills/Buffs/ActiveBuffs/Ki_Control/KC in m)
-									if(!m.BuffOn(KC))
-										m.PowerControl=150
-										m.PoweringUp=0
-										m.Auraz("Remove")
-										m.UseBuff(KC)
 				if("Ultraviolet")
 					view(10,src)<<"<font color=red><small>The projector emits a powerful burst of UV light!"
 					for(var/turf/t in Turf_Circle(src, 10))
@@ -2367,7 +2353,7 @@ obj/Items/Tech
 			if(src.WaveType)
 				usr << "[src] was already configured!"
 				return
-			src.WaveType=alert(usr, "What wave frequency should the projector be configured for?", "EM Wave Type", "Blutz Rays", "Redlight", "Ultraviolet")
+			src.WaveType=alert(usr, "What wave frequency should the projector be configured for?", "EM Wave Type", "Blutz Rays", "Ultraviolet")
 		verb/Activate()
 			set category=null
 			set src in range(1, usr)
@@ -2412,20 +2398,6 @@ obj/Items/Tech
 												b.Trigger(m)
 									for(var/obj/Skills/Buffs/SlotlessBuffs/Werewolf/Full_Moon_Form/F)
 										F.Trigger(m)
-				if("Redlight")
-					view(10,src)<<"<font color=red><small>The projector emits a burst of an eerie light!"
-					for(var/turf/t in Turf_Circle(src, 10))
-						sleep(-1)
-						TurfShift('Flamestorm.dmi', t, 10, src, EFFECTS_LAYER)
-						for(var/mob/m in t)
-							if(m.isRace(MAKYO))
-								m.StarPowered=1
-								for(var/obj/Skills/Buffs/ActiveBuffs/Ki_Control/KC in m)
-									if(!m.BuffOn(KC))
-										m.PowerControl=150
-										m.PoweringUp=0
-										m.Auraz("Remove")
-										m.UseBuff(KC)
 				if("Ultraviolet")
 					view(10,src)<<"<font color=red><small>The projector emits a powerful burst of UV light!"
 					for(var/turf/t in Turf_Circle(src, 10))
