@@ -1879,8 +1879,8 @@ NEW VARIABLES
 					src.Trigger(usr)
 			Jinchuuriki
 				SignatureTechnique=3
-				NeedsHealth=50
-				TooMuchHealth=75
+				//NeedsHealth=50
+				//TooMuchHealth=75
 				WoundThreshold=95
 				passives = list("Maki" = 1, "Curse" = 1,"LifeGeneration" = 0.5, "Deflection" = 2, "Reversal" = 0.1)
 				LifeGeneration=0.5
@@ -1899,8 +1899,8 @@ NEW VARIABLES
 					if(usr.passive_handler.Get("Unstoppable") || usr.HasInjuryImmune())
 						WoundThreshold = 0
 					if(!usr.BuffOn(src))
-						src.NeedsHealth=25+(12.5*src.Mastery)
-						src.TooMuchHealth=50+(6.25*src.Mastery)
+						src.NeedsHealth=40+(12.5*src.Mastery)
+						src.TooMuchHealth=65+(6.25*src.Mastery)
 						if(Mastery >= 4)
 							src.TooMuchHealth=null
 						if(Mastery >= 3)
