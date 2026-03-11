@@ -8,19 +8,48 @@ transformation
 			form_glow_icon = 'Ripple Radiance.dmi'
 			form_glow_x = -32
 			form_glow_y = -32
-			//... i guess, intend for them around 35 potential... ??? 
-			//i ain't even gonna try to make sense of these guys
-			unlock_potential = 55
-			passives = list("Instinct" = 3, "Flicker" = 4, "Pursuer" = 5,  "BuffMastery" = 4, "PureDamage" = 3, "BleedHit"=0.75, "PureReduction"=-2)
-			PUSpeedModifier = 1.5
+			unlock_potential = 45
+			passives = list("Instinct" = 1, "Flow" = 1, "Flicker" = 1, "Pursuer" = 2,  "PureDamage" = 1, "SaiyanPower"=1, "SaiyanPower1"=0.5)
+			speedadd = 0.3 //these are additive. base is 1, so 0.3=1.3x
+			enduranceadd = 0.3
+			offenseadd = 0.3
+			defenseadd = 0.3
+			strengthadd = 0.3
+			forceadd = 0.3
 			mastery_boons(mob/user)
-				if(mastery>=75&&mastery<100)
-					passives = list("Instinct" = 3, "Flicker" = 4, "Pursuer" = 5, "BuffMastery" = 4, "PureDamage" = 3, "UnderDog" = 1, "PureReduction"=-1)
-				if(mastery==100)
-					passives = list("Instinct" = 3, "Flicker" = 4, "Pursuer" = 5, "BuffMastery" = 4, "PureDamage" = 3, "UnderDog" = 1, "Persistence"=2, "Herald of the End"=1)
-					if(prob(15)&&user.transUnlocked<2)
-						user.passive_handler.Increase("The Clock Is Ticking", 0.5)
-						user<<"<font color=red><b>This form is not to be used lightly, [user]. The clock is ticking.</font></b>"
+				if(mastery >= 50)
+					if(!locate(/obj/Skills/Buffs/SpecialBuffs/SuperSaiyanGrade2, user)&&user.isRace(SAIYAN))
+						user.AddSkill(new/obj/Skills/Buffs/SpecialBuffs/SuperSaiyanGrade2)
+						user << "You can draw out greater power from your mastery over super Saiyan - Grade 2 unlocked!"
+				if(mastery >= 75)
+					if(!locate(/obj/Skills/Buffs/SpecialBuffs/SuperSaiyanGrade3, user)&&user.isRace(SAIYAN))
+						user.AddSkill(new/obj/Skills/Buffs/SpecialBuffs/SuperSaiyanGrade3)
+						user << "You can strain past the limits of your Super Saiyan form! Grade 3 Unlocked!"
+			class_boons(mob/user) //pride stats as a baseline no matter what
+				if(user.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/zeal)
+					class_passives = list("EnergyGeneration" = 3, "Instinct" = 2, "Flow" = 2)
+					speedadd = 0.3
+					enduranceadd = 0.1
+					offenseadd = 0.45
+					defenseadd = 0.15
+					strengthadd = 0.4
+					forceadd = 0.4
+				if(user.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/pride)
+					class_passives = list("PureDamage" = 1.5, "Flicker" = 2, "Pursuer" = 1)
+					speedadd = 0.3
+					enduranceadd = 0.1
+					offenseadd = 0.45
+					defenseadd = 0.15
+					strengthadd = 0.4
+					forceadd = 0.4
+				if(user.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/honor)
+					class_passives = list("PureReduction" = 1.5, "Flow" = 2, "EnergyGeneration" = 3)
+					speedadd = 0.3
+					enduranceadd = 0.1
+					offenseadd = 0.45
+					defenseadd = 0.15
+					strengthadd = 0.4
+					forceadd = 0.4
 			adjust_transformation_visuals(mob/user)
 				if(!form_hair_icon&&user.Hair_Base)
 					var/icon/x=new(user.Hair_Base)
@@ -85,45 +114,30 @@ transformation
 					return
 				else
 					..()
-		hellspawn_super_saiyan_2 //it's super saiyan 4
-			tier = 7//full transparency this does functionally nothing for hellspawns, but it's a bandaid for our special regular saiyans hahaha
-			//lmao
-			//lol
-			unlock_potential = 80
+		hellspawn_super_saiyan_2 //now based on daima
+			unlock_potential = 70 //intended to be unlocked at around 55 potential
 			autoAnger = 1
-			speed = 1.5
-			endurance = 1.5
-			offense = 1.5
-			defense = 1.5
-			strength = 1.3
-			force = 1.3
-			revertToTrans = 0
+			speedadd = 1.5
+			enduranceadd = 0.5
+			offenseadd = 1.5
+			defenseadd = 0.5
+			strengthadd = 1.5
+			forceadd = 1.5
 			var/previousTailIcon
 			var/previousTailUnderlayIcon
 			var/previousTailWrappedIcon
 			var/tailIcon = 'saiyantail_ssj4.dmi'
 			var/tailUnderlayIcon = 'saiyantail_ssj4_under.dmi'
 			var/tailWrappedIcon = 'saiyantail-wrapped_ssj4.dmi'
-			passives = list("GiantForm" = 1, "SweepingStrike" = 1, "Brutalize" = 3, "Meaty Paws" = 2, "KiControlMastery" = 3, "PureReduction" = 5, "LifeGeneration" = 5, "Unstoppable" = 1, "AllOutAttack" = 1, "Reversal" = 0.3)
+			form_icon_1_icon = 'GokentoMaleBase_SSJ4.dmi'
+			form_icon_1_layer = FLOAT_LAYER-3
+			passives = list("GiantForm" = 1, "SweepingStrike" = 1, "Brutalize" = 3, "Meaty Paws" = 2, "PureDamage" = 9, "EnergyGeneration" = 5, "AllOutAttack" = 1, "SaiyanPower4"=1.5, "TrueZenkai" = 1)
 			adjust_transformation_visuals(mob/user)
 				if(user.Hair_Base && !form_hair_icon)
 					var/icon/x=new(user.Hair_Base)
+					x.Blend(rgb(150,-10,-10),ICON_ADD)
 					form_hair_icon=x
 				..()
-
-			mastery_boons(mob/user)
-				passives = list("GiantForm" = 1, "Juggernaut" = 1+(mastery/25), "BuffMastery" = 5 + (mastery/10), "SweepingStrike" = 1, "Brutalize" = 3,\
-				"Meaty Paws" = 2 + (mastery/50), "KiControlMastery" = 3 + (mastery/50), "PureReduction" = 5 + (mastery/10),\
-				"LifeGeneration" = 1 + round(mastery/50,1), "Unstoppable" = 1, "AllOutAttack" = 1, "Reversal" = 0.1 + (mastery/200),\
-				"Flow" = 4, "Instinct" = 4, "Transformation Power" = clamp(user.AscensionsAcquired * 3, 1, 20), "Deicide" = 10,\
-				"Flicker" = 5, "Pursuer" = 5, "PureDamage"= 4 + (mastery/10),"SSJ4" = 1,"EndlessNine"=0.25)
-				speed = 1.5 + (mastery/200)
-				endurance = 1.5 + (mastery/200)
-				offense = 1.5 + (mastery/200)
-				defense = 1.5 + (mastery/200)
-				strength = 1.5 + (mastery/200)
-				force = 1.5 + (mastery/200)
-
 			transform(mob/user)
 				. = ..()
 				previousTailIcon = user.TailIcon
@@ -137,7 +151,6 @@ transformation
 			revert(mob/user)
 				. = ..()
 				if(!is_active || !user.CanRevert()) return
-				user.transActive = 0
 				user.TailIcon = previousTailIcon
 				user.TailIconUnderlay = previousTailUnderlayIcon
 				user.TailIconWrapped = previousTailWrappedIcon
@@ -147,33 +160,21 @@ transformation
 				user.Tail(1)
 
 			transform_animation(mob/user)
-				user.Quake(40)
-				user.Frozen=1
-				KenShockwave2(user, icon='KenShockwaveGold.dmi', Size=10)
-				for(var/turf/t in Turf_Circle(user, 18))
-					if(prob(50))
-						spawn(rand(2,6))
-							var/icon/i = icon('RisingRocks.dmi')
-							t.overlays+=i
-							spawn(rand(20, 60))
-								t.overlays-=i
-				spawn(10)
-					KenShockwave2(user, icon='KenShockwaveGold.dmi', Size=10)
-				user.Frozen=0
-				animate(user, color = list(1,0,0, 0,1,0, 0,0,1, 1,0.9,0.2), time=20)
-				sleep(20)
-
-				var/ShockSize = 5
-				for(var/wav=5, wav>0, wav--)
-					KenShockwave(user, icon='KenShockwaveGold.dmi', Size=ShockSize, Blend=2, Time=10)
-					ShockSize/=2
-				spawn(10)
-					animate(user, color = user.MobColor, time=20)
-			transform(mob/user)
-				if(user.CheckSlotless("Beyond God")||user.passive_handler.Get("InBlue"))
-					return
-				else
-					..()
+				if(first_time) // store the pre-form appearance and then the post-form appearance before calling the animation. also remove the hair set on overlay afterwards since it's not supposed to be an overlay
+					var/appearance1 = user.appearance
+					world << "app1 is [appearance1]"
+					user.overlays += form_icon_1
+					user.overlays += form_icon_2
+					user.overlays += form_glow
+					user.overlays += form_aura
+					user.underlays += form_aura_underlay
+					world << "[form_hair_icon]"
+					user.overlays += form_hair
+					world << "[user.Hair]"
+					var/appearance2 = user.appearance
+					world << "app2 is [appearance2]"
+					user.HellSSJ4Animation1(appearance1, appearance2)
+					user.overlays -= form_hair
 		hellspawn_super_full_power_saiyan_2_limit_breaker //it's super saiyan 5
 			tier = 8
 			unlock_potential = 90
