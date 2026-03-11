@@ -3860,6 +3860,7 @@ turf/Special
 		icon = 'StarPixel.dmi'
 		icon_state="2"
 		Health=1345345400000000000000000
+		Buildable = 1
 		GainLoop(mob/source)
 			..()
 			source.loseOxygen(1)
@@ -3867,6 +3868,7 @@ turf/Special
 		icon='StarPixel.dmi'
 		icon_state="3"
 		Health=100000000000
+		Buildable = 1
 		GainLoop(mob/source)
 			..()
 			source.loseOxygen(1)
