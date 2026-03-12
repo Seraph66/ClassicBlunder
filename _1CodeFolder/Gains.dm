@@ -357,6 +357,11 @@ mob
 
 		Update_Stat_Labels()
 
+		// Per-tick SlothFactor SinBonus handling for Demon Devil Trigger
+		if(istype(src, /mob/Players))
+			var/mob/Players/P = src
+			P.updateSlothSinBonus()
+
 		if(!src.PureRPMode)
 
 			// if(calmcounter<=0)

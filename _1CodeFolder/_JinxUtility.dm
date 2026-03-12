@@ -5,6 +5,9 @@
 
 /mob/var/AbsorbingDamage = 0
 /mob/var/transGod = 0
+/mob/var/tmp/DevilTriggerSinDamageBonus = 0
+/mob/var/tmp/DevilTriggerSlothBonus = 0
+/mob/var/tmp/LastSlothTick = 0
 /mob/var/tmp/list/tmp_removed_ssj_forms = list()
 /mob/var/list/removed_ssj_forms = list()
 
@@ -239,10 +242,12 @@ mob
 					else
 						OMsg(src, "<font color='[rgb(255, 0, 0)]'>[defender] takes a critical hit! They take [tmpval] damage!</font color>")
 				DEBUGMSG("this was a voof hit and the dmg is: [tmpval]")
-				defender.LoseHealth(max(0,tmpval))
+				var/final_vuffa_damage = max(0,tmpval)
+				defender.LoseHealth(final_vuffa_damage)
 			else
 				DEBUGMSG("this is the damage actually dealt: [val]")
-				defender.LoseHealth(max(0,val))
+				var/final_damage = max(0,val)
+				defender.LoseHealth(final_damage)
 
 			if(defender.Flying)
 				var/obj/Items/check = defender.EquippedFlyingDevice()
@@ -807,6 +812,11 @@ mob
 		LoseHealth(var/val)
 			src.Health-=val
 			src.MaxHealth()
+			// Apply Demon Devil Trigger Sadist/Masochist effects based on damage taken
+			applySinBonusFromTakenDamage(val)
+			// Any damage taken counts as "activity" and should reset Sloth stacking
+			DevilTriggerSlothBonus = 0
+			LastSlothTick = world.time
 			var/Absorb = passive_handler.Get("AbsorbingDamage")
 			if(passive_handler["Grit"])
 				AdjustGrit("add", val*glob.racials.GRITMULT)
@@ -1206,6 +1216,131 @@ mob
 		BaseRecov()
 			return (src.RecovMod+src.RecovAscension)*RecovChaos
 
+		isInDemonDevilTrigger()
+			if(!isRace(DEMON)) return FALSE
+			if(!transActive || !race || !race.transformations || transActive > race.transformations.len) return FALSE
+			var/transformation/current = race.transformations[transActive]
+			if(!istype(current, /transformation/demon/devil_trigger)) return FALSE
+			return TRUE
+
+		getDevilTriggerSinBonusMult()
+			if(!isInDemonDevilTrigger()) return 0
+
+			var/mult = 0
+
+			// EnvyFactor
+			if(passive_handler && passive_handler.Get("EnvyFactor"))
+				if(!passive_handler.Get("MirrorStats"))
+					passive_handler.Set("MirrorStats", 1)
+
+			// LustFactor
+			if(passive_handler && passive_handler.Get("LustFactor"))
+				var/targets = getTargetingMeCount()
+				if(targets > 0)
+					mult += 0.02 * passive_handler.Get("LustFactor") * targets
+
+			// GreedFactor
+			if(passive_handler && passive_handler.Get("GreedFactor"))
+				var/money = 0
+				for(var/obj/Money/m in src.contents)
+					money = m.Level
+				if(money > 0)
+					var/greed_bonus = max(0, money / glob.racials.GOLD_DRAGON_FORMULA) * passive_handler.Get("GreedFactor")
+					mult += greed_bonus
+
+			// Sadist / Masochist
+			if(DevilTriggerSinDamageBonus > 0)
+				mult += DevilTriggerSinDamageBonus
+
+			// SlothFactor
+			if(DevilTriggerSlothBonus > 0)
+				mult += DevilTriggerSlothBonus
+
+			// PrideFactor
+			if(passive_handler && passive_handler.Get("PrideFactor") && Target && istype(Target, /mob/Players))
+				var/healthDiff = Health - Target:Health
+				if(healthDiff > 0)
+					var/steps = round(healthDiff / 10)
+					if(steps > 0)
+						var/pride_bonus = 0.25 * steps * passive_handler.Get("PrideFactor")
+						mult += pride_bonus
+
+			//these aren't actually multipliers btw teehee, they are additive. They started out as multiplicative but I changed my mind after the fact
+			if(mult < 0)
+				mult = 0
+
+			if(passive_handler && passive_handler.Get("PrideFactor") && mult < 1.5)
+				mult = 1.5
+
+			if(mult > 3)
+				mult = 3
+
+			return mult
+
+		getTargetingMeCount()
+			var/count = 0
+			for(var/mob/Players/P in players)
+				if(P != src && P.Target == src)
+					count++
+			return count
+
+		// adist/Masochist effects
+		applySinBonusFromDealtDamage(var/amount)
+			if(amount <= 0) return
+			if(!isInDemonDevilTrigger()) return
+
+			var/rate = 0.0001
+
+			if(passive_handler && passive_handler.Get("Sadist"))
+				var/inc = amount * rate
+				DevilTriggerSinDamageBonus += inc
+
+			if(passive_handler && passive_handler.Get("Masochist"))
+				var/dec = amount * rate * 0.5
+				DevilTriggerSinDamageBonus -= dec
+
+			if(DevilTriggerSinDamageBonus < 0)
+				DevilTriggerSinDamageBonus = 0
+
+		applySinBonusFromTakenDamage(var/amount)
+			if(amount <= 0) return
+			if(!isInDemonDevilTrigger()) return
+
+			var/rate = 0.0001
+
+			if(passive_handler && passive_handler.Get("Sadist"))
+				var/dec = amount * rate * 0.5
+				DevilTriggerSinDamageBonus -= dec
+
+			if(passive_handler && passive_handler.Get("Masochist"))
+				var/inc = amount * rate
+				DevilTriggerSinDamageBonus += inc
+
+			if(DevilTriggerSinDamageBonus < 0)
+				DevilTriggerSinDamageBonus = 0
+
+		// Sloth movement
+		resetSlothTracking()
+			DevilTriggerSlothBonus = 0
+			LastSlothTick = world.time
+
+		updateSlothSinBonus()
+			if(!isInDemonDevilTrigger()) return
+			if(!passive_handler || !passive_handler.Get("SlothFactor")) return
+
+			if(!LastSlothTick)
+				LastSlothTick = world.time
+				return
+
+			var/ticksSince = world.time - LastSlothTick
+
+			// About 5 seconds before it kicks in?
+			if(ticksSince < 50) return
+
+			var/inc = 1 / 10 * passive_handler.Get("SlothFactor")
+			DevilTriggerSlothBonus += inc
+			LastSlothTick = world.time
+
 		GetStrMult()
 			return src.StrMultTotal
 		GetForMult()
@@ -1321,7 +1456,7 @@ mob
 				if(src.Tension>=50&&src.Tension<src.getMaxTensionValue())
 					Mod+=0.01*(src.Tension/10)
 				else if(src.Tension>=src.getMaxTensionValue())
-					Mod+=1		
+					Mod+=1
 			// if(src.isRace(HUMAN))
 			// 	if(src.AscensionsAcquired)
 			// 		Mod+=(src.AscensionsAcquired/20)
@@ -1344,6 +1479,8 @@ mob
 					Mod*=(1+(BM*glob.BUFF_MASTERY_LOWMULT))
 				else if(Mod>=glob.BUFF_MASTER_HIGHTHRESHOLD)
 					Mod*=(1+(BM*glob.BUFF_MASTERY_HIGHMULT))
+			// Demon Devil Trigger sins bonus
+			Mod += getDevilTriggerSinBonusMult()
 			if(src.Burn)
 				if(passive_handler.Get("BurningShot"))
 					if(src.Burn>0&&src.Burn<=25)
@@ -1402,6 +1539,8 @@ mob
 				Mod += GetMangStats() // you can find this proc in Secrets\Shin\buff.dm
 			if(src.StyleRating > 0)
 				Mod += 0.1 * src.StyleRating * src.getStyleBonusMult()
+			// Demon Devil Trigger sins bonus
+			Mod += getDevilTriggerSinBonusMult()
 			var/STM=GetStrTransMult()
 			Str*=STM
 			Str*=Mod
@@ -1547,6 +1686,9 @@ mob
 				Mod+=h
 			if(src.ForEroded)
 				Mod-=src.ForEroded
+
+			// Demon Devil Trigger sins bonus (additive)
+			Mod += getDevilTriggerSinBonusMult()
 
 			var/adaptive = passive_handler.Get("AngerAdaptiveForce")
 			if(adaptive && (src.HasCalmAnger() || passive_handler.Get("EndlessAnger") || Anger))
@@ -1835,6 +1977,8 @@ mob
 				Mod += GetMangStats() // you can find this proc in Secrets\Shin\buff.dm
 			if(src.StyleRating > 0)
 				Mod += 0.1 * src.StyleRating * src.getStyleBonusMult()
+			// Demon Devil Trigger sins bonus
+			Mod += getDevilTriggerSinBonusMult()
 			var/SpTM=GetSpdTransMult()
 			Spd*=SpTM
 			Spd*=Mod
@@ -1929,6 +2073,8 @@ mob
 				Mod += GetMangStats() // you can find this proc in Secrets\Shin\buff.dm
 			if(src.StyleRating > 0)
 				Mod += 0.1 * src.StyleRating * src.getStyleBonusMult()
+			// Demon Devil Trigger sins bonus
+			Mod += getDevilTriggerSinBonusMult()
 			var/OTM=GetOffTransMult()
 			Off*=OTM
 			Off*=Mod
@@ -2027,6 +2173,8 @@ mob
 				Mod+=passive_handler.Get("TensionPowered")
 			if(src.StyleRating > 0)
 				Mod += 0.1 * src.StyleRating * src.getStyleBonusMult()
+			// Demon Devil Trigger sins bonus
+			Mod += getDevilTriggerSinBonusMult()
 			var/DTM=GetDefTransMult()
 			Def*=DTM
 			Def*=Mod

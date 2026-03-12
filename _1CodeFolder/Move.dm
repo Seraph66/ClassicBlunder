@@ -192,3 +192,8 @@ mob/Move()
 	if(AFKTimer==0)
 		overlays-=AFKIcon
 	AFKTimer=AFKTimeLimit
+
+	// SlothFactor tracking: reset stationary bonus on any movement
+	if(istype(src, /mob/Players))
+		var/mob/Players/P = src
+		P.resetSlothTracking()

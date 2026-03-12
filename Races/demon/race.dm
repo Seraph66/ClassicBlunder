@@ -15,19 +15,10 @@ race
 		imagination = 2
 
 		passives = list("AbyssMod" = 0.5, "Corruption" = 1, "StaticWalk" = 1, "SpaceWalk" = 1, "CursedWounds" = 1, "FakePeace" = 1, "MartialMagic" = 1)
-		skills = list(/obj/Skills/Buffs/SlotlessBuffs/Devil_Arm2,/obj/Skills/Utility/Imitate, /obj/Skills/Utility/Telepathy,  /obj/Skills/Buffs/SlotlessBuffs/Regeneration, /obj/Skills/Buffs/SlotlessBuffs/True_Form/Demon, \
+		skills = list(/obj/Skills/Buffs/SlotlessBuffs/Devil_Arm2,/obj/Skills/Utility/Imitate, /obj/Skills/Utility/Telepathy,  /obj/Skills/Buffs/SlotlessBuffs/Regeneration,  \
 						/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic, /obj/Skills/Buffs/SlotlessBuffs/DemonMagic/HellFire, /obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption, /obj/Skills/Teleport/Traverse_Depths)
 		var/devil_arm_upgrades = 1
 		var/sub_devil_arm_upgrades = 0
-
-		proc/findTrueForm(mob/p)
-			var/obj/Skills/Buffs/SlotlessBuffs/True_Form/Demon/d = new()
-			d = locate() in p
-			if(!d)
-				world.log << "There was an error finding [p]'s true form, please fix as their ascension is likely bugged"
-				p << "Please report to the admin or discord that your true form is bugged on asc"
-			return d
-
 
 		proc/checkReward(mob/p)
 			p.checkDevilArmUpgrades();

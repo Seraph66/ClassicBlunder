@@ -931,6 +931,12 @@ mob/proc/
 								a=src.GetAngerThreshold()
 						if(src.DefianceCounter)
 							a+=src.DefianceCounter*0.05
+						// WrathFactor
+						if(src.passive_handler.Get("WrathFactor"))
+							var/missing = max(0, 100 - Health)
+							var/steps = round(missing / 10)
+							if(steps > 0)
+								a += 0.2 * steps * src.passive_handler.Get("WrathFactor")
 					if(src.CyberCancel>0 && !isRace(ANDROID))
 						var/ang=a-1//Usable anger.
 						var/cancel=ang*src.CyberCancel//1 Cyber Cancel = all of usable anger.
