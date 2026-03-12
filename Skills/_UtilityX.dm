@@ -3240,7 +3240,7 @@ obj/Skills/Utility
 					M.ManaPU=1
 
 				if("Biological Cybernetics")
-					if((M.BioAndroid||M.Saga)
+					if((M.BioAndroid||M.Saga))
 						OMsg(usr, "[usr] tried to install a [ModChoice] into [M]...but they already have Biological Cybernetics.")
 						src.Using=0
 						return
