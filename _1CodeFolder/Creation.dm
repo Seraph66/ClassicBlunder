@@ -184,11 +184,15 @@ mob/Players
 		if(RPPSpendable + RPPSpent > RPPCurrent)
 			AdminMessage("[src] has more rpp than they should.")
 
-		if(isRace(DEMON) || (isRace(CELESTIAL) && CelestialAscension == "Demon"))
+		if(isRace(DEMON) || (isRace(CELESTIAL) && CelestialAscension == "Demon") || isRace(MAKAIOSHIN))
 			for(var/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/s in src)
 				for(var/ss in s.possible_skills)
 					for(var/obj/Skills/sss in s.possible_skills[ss])
 						sss:returnToInit()
+
+		if(isRace(ANGEL) || isRace(MAKAIOSHIN))
+			for(var/obj/Skills/Buffs/SlotlessBuffs/AngelMagic/s in src)
+				s.resetToInital()
 
 		if(isplayer(src))
 			move_speed = MovementSpeed()
@@ -342,7 +346,7 @@ mob/Players
 		// mainLoop += src
 	//	ticking_generic.Add(src)
 		gain_loop.Add(src)
-		if(isRace(DEMON))
+		if(isRace(DEMON) || isRace(MAKAIOSHIN))
 			client.updateCorruption()
 		var/list/lol=list("butt3","butt4")
 		for(var/x in lol)
@@ -414,6 +418,12 @@ mob/Players
 						dm.possible_skills[path].cooldown_remaining=0
 						dm.possible_skills[path].cooldown_start=0
 						dm.possible_skills[path].Using = 0
+			for(var/obj/Skills/Buffs/SlotlessBuffs/AngelMagic/am in src)
+				if(am.possible_skills)
+					for(var/path in am.possible_skills)
+						am.possible_skills[path].cooldown_remaining=0
+						am.possible_skills[path].cooldown_start=0
+						am.possible_skills[path].Using = 0
 		for(var/obj/Redo_Stats/r in src)
 			if(r.LoginUse) r.RedoStats(src)
 		if(locate(/obj/Skills/Companion/arcane_follower) in src) is_arcane_beast = locate(/obj/Skills/Companion/arcane_follower) in src

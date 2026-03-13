@@ -8,7 +8,7 @@
 	LockY=0
 	var/max_stacks = 1
 	var/total_stacks = 0
-	Trigger(mob/User, Override, reseting = FALSE) 
+	Trigger(mob/User, Override, reseting = FALSE)
 		..()
 		if(!reseting)
 			// this fades off
@@ -64,7 +64,7 @@
 		TimerLimit = 25 + (5 * attacker.AscensionsAcquired)
 		max_stacks = glob.racials.SOULDRAINMAX + attacker.AscensionsAcquired
 		passives = list("Drained" = glob.racials.SOULDRAINPER * total_stacks)
-	
+
 /obj/Skills/Buffs/SlotlessBuffs/Autonomous/Debuff/Marked_Prey
 	HealthDrain = 0.005
 	TimerLimit = 30
@@ -79,7 +79,7 @@
 		s.adjust(attacker)
 		s.Password = attacker.name
 		OMsg(defender, "[attacker] starts to hunt [defender].")
-		
+
 	adjust(mob/attacker)
 		total_stacks = clamp(total_stacks, 1, 10)
 		IconState = num2text(total_stacks)
@@ -99,14 +99,14 @@
 	ActiveMessage = "has started to bleed!"
 	OffMessage = "has stopped bleeding..."
 	do_effect(mob/defender, mob/attacker)
-		
+
 	adjust(mob/attacker, mob/defender)
 		var/ratio = clamp(defender.Health / 100, 0.1, 0.9)
 		HealthDrain = glob.SERRATED_DAMAGE * ratio
 		PoisonAffected = 5 * ratio
 		TimerLimit = round(5 + (2.5 * ratio), 1)
 		// higher health = better
-		
+
 
 /obj/Skills/Buffs/SlotlessBuffs/Autonomous/Debuff/Rupture
 	HealthDrain = 0.01
@@ -128,6 +128,34 @@
 				ShearAffected = 2
 				CrippleAffected = 2
 
+/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Debuff/Judged
+	TimerLimit = 120
+	AlwaysOn = 0
+	NeedsPassword = 0
+	IconLock = 'marked.dmi'
+	passives = list("Judged" = 1)
+	ActiveMessage = "has been judged!"
+	adjust(mob/p, limit = 120)
+		if(limit)
+			TimerLimit = limit
+		..()
+	// Target takes 25% increased damage from compatible Angel Magic spells (checked in damage flow).
+
+/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Debuff/Sentenced
+	TimerLimit = 60
+	AlwaysOn = 0
+	NeedsPassword = 0
+	IconLock = 'marked.dmi'
+	passives = list("PureReduction" = -3, "PureDamage" = -3, "BuffMastery" = -5)
+	PowerMult = 0.9
+	StrMult = 0.9
+	EndMult = 0.9
+	OffMult = 0.9
+	DefMult = 0.9
+	ForMult = 0.9
+	ActiveMessage = "has been sentenced!"
+	// -3 PureReduction, -3 PureDamage, -5 BuffMastery, all stats x0.9
+
 /obj/Skills/Buffs/SlotlessBuffs/Autonomous/Debuff/Cornered
 	passives = list("PureReduction" = 0.05, "Flow" = -0.1)
 	TimerLimit = 10
@@ -144,4 +172,3 @@
 			IconState = "[total_stacks]"
 		passives = list("PureReduction" = -glob.OVERHWELMING_BASE_PR_NERF * total_stacks, "Flow" = -glob.OVERHWELMING_BASE_FLOW * total_stacks)
 		endAdd = -glob.OVERHWELMING_BASE_END_NERF * total_stacks
-		

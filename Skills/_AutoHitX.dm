@@ -41,6 +41,10 @@ obj
 				SnaringOverlay
 				NoPierce=0//If this is flagged it will make a technique terminate after hitting something.
 				CorruptionGain = 0
+				AngelMagicCompatible
+				ApplyJudged
+				ApplySentenced
+				AffectTarget
 				UnarmedOnly
 				StanceNeeded
 				ABuffNeeded
@@ -5719,6 +5723,9 @@ obj
 			ManaDrain
 			FoxFire
 			hitSelf = 0
+			AngelMagicCompatible
+			ApplyJudged
+			ApplySentenced
 
 			Arcing//Triggers offshoots on every step that expand outwards.  Higher than 1 means that every X steps the range will widen.
 			ArcingCount=0//Number of times arcing has been triggered.  Informs the game how many tiles to send the offshoots.
@@ -5910,6 +5917,9 @@ obj
 			src.Primordial = Z.Primordial
 			src.RagingDemonAnimation = Z.RagingDemonAnimation
 			src.GoldScatter = Z.GoldScatter
+			src.AngelMagicCompatible = Z.AngelMagicCompatible
+			src.ApplyJudged = Z.ApplyJudged
+			src.ApplySentenced = Z.ApplySentenced
 			src.Knockback=Z.Knockback
 			src.ChargeTech=Z.ChargeTech
 			src.UnarmedTech=Z.UnarmedOnly
@@ -6465,6 +6475,8 @@ obj
 					spawn()
 						LaunchEnd(m)
 				DEBUGMSG("FINAL TOTAL DAMAGE DEALT before do damage! [FinalDmg]")
+				if(src.AngelMagicCompatible && m.passive_handler.Get("Judged"))
+					FinalDmg *= 1.25
 				if(src.DirectWounds)
 					src.Owner.DealWounds(m, src.DirectWounds);
 				var/damageDealt = src.Owner.DoDamage(m, FinalDmg, src.UnarmedTech, src.SwordTech, Destructive=src.Destructive, innateLifeSteal = LifeSteal, Autohit = TRUE)
@@ -6478,6 +6490,10 @@ obj
 
 				if(CorruptionGain)
 					Owner.gainCorruption((FinalDmg * 2) * glob.CORRUPTION_GAIN)
+				if(src.ApplyJudged)
+					m.applyJudged(120)
+				if(src.ApplySentenced)
+					m.applySentenced(60)
 				if(src.Owner.UsingAnsatsuken())
 					src.Owner.HealMana(src.Owner.SagaLevel)
 				if(src.Owner.SagaLevel>1&src.Owner.Saga=="Path of a Hero: Rebirth")

@@ -75,6 +75,25 @@ mob/proc/UsingHotnCold()
 
 	// this could be better i think?
 
+/mob/proc/applyJudged(limit = 120)
+	var/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Debuff/Judged/s = findOrAddSkill(/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Debuff/Judged)
+	if(!BuffOn(s))
+		s.adjust(src, limit)
+		s.Trigger(src, TRUE)
+	else
+		s.adjust(src, limit)
+		s.TimerLimit = limit
+
+/mob/proc/applySentenced(limit = 60)
+	var/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Debuff/Sentenced/s = findOrAddSkill(/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Debuff/Sentenced)
+	if(!BuffOn(s))
+		s.adjust(src)
+		s.TimerLimit = limit
+		s.Trigger(src, TRUE)
+	else
+		s.TimerLimit = limit
+		s.adjust(src)
+
 
 /mob/proc/TriggerPerfectCounter(mob/attacker)
     // thhis shit blows

@@ -201,6 +201,7 @@ obj
 
 				GoldScatter
 				Snaring
+				AngelMagicCompatible
 				LingeringTornado//spawn obj/leftOver/LingeringTornado on hit
 			skillDescription()
 				..()
@@ -5454,6 +5455,7 @@ obj
 					src.HolyMod=Z.HolyMod
 					src.AbyssMod=Z.AbyssMod
 					src.SlayerMod=Z.SlayerMod
+					src.AngelMagicCompatible=Z.AngelMagicCompatible
 					src.Devour=Z.Devour
 					src.SoulFire=Z.SoulFire
 					src.Stasis=Z.Stasis
@@ -6038,6 +6040,8 @@ obj
 							EffectiveDamage*=1+src.Owner.AbyssDamage(a, Forced=src.AbyssMod)/glob.ABYSS_DAMAGE_DIVISOR
 						if(src.SlayerMod)
 							EffectiveDamage*=1+src.Owner.SlayerDamage(a, Forced=src.SlayerMod)/glob.SLAYER_DAMAGE_DIVISOR
+						if(src.AngelMagicCompatible && m.passive_handler.Get("Judged"))
+							EffectiveDamage *= 1.25
 						if(src.WarpUser)
 							if(src.WarpUserFlashChange && src.Owner)
 								animate(src.Owner, color=list(1,0,0, 0,1,0, 0,0,1, 1,1,1), time=2)

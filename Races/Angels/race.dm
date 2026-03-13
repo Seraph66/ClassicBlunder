@@ -44,6 +44,10 @@ race
 							passives["StyleMastery"]=2
 				user.AngelAscension = Choice
 				//t1 style/armor unlocked
+			user.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/AngelMagic/Light)
+			user.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/AngelMagic/Divinity)
+			user.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/AngelMagic/Order)
+			user << "Please set macros for (Light), (Divinity), and (Order), your 3 angel magics."
 			user.passive_handler.increaseList(passives)
 			for(var/s in skills)
 				user.AddSkill(new s)
