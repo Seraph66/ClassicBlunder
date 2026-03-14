@@ -4,8 +4,8 @@
 #define MADNESS_MAX 100
 #define MADNESS_ADD_PER_TIER 25
 
-#define VALID_SECRET_LIST list("Jagan Eye", "Haki", "Hamon", "Vampire", "Eldritch", "Werewolf", "Heavenly Restriction", "Senjutsu", "Shin",\
-"Ultra Instinct", "Zombie", "Necromancy")
+#define VALID_SECRET_LIST list("Jagan Eye", "Haki", "Hamon", "Vampire", "Werewolf", "Heavenly Restriction", "Senjutsu", "Shin",\
+"Ultra Instinct", "Zombie", "Necromancy", "Eldritch", "Eldritch (Shrouded)", "Eldritch (Reflected)")
 
 //thank you hadoje
 /mob/var/SecretInformation/secretDatum = new()

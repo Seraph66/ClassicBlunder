@@ -385,18 +385,12 @@ window "MagicTree"
 		size = 600x664
 		anchor1 = -1,-1
 		anchor2 = -1,-1
-		background-color = none
 		is-visible = false
 		saved-params = "pos;size;is-minimized;is-maximized"
 		title = "Magic Tree"
 		statusbar = false
 		can-minimize = false
 		can-resize = false
-		outer-size = 608x695
-		outer-pos = 281,0
-		inner-size = 600x664
-		inner-pos = 4,27
-		screen-size = 1858x1080
 	elem "SpaceTree"
 		type = BUTTON
 		pos = 552,616

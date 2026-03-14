@@ -6,6 +6,7 @@
     skinHide(control)
         winset(src, control, "is-visible=\"false\"");
 
+
 /mob/proc/changeTreeImage()
     var/elementImage = getTreeImage(magicTreeDisplayed);
     var/list/params=list();
@@ -16,7 +17,6 @@
     list/revealedMagicButtons=list();
 
 /mob/proc/hideRevealedButtons()
-    DEBUGMSG("Hiding magic tree buttons that have been revealed ([magicTreeDisplayed] is currently displayed tree)");
     for(var/x in revealedMagicButtons)
         skinHide(x);
     revealedMagicButtons=list();//clear list
@@ -52,6 +52,11 @@
         if("Dark") return DARK_LOCKED_ACCESS;
         if("Space") return SPACE_LOCKED_ACCESS;
 
+/mob/proc/updateSelectionNodes()
+    setAccessNode();
+    setTreeSelectNodes();
+    setUnlockedNodeImages();
+
 /mob/proc/setAccessNode()
     var/element = magicTreeDisplayed;
     var/list/params=list();
@@ -69,13 +74,14 @@
 mob/proc/setTreeSelectNodes()
     var/list/elements = VALID_MAGIC_ELEMENTS;
     for(var/e in elements)
+        sleep();
         var/list/params=list();
         if(e in accessedMagicTrees) params["image"] = getUnlockedAccessNodeImage(e) //tree unlocked
         else params["image"] = getLockedAccessNodeImage(e) //tree locked
         winset(src, "[e]Tree", list2params(params));
 
 
-/mob/proc/toggleMagicTreeButton(magic_node/mn, hiding=0)
+/mob/proc/createMagicTreeButton(magic_node/mn)
     var/list/params=list();
     params["type"] = "Button";
     params["parent"] = "MagicTree";
@@ -85,8 +91,10 @@ mob/proc/setTreeSelectNodes()
     else params["image"] = mn.lockedNodeImage//node locked
     params["command"] = mn.command ? mn.command : ".unlockMagicNode [mn.name]";
     params["name"] = mn.name;
-    if(isShowing(mn.name) && hiding) params["is-visible"] = "false";
-    else
-        params["is-visible"] = "true";
-        revealedMagicButtons.Add(mn.name);
     winset(src, mn.name, list2params(params));
+
+/mob/proc/setUnlockedNodeImages()
+    for(var/magic_node/mn in acquiredMagicNodes)
+        sleep();
+        winset(src, mn.name, "image='[mn.unlockedNodeImage]'")
+

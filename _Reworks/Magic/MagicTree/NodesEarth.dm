@@ -1,5 +1,5 @@
 magic_node/earth_tree
-    getTreeAutohitImage()
+    getTreeAOEImage()
         return EARTH_UNLOCKED_AOE
     getTreeBuffImage()
         return EARTH_UNLOCKED_BUFF

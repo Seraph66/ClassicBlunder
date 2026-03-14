@@ -27,6 +27,8 @@
         return 0;
     hasEldritchStrike()
         if(hasSecret("Eldritch") && CheckSlotless("True Form")) return 1;
+        if(hasSecret("Eldritch (Shrouded)")) return 1;
+        if(hasSecret("Eldritch (Reflected)") && Potential >= glob.AdvancedElementPotential) return 1;
         return 0;
     hasJaganStrike()
         if(hasSecret("Jagan Eye")) return 1;

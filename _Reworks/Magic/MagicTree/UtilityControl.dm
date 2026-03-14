@@ -3,12 +3,10 @@
 
 /mob/proc/showMagicTree()
     changeTreeImage();
-    setAccessNode();
-    setTreeSelectNodes();
+    updateSelectionNodes();
     skinShow(MAGIC_TREE);
 
 /mob/proc/setMagicTreeToElement()
-    DEBUGMSG("setting [src]'s magic tree displayed")
     switch(magicTreeDisplayed)
         if("Water") setMagicTreeToWater();
         if("Fire") setMagicTreeToFire();
@@ -27,10 +25,9 @@
         showWaterTree();
     showWaterTree()
         showMagicTree();
-        loadButtons(glob.WaterTreeNodes);
-    hideWaterTree()
         for(var/mname in glob.WaterTreeNodes)
-            skinHide(mname);
+            skinShow(mname);
+            revealedMagicButtons |= mname;
 
 
 /mob/proc/
@@ -40,10 +37,9 @@
         showFireTree();
     showFireTree()
         showMagicTree();
-        loadButtons(glob.FireTreeNodes);
-    hideFireTree()
         for(var/mname in glob.FireTreeNodes)
-            skinHide(mname);
+            skinShow(mname);
+            revealedMagicButtons |= mname;
 
 /mob/proc/
     setMagicTreeToAir()
@@ -52,10 +48,9 @@
         showAirTree();
     showAirTree()
         showMagicTree();
-        loadButtons(glob.AirTreeNodes);
-    hideAirTree()
         for(var/mname in glob.AirTreeNodes)
-            skinHide(mname);
+            skinShow(mname);
+            revealedMagicButtons |= mname;
 
 /mob/proc/
     setMagicTreeToEarth()
@@ -64,10 +59,9 @@
         showEarthTree();
     showEarthTree()
         showMagicTree();
-        loadButtons(glob.EarthTreeNodes);
-    hideEarthTree()
         for(var/mname in glob.EarthTreeNodes)
-            skinHide(mname);
+            skinShow(mname);
+            revealedMagicButtons |= mname;
 
 /mob/proc/
     setMagicTreeToLight()
@@ -76,10 +70,9 @@
         showLightTree();
     showLightTree()
         showMagicTree();
-        loadButtons(glob.LightTreeNodes);
-    hideLightTree()
         for(var/mname in glob.LightTreeNodes)
-            skinHide(mname);
+            skinShow(mname);
+            revealedMagicButtons |= mname;
 
 /mob/proc/
     setMagicTreeToTime()
@@ -88,10 +81,9 @@
         showTimeTree();
     showTimeTree()
         showMagicTree();
-        loadButtons(glob.TimeTreeNodes);
-    hideTimeTree()
         for(var/mname in glob.TimeTreeNodes)
-            skinHide(mname);
+            skinShow(mname);
+            revealedMagicButtons |= mname;
 
 /mob/proc/
     setMagicTreeToDark()
@@ -100,10 +92,9 @@
         showDarkTree();
     showDarkTree()
         showMagicTree();
-        loadButtons(glob.DarkTreeNodes);
-    hideDarkTree()
         for(var/mname in glob.DarkTreeNodes)
-            skinHide(mname);
+            skinShow(mname);
+            revealedMagicButtons |= mname;
 
 /mob/proc/
     setMagicTreeToSpace()
@@ -112,10 +103,9 @@
         showSpaceTree();
     showSpaceTree()
         showMagicTree();
-        loadButtons(glob.SpaceTreeNodes);
-    hideSpaceTree()
         for(var/mname in glob.SpaceTreeNodes)
-            skinHide(mname);
+            skinShow(mname);
+            revealedMagicButtons |= mname;
 
 /mob/var/tmp/
     loadingTree=0;
@@ -123,7 +113,8 @@
 /mob/proc/loadButtons(list/treeNodes)
     loadingTree=1;
     for(var/mname in treeNodes)
-        toggleMagicTreeButton(treeNodes[mname]);
+        createMagicTreeButton(treeNodes[mname]);
+        revealedMagicButtons |= mname;
     loadingTree=0;
 
 /mob/verb/

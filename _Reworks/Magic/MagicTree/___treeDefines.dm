@@ -1,4 +1,5 @@
 #define VALID_MAGIC_ELEMENTS list("Water", "Fire", "Air", "Earth", "Light", "Time", "Dark", "Space")
+#define ADVANCED_MAGIC_ELEMENTS list("Light", "Time", "Dark", "Space")
 
 #define MAGIC_TREE "MagicTree"
 
