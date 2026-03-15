@@ -4284,6 +4284,18 @@ obj/Turfs/Edges
 		icon='Edges.dmi'
 		icon_state="2"
 		dir=EAST
+	RockGray2N
+		icon='grayrockedges.dmi'
+		dir=NORTH
+	RockGray2S
+		icon='grayrockedges.dmi'
+		dir=SOUTH
+	RockGray2W
+		icon='grayrockedges.dmi'
+		dir=WEST
+	RockGray2E
+		icon='grayrockedges.dmi'
+		dir=EAST
 	Edge3N
 		icon='Edges.dmi'
 		icon_state="3"
