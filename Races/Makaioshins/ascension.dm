@@ -72,6 +72,7 @@ ascension
 				if(!locate(/obj/Skills/Buffs/NuStyle/UnarmedStyle/AngelStyles/Perfected_Ultra_Instinct, owner))
 					var/obj/Skills/Buffs/NuStyle/s=new/obj/Skills/Buffs/NuStyle/UnarmedStyle/AngelStyles/Perfected_Ultra_Instinct
 					owner.AddSkill(s)
+				owner.passive_handler.Increase("ChaosRuler", 1)
 		five
 			unlock_potential = ASCENSION_FIVE_POTENTIAL
 			passives = list("HellPower" = 1, "EndlessAnger" = 1, "SpiritPower" = 0.25, "GodKi"=1, "BlurringStrikes"=1, "HybridStrike"=1,"PureDamage"=1, "PureReduction"=1)

@@ -542,6 +542,53 @@ mob/proc/SkillX(var/Wut,var/obj/Skills/Z,var/bypass=0)
 					src.TimeStop=1
 					Z:TimeStopped=0
 
+			if("Chaos Control")
+				if(Z.Using)
+					return
+				if(src.Health<20/max(Z.Mastery,1))
+					src << "You haven't the vitality to invoke chaos control..."
+					return
+				Z.Using = 1
+				for(var/mob/E in hearers(12,src))
+					E<<"<font color=[src.Text_Color]>[src] says: Chaos..."
+				sleep(15)
+				for(var/mob/M in view(20,src))
+					if(M.client)
+						spawn()animate(M.client, color = list(-1,0,0, 0,-1,0, 0,0,-1, 1,1,1), time = 7)
+				for(var/mob/E in hearers(12,src))
+					E<<"<font color=[src.Text_Color]>[src] yells: <b>...Control!</b>"
+				if(!Z:frozen_mobs)
+					Z:frozen_mobs = list()
+				else
+					Z:frozen_mobs.Cut()
+				for(var/mob/M in view(20,src))
+					if(M != src)
+						M.Frozen = 1
+						M.TimeFrozen = 1
+						Z:frozen_mobs += M
+				sleep(10)
+				for(var/mob/M in view(20,src))
+					if(M.client)
+						spawn()animate(M.client, color = null, time = 3)
+						spawn()animate(M.client, color = list(0.6,0,0.1, 0,0.6,0.1, 0,0,0.7, 0,0,0), time = 3)
+				for(var/mob/E in hearers(12,src))
+					E<<"<font color=[src.Text_Color]>[src] says: Time is now frozen."
+				var/duration = 50 + max(Z.Mastery,1) * 20
+				var/mob/caster = src
+				spawn(duration)
+					if(Z && Z:frozen_mobs)
+						for(var/mob/B in Z:frozen_mobs)
+							if(B)
+								B.TimeFrozen = 0
+								B.Frozen = 0
+							if(B.client)
+								spawn()animate(B.client, color = null, time = 3)
+						if(caster)
+							for(var/mob/E in hearers(12,caster))
+								E<<"<font color=[caster.Text_Color]>[caster] says: Let the flow of time return to normal."
+						Z:frozen_mobs.Cut()
+						Z.Cooldown()
+
 			if("Heal")
 				if(src.Energy<50)
 					return

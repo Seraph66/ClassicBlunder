@@ -131,6 +131,76 @@
 			return
 		usr.UseProjectile(src)
 
+// Shared 300-second cooldown across all Chaos skills when triggered via combo
+/mob/proc/cooldownAllChaosSkills()
+	var/list/chaosTypes = list(
+		/obj/Skills/AutoHit/Chaos_Degrade,
+		/obj/Skills/Buffs/SlotlessBuffs/Chaos_Soldier,
+		/obj/Skills/Buffs/SlotlessBuffs/Chaos_Control
+	)
+	for(var/t in chaosTypes)
+		var/obj/Skills/s = locate(t) in src
+		if(s)
+			s.Cooldown(1, 3000, src)
+
+/obj/Skills/Buffs/SlotlessBuffs/Chaos_Control
+	BuffName = "Chaos Control"
+	name = "Chaos Control"
+	Cooldown = 300
+	Mastery = 1
+	desc = "Freeze time for everyone in view with no exceptions."
+	var/tmp/list/frozen_mobs
+	verb/Chaos_Control()
+		set category = "Utility"
+		set name = "Chaos Control"
+		if(!usr || usr.Dead) return
+		if(!istype(usr.race, /race/makaioshin))
+			usr << "You must be a Makaioshin to use this!"
+			return
+		usr.SkillX("Chaos Control", src)
+
+/obj/Skills/AutoHit/Chaos_Degrade
+	Area = "Target"
+	Distance = 10
+	Cooldown = 300
+	FixedDamage = 10
+	StrOffense = 1
+	EndDefense = 1
+	GuardBreak = 1
+	ActiveMessage = "corrodes their target's existence with chaos!"
+	verb/Chaos_Degrade()
+		set category = "Skills"
+		set name = "Chaos Degrade"
+		if(!usr || usr.Dead) return
+		if(!istype(usr.race, /race/makaioshin))
+			usr << "You must be a Makaioshin to use this!"
+			return
+		usr.Activate(src)
+
+/obj/Skills/Buffs/SlotlessBuffs/Chaos_Soldier
+	BuffName = "Chaos Soldier"
+	name = "Chaos Soldier"
+	Cooldown = 300
+	TimerLimit = 120
+	StrMult = 1.2
+	ForMult = 1.2
+	SpdMult = 1.2
+	OffMult = 1.2
+	DefMult = 1.2
+	EndMult = 1.2
+	VaizardHealth = 10
+	passives = list()
+	ActiveMessage = "unleashes the power of their duality! One soul invites the light! One soul guides the darkness! Between the souls of light and darkness, the light of chaos is created!"
+	OffMessage = "releases the power of chaos."
+	verb/Chaos_Soldier()
+		set category = "Skills"
+		set name = "Chaos Soldier"
+		if(!usr || usr.Dead) return
+		if(!istype(usr.race, /race/makaioshin))
+			usr << "You must be a Makaioshin to use this!"
+			return
+		src.Trigger(usr)
+
 /*/obj/Skills/Buffs/NuStyle/UnarmedStyle/HalfbreedAngelStyles //weaker versions for Makaioshins and Celestials
 	Selfless_State
 		Copyable=0
