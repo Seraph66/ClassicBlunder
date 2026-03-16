@@ -31,10 +31,6 @@ race
 			user << "The name your demonic half goes by is <b>[user.TrueName]</b>."
 			user.EnhancedSmell = 1
 			user.EnhancedHearing = 1
-			if(!locate(/obj/Skills/Buffs/NuStyle/UnarmedStyle/AngelStyles/Selfless_State, user))
-				var/obj/Skills/Buffs/NuStyle/s=new/obj/Skills/Buffs/NuStyle/UnarmedStyle/AngelStyles/Selfless_State
-				user.AddSkill(s)
-				user << "You have embarked upon the path of true martial arts mastery: Ultra Instinct."
 			user.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/AngelMagic/Light)
 			user.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/AngelMagic/Divinity)
 			user.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/AngelMagic/Order)
