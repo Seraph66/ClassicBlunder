@@ -35,9 +35,6 @@ ascension
 			on_ascension_message = "Chaos flows through your every breath."
 			postAscension(mob/owner)
 				..()
-				if(!locate(/obj/Skills/Buffs/NuStyle/UnarmedStyle/AngelStyles/Incomplete_Ultra_Instinct, owner))
-					var/obj/Skills/Buffs/NuStyle/s=new/obj/Skills/Buffs/NuStyle/UnarmedStyle/AngelStyles/Incomplete_Ultra_Instinct
-					owner.AddSkill(s)
 				owner.Class = "Lightbringer"
 		three
 			unlock_potential = ASCENSION_THREE_POTENTIAL
@@ -51,9 +48,6 @@ ascension
 			postAscension(mob/owner)
 				..()
 				owner.Class = "Shadowlord"
-				if(!locate(/obj/Skills/Buffs/NuStyle/UnarmedStyle/AngelStyles/Ultra_Instinct, owner))
-					var/obj/Skills/Buffs/NuStyle/s=new/obj/Skills/Buffs/NuStyle/UnarmedStyle/AngelStyles/Ultra_Instinct
-					owner.AddSkill(s)
 		four
 			unlock_potential = ASCENSION_FOUR_POTENTIAL
 			passives = list("HellPower" = 0.25, "HolyMod" = 2, "AbyssMod" = 2, " KiControlMastery"=1, "Incomplete" = -0.25, "BlurringStrikes"=0.5, "HybridStrike"=0.5,"PureDamage"=1, "PureReduction"=1)
@@ -69,9 +63,6 @@ ascension
 			postAscension(mob/owner)
 				..()
 				owner.Class = "Morningstar"
-				if(!locate(/obj/Skills/Buffs/NuStyle/UnarmedStyle/AngelStyles/Perfected_Ultra_Instinct, owner))
-					var/obj/Skills/Buffs/NuStyle/s=new/obj/Skills/Buffs/NuStyle/UnarmedStyle/AngelStyles/Perfected_Ultra_Instinct
-					owner.AddSkill(s)
 				if(!locate(/obj/Skills/Buffs/SlotlessBuffs/Chaos_Control, owner))
 					owner.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Chaos_Control)
 				if(!locate(/obj/Skills/AutoHit/Chaos_Degrade, owner))
