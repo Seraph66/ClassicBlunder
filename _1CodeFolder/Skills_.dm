@@ -584,10 +584,14 @@ mob/proc/SkillX(var/Wut,var/obj/Skills/Z,var/bypass=0)
 							if(B.client)
 								spawn()animate(B.client, color = null, time = 3)
 						if(caster)
+							if(caster.client)
+								spawn()animate(caster.client, color = null, time = 3)
 							for(var/mob/E in hearers(12,caster))
 								E<<"<font color=[caster.Text_Color]>[caster] says: Let the flow of time return to normal."
 						Z:frozen_mobs.Cut()
 						Z.Cooldown()
+					if(Z)
+						Z.Using = 0
 
 			if("Heal")
 				if(src.Energy<50)

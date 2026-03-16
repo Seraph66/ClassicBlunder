@@ -72,6 +72,12 @@ ascension
 				if(!locate(/obj/Skills/Buffs/NuStyle/UnarmedStyle/AngelStyles/Perfected_Ultra_Instinct, owner))
 					var/obj/Skills/Buffs/NuStyle/s=new/obj/Skills/Buffs/NuStyle/UnarmedStyle/AngelStyles/Perfected_Ultra_Instinct
 					owner.AddSkill(s)
+				if(!locate(/obj/Skills/Buffs/SlotlessBuffs/Chaos_Control, owner))
+					owner.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Chaos_Control)
+				if(!locate(/obj/Skills/AutoHit/Chaos_Degrade, owner))
+					owner.AddSkill(new/obj/Skills/AutoHit/Chaos_Degrade)
+				if(!locate(/obj/Skills/Buffs/SlotlessBuffs/Chaos_Soldier, owner))
+					owner.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Chaos_Soldier)
 				owner.passive_handler.Increase("ChaosRuler", 1)
 		five
 			unlock_potential = ASCENSION_FIVE_POTENTIAL
