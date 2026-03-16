@@ -85,6 +85,31 @@
             result = 1
         switch(result)
             if(1)
+                // Cross-combo: AngelMagic was pressed first, DemonMagic pressed second
+                if(findtext("[initType]", "/obj/Skills/Buffs/SlotlessBuffs/AngelMagic/"))
+                    if(User.passive_handler.Get("ChaosRuler"))
+                        var/list/initParts = splittext("[initType]", "/obj/Skills/Buffs/SlotlessBuffs/AngelMagic/")
+                        var/list/curParts = splittext("[type]", "/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/")
+                        var/initName = initParts.len >= 2 ? initParts[2] : ""
+                        var/curName = curParts.len >= 2 ? curParts[2] : ""
+                        if(initName == "Divinity" && curName == "Corruption")
+                            var/obj/Skills/Buffs/SlotlessBuffs/Chaos_Soldier/cs = locate(/obj/Skills/Buffs/SlotlessBuffs/Chaos_Soldier) in User
+                            if(cs)
+                                cs.Trigger(User)
+                                User.cooldownAllChaosSkills()
+                            else
+                                User << "You lack the knowledge to complete this technique."
+                        else if(initName == "Order" && curName == "HellFire")
+                            var/obj/Skills/Buffs/SlotlessBuffs/Chaos_Control/cc = locate(/obj/Skills/Buffs/SlotlessBuffs/Chaos_Control) in User
+                            if(cc)
+                                User.SkillX("Chaos Control", cc)
+                                User.cooldownAllChaosSkills()
+                            else
+                                User << "You lack the knowledge to complete this technique."
+                    if(perfect)
+                        User.Quake(5, 0)
+                    keyQ.TRIGGERED = null
+                    return
                 // execute the skill here
                 User << "You have used your [KEYWORD] spell."
                 var/trueType = splittext("[initType]", "/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/")

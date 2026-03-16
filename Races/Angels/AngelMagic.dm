@@ -77,6 +77,25 @@
 			result = 1
 		switch(result)
 			if(1)
+				// Cross-combo: DemonMagic was pressed first, AngelMagic pressed second
+				if(findtext("[initType]", "/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/"))
+					if(User.passive_handler.Get("ChaosRuler"))
+						var/list/initParts = splittext("[initType]", "/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/")
+						var/list/curParts = splittext("[type]", "/obj/Skills/Buffs/SlotlessBuffs/AngelMagic/")
+						var/initName = initParts.len >= 2 ? initParts[2] : ""
+						var/curName = curParts.len >= 2 ? curParts[2] : ""
+						if(initName == "DarkMagic" && curName == "Light")
+							var/obj/Skills/AutoHit/Chaos_Degrade/cd = locate(/obj/Skills/AutoHit/Chaos_Degrade) in User
+							if(cd)
+								User.Activate(cd)
+								spawn(2)
+									User.cooldownAllChaosSkills()
+							else
+								User << "You lack the knowledge to complete this technique."
+					if(perfect)
+						User.Quake(5, 0)
+					keyQ.TRIGGERED = null
+					return
 				User << "You have used your [KEYWORD] spell."
 				var/trueType = splittext("[initType]", "/obj/Skills/Buffs/SlotlessBuffs/AngelMagic/")
 				var/obj/Skills/theSkill = possible_skills[trueType[2]]

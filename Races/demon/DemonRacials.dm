@@ -98,3 +98,13 @@
 					if(!P.DevilTriggerSinDamageBonus)
 						P.DevilTriggerSinDamageBonus = 0
 					P.DevilTriggerSinDamageBonus += (0.25 * consumed) * P.passive_handler.Get("GluttonyFactor")
+
+/obj/Skills/AutoHit/I_Want_To_Be_Like_You
+	Area = "Target"
+	Distance = 10
+	Cooldown = 1
+	verb/I_Want_To_Be_Like_You()
+		set category = "Skills"
+		set name = "I Want to Be Like You"
+		if(!usr || usr.Dead) return
+		usr.Activate(src)

@@ -31,6 +31,10 @@ race
 						user.Class = "Guardian"
 						user.AddSkill(/obj/Skills/Utility/Recall_Armaments)
 						user.GrantGuardianItem(/obj/Items/Sword/Guardian/Sword_of_the_Saint)
+						user.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/AngelMagic/Light)
+						user.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/AngelMagic/Divinity)
+						user.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/AngelMagic/Order)
+						user << "Please set macros for (Light), (Divinity), and (Order), your 3 angel magics."
 					if("Mentor")
 						Confirm=alert(user, "Do you wish to mentor humanity and ensure the spiritual arts remain unforgotten?", "Angel  Ascension", "Yes", "No")
 						if(!locate(/obj/Skills/Buffs/SlotlessBuffs/Autonomous/SlotlessUI/Divine_Instinct, user))
@@ -44,10 +48,7 @@ race
 							passives["StyleMastery"]=2
 				user.AngelAscension = Choice
 				//t1 style/armor unlocked
-			user.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/AngelMagic/Light)
-			user.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/AngelMagic/Divinity)
-			user.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/AngelMagic/Order)
-			user << "Please set macros for (Light), (Divinity), and (Order), your 3 angel magics."
+
 			user.passive_handler.increaseList(passives)
 			for(var/s in skills)
 				user.AddSkill(new s)

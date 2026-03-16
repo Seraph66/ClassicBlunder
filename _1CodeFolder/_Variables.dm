@@ -63,6 +63,7 @@ mob/var
 	tmp/is_dashing = 0
 	tmp/verb_delay = 0
 	tmp/last_autohit
+	tmp/last_autohit_used // type path of the last AutoHit skill used (for Envy copy)
 	tmp/GlowFilter
 	tmp/ArmamentGlow
 	tmp/FlickeringGlow

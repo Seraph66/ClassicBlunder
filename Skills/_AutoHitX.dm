@@ -56,6 +56,7 @@ obj
 				Duration
 				Persistent
 				DamageMult=1//Damage on top of whatever stat calculations.
+				FixedDamage=0//If set, target loses exactly this much HP (no formula, no modifiers).
 				StepsDamage//Every step adds this value to damage mult.
 				Knockback//Does the technique knockback?  If so, how far?
 				while_warping = FALSE
@@ -5000,6 +5001,20 @@ mob
 					OMsg(Target, "[Target]'s counterspell nullified [Z]")
 					Z.Cooldown()
 					return
+				if(Z.type == /obj/Skills/AutoHit/I_Want_To_Be_Like_You)
+					if(src.Target == src)
+						src << "You have nothing to be envious of."
+						Z.Cooldown(45)
+						return FALSE
+					var/last_used = src.Target.last_autohit_used
+					if(!last_used || last_used == /obj/Skills/AutoHit/I_Want_To_Be_Like_You)
+						src << "You have nothing to be envious of."
+						Z.Cooldown(45)
+						return FALSE
+					var/obj/Skills/AutoHit/copied = new last_used
+					src.Activate(copied, TRUE)
+					Z.Cooldown(45)
+					return FALSE
 			if(Z.NeedsHealth)
 				if(src.Health>Z.NeedsHealth*(1-src.HealthCut))
 					src << "You can't use [Z] before you're below [Z.NeedsHealth*(1-src.HealthCut)]% health!"
@@ -5137,6 +5152,8 @@ mob
 				src.AutoHitting=1
 			var/turf/TrgLoc
 			last_autohit = world.time
+			if(Z.type != /obj/Skills/AutoHit/I_Want_To_Be_Like_You)
+				last_autohit_used = Z.type
 			if(Z.Area=="Around Target"||Z.Area=="Target")
 				TrgLoc=src.Target.loc
 				if(Target.passive_handler.Get("CounterSpell"))
@@ -5732,6 +5749,7 @@ obj
 			AngelMagicCompatible
 			ApplyJudged
 			ApplySentenced
+			FixedDamage=0
 
 			Arcing//Triggers offshoots on every step that expand outwards.  Higher than 1 means that every X steps the range will widen.
 			ArcingCount=0//Number of times arcing has been triggered.  Informs the game how many tiles to send the offshoots.
@@ -5926,6 +5944,7 @@ obj
 			src.AngelMagicCompatible = Z.AngelMagicCompatible
 			src.ApplyJudged = Z.ApplyJudged
 			src.ApplySentenced = Z.ApplySentenced
+			src.FixedDamage = Z.FixedDamage
 			src.Knockback=Z.Knockback
 			src.ChargeTech=Z.ChargeTech
 			src.UnarmedTech=Z.UnarmedOnly
@@ -6485,7 +6504,12 @@ obj
 					FinalDmg *= 1.25
 				if(src.DirectWounds)
 					src.Owner.DealWounds(m, src.DirectWounds);
-				var/damageDealt = src.Owner.DoDamage(m, FinalDmg, src.UnarmedTech, src.SwordTech, Destructive=src.Destructive, innateLifeSteal = LifeSteal, Autohit = TRUE)
+				var/damageDealt
+				if(src.FixedDamage)
+					m.LoseHealth(src.FixedDamage)
+					damageDealt = src.FixedDamage
+				else
+					damageDealt = src.Owner.DoDamage(m, FinalDmg, src.UnarmedTech, src.SwordTech, Destructive=src.Destructive, innateLifeSteal = LifeSteal, Autohit = TRUE)
 				DEBUGMSG("FINAL TOTAL DAMAGE DEALT! [damageDealt]")
 				if(!damageDealt)
 					damageDealt = 0
