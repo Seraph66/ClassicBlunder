@@ -6,7 +6,6 @@ ascension
 			choiceTitle = "From which Court do you Hail?"
 			choiceMessage ="As you've grown, the Court of Seasons calls, which House are you most attuned to?\n\nSummer:Passionate yet fickle, you burn too bright for most, for you know in no time at all you shall be snuffed out...\n\nWinter: Stagnant and solitary, slow to act, yet bringing forth the inevitable end once roused...\n\nFall: The most mystical and  mysterious of all, wise beyond your years and yet always in the midst of fading...\n\nSpring: The most vivacious and inexperienced, always creating new marvels while rarely perfecting what you bring to bloom..."
 			passives = list("ManaCapMult" =0.25)
-			..()
 		two
 			unlock_potential = ASCENSION_TWO_POTENTIAL
 			onAscension(mob/owner)
@@ -122,7 +121,7 @@ ascension
 					owner.Class = "Summer"
 					..()
 			winter // Water Element, Freezing, bring death through Inevitabilty, wearing all things to stagnation
-				skills= list(/obj/Skills/Buffs/SlotlessBuffs/Makyo/Crown_of_Rhime)
+				skills= list(/obj/Skills/Buffs/SlotlessBuffs/Makyo/Crown_of_Rime)
 				endurance = 0.5
 				defense = 0.5
 				offense = -0.25
