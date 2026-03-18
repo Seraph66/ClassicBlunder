@@ -121,7 +121,7 @@ ascension
 					owner.Class = "Summer"
 					..()
 			winter // Water Element, Freezing, bring death through Inevitabilty, wearing all things to stagnation
-				skills= list(/obj/Skills/Buffs/SlotlessBuffs/Makyo/Crown_of_Rime)
+				skills= list(/obj/Skills/Buffs/SlotlessBuffs/Makyo/Crown_of_Rhime)
 				endurance = 0.5
 				defense = 0.5
 				offense = -0.25
