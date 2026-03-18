@@ -405,12 +405,12 @@ transformation
 			//Autounlocked at 90, intended to be unlocked at around 70 potential
 			unlock_potential = 90
 			autoAnger = 1
-			speed = 1.5
-			endurance = 1.5
-			offense = 1.5
-			defense = 1.5
-			strength = 1.3
-			force = 1.3
+			speedadd = 3
+			enduranceadd = 3
+			offenseadd = 3
+			defenseadd = 3
+			strengthadd = 3
+			forceadd = 3
 			revertToTrans = 0
 			var/previousTailIcon
 			var/previousTailUnderlayIcon
@@ -432,13 +432,7 @@ transformation
 				"Meaty Paws" = 2 + (mastery/50), "KiControlMastery" = 3 + (mastery/50), "PureReduction" = 5 + (mastery/10),\
 				"LifeGeneration" = 1 + round(mastery/50,1), "Unstoppable" = 1, "AllOutAttack" = 1, "Reversal" = 0.1 + (mastery/200),\
 				"Flow" = 4, "Instinct" = 4, "Transformation Power" = clamp(user.AscensionsAcquired * 3, 1, 20), "Deicide" = 10,\
-				"Flicker" = 5, "Pursuer" = 5, "PureDamage"= 4 + (mastery/10),"SSJ4" = 1,"EndlessNine"=0.25)
-				speed = 1.5 + (mastery/200)
-				endurance = 1.5 + (mastery/200)
-				offense = 1.5 + (mastery/200)
-				defense = 1.5 + (mastery/200)
-				strength = 1.5 + (mastery/200)
-				force = 1.5 + (mastery/200)
+				"Flicker" = 5, "Pursuer" = 5, "PureDamage"= 4 + (mastery/10),"SSJ4" = 1,"EndlessNine"=0.25, "SaiyanPower"=1, "SaiyanPower4"=2.5)
 				autoAnger = 1
 				angerPoint = 99 // funny fix for golden ooz stopping endless anger
 
@@ -508,12 +502,12 @@ transformation
 			//Probably the in game reason for people going beyond 100 potential. Rolls eyes in seiyn
 			unlock_potential = 100
 			autoAnger = 1
-			speed = 1.5
-			endurance = 1.5
-			offense = 1.5
-			defense = 1.5
-			strength = 1.3
-			force = 1.3
+			speedadd = 0.25
+			enduranceadd = 0.25
+			offenseadd = 0.25
+			defenseadd = 0.25
+			strengthadd = 0.25
+			forceadd = 0.25
 			var/previousTailIcon
 			var/previousTailUnderlayIcon
 			var/previousTailWrappedIcon
@@ -534,13 +528,7 @@ transformation
 				passives = list("BuffMastery" = 2, "SweepingStrike" = 1, "Brutalize" = 3,\
 				"KiControlMastery" = 4, "PureReduction" = 3, "EnergyGeneration" = 5, \
 				"Flow" = 4, "Instinct" = 4, "Deicide" = 10,\
-				"Flicker" = 5, "Pursuer" = 5, "PureDamage"= 3,"EndlessNine"=0.25,"SSJ4LimitBreaker"=1)
-				speed = 1.25 + (mastery/400)
-				endurance = 1.25 + (mastery/400)
-				offense = 1.25 + (mastery/400)
-				defense = 1.25 + (mastery/400)
-				strength = 1.25 + (mastery/400)
-				force = 1.25 + (mastery/400)
+				"Flicker" = 5, "Pursuer" = 5, "PureDamage"= 3,"EndlessNine"=0.25,"SSJ4LimitBreaker"=1, "SaiyanPower4"=0.5)
 
 			transform(mob/user)
 				. = ..()
@@ -595,18 +583,19 @@ transformation
 			form_aura_icon = 'SSBGlow.dmi'
 			form_aura_x = -32
 			form_aura_y = -32
-			strength = 1.3
-			speed = 1.4
-			offense = 1.3
-			defense = 1.3
-			force = 1.3
+			speedadd = 1.25
+			enduranceadd = 1.25
+			offenseadd = 1.25
+			defenseadd = 1.25
+			strengthadd = 1.25
+			forceadd = 1.25
 			// at full mastery, give the saiyan beyond god buff, then remove ssjgod, and replace it with ssjgb
 			mastery_boons(mob/user)
 				autoAnger = TRUE
 				passives = list("GodKi" = 0.5, "EnergyGeneration" = 3 + round(mastery/10, 1), "Godspeed" = 4, "Flow" = 4 + round(mastery/25, 1),"TechniqueMastery" = 3 + round(mastery/15, 1), \
 								"Instinct" = 4,"Pursuer"= 4 , "BackTrack" = 2 + round(mastery/50, 1), \
 								"MovementMastery" = 4+round(mastery/25, 1), "StunningStrike" = 1 + round(mastery/50, 0.1), "Sunyata" = 1 + round(mastery/20 ,1),"GodlyCalm"=1,\
-								"Flicker" = 4, "PureDamage"=2, "BuffMastery" = 1 + (mastery/25))
+								"Flicker" = 4, "PureDamage"=2, "BuffMastery" = 1 + (mastery/25), "SaiyanPower" = 1, "SaiyanPower1"=1)
 			adjust_transformation_visuals(mob/user)
 				if(user.Hair_Base && !form_hair_icon)
 					var/icon/x=new(user.Hair_Base)
@@ -707,25 +696,26 @@ transformation
 			form_aura_icon = 'SSBGlow.dmi'
 			form_aura_x = -32
 			form_aura_y = -32
-			strength = 1.4
-			speed = 1.5
-			offense = 1.4
-			defense = 1.4
-			force = 1.4
+			speedadd = 1.75
+			enduranceadd = 1.75
+			offenseadd = 1.75
+			defenseadd = 1.75
+			strengthadd = 1.75
+			forceadd = 1.75
 			revertToTrans = 0
 
 			mastery_boons(mob/user)
 				passives = list("GodKi" = 0.75, "Instinct" = 4, "Brutalize" = 3, "Steady" = 5,  "BuffMastery" = 8, "MovementMastery" = 8, \
-								"PureDamage" = 5, "PureReduction" = 4, "InBlue" = 1, "Godspeed" = 4, "Pursuer" = 4, "LikeWater"=6,"Flicker"=4, "Transformation Power" = clamp(user.AscensionsAcquired * 3, 1, 20))
-				strength = 1.4
-				speed = 1.5
-				offense = 1.4
-				defense = 1.4
-				force = 1.4
-				endurance = 1.4
+								"PureDamage" = 5, "PureReduction" = 4, "InBlue" = 1, "Godspeed" = 4, "Pursuer" = 4, "LikeWater"=6,"Flicker"=4, "SaiyanPower" = 1, "SaiyanPower1"=1))
+				speedadd = 1.75
+				enduranceadd = 1.75
+				offenseadd = 1.75
+				defenseadd = 1.75
+				strengthadd = 1.75
+				forceadd = 1.75
 				if(mastery >= 100)
 					passives = list("GodKi" = 1, "Instinct" = 4, "Brutalize" = 3, "Steady" = 5,  "BuffMastery" = 8, "MovementMastery" = 10, \
-									"PureDamage" = 5, "PureReduction" = 4, "InBlue" = 1, "Godspeed" = 4, "Pursuer" = 4, "LikeWater"=6,"Flicker"=4, "Transformation Power" = clamp(user.AscensionsAcquired * 5, 1, 30))
+									"PureDamage" = 5, "PureReduction" = 4, "InBlue" = 1, "Godspeed" = 4, "Pursuer" = 4, "LikeWater"=6,"Flicker"=4, "SaiyanPower" = 1, "SaiyanPower1"=1)
 
 			adjust_transformation_visuals(mob/user)
 				if(!form_hair_icon&&user.Hair_Base)
@@ -819,31 +809,31 @@ transformation
 					passives = list("GodKi" = 0.25, "Instinct" = 4, "Brutalize" = 3, "Steady" = 1, "MovementMastery" = 2, \
 									"EnergyGeneration" = 3,  "PureDamage" = 3, "PureReduction" = 2, "LikeWater" = 2, \
 									"BackTrack" = 1 , "StunningStrike" = 2, "Sunyata" = 3, "InBlueEvolved" = 1,"Flow"=4)
-					strength = 1.1
-					speed = 1.2
-					offense = 1.2
-					defense = 1.2
-					force = 1.1
-					endurance = 1.2
+					speedadd = 0.35
+					enduranceadd = 0.35
+					offenseadd = 0.35
+					defenseadd = 0.35
+					strengthadd = 0.35
+					forceadd = 0.35
 				//evolved: high risk high reward. glass cannon stage that drains heavily
 				if(user.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/pride)
 					passives = list("GodKi" = 0.5, "Brutalize" = 2, "MovementMastery" = 7, "EnergyLeak" = 3, "FatigueLeak"=1,\
 							 	"PureDamage" = 9, "PureReduction" = -2,"LikeWater" = 4, \
 								"Sunyata" = 6, "InBlueEvolved" = 1, "Pursuer" = 2)
-					strength = 1.35
-					speed = 1.25
-					force = 1.35
-					endurance = 0.75
+					speedadd = 0.5
+					offenseadd = 0.25
+					strengthadd = 0.65
+					forceadd = 0.65
 				//enraged: draw out fights, anger makes user stronger but wounds put a limit on it
 				if(user.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/honor)
 					passives = list("GodKi" = 0.25, "Brutalize" = 2, "MovementMastery" = 5, \
 							 	"PureDamage" = 2,"PureReduction" = 5, "LikeWater" = 4, "BleedHit"=0.25, \
 								"Persistence" = 3, "InBlueEvolved" = 1, "UnderDog" = 5, "Flicker" = 3)
-					endurance = 1.25
-					strength = 1.1
-					force = 1.1
-					defense = 1.25
-					speed = 1.1
+					speedadd = 0.25
+					enduranceadd = 0.75
+					defenseadd = 0.75
+					strengthadd = 0.15
+					forceadd = 0.15
 
 			adjust_transformation_visuals(mob/user)
 				if(!form_hair_icon&&user.Hair_Base)
