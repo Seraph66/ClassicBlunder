@@ -37,6 +37,7 @@ ascension
 							strength=0.5 * SMod
 							offense=0.5 * SMod
 							speed=0.5 * SMod
+							passives = list("Tenacity" = 1, "Persistence" = 1)
 				..()
 		two
 			unlock_potential = ASCENSION_TWO_POTENTIAL
@@ -73,6 +74,7 @@ ascension
 							strength=0.5 * SMod
 							offense=0.5 * SMod
 							speed=0.5 * SMod
+							passives = list("Tenacity" = 1, "Persistence" = 1)
 				..()
 		three
 			unlock_potential = ASCENSION_THREE_POTENTIAL
@@ -109,6 +111,7 @@ ascension
 							strength=0.5 * SMod
 							offense=0.5 * SMod
 							speed=0.5 * SMod
+							passives = list("Tenacity" = 1, "Persistence" = 1)
 				..()
 		four
 			unlock_potential = ASCENSION_FOUR_POTENTIAL
@@ -145,6 +148,7 @@ ascension
 							strength=0.5 * SMod
 							offense=0.5 * SMod
 							speed=0.5 * SMod
+							passives = list("Tenacity" = 1, "Persistence" = 1)
 				..()
 		five
 			unlock_potential = ASCENSION_FIVE_POTENTIAL
@@ -181,6 +185,7 @@ ascension
 							strength=0.5 * SMod
 							offense=0.5 * SMod
 							speed=0.5 * SMod
+							passives = list("Tenacity" = 1, "Persistence" = 1)
 				..()
 		six
 			unlock_potential = ASCENSION_SIX_POTENTIAL
@@ -217,4 +222,5 @@ ascension
 							strength=1 * SMod
 							offense=1 * SMod
 							speed=1 * SMod
+							passives = list("Tenacity" = 1, "Persistence" = 1)
 				..()
