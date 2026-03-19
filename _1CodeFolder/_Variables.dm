@@ -70,6 +70,7 @@ mob/var
 	tmp/MeditateTime
 	tmp/Party/party//party party party
 	tmp/StunImmune
+	tmp/BlindImmune=0
 	tmp/GrabTime
 	tmp/CloudedHeartActive = FALSE
 	custom_scent

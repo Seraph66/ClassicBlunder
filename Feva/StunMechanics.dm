@@ -77,3 +77,8 @@ proc
 				mob.StunImmune=0
 			else
 				return 1
+		if(mob.BlindImmune)
+			if(mob.BlindImmune<world.time)
+				mob.BlindImmune=0
+			else
+				return 1

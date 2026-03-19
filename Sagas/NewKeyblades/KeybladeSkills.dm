@@ -3,29 +3,38 @@ obj
 	Skills
 //t1
 		AutoHit
+			var/UpgradedKeybladeSkill=0
 			Sonic_Blade
 				NeedsSword=1
 				Area="Strike"
 				PassThrough=1
 				Distance=4
 				AdaptRate=1
-				NoPierce=1
 				DamageMult=1.5
 				Rush=3
 				ControlledRush=1
-				Cooldown=30
+				Cooldown=45
 				EnergyCost=2
+				DelayTime=1.5
 				Rounds=3
 				ActiveMessage="dashes forward repeatedly with a jousting strike!"
+				adjust(mob/P)
+					if(src.UpgradedKeybladeSkill)
+						src.Cooldown=30
+						src.Distance=7
+						src.Rush=7
+						DelayTime=2
+						src.Rounds=5
+						DamageMult=2
 				verb/Sonic_Blade()
 					set category="Skills"
+					adjust(usr)
 					usr.Activate(src)
 			Strike_Raid
 				NeedsSword=1
 				Area="Wave"
-				Distance=6
+				Distance=7
 				AdaptRate=1
-				Knockback=5
 				HitSparkIcon='Hit Effect Pearl.dmi'
 				HitSparkX=-32
 				HitSparkY=-32
@@ -33,22 +42,29 @@ obj
 				HitSparkSize=3
 				TurfStrike=1
 				Slow=1
-				DamageMult=2.8
-				Cooldown=30
+				DamageMult=3
+				Cooldown=45
 				EnergyCost=3
 				ActiveMessage="throws their Keyblade forward!"
+				adjust(mob/P)
+					if(src.UpgradedKeybladeSkill)
+						src.Cooldown=30
+						DamageMult=4
+						DelayTime=1
+						Rounds=3
 				verb/Strike_Raid()
 					set category="Skills"
+					adjust(usr)
 					usr.Activate(src)
 			Magnet_Burst
 				SignatureTechnique=1
 				Area="Circle"
-				Distance=7
+				Distance=5
 				AdaptRate = 1
 				GuardBreak=1
-				DamageMult=3
+				DamageMult=1
 				PullIn=8
-				Cooldown=30
+				Cooldown=45
 				Shockwaves=3
 				Shockwave=4
 				BuffAffected = "/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Staggered"
@@ -58,7 +74,11 @@ obj
 				HitSparkX=0
 				HitSparkY=0
 				ActiveMessage="draws in everyone nearby with a burst of magnetism!"
-				EnergyCost=5
+				adjust(mob/P)
+					if(src.UpgradedKeybladeSkill)
+						src.Cooldown=30
+						Distance=8
+						DamageMult=5
 				verb/Magnet_Burst()
 					set category="Skills"
 					usr.Activate(src)
@@ -212,3 +232,43 @@ obj
 				Size=3
 				DamageMult=2
 				ActiveMessage="thrusts their blade forward, magic exploding from the tip of the blade!"
+			ExplosionFollowup
+				Area="Circle"
+				AdaptRate=1
+				DamageMult=9
+				Shattering=1
+				Size=2
+				Icon='SweepingKick.dmi'
+				IconX=-32
+				IconY=-32
+				EnergyCost=2
+				Shockwaves=3
+				Shockwave=4
+				ShockIcon='KenShockwave.dmi'
+				ActiveMessage="releases the explosive energy within their Keyblade!"
+
+		Queue
+			Stun_Impact
+				DamageMult=6
+				AccuracyMult = 1.25
+				Duration=10
+				Cooldown=60
+				Instinct=4
+				Stunner=3
+				PushOut=3
+				PushOutWaves=2
+				HitMessage="releases the energy they gathered into their Keyblade!"
+				ActiveMessage="gathers energy into their Keyblade!"
+				verb/Stun_Impact()
+					set category="Skills"
+					usr.SetQueue(src)
+			Explosion
+				DamageMult=1
+				AccuracyMult = 1.5
+				Cooldown=60
+				Instinct=5
+				FollowUp="/obj/Skills/AutoHit/ExplosionFollowup"
+				HitMessage="strikes with their Keyblade, as it glows brightly..."
+				verb/Explosion()
+					set category="Skills"
+					usr.SetQueue(src)

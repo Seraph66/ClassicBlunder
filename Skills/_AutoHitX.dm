@@ -5813,6 +5813,8 @@ obj
 			TurfShiftY
 			Flash
 
+			BlindImmuneDuration
+
 			Slow//Autohit doesn't hit instantly
 			ApplySlow
 			CanBeBlocked
@@ -5976,6 +5978,7 @@ obj
 			TurfShiftY = Z.TurfShiftY
 
 			src.Flash=Z.Flash
+			src.BlindImmuneDuration=Z.Cooldown
 			src.ComboMaster=Z.ComboMaster
 			Dunker = Z.Dunker
 			Destroyer = Z.Destroyer
@@ -6571,9 +6574,11 @@ obj
 							animate(m.client, color = list(-1,-1,-1, -1,-1,-1, -1,-1,-1, 1,1,1), time = 5)
 							m.TsukiyomiTime=6
 				if(src.Flash)
-					m.Blind(src.Flash*(10*world.tick_lag))
-					m.RemoveTarget()
-					m.Grab_Release()
+					if(!m.BlindImmune)
+						m.Darkness(src.Flash*(10*world.tick_lag))
+						m.RemoveTarget()
+						m.Grab_Release()
+						m.BlindImmune=world.time+(src.BlindImmuneDuration-1)
 
 				if(Shearing)
 					m.AddShearing(Shearing,src.Owner)

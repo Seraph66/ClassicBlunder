@@ -89,9 +89,11 @@
 		. = ..()
 		if(.)
 			var/asc = User.AscensionsAcquired ? User.AscensionsAcquired + 1 : 1
-			User.Target.Darkness(10 * asc, 7-asc)
-			User.Target.RemoveTarget()
-			User.Target.Grab_Release()
+			if(!User.Target.BlindImmune)
+				User.Target.Darkness(10 * asc, 7-asc)
+				User.Target.RemoveTarget()
+				User.Target.Grab_Release()
+				User.Target.BlindImmune=world.time+(60)
 			if(User.isRace(DEMON))
 				if(asc < 1)
 					asc = 1
