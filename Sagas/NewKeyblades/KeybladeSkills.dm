@@ -3,7 +3,7 @@ obj
 	Skills
 //t1
 		AutoHit
-		var/UpgradedKeybladeSkill=0
+			var/UpgradedKeybladeSkill=0
 			Sonic_Blade
 				NeedsSword=1
 				Area="Strike"
