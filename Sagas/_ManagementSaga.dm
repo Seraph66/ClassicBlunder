@@ -1719,7 +1719,7 @@ mob
 										for(var/obj/Skills/AutoHit/Sonic_Blade/R in src)
 											R.UpgradedKeybladeSkill=1
 								if("Strike Raid")
-									if(!locate(/obj/Skills/AutoHit//Strike_Raid, src))
+									if(!locate(/obj/Skills/AutoHit/Strike_Raid, src))
 										src.AddSkill(new/obj/Skills/AutoHit/Strike_Raid)
 									else if(locate(/obj/Skills/AutoHit/Strike_Raid, src))
 										for(var/obj/Skills/AutoHit/Strike_Raid/R in src)
