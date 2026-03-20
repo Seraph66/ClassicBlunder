@@ -1,3 +1,6 @@
+// Multiplier on each beam skill's ChargeRate for max charge level
+#define BEAM_CHARGE_CAP_MULT 10
+
 /mob/var/Power = 1
 
 atom/var

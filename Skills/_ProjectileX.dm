@@ -87,7 +87,7 @@ obj
 				Slashing=0//Slash hitspark
 				Charge
 				tmp/Charging//Used to keep track of which beam you're using
-				ChargeRate=1//How much faster a certain beam charges
+				ChargeRate=1//Base for max charge, actual cap is ChargeRate * BEAM_CHARGE_CAP_MULT
 				BeamTime=1200//If you want the beam to have a limited duration, used this.  0 means unlimited
 				BeamTimeUsed//keeps track of how long you've used it for.
 				Immediate//no charge beams
