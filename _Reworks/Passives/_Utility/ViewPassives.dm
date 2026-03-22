@@ -36,6 +36,7 @@ var/list/PassiveInfo = list("Extend"="increases the range of armed autohits base
 "SpiritStrike"= "uses force in place of str for damage",
 "QuickCast"= "Cast and Charge Faster",
 "MovingCharge"= "you can move and charge",
+"TurningCharge"= "you can turn while firing a beam",
 "SoulFire"= "dealing damage to someone also deals damage to their mana, mana capacity, and fatigues them at a rate based on passive value.",
 "Siphon"= "restores energy (and reduces the damage) when hit by a Projectile, spiritsword/spirithand, hybridstrike, spiritstrike",
 "ManaStats"= "increases your Stats based on your Mana.",

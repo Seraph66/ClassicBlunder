@@ -1413,6 +1413,10 @@ mob
 			if(src.UBWPath=="Feeble"&&SagaLevel>=4)
 				return 1
 			return 0
+		HasTurningCharge()
+			if(passive_handler.Get("TurningCharge"))
+				return 1
+			return 0
 		HasQuickCast()
 			if(passive_handler.Get("QuickCast"))
 				return 1

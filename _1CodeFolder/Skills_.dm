@@ -17,7 +17,8 @@ mob/verb
 obj/Skills/var
 	cooldown_remaining = 0
 	cooldown_start
-obj/Skills/proc/Cooldown(var/modify=1, var/Time, mob/p)
+	tmp/halve_next_cd = 0
+obj/Skills/proc/Cooldown(var/modify=1, var/Time, mob/p, var/announce_cd=1)
 	var/mob/m=src.loc
 	if(p)
 		m = p
@@ -55,6 +56,9 @@ obj/Skills/proc/Cooldown(var/modify=1, var/Time, mob/p)
 			Time=src.Cooldown*10*modify*(1+0.33*src.CooldownScalingCounter)
 			if(src.CooldownScaling)
 				src.CooldownScalingCounter++
+			if(src.halve_next_cd)
+				Time=max(1, round(Time/2))
+				src.halve_next_cd=0
 		else
 			forcemessage=1
 		if(isnull(Time) || Time == 0)
@@ -65,7 +69,7 @@ obj/Skills/proc/Cooldown(var/modify=1, var/Time, mob/p)
 				return
 			cooldown_start = world.realtime
 			var/start_time = world.realtime
-			if(m.cooldownAnnounce && Time/10 > 5)
+			if(announce_cd && m.cooldownAnnounce && Time/10 > 5)
 				m << "[src] has gone on Cooldown ([Time/10] Seconds)"
 			spawn(Time)
 				if(cooldown_start != start_time) return //This instance of the CD was canceled.
