@@ -1,4 +1,61 @@
 proc/
+	ChooseMartialSkill(var/Level)
+		var/list/Choices
+		var/confirm
+		var/choice
+		var/list/LV1=list("Sonic Blade", "Strike Raid", "Magnet Burst")
+		var/list/LV2=list("Ripple Drive", "Stun Impact", "Explosion")
+		var/list/LV3=list("Fire Surge", "Thunder Surge", "Ars Arcanum")
+		var/list/LV4=list("Ragnarok", "Salvation", "Raging Storm")
+		switch(Level)
+			if(1)
+				Choices+=LV1
+			if(2)
+				Choices+=LV2
+			if(3)
+				Choices+=LV3
+			if(4)
+				Choices+=LV4
+		while(confirm!="Yes")
+			choice=input(src, "What skill do you want?", "Martial Keyblade Skill") in Choices
+			if("Sonic Blade")
+				confirm=alert(src, "Quickly dash towards your opponent three times.", "Choice","Yes", "No")
+			if("Strike Raid")
+				confirm=alert(src, "Throw your Keyblade at your opponent in the form of an autohit wave.", "Choice","Yes", "No")
+			if("Magnet Burst")
+				confirm=alert(src, "A weak Area-Of-Effect move that pulls in everyone nearby and stuns.", "Choice","Yes", "No")
+			if("Ripple Drive")
+				confirm=alert(src, "Release a powerful wave of energy with a strong knockback.", "Choice","Yes", "No")
+			if("Stun Impact")
+				confirm=alert(src, "Queues up a stunning attack.", "Yes", "No")
+			if("Explosion")
+				confirm=alert(src, "Queue up a weak hit that follows up with a powerful explosive one.", "Choice","Yes", "No")
+			switch(choice)
+				if("Sonic Blade")
+					if(!locate(/obj/Skills/AutoHit/Sonic_Blade, src))
+						src.AddSkill(new/obj/Skills/AutoHit/Sonic_Blade)
+					else if(locate(/obj/Skills/AutoHit/Sonic_Blade, src))
+						for(var/obj/Skills/AutoHit/Sonic_Blade/R in src)
+							R.UpgradedKeybladeSkill=1
+				if("Strike Raid")
+					if(!locate(/obj/Skills/AutoHit/Strike_Raid, src))
+						src.AddSkill(new/obj/Skills/AutoHit/Strike_Raid)
+					else if(locate(/obj/Skills/AutoHit/Strike_Raid, src))
+						for(var/obj/Skills/AutoHit/Strike_Raid/R in src)
+							R.UpgradedKeybladeSkill=1
+				if("Magnet Burst")
+					src.AddSkill(new/obj/Skills/AutoHit/Magnet_Burst)
+					if(!locate(/obj/Skills/AutoHit/Magnet_Burst, src))
+						src.AddSkill(new/obj/Skills/AutoHit/Magnet_Burst)
+					else if(locate(/obj/Skills/AutoHit/Magnet_Burst, src))
+						for(var/obj/Skills/AutoHit/Magnet_Burst/R in src)
+							R.UpgradedKeybladeSkill=1
+				if("Ripple Drive")
+					src.AddSkill(new/obj/Skills/AutoHit/Ripple_Drive)
+				if("Stun Impact")
+					src.AddSkill(new/obj/Skills/Queue/Stun_Impact)
+				if("Explosion")
+					src.AddSkill(new/obj/Skills/Queue/Explosion)
 	GetKeychainClass(var/KC)
 		switch(KC)
 //small
