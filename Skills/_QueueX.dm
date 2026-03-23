@@ -972,7 +972,7 @@ obj
 							hs.adjust(usr);
 							usr.SetQueue(hs);
 						else usr.SetQueue(src);
-						
+
 			Meteor_Mash
 				name="Meteor Mash"
 				DamageMult=1

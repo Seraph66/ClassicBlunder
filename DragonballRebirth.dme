@@ -679,6 +679,7 @@
 #include "Secrets\ArsGoetia.dm"
 #include "Secrets\Senjutsu.dm"
 #include "Secrets\WitchCraft.dm"
+#include "Secrets\BlackFlash\skills.dm"
 #include "Secrets\Haki\buffs.dm"
 #include "Secrets\Haki\Skills.dm"
 #include "Secrets\Haki\utility.dm"

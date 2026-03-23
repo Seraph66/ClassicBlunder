@@ -5,7 +5,7 @@
 #define MADNESS_ADD_PER_TIER 25
 
 #define VALID_SECRET_LIST list("Jagan Eye", "Haki", "Hamon", "Vampire", "Werewolf", "Heavenly Restriction", "Senjutsu", "Shin",\
-"Ultra Instinct", "Zombie", "Necromancy", "Eldritch", "Eldritch (Shrouded)", "Eldritch (Reflected)")
+"Ultra Instinct", "Zombie", "Necromancy", "Eldritch", "Eldritch (Shrouded)", "Eldritch (Reflected)", "BlackFlash")
 
 //thank you hadoje
 /mob/var/SecretInformation/secretDatum = new()
@@ -543,9 +543,9 @@ SecretInformation
 				if(5)
 					nextTierUp=999
 					p << "You have mastered the art of Senjutsu!"
-	
+
 	Shin
-		name = "Shin" 
+		name = "Shin"
 		givenSkills = list("/obj/Skills/Buffs/SlotlessBuffs/Shin_Radiance")
 		maxTier = 6;
 		var/Mang = 0; // The current amount of mang used
@@ -554,7 +554,7 @@ SecretInformation
 		// This code checks for the maximum Mang you can have, wheras var/Mang checks for your current mang :3
 			if(currentTier >= 2)
 				MangMastery = (currentTier-1)
-			else 
+			else
 				MangMastery = 0
 		// This code switches your Secret Tier
 			switch(currentTier)
@@ -577,6 +577,28 @@ SecretInformation
 					nextTierUp = 4
 				if(6) // 5 Mang Rings
 					p << "You have refined both Shin and Mang to perfection, leveraging perfect control over your sense of self to invoke that intense emotion."
+
+
+	BlackFlash
+		name = "Black Flash"
+		givenSkills = list("/obj/Skills/Buffs/SlotlessBuffs/BlackFlash_Potential")
+		maxTier = 6;
+		var/BlackFlashCount = 0; //Tracks how many were fired off during a fight
+		var/BFlashPotential = 0; // If 120 Potential is up
+		var/BlackFlashChance = 0; // Usually a raising chance to land one per Heavy Strike
+		var/BlackFlashBaseChance = 5; // The chance it goes back to after med or too much time passed
+		var/BlackFlashForcedChance = 0; // If above 0, is used to force a certain chance to BFlash
+		var/BlackFlashFirstTimeUse = 1; // Literally just to do some funny narrative yapping like in the series
+		secretVariable = list("BlackFlashCount" = 0, "BFlashPotential" = 0, "BlackFlashChance" = 0, "BlackFlashBaseChance" = 5, "BlackFlashForcedChance" = 0, "BlackFlashFirstTimeUse" = 1)
+		applySecret(mob/p)
+			switch(currentTier)
+				if(1)
+					p << "You feel a new resonance with your own energy..."
+					giveSkills(p)
+					giveVariables(p)
+				if(2)
+					p << "You feel a new resonance with your own energy..."
+					secretVariable["BlackFlashBaseChance"] = 10
 
 mob
 	var
@@ -602,7 +624,7 @@ mob/Admin3/verb
 	SecretManagement(var/mob/P in players)
 		set category="Admin"
 		if(!P.client) return
-		var/list/Secrets=list("Spirits of The World","Jagan Eye", "Hamon of the Sun", "Werewolf", "Vampire", "Sage Arts", "Haki", "Eldritch", "Heavenly Restriction", "Shin")
+		var/list/Secrets=list("Spirits of The World","Jagan Eye", "Hamon of the Sun", "Werewolf", "Vampire", "Sage Arts", "Haki", "Eldritch", "Heavenly Restriction", "Shin", "Black Flash")
 		var/Selection=input(src, "Which aspect of power does [P] awaken to?", "Secret Management") in Secrets
 		if(P.Secret)
 			src << "They already have a secret."
@@ -657,6 +679,9 @@ mob/Admin3/verb
 				if("Shin")
 					P.Secret="Shin"
 					P.giveSecret("Shin")
+				if("Black Flash")
+					P.Secret="BlackFlash"
+					P.giveSecret("BlackFlash")
 mob
 	proc
 		AddHaki(var/Type)
