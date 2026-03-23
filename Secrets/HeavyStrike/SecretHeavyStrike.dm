@@ -240,7 +240,7 @@
     Divergent_Fist
         ActiveMessage="'s own energy lags behind...!"
         HitMessage="'s impact is doubled up from their energy lagging behind!"
-        DamageMult=3
+        DamageMult=2
         HitSparkIcon='CE Hitspark.dmi'
         HitSparkTurns=1
         HitSparkSize=1
@@ -251,7 +251,7 @@
         TextColor = "#DC143C";
         ActiveMessage="'s fists sparks black...!"
         HitMessage="lands a <b>BLACK FLASH!!</b>"
-        DamageMult = (3 ** 2.5)
+        DamageMult = (2 ** 2.5)
         AccuracyMult = 10
         KBAdd = 10
         Duration=4
@@ -260,3 +260,7 @@
         HitSparkSize=1
         KBMult = 10
         BuffSelf="/obj/Skills/Buffs/SlotlessBuffs/Autonomous/QueueBuff/BlackFlash_Potential"
+        adjust(mob/p)
+            var/SecretInformation/BlackFlash/bf = p.secretDatum
+            bf.BlackFlashChance = bf.BlackFlashBaseChance
+            admins << "Queue'd a Black Flash, reset the chance to [bf.BlackFlashChance]"
