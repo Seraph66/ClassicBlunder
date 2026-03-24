@@ -432,25 +432,7 @@ mob/Admin3/verb
 					P.SagaLevel=1
 					P.KeybladeColor=Color
 					if(P.KeybladeType=="Sword")
-						var/choice2
-						var/confirm2
-						while(confirm2!="Yes")
-							var/list/Choices2=list("Sonic Blade", "Strike Raid", "Magnet Burst")
-							choice2=input(P, "What skill do you want?", "Martial Keyblade Skill") in Choices2
-							switch(choice2)
-								if("Sonic Blade")
-									confirm2=alert(P, "Quickly dash towards your opponent three times.", "Choice","Yes", "No")
-								if("Strike Raid")
-									confirm2=alert(P, "Throw your Keyblade at your opponent in the form of an autohit wave.", "Choice","Yes", "No")
-								if("Magnet Burst")
-									confirm2=alert(P, "A weak Area-Of-Effect move that pulls in everyone nearby and stuns.", "Choice","Yes", "No")
-						switch(choice2)
-							if("Sonic Blade")
-								P.AddSkill(new/obj/Skills/AutoHit/Sonic_Blade)
-							if("Strike Raid")
-								P.AddSkill(new/obj/Skills/AutoHit/Strike_Raid)
-							if("Magnet Burst")
-								P.AddSkill(new/obj/Skills/AutoHit/Magnet_Burst)
+						src.ChooseMartialSkill(1)
 					if(P.KeybladeType=="Shield")
 						var/inp = input(P, "What path of magic will you fall under?") in list("Fire", "Ice", "Thunder")
 						P.KeybladePath = inp
