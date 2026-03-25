@@ -1,0 +1,10 @@
+//time
+/obj/Skills/AutoHit/Magic/Time
+    SpellElement="Time"
+    SpellSlot=1;
+    Tempus_Cessat//aoe
+/obj/Skills/Buffs/SlotlessBuffs/Magic/Time
+    SpellElement="Time"
+    SpellSlot=1;
+    Haste//buff
+    Wither//debuff

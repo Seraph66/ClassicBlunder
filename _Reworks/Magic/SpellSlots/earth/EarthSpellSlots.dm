@@ -1,0 +1,10 @@
+//earth
+/obj/Skills/AutoHit/Magic/Earth//aoe
+    SpellElement="Earth"
+    SpellSlot=1;
+    Seismic_Entry
+/obj/Skills/Buffs/SlotlessBuffs/Magic/Earth
+    SpellElement="Earth"
+    SpellSlot=1;
+    Ward_of_Stone//buff
+    Prickly_Ballet//debuff
