@@ -11,6 +11,7 @@
     return 1;
 
 /mob/proc/canDoATransform()
+    if(!canPC()) return 0;//doesn't check for ki control
     if(isRace(HUMAN)) return 0;//humans do not transform like this!
     if(ChangelingTransformRequirements()) return 1;//changelings transform weird
     if(StandardTransformRequirements()) return 1;
@@ -32,13 +33,14 @@
 
 
 mob/proc/PowerUp() // Handles Normal (read: Not Kaioken/Shin) power up related code
-    if(!canPC(goingUp=1)) return 0;
-    if(passive_handler.Get("Kaioken"))
-        KaiokenPowerUp() // This proc is at line 101
-        return
     if(canDoATransform())
         Transform();
         return;
+    if(!canPC(goingUp=1)) return 0;
+    if(passive_handler.Get("Kaioken"))
+        KaiokenPowerUp() // This proc is at line 101
+        
+        return
     if(Secret == "Shin" && ((usingShinBuff() && !MangOnCD())|| usingMangBuff()) && ActiveBuff)
         MangPowerUp() // This proc is at line 189
     if(HasPULock())
