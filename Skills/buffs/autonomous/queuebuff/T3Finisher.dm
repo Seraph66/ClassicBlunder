@@ -51,7 +51,7 @@
     Justice_of_Hell
         IconLock='SweatDrop.dmi'
         IconApart=1
-        passives = list("PureReduction" = -2, "Flow" = -2, "PureDamage" = -2, "GodSpeed" = -2)
+        passives = list("PureReduction" = -2, "Flow" = -2, "PureDamage" = -2, "Godspeed" = -2)
         CrippleAffected = 50
         SlowAffected = 50
 

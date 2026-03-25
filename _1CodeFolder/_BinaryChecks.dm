@@ -174,13 +174,7 @@ mob
 					Ascensions=6
 				if(src.Saga)
 					if(src.Saga in Swordsmanship)
-						switch(Saga)
-							if("Weapon Soul")
-								if(src.SagaLevel)
-									Ascensions += SagaLevel
-							if("Hiten Mitsurugi-Ryuu")
-								if(src.SagaLevel)
-									Ascensions += SagaLevel
+						Ascensions += SagaLevel;
 					if(Ascensions>6)
 						Ascensions=6
 				if(s.Glass)

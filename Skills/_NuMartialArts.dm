@@ -608,7 +608,7 @@ obj
 							StyleFor=1.25
 							StyleSpd=1.5
 							StyleActive="Nachtflugel"
-							passives = list("GodSpeed" = 4, "Warping" = 2,"Skimming" = 2, "Tossing" = 3, "Secret Knives" = "GodSlayer")
+							passives = list("Godspeed" = 4, "Warping" = 2,"Skimming" = 2, "Tossing" = 3, "Secret Knives" = "GodSlayer")
 							SweepingStrike=1
 							ElementalOffense = "Truth"
 							ElementalDefense = "Mirror"

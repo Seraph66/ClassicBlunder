@@ -1,5 +1,5 @@
 /obj/Skills/Buffs/SlotlessBuffs/Autonomous/Racial/Nobody/Lunar_Wrath
-    passives = list("Unrelenting Wrath" = 1, "GodSpeed" = 1, "Skimming" = 1)
+    passives = list("Unrelenting Wrath" = 1, "Godspeed" = 1, "Skimming" = 1)
     TextColor=rgb(255, 0, 0)
     Cooldown=-1
     ActiveMessage="unleashes the anger they keep locked in a cage!"

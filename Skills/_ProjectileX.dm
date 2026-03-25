@@ -3942,30 +3942,6 @@ obj
 						set category="Skills"
 						usr.UseProjectile(src)
 
-				Hiten_Mitsurugi
-					StyleNeeded="Hiten Mitsurugi"
-					Earth_Dragon_Flash
-						name="Doryusen"
-						Distance=5
-						AccMult = 1.175
-						DamageMult=2
-						Blasts=5
-						Radius=1
-						Slashing=0
-						Striking=1
-						Crushing=2
-						Crippling=2
-						EnergyCost=5
-						Cooldown=90
-						Stream=2
-						IconLock='Boulder Normal2.dmi'
-						IconSize=0.2
-						LockX=-36
-						LockY=-36
-						Variation=12
-						verb/Doryusen()
-							set category="Skills"
-							usr.UseProjectile(src)
 				Bard
 					StrRate=1
 					ForRate=1

@@ -1,10 +1,4 @@
-#define HITEN_PASSIVES_TIER_1 list("SlayerMod"=1, "Flicker"=1, "Pursuer"=1, "GodSpeed"=1, "FavoredPrey"="Mortal")
-#define HITEN_PASSIVES_TIER_2 list("SlayerMod"=1, "GodSpeed"=1, "AttackSpeed"=2, "Pursuer"=1)
-#define HITEN_PASSIVES_TIER_3 list("SlayerMod"=1, "GodSpeed"=1, "Brutalize"=2, "TechniqueMastery"=2)
-#define HITEN_PASSIVES_TIER_4 list("SlayerMod"=1, "GodSpeed"=1, "FavoredPrey"="All", "MovementMastery"=5)
-#define HITEN_PASSIVES_TIER_5 list("SlayerMod"=1, "GodSpeed"=1, "AttackSpeed"=3, "Pursuer"=1)
-#define HITEN_PASSIVES_TIER_6 list("SlayerMod"=1, "GodSpeed"=1, "Brutalize"=2.5, "TechniqueMastery"=3)
-#define HITEN_PASSIVES_TIER_7 list("SlayerMod"=1, "GodSpeed"=2, "Deicide"=1, "EndlessNine"=1, "AsuraStrike"=1)
+
 
 mob/var
 	SagaLevel=0//Level for all tier s.
@@ -111,7 +105,7 @@ mob/Admin3/verb
 		var/Level7=0
 		var/list/SagaList=list("Cancel","Ansatsuken","Eight Gates","Cosmo","Spiral","King of Courage", "Hero","Hiten Mitsurugi-Ryuu","Kamui","Keyblade","King of Braves","Path of a Hero: Rebirth","Sharingan","Weapon Soul", "Unlimited Blade Works","Force")
 		if(P.Saga)
-			if(P.Saga=="Keyblade"||P.Saga=="Weapon Soul"||P.Saga=="Cosmo"||P.Saga=="King of Braves")
+			if(P.Saga=="Keyblade"||P.Saga=="Weapon Soul"||P.Saga=="Cosmo"||P.Saga=="King of Braves"||P.Saga=="Hiten Mitsurugi-Ryuu")
 				Level7=1
 			if(P.SagaLevel>=6+Level7)
 				src << "They've already fully mastered the power of their soul."
@@ -251,17 +245,7 @@ mob/Admin3/verb
 						P<<"You can reinforce your body leagues past anything else..."
 
 				if("Hiten Mitsurugi-Ryuu")
-					P<<"You embark down the path of slaying men... <b>Hiten Mitsurugi Style</b>!"
-					P.Saga="Hiten Mitsurugi-Ryuu"
-					P.SagaLevel=1
-					passiveGain = HITEN_PASSIVES_TIER_1
-					if(!locate(/obj/Skills/Buffs/NuStyle/SwordStyle/Hiten_Mitsurugi_Ryuu, P))
-						var/obj/Skills/Buffs/NuStyle/s=new/obj/Skills/Buffs/NuStyle/SwordStyle/Hiten_Mitsurugi_Ryuu
-						P.AddSkill(s)
-					if(!locate(/obj/Skills/Queue/JawStrike,P))
-						P.AddSkill(new/obj/Skills/Queue/JawStrike)
-					if(!locate(/obj/Skills/Queue/FallingBlade,P))
-						P.AddSkill(new/obj/Skills/Queue/FallingBlade)
+					P.gainHitenMitsurugi();
 				if("Ansatsuken")
 					P<<"You begin to learn of the assassin's fist... <b>Ansatsuken</b>!"
 					P.Saga="Ansatsuken"
@@ -859,9 +843,7 @@ mob
 			src.SagaAdminPermission--
 			if(src.SagaAdminPermission<0)
 				src.SagaAdminPermission=0
-			
-			var/list/passiveGain=list();
-
+	
 			switch(src.Saga)
 				if("Hero")
 					tierUpSaga("Hero")
@@ -1026,87 +1008,6 @@ mob
 					tierUpSaga("Spiral")
 				if("Weapon Soul")
 					tierUpSaga("Weapon Soul")
-/*					if(src.SagaLevel==2)
-						src << "Your knowledge on classic swordplay improves."
-					if(src.SagaLevel==3)
-						var/Choice=alert(src, "Is your swordsmanship guided by Intuition or Experience?", "Weapon Soul", "Intuition", "Experience")
-						if(Choice=="Intuition")
-							passive_handler.Increase("Instinct", 2)
-							passive_handler.Increase("Flow")
-						if(Choice=="Experience")
-							passive_handler.Increase("TechniqueMastery", 2)
-						src << "You develop the acumen to draw forth greater power from your weapons."
-						var/Choice2=alert(src, "Is your soul one of light or dark?", "Weapon Soul", "Light", "Dark")
-						if(Choice2=="Light")
-							src << "You've learned to infuse your sword with the power of holy light."
-							src.AddSkill(new/obj/Skills/Queue/Holy_Blade)
-						if(Choice2=="Dark")
-							src << "You've learned to infuse your sword with overwhelming darkness."
-							src.AddSkill(new/obj/Skills/Queue/Darkness_Blade)
-						passive_handler.Increase("Flicker")
-						passive_handler.Increase("Godspeed")
-						passive_handler.Increase("Extend")
-						passive_handler.Increase("Duelist")
-					if(SagaLevel == 4)
-						if(!BoundLegend)
-							var/list/openSwords = glob.WeaponSoulNames
-							if(!glob.infWeaponSoul)
-								openSwords = glob.getOpen("WeaponSoul")
-								if(openSwords.len<1)
-									glob.ResetSwords()
-							src.BoundLegend=input(src, "What sword have you merged with?", "Sword Claim") in openSwords
-						src << "You have gained knowledge sufficient to wield a legendary weapon with its original powers!"
-						src << "[src.BoundLegend] accepts you as its current wielder!"
-						switch(BoundLegend)
-							if("Green Dragon Crescent Blade")
-								if(!locate(/obj/Items/Sword/Heavy/Legendary/WeaponSoul/Spear_of_War, src))
-									new/obj/Items/Sword/Heavy/Legendary/WeaponSoul/Spear_of_War(src)
-
-							if("Ruyi Jingu Bang")
-								if(!locate(/obj/Items/Sword/Wooden/Legendary/WeaponSoul/RyuiJinguBang, src))
-									new/obj/Items/Sword/Wooden/Legendary/WeaponSoul/RyuiJinguBang(src)
-
-							if("Masamune")
-								if(!locate(/obj/Items/Sword/Light/Legendary/WeaponSoul/Sword_of_Purity, src))
-									new/obj/Items/Sword/Light/Legendary/WeaponSoul/Sword_of_Purity(src)
-
-							if("Kusanagi")
-								if(!locate(/obj/Items/Sword/Medium/Legendary/WeaponSoul/Sword_of_Faith, src))
-									new/obj/Items/Sword/Medium/Legendary/WeaponSoul/Sword_of_Faith(src)
-
-							if("Durendal")
-								if(!locate(/obj/Items/Sword/Heavy/Legendary/WeaponSoul/Sword_of_Hope, src))
-									new/obj/Items/Sword/Heavy/Legendary/WeaponSoul/Sword_of_Hope(src)
-
-							if("Caledfwlch")
-								if(!locate(/obj/Items/Sword/Medium/Legendary/WeaponSoul/Sword_of_Glory, src))
-									new/obj/Items/Sword/Medium/Legendary/WeaponSoul/Sword_of_Glory(src)
-
-							if("Muramasa")
-								if(!locate(/obj/Items/Sword/Light/Legendary/WeaponSoul/Bane_of_Blades, src))
-									new/obj/Items/Sword/Light/Legendary/WeaponSoul/Bane_of_Blades(src)
-
-							if("Soul Calibur")
-								if(!locate(/obj/Items/Sword/Medium/Legendary/WeaponSoul/Blade_of_Order, src))
-									new/obj/Items/Sword/Medium/Legendary/WeaponSoul/Blade_of_Order(src)
-
-							if("Soul Edge")
-								if(!locate(/obj/Items/Sword/Heavy/Legendary/WeaponSoul/Blade_of_Chaos, src))
-									new/obj/Items/Sword/Heavy/Legendary/WeaponSoul/Blade_of_Chaos(src)
-
-							if("Dainsleif")
-								if(!locate(/obj/Items/Sword/Medium/Legendary/WeaponSoul/Blade_of_Ruin, src))
-									new/obj/Items/Sword/Medium/Legendary/WeaponSoul/Blade_of_Ruin(src)
-
-							if("Moonlight Greatsword")
-								if(!locate(/obj/Items/Sword/Heavy/Legendary/WeaponSoul/Sword_of_the_Moon, src))
-									new/obj/Items/Sword/Heavy/Legendary/WeaponSoul/Sword_of_the_Moon(src)
-					if(src.SagaLevel==5)
-						src << "You have gained knowledge sufficient to unleash the secret trump card of legendary weapons!"
-					if(src.SagaLevel==6)
-						if(!locate(/obj/Skills/Buffs/SpecialBuffs/OverSoul, src))
-							src.AddSkill(new/obj/Skills/Buffs/SpecialBuffs/OverSoul)
-							src << "You've learned to unseal the true form of your legendary weapon."*/
 
 				if("Unlimited Blade Works")
 					switch(src.SagaLevel)
@@ -1216,59 +1117,8 @@ mob
 							src<< "You grasp the understanding of a legendary weapon forgotten to time..."
 
 
-				if("Hiten Mitsurugi-Ryuu")
-					if(src.SagaLevel==2)
-						passiveGain=HITEN_PASSIVES_TIER_2
-						if(!locate(/obj/Skills/AutoHit/CoiledSlash, src))
-							src << "You learn how to add the momentum of your spin to perform an unavoidable slash!"
-							src.AddSkill(new/obj/Skills/AutoHit/CoiledSlash)
-						if(!locate(/obj/Skills/AutoHit/NestedSlash, src))
-							src<< "You learn how to strike countless times with incredible speed!"
-							src.AddSkill(new/obj/Skills/AutoHit/NestedSlash)
-					if(src.SagaLevel==3)
-						passiveGain=HITEN_PASSIVES_TIER_3
-						if(!locate(/obj/Skills/Projectile/Sword/Hiten_Mitsurugi/Earth_Dragon_Flash, src))
-							src.AddSkill(new/obj/Skills/Projectile/Sword/Hiten_Mitsurugi/Earth_Dragon_Flash)
-							src << "You learn to strike the ground and unleash a torrent of debris!"
-						if(!locate(/obj/Skills/Queue/Twin_Dragon_Slash, src))
-							src.AddSkill(new/obj/Skills/Queue/Twin_Dragon_Slash)
-							src << "You can deliver a quick blow with your blade only to be followed with a crushing strike from your sheath!"
-					if(src.SagaLevel==4)
-						passiveGain=HITEN_PASSIVES_TIER_4
-						for(var/obj/Skills/Buffs/NuStyle/SwordStyle/Hiten_Mitsurugi_Ryuu/hmr in src.contents)
-							if(hmr.Finisher!="/obj/Skills/Queue/Finisher/True_Flash_Strike")
-								hmr.Finisher="/obj/Skills/Queue/Finisher/True_Flash_Strike"
-								src << "You have refined your finishing technique: True Flash Strike!"
-						var/Choice=alert(src, "Hiten Mitsurugi can follow the path of tradition, embracing the code of a hermit and honorable warrior or can truly become an ultimate tool of murder. What is the mantle you will bear?", "Hiten Path", "Tradition", "Slaughter")
-						if(Choice=="Tradition")
-							src<<"You embrace the path of tradition, sharpening your art and making it a constant presence in your life!"
-							src.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Dance_Of_The_Full_Moon)
-							src<<"You can now draw out the full form of the Moon by using paired blades."
-						if(Choice=="Slaughter")
-							src.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Hitokiri_Battosai)
-							src<<"You embrace the path of a killer and assassin, revealing your true nature in moments of strife!"
-					if(src.SagaLevel==5)
-						passiveGain=HITEN_PASSIVES_TIER_5
-						if(!locate(/obj/Skills/AutoHit/Sonic_Sheath, src))
-							src << "You learn to sheath your sword with such authority that it stuns those around you!"
-							src.AddSkill(new/obj/Skills/AutoHit/Sonic_Sheath)
-						src<<"Your use of Godspeed has been ingrained in your body!"
-						src<<"You can slay even inhuman foes!"
-						if(!locate(/obj/Skills/Queue/Nine_Dragons_Strike, src))
-							src << "You learn of nine killing blows: Kuzuryusen!"
-							src.AddSkill(new/obj/Skills/Queue/Nine_Dragons_Strike)
-					if(src.SagaLevel==6)
-						passiveGain=HITEN_PASSIVES_TIER_6
-						src<<"Your speed transcends mortal limit and you can chase down any foe..."
-						if(!locate(/obj/Skills/Queue/Heavenly_Dragon_Flash, src))
-							src << "You learn the ultimate killing technique...even if you avoid the fangs of the flying dragon, the claws will rip you apart!"
-							src.AddSkill(new/obj/Skills/Queue/Heavenly_Dragon_Flash)
-					if(src.SagaLevel==7)
-						passiveGain=HITEN_PASSIVES_TIER_7
-						src << "Your blade can cull even the gods."
-					if(passiveGain.len > 0) passive_handler.increaseList(passiveGain);
+				if("Hiten Mitsurugi-Ryuu") tierUpSaga("Hiten Mitsurugi-Ryuu");
 				if("Ansatsuken")
-
 					if(src.SagaLevel>=1&&src.SagaLevel<4)
 						if(!locate(/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Satsui_Infected, src))
 							if(prob(glob.SATSUICHANCE))
@@ -1925,7 +1775,7 @@ mob/Admin3/verb
 			P.passive_handler["SlayerMod"] = 0
 			P.passive_handler["Flicker"] = 0
 			P.passive_handler["Pursuer"] = 0
-			P.passive_handler["GodSpeed"] = 0
+			P.passive_handler["Godspeed"] = 0
 			P.passive_handler["AttackSpeed"] = 0
 			P.passive_handler["Brutalize"] = 0
 			P.passive_handler["MovementMastery"] = 0

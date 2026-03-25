@@ -18,7 +18,7 @@
     offense = 0.5;
 
 /ascension/sub_ascension/beastkin/rus
-    passives = list("GodSpeed" = 1, "ChillResistance" = 1);
+    passives = list("Godspeed" = 1, "ChillResistance" = 1);
     speed = 1.5;
 
 /ascension/sub_ascension/beastkin/mer

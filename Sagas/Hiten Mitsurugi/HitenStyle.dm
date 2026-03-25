@@ -13,14 +13,17 @@
     Finisher="/obj/Skills/Queue/Finisher/Flash_Strike"
     adjust(mob/p)
         var/maximumValue = MAXED_SAGA_STYLE_ADD;
-        StyleStr = max(1, maximumValue / SAGA_TIERS) * p.SagaLevel;
-        StyleSpd = max(1, maximumValue / SAGA_TIERS) * p.SagaLevel;
-        StyleOff = max(1, maximumValue / SAGA_TIERS) * p.SagaLevel;
+        StyleStr = 1 + ((maximumValue / SAGA_TIERS) * p.SagaLevel);
+        StyleSpd = 1 + ((maximumValue / SAGA_TIERS) * p.SagaLevel);
+        StyleOff = 1 + ((maximumValue / SAGA_TIERS) * p.SagaLevel);
 
         passives["SuperDash"] = 1 + round(p.SagaLevel / 4);
         passives["DoubleStrike"] = (2 / SAGA_TIERS * p.SagaLevel);
         passives["TripleStrike"] = (1 / SAGA_TIERS * p.SagaLevel);
-        passives["BlurringStrikes"] = p.SagaLevel;
+        passives["BlurringStrikes"] = (p.SagaLevel);
+
+        if(p.SagaLevel>=4) Finisher="/obj/Skills/Queue/Finisher/True_Flash_Strike"
     verb/Hiten_Mitsurugi_Ryuu()
         set hidden=1
-        src.Trigger(usr)
+        if(!usr.BuffOn(src)) adjust(usr)
+        Trigger(usr)
