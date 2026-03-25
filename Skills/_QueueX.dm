@@ -703,26 +703,6 @@ obj
 					FollowUp="/obj/Skills/AutoHit/Shun_Goku_Satsu"
 					BuffSelf="/obj/Skills/Buffs/SlotlessBuffs/Autonomous/QueueBuff/Finisher/Violent_Personality"
 
-
-				//Hiten Finisher
-				Flash_Strike
-					DamageMult=3
-					Counter=1
-					Warp=10
-					SpeedStrike=2
-					SlayerMod=2
-					FollowUp="/obj/Skills/AutoHit/Shunshin_Massacre"
-					BuffSelf="/obj/Skills/Buffs/SlotlessBuffs/Autonomous/QueueBuff/Finisher/Shunshin"
-				True_Flash_Strike
-					DamageMult=2.5
-					Counter=1
-					Warp=10
-					SpeedStrike=2
-					SlayerMod=3
-					FollowUp="/obj/Skills/AutoHit/Shunshin_Massacre"
-					BuffAffected="/obj/Skills/Buffs/SlotlessBuffs/Autonomous/QueueBuff/Godspeed_Assaulted"
-					BuffSelf="/obj/Skills/Buffs/SlotlessBuffs/Autonomous/QueueBuff/Finisher/Shunshin_Shin"
-
 				//Keyblade Finishers
 				Fever_Pitch
 					KBAdd=2

@@ -1232,7 +1232,7 @@ NEW VARIABLES
 								src.OffMessage="conceals █████████████.."
 						if("Dainsleif")
 							HealthDrain = 0
-							passives = list("SlayerMod" = usr.SagaLevel/2, "FavoredPrey" = "Races", "MortalStrike" = 0.5, "AbyssMod" = usr.SagaLevel/2, "LifeSteal" = usr.SagaLevel*5, "Curse" = 1, "PULock" = 1)
+							passives = list("SlayerMod" = usr.SagaLevel/2, "FavoredPrey" = "Mortal", "MortalStrike" = 0.5, "AbyssMod" = usr.SagaLevel/2, "LifeSteal" = usr.SagaLevel*5, "Curse" = 1, "PULock" = 1)
 
 							if(!redacted)
 								src.SwordName="Dainsleif"
@@ -2543,7 +2543,7 @@ NEW VARIABLES
 				DefMult=1.5
 				ActiveMessage= "ascends in a pillar of light, manifesting Wings of Pure, Spiritual Energy!"
 				OffMessage= "returns to the earth, their task done..."
-				passives= list("MovementMastery" = 10, "Siphon" = 10, "EnergyGeneration" = 10, "SpiritStrike" = 1, "LifeGeneration" = 10, "Skimming" = 1, "GodSpeed" = 5, "Tossing" = 4, "Secret Knives" = "Quincy")
+				passives= list("MovementMastery" = 10, "Siphon" = 10, "EnergyGeneration" = 10, "SpiritStrike" = 1, "LifeGeneration" = 10, "Skimming" = 1, "Godspeed" = 5, "Tossing" = 4, "Secret Knives" = "Quincy")
 				IconLock='DA-Bellerophon.dmi'
 				IconUnder=1
 				LockX=-15
@@ -3409,7 +3409,7 @@ NEW VARIABLES
 						OffMult = 1.3 + ((player.SagaLevel-3) * 0.1)
 						DefMult = 1.2 + ((player.SagaLevel-3) * 0.1)
 						passives = list("DebuffResistance" = 1, "SpaceWalk" =1, "StaticWalk" = 1,"MovementMastery" = 8+player.SagaLevel, "ArmorAscension" = 3, \
-						"Godspeed" = 1+(player.SagaLevel*0.25), "MartialMagic" = 1, "AbyssMod" = player.SagaLevel*2, "SlayerMod" = 3+(player.SagaLevel/2), "FavoredPrey" = "Races", "SpiritPower" = player.SagaLevel*0.25)
+						"Godspeed" = 1+(player.SagaLevel*0.25), "MartialMagic" = 1, "AbyssMod" = player.SagaLevel*2, "SlayerMod" = 3+(player.SagaLevel/2), "FavoredPrey" = "Mortal", "SpiritPower" = player.SagaLevel*0.25)
 
 					verb/Don_Cloth()
 						set category="Skills"
@@ -6596,7 +6596,7 @@ NEW VARIABLES
 					ManaGlowSize = 1
 					TimerLimit = 10 + (mecha.Level * 10)
 					PhysicalHitsLimit = mecha.Level * 5
-					passives = list("Shearing" = mecha.Level/2, "SlayerMod" = mecha.Level/2, "FavoredPrey" = "Races", "Steady" = mecha.Level/2, "Extend" = mecha.Level/2 + 1)
+					passives = list("Shearing" = mecha.Level/2, "SlayerMod" = mecha.Level/2, "FavoredPrey" = "Mortal", "Steady" = mecha.Level/2, "Extend" = mecha.Level/2 + 1)
 					Shearing = mecha.Level/2
 					SlayerMod = mecha.Level/2
 					Steady = mecha.Level/2
@@ -9195,25 +9195,6 @@ NEW VARIABLES
 		// 		set category="Skills"
 		// 		src.Trigger(usr)
 
-		Dance_Of_The_Full_Moon
-			StyleNeeded="Hiten Mitsurugi"
-			SpecialBuffLock=1
-			NeedsSecondSword=1
-			StrMult = 1.2
-			SpdMult = 1.3
-			OffMult = 1.3
-			passives = list("SpecialBuffLock" = 1,"DoubleStrike" = 2, "Reversal" = 0.5, "Deflection" = 2, "Godspeed" = 2, "Flow" = 1)
-			DoubleStrike=2
-			Reversal=1
-			Deflection=2
-			Godspeed=2
-			Flow=1
-			ActiveMessage="draws a second blade in display of mastery of their style!"
-			OffMessage="sheathes their second blade..."
-			verb/Dance_Of_The_Full_Moon()
-				set category="Skills"
-				src.Trigger(usr)
-
 		Celestial_Ascension
 			passives = list("Purity" = 1, "BeyondPurity" = 1)
 			Purity=1
@@ -9425,7 +9406,7 @@ NEW VARIABLES
 				adjust(mob/p)
 					var/secretLevel = p.secretDatum.currentTier
 					if(secretLevel >= 4)
-						passives = list("Purity" = 1, "HolyMod" = 2 + secretLevel, "PUDrainReduction" = 2 + (secretLevel / 4), "Ripple" = 1 + (secretLevel / 4), "FavoredPrey" = "Evil", "SlayerMod" = (secretLevel / 2))
+						passives = list("Purity" = 1, "HolyMod" = 2 + secretLevel, "PUDrainReduction" = 2 + (secretLevel / 4), "Ripple" = 1 + (secretLevel / 4), "FavoredPrey" = "Beyond", "SlayerMod" = (secretLevel / 2))
 					else
 						passives = list("Purity" = 1, "HolyMod" = 2 + secretLevel, "PUDrainReduction" = 2 + (secretLevel / 4), "Ripple" = 1 + (secretLevel / 4))
 				verb/Ripple_Breathing()
@@ -10122,22 +10103,6 @@ NEW VARIABLES
 						passives = list("TensionLock" = 1,"MovementMastery" = 10, "TechniqueMastery" = 5)
 						ManaHeal=2.5
 
-					//hiten
-					Shunshin
-						SpdMult=1.6
-						passives = list("TensionLock" = 1,"Warping" = 4, "HotHundred" = 1, "Godspeed" = 3, "BlurringStrikes" = 1)
-						TimerLimit=12
-						Afterimages=1
-						ActiveMessage="moves at godspeed for a rapid attack!"
-						OffMessage="restrains their godspeed..."
-					Shunshin_Shin
-						SpdMult=2
-						passives = list("TensionLock" = 1,"Warping" = 3, "HotHundred" = 2, "PureDamage" = 2, "Steady" = 3, "BlurringStrikes" = 2)
-						TimerLimit=15
-						Afterimages=1
-						ActiveMessage="unleashes their godspeed for a short burst!"
-						OffMessage="falls back in step..."
-
 					//keyblades
 					Fever_Pitch
 						StrMult=1.5
@@ -10612,17 +10577,6 @@ NEW VARIABLES
 					SpdMult=0.25
 					ActiveMessage="feels the wheezing breath of Moelach tickling at their mind..."
 					OffMessage="doesn't know what that was all about!!"
-
-				Godspeed_Assaulted
-					IconLock='SweatDrop.dmi'
-					IconApart=1
-					Afterimages=1
-					SpdMult=0.5
-					DefMult=0.5
-					EndMult=0.8
-					passives = list("NoDodge" = 1)
-					ActiveMessage="fears for their life against a hyperspeed opponent!"
-					OffMessage="regains courage!"
 
 				Arena_Champion
 					BuffName = "Champion of The Arena"
@@ -11410,32 +11364,6 @@ NEW VARIABLES
 						SlayerMod = player.SagaLevel * 0.5
 						HardStyle = 1 + (player.SagaLevel * 0.25)
 						TechniqueMastery = player.SagaLevel
-					..()
-			Hitokiri_Battosai
-				StyleNeeded="Hiten Mitsurugi"
-				SpecialBuffLock=1
-				NeedsHealth=50
-				TooMuchHealth=75
-				StrMult = 1.15
-				SpdMult = 1.15
-				TechniqueMastery=5
-				MovementMastery=5
-				passives = list("SpecialBuffLock" = 1,"TechniqueMastery" = 2, "MovementMastery" = 3, "Instinct" = 2, "Flicker" = 2, "Curse" = 1)
-				Instinct=2
-				Flicker=2
-				Curse=1
-				IconLock='SlayerEyes.dmi'
-				LockX=0
-				LockY=0
-				Cooldown=-1
-				TextColor=rgb(215, 0, 0)
-				BuffName="Battosai"
-				ActiveMessage="becomes the embodiment of battoujutsu, an unstoppable manslayer Battosai!"
-				OffMessage="restrains their nature as a killer..."
-				Trigger(mob/User, Override = FALSE)
-					if(!User.BuffOn(src))
-						if(!altered)
-							passives = list("SpecialBuffLock" = 1,"TechniqueMastery" = 2, "MovementMastery" = 3, "Instinct" = 2, "Flicker" = 2, "Curse" = 1)
 					..()
 			Kagutsuchi
 				NeedsHealth=50
@@ -12426,13 +12354,6 @@ mob
 					src.StyleBuff.HitX=-32
 					src.StyleBuff.HitY=-32
 					src.StyleBuff.HitSize=0.5
-
-			if(src.StyleBuff.StyleActive=="Hiten Mitsurugi")
-				StyleBuff.passives["Godspeed"] = SagaLevel/2
-				StyleBuff.passives["Flicker"] = SagaLevel/2
-				StyleBuff.passives["BlurringStrikes"] = round(SagaLevel/6,0.05)
-
-				src.StyleBuff.Mastery=4
 
 			if(src.StyleBuff.StyleActive=="Ansatsuken")
 				var/unarmed = glob.UNARMED_DAMAGE_DIVISOR/6
@@ -13605,7 +13526,7 @@ mob
 				src.SenseUnlocked+=B.SenseUnlocked
 			if(B.Afterimages)
 				src.Afterimages+=1
-			if(B.AutoAnger)
+			if(B.AutoAnger || B.passives["AutoAnger"])
 				Anger()
 				passive_handler.Increase("EndlessAnger")
 			if(B.CalmAnger)
@@ -14096,7 +14017,7 @@ mob
 				src.SenseUnlocked-=B.SenseUnlocked
 			if(B.Afterimages)
 				src.Afterimages-=B.Afterimages
-			if(B.AutoAnger)
+			if(B.AutoAnger || B.passives["AutoAnger"])
 				if(passive_handler.Get("EndlessAnger"))
 					passive_handler.Decrease("EndlessAnger")
 				src.Calm()

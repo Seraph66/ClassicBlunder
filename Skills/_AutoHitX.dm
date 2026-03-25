@@ -656,28 +656,6 @@ obj
 				IconY=-32
 				IconTime=10
 				Cooldown=4
-			Shunshin_Massacre
-				Area="Target"
-				NoLock=1
-				NoAttackLock=1
-				Distance=10
-				Instinct=4
-				DamageMult = T2_DMG_MULT / 2 / 5;
-				Rounds=5
-				DelayTime=30
-				GuardBreak=1
-				StrOffense=1
-				EndDefense=1
-				PassThrough=1
-				ActiveMessage="rips through their opponent with rapid godspeed slashes!"
-				HitSparkIcon='Slash - Zan.dmi'
-				HitSparkX=-16
-				HitSparkY=-16
-				HitSparkSize=2
-				HitSparkTurns=1
-				HitSparkLife=10
-				IconTime=10
-				Cooldown=4
 			Stop_Effect
 				Area="Around Target"
 				NoLock=1
@@ -4202,92 +4180,6 @@ obj
 					if(usr.SagaLevel>=5)
 						WoundCost=0
 						EnergyCost=20
-					usr.Activate(src)
-
-///Hiten
-			Sonic_Sheath
-				name="Ryumeisen"
-				Area="Circle"
-				StrOffense=1
-				StyleNeeded="Hiten Mitsurugi"
-				DamageMult=10
-				Distance=7
-				GuardBreak = 1
-				PassThrough=1
-				Stunner=5
-				PreShockwave=1
-				Shockwave=5
-				Shockwaves=5
-				PostShockwave=0
-				Cooldown=180
-				NoLock=1
-				NoAttackLock=1
-				HitSparkIcon='BLANK.dmi'
-				ActiveMessage="sheathes their sword with stunning authority!"
-				verb/Ryumeisen()
-					set category="Skills"
-					usr.Activate(src)
-			NestedSlash
-				name="Ryusousen"
-				StyleNeeded="Hiten Mitsurugi"
-				Area="Arc"
-				StrOffense=1
-				DamageMult = 3
-				Launcher = 2
-				ComboMaster = 1
-				EnergyCost=2
-				Rush=3
-				ControlledRush=1
-				Cooldown=60
-				Icon='Nest Slash.dmi'
-				IconTime=0.7
-				IconX=-16
-				IconY=-16
-				Size=0.8
-				HitSparkIcon='Slash.dmi'
-				HitSparkX=-32
-				HitSparkY=-32
-				HitSparkSize=0.8
-				HitSparkTurns=1
-				HitSparkCount=10
-				NoLock=1
-				NoAttackLock=1
-				ActiveMessage="throws countless sword strikes in an endless flurry!"
-				verb/Ryusousen()
-					set category="Skills"
-					usr.Activate(src)
-			CoiledSlash
-				name="Ryukansen"
-				NeedsSword=1
-				StyleNeeded="Hiten Mitsurugi"
-				Area="Wave"
-				StrOffense=1
-				DamageMult=5
-				ChargeTech=1
-				SpeedStrike = 2
-				Crippling = 50
-				PassThrough = 1
-				ChargeTime=0
-				DelayTime=0
-				Cooldown=60
-				Distance = 3
-				Size=1
-				Rounds=6
-				Icon='Air Slash.dmi'
-				IconX=-8
-				IconY=-8
-				HitSparkIcon='Slash.dmi'
-				HitSparkX=-32
-				HitSparkY=-32
-				HitSparkSize=0.8
-				HitSparkTurns=1
-				TurfStrike=1
-				EnergyCost=2
-				NoLock=1
-				NoAttackLock=1
-				ActiveMessage="bursts forward, performing a whirling slash!"
-				verb/Ryukansen()
-					set category="Skills"
 					usr.Activate(src)
 
 ///Ansatsuken

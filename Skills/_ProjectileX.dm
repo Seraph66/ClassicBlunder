@@ -3952,30 +3952,6 @@ obj
 						set category="Skills"
 						usr.UseProjectile(src)
 
-				Hiten_Mitsurugi
-					StyleNeeded="Hiten Mitsurugi"
-					Earth_Dragon_Flash
-						name="Doryusen"
-						Distance=5
-						AccMult = 1.175
-						DamageMult=2
-						Blasts=5
-						Radius=1
-						Slashing=0
-						Striking=1
-						Crushing=2
-						Crippling=2
-						EnergyCost=5
-						Cooldown=90
-						Stream=2
-						IconLock='Boulder Normal2.dmi'
-						IconSize=0.2
-						LockX=-36
-						LockY=-36
-						Variation=12
-						verb/Doryusen()
-							set category="Skills"
-							usr.UseProjectile(src)
 				Bard
 					StrRate=1
 					ForRate=1
@@ -6050,12 +6026,17 @@ obj
 										found=1
 								if(!found)//If you don't find what you're supposed to hunt
 									goto SkipDamage
-						if(src.HolyMod)
-							EffectiveDamage*=1+src.Owner.HolyDamage(a, Forced=src.HolyMod)/glob.HOLY_DAMAGE_DIVISOR
-						if(src.AbyssMod)
-							EffectiveDamage*=1+src.Owner.AbyssDamage(a, Forced=src.AbyssMod)/glob.ABYSS_DAMAGE_DIVISOR
-						if(src.SlayerMod)
-							EffectiveDamage*=1+src.Owner.SlayerDamage(a, Forced=src.SlayerMod)/glob.SLAYER_DAMAGE_DIVISOR
+						var/list/specDmgTypes = list();
+						if(HolyMod) specDmgTypes["Holy"] = HolyMod;
+						if(AbyssMod) specDmgTypes["Abyss"] = AbyssMod;
+						if(SlayerMod) specDmgTypes["Slayer"] = SlayerMod;
+						if(specDmgTypes.len) EffectiveDamage *= Owner.attackModifiers(m, specDmgTypes);
+						//Technically these are going to get doubletapped for projectiles
+						//because attackModifiers is called here as well as in dodamage
+						//which will be run further below
+						//but projectiles are kind of weak
+						//so we let it slide
+						//(i do not want to do that rework)
 						if(src.AngelMagicCompatible && m.passive_handler.Get("Judged"))
 							EffectiveDamage *= 1.25
 						if(src.WarpUser)

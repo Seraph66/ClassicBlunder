@@ -460,7 +460,7 @@ proc/
 				KeybladePassives=list("PULock" = 1, "Combustion" = 60, "Scorching" = 2+Boost)
 				return KeybladePassives
 			if("Wayward Wind")
-				KeybladePassives=list("PULock" = 1,"Skimming" = 1+(Boost/2), "GodSpeed" = 1,"BlurringStrikes" = 3)
+				KeybladePassives=list("PULock" = 1,"Skimming" = 1+(Boost/2), "Godspeed" = 1,"BlurringStrikes" = 3)
 				return KeybladePassives
 			if("Rainfell")
 				KeybladePassives=list("PULock" = 1, "CriticalChance" = 30+(Boost*5), "ThunderHerald" = 1, "CriticalDamage"= 0.15)

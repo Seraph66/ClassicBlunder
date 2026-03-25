@@ -342,26 +342,6 @@ obj
 							src.Trigger(usr)
 //Saga Sword Styles
 
-	//Hiten Mitsurugi
-					Hiten_Mitsurugi_Ryuu
-						Copyable=0
-						SagaSignature=1
-						StyleStr=1 // ???
-						StyleSpd=1
-						StyleActive="Hiten Mitsurugi"
-						passives = list("Godspeed" = 1, "BlurringStrikes" = 3, "Flicker" = 1)
-						Flicker=1
-						Mastery=4
-						ClassNeeded = list("Light", "Wooden")
-						Finisher="/obj/Skills/Queue/Finisher/Flash_Strike"
-						adjust(mob/p)
-							StyleStr = 1.1 + (p.SagaLevel * 0.05)
-							StyleSpd = 1.1 + (p.SagaLevel * 0.1)
-							StyleOff = 1.1 + (p.SagaLevel * 0.05)
-						verb/Hiten_Mitsurugi_Ryuu()
-							set hidden=1
-							src.Trigger(usr)
-
 	//Keyblade
 					Command
 						Copyable=0
@@ -628,7 +608,7 @@ obj
 							StyleFor=1.25
 							StyleSpd=1.5
 							StyleActive="Nachtflugel"
-							passives = list("GodSpeed" = 4, "Warping" = 2,"Skimming" = 2, "Tossing" = 3, "Secret Knives" = "GodSlayer")
+							passives = list("Godspeed" = 4, "Warping" = 2,"Skimming" = 2, "Tossing" = 3, "Secret Knives" = "GodSlayer")
 							SweepingStrike=1
 							ElementalOffense = "Truth"
 							ElementalDefense = "Mirror"

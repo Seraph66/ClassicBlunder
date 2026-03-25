@@ -111,11 +111,11 @@ mob/proc/MovementSpeed()
 		if(Spd<SpdMin)
 			Spd=SpdMin
 	var/SpdMult = 0;
-	var/GodSpeed = src.HasGodspeed();
+	var/Godspeed = src.HasGodspeed();
 	if(src.Crippled > 10)
 		var/CrippledGod=round(src.Crippled/10);
-		GodSpeed = min(0, GodSpeed-CrippledGod);
-	SpdMult = max(0.1,glob.GOD_SPEED_MULT*sqrt(max(1,GodSpeed)))
+		Godspeed = min(0, Godspeed-CrippledGod);
+	SpdMult = max(0.1,glob.GOD_SPEED_MULT*sqrt(max(1,Godspeed)))
 	var/Delay=glob.SPEED_DELAY/(Spd*(1+SpdMult))
 	if(src.Flying)
 		Delay=0.25

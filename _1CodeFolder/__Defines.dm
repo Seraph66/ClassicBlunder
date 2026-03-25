@@ -67,6 +67,7 @@ proc/log_func(x, a, b)
 #define ANGEL /race/angel
 #define POPO /race/popo
 #define CELESTIAL /race/celestial
+#define NOBODY /race/nobody
 
 
 #define DEBUG_DAMAGE 0

@@ -29,7 +29,7 @@ ascension
 					strength = 0.25
 					speed = 0.25
 					defense = 0.25
-					passives+= list("GodSpeed" = 1, "BlurringStrikes"=1)
+					passives+= list("Godspeed" = 1, "BlurringStrikes"=1)
 				..()
 		three
 			unlock_potential = ASCENSION_THREE_POTENTIAL
@@ -79,7 +79,7 @@ ascension
 					strength = 0.25
 					speed = 0.25
 					defense = 0.25
-					passives+= list("GodSpeed" = 1, "BlurringStrikes"=1)
+					passives+= list("Godspeed" = 1, "BlurringStrikes"=1)
 				..()
 		five
 			unlock_potential = ASCENSION_FIVE_POTENTIAL
@@ -137,7 +137,7 @@ ascension
 				defense = 0.5
 				intelligenceAdd=3
 				imaginationAdd=-2
-				passives= list("GodSpeed"= 1, "Flicker" = 1)
+				passives= list("Godspeed"= 1, "Flicker" = 1)
 
 				onAscension(mob/owner)
 					owner.Class = "Spring"

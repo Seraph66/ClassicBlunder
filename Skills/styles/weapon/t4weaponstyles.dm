@@ -56,14 +56,14 @@
 		StyleStr=2
 		StyleEnd=1.5
 		Finisher="/obj/Skills/Queue/Finisher/The_Blade_of_Chaos"
-		passives = list("DisableGodKi" = 1, "EndlessNine" = 0.25, "Deicide" = 10, "Rage" = 5, "Half-Sword" = 5, "Zornhau" = 5, "FavoredPrey" = "Everything", \
+		passives = list("DisableGodKi" = 1, "EndlessNine" = 0.25, "Deicide" = 10, "Rage" = 5, "Half-Sword" = 5, "Zornhau" = 5, "FavoredPrey" = "All", \
 			"Shearing" = 10, "Deflection" = 5, "Disarm" = 3,"Parry" = 5, "Momentum" = 5, \
 			"Secret Knives" = "GodSlayer", "Tossing" = 5, "Pressure" = 5, "Unnerve" = 5, "BladeFisting" = 1, "SlayerMod" = 3, "Extend" = 2)
 		// either throw swords at them, or runes, depending on icon_state do a different effect
 		adjust(mob/p)
-		passives = list("DisableGodKi" = 1, "EndlessNine" = 0.25, "Deicide" = 10, "Rage" = 5, "Half-Sword" = 5, "Zornhau" = 5, "FavoredPrey" = "Everything", \
-			"Shearing" = 10, "Deflection" = 5, "Disarm" = 3,"Parry" = 5, "Momentum" = 5, \
-			"Secret Knives" = "GodSlayer", "Tossing" = 5, "Pressure" = 5, "Unnerve" = 5, "BladeFisting" = 1, "SlayerMod" = 3, "Extend" = 2)
+			passives = list("DisableGodKi" = 1, "EndlessNine" = 0.25, "Deicide" = 10, "Rage" = 5, "Half-Sword" = 5, "Zornhau" = 5, "FavoredPrey" = "All", \
+				"Shearing" = 10, "Deflection" = 5, "Disarm" = 3,"Parry" = 5, "Momentum" = 5, \
+				"Secret Knives" = "GodSlayer", "Tossing" = 5, "Pressure" = 5, "Unnerve" = 5, "BladeFisting" = 1, "SlayerMod" = 3, "Extend" = 2)
 		verb/War_God()
 			set hidden=1
 			adjust(usr)

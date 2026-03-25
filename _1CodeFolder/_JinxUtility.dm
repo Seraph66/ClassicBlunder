@@ -2609,24 +2609,6 @@ mob
 			else if(GetSpiritPower()>=0.25)
 				var/spiritPower = (GetSpiritPower() / 2)
 				return clamp(src.GetAbyssMod()*spiritPower, 0.001, 10)
-		SlayerDamage(mob/P, Forced=0)
-			if(HasSlayerMod(P))
-				if(P.UsingMuken())
-					return (-1)*src.GetSlayerMod()
-				var/ignore = P.passive_handler.Get("Xenobiology")
-				if(ignore && ((passive_handler["FavoredPrey"] == P.race.name) || passive_handler["FavoredPrey"] == "All"))
-					ignore = 0
-				if(src.Saga in list("Hiten Mitsurugi-Ryuu", "Ansatsuken"))
-					if(src.SagaLevel>=1)
-						if(!Forced)
-							return clamp((src.GetSlayerMod() * 1.5) - ignore, 0, glob.SLAYER_DAMAGE_CLAMP)
-						else
-							return clamp((Forced *1.5) - ignore, 0, glob.SLAYER_DAMAGE_CLAMP)
-				if(!Forced)
-					return clamp((src.GetSlayerMod() * 1.5) - ignore, 0, glob.SLAYER_DAMAGE_CLAMP)
-				else
-					return clamp(Forced - ignore, 0, glob.SLAYER_DAMAGE_CLAMP)
-				return 1
 
 		SpiritShift()
 			var/SFStr=src.BaseFor()+(glob.SPIRIT_FORM_BASE_RATE*src.AscensionsAcquired*(src.BaseStr()-src.BaseFor()))

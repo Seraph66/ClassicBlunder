@@ -35,11 +35,14 @@ globalTracker/var/SYMBIOTE_DMG_TEST = 2
             . = 0;
 
 
+globalTracker/var/
+    MORTAL_VS_GOD_SPEC_DMG_REDUCTION = 0.3;
 
-/mob/proc/attackModifiers(mob/defender)
-    var/nerf = (defender.HasGodKi()&&!HasNull()) ? 1 - (0.3 * defender.GetGodKi()) : 0
-    if(nerf && nerf <= 0)
-        nerf = 0.1
+#define NO_GOD_KI_REDUCTION 1
+#define VALID_SPEC_DMG_TYPE list("Holy", "Abyss", "Slayer", "Deicide")//only slayer is implemented atm
+/mob/proc/attackModifiers(mob/defender, list/forcedDmgList=list())
+    var/godKiNerf = NO_GOD_KI_REDUCTION;
+    if(defender.HasGodKi() && !HasGodKi() && !HasNull()) godKiNerf += max(0, (glob.MORTAL_VS_GOD_SPEC_DMG_REDUCTION * defender.GetGodKi()));
     if(passive_handler.Get("Enraged") && Anger)
         if(!defender.Anger || Anger > defender.Anger)
             . += passive_handler.Get("Enraged") / glob.ENRAGED_DAMAGE_DIVISOR
@@ -47,11 +50,14 @@ globalTracker/var/SYMBIOTE_DMG_TEST = 2
         . += HolyDamage(defender) / glob.HOLY_DAMAGE_DIVISOR
     if(HasAbyssMod())
         . += AbyssDamage(defender) / glob.ABYSS_DAMAGE_DIVISOR
-    if(HasSlayerMod())
-        . += SlayerDamage(defender) / glob.SLAYER_DAMAGE_DIVISOR
-    if(passive_handler.Get("Deicide"))
-        . += DeicideDamage(defender) / glob.DEICIDE_DAMAGE_DIVISOR
-    else
-        if(nerf > 0)
-            . *= nerf
+    . += GetSlayerMod(defender, getForcedDamageType("Slayer", forcedDmgList)) / glob.SLAYER_DAMAGE_DIVISOR; //validates within the GetSlayerMod proc, which does still need to be moved out of _binaryChecks
+    if(passive_handler.Get("Deicide")) . += DeicideDamage(defender) / glob.DEICIDE_DAMAGE_DIVISOR
+    else . /= max(NO_GOD_KI_REDUCTION, godKiNerf);
 
+/mob/proc/getForcedDamageType(typeToFind, list/forcedDmgList=list())
+    if(!typeToFind) return 0;
+    if(!forcedDmgList || forcedDmgList.len < 1) return 0;
+    if(!(typeToFind in VALID_SPEC_DMG_TYPE)) return 0;
+    var/val = forcedDmgList[typeToFind];
+    . = 0;
+    . += isnum(val) ? val : 0;
