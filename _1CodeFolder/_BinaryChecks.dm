@@ -2011,17 +2011,19 @@ mob
 			if(src.CheckSlotless("Saiyan Soul"))
 				Total=0.35
 			return Total
-		HasEndlessNine()
-			if(HasNullTarget()) return 0;
-			if(passive_handler.Get("CreateTheHeavens"))
-				return 0
-			if(passive_handler.Get("EndlessNine"))
-				return 1
-			return 0
-		GetEndlessNine()
-			var/Total=(!HasNullTarget() ? passive_handler.Get("EndlessNine") : 0)
-			Total*=clamp(100/(Health+1), 1, 8)
-			return Total
+
+globalTracker/var
+	ENDLESS_NINE_MIN = 0;
+	ENDLESS_NINE_MAX_MULT = 8;
+
+mob
+	proc
+		GetEndlessNine(mob/atkr)
+			if(!atkr || HasNullTarget() || passive_handler.Get("CreateTheHeavens")) return 0;
+			. = passive_handler.Get("EndlessNine");
+			if(.) . *= clamp(100/(Health+1), 1, glob.ENDLESS_NINE_MAX_MULT);
+			. = min(., atkr.GetGodKi());
+			. = max(glob.ENDLESS_NINE_MIN, .);
 		HasFluidForm()
 			if(passive_handler.Get("FluidForm"))
 				return passive_handler.Get("FluidForm")

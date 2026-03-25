@@ -3,10 +3,8 @@
 		. += (GetGodKi() * 10) * glob.GODKI_DIFF_MULT
 	if(defender.HasGodKi() && destructive < 2 )
 		. -= (defender.GetGodKi() * 10) * glob.GODKI_DIFF_MULT
-	var/EffectiveEndlessNine=defender.GetEndlessNine()*clamp((80/(defender.Health+1)),1,8)
-	if(EffectiveEndlessNine>GetGodKi())
-		EffectiveEndlessNine=GetGodKi()
-	if(HasGodKi() && defender.HasEndlessNine() && destructive < 2 )
+	var/EffectiveEndlessNine=defender.GetEndlessNine(src);
+	if(HasGodKi() && EffectiveEndlessNine && destructive < 2 )
 		. -= (EffectiveEndlessNine * 10) * glob.GODKI_DIFF_MULT
 	if(defender.passive_handler.Get("The Immovable Object")&&!defender.HasGodKi())
 		. = 0;
