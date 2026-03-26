@@ -2,7 +2,7 @@
 /obj/Skills/AutoHit/Magic/Fire
     SpellElement="Fire"
     SpellSlot=1;
-    Inferno_Cannon
+    Blazing_Whip//AoE
 /obj/Skills/Projectile/Fire//line, specifically
     SpellElement="Fire"
     SpellSlot=1;

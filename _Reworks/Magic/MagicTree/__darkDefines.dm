@@ -26,13 +26,13 @@
 #define DARK_NODE_52_Y 134
 #define DARK_NODE_CROWN_Y 47
 
-#define DARK_NODE_ENTRY "DarkNodeAutohit"
+#define DARK_NODE_ENTRY "Shadow Cleave (Spell Slot)"
 #define DARK_NODE_11 "DarkNode11"
 #define DARK_NODE_12 "DarkNode12"
-#define DARK_NODE_21 "DarkNodeProjectile"
+#define DARK_NODE_21 "Void Blast (Spell Slot)"
 #define DARK_NODE_22 "DarkNode22"
 #define DARK_NODE_23 "DarkNode23"
-#define DARK_NODE_24 "DarkNodeLine"
+#define DARK_NODE_24 "Arachnae Touch (Spell Slot)"
 #define DARK_NODE_3 "DarkNode3"
 #define DARK_NODE_41 "DarkNode41"
 #define DARK_NODE_42 "DarkNode42"

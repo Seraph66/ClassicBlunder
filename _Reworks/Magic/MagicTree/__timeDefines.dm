@@ -24,13 +24,13 @@
 #define TIME_NODE_34_Y 292
 #define TIME_NODE_CROWN_Y 214
 
-#define TIME_NODE_ENTRY "TimeNodeAOE"
+#define TIME_NODE_ENTRY "Tempus Cessat (Spell Slot)"
 #define TIME_NODE_11 "TimeNode11"
 #define TIME_NODE_12 "TimeNode12"
 #define TIME_NODE_13 "TimeNode13"
 #define TIME_NODE_14 "TimeNode14"
-#define TIME_NODE_21 "TimeNodeBuff"
-#define TIME_NODE_22 "TimeNodeDebuff"
+#define TIME_NODE_21 "Haste (Spell Slot)"
+#define TIME_NODE_22 "Wither (Spell Slot)"
 #define TIME_NODE_31 "TimeNode31"
 #define TIME_NODE_32 "TimeNode32"
 #define TIME_NODE_33 "TimeNode33"

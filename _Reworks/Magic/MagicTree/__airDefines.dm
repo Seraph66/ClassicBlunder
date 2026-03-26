@@ -24,15 +24,15 @@
 #define AIR_NODE_NORTH2_Y 114
 #define AIR_NODE_NORTH3_Y 177
 
-#define AIR_NODE_ENTRY "AirNodeAutohit"
+#define AIR_NODE_ENTRY "Breaking Twister (Spell Slot)"
 #define AIR_NODE_SOUTH2 "AirNodeSouth2"
 #define AIR_NODE_SOUTH3 "AirNodeSouth3"
 #define AIR_NODE_EAST "AirNodeEast"
-#define AIR_NODE_EAST2 "AirNodeBuff"
+#define AIR_NODE_EAST2 "Evading Zephyr (Spell Slot)"
 #define AIR_NODE_EAST3 "AirNodeEast3"
 #define AIR_NODE_WEST "AirNodeWest"
 #define AIR_NODE_WEST2 "AirNodeWest2"
-#define AIR_NODE_WEST3 "AirNodeLine"
+#define AIR_NODE_WEST3 "Mentis Imperium (Spell Slot)"
 #define AIR_NODE_CROWN "AirNodePinnacle"
 #define AIR_NODE_NORTH2 "AirNodeNorth2"
 #define AIR_NODE_NORTH3 "AirNodeNorth3"

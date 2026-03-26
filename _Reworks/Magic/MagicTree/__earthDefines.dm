@@ -24,13 +24,13 @@
 #define EARTH_NODE_42_Y 96
 #define EARTH_NODE_43_Y 96
 
-#define EARTH_NODE_ENTRY "EarthNodeAOE"
+#define EARTH_NODE_ENTRY "Seismic Entry (Spell Slot)"
 #define EARTH_NODE_12 "EarthNode12"
 #define EARTH_NODE_13 "EarthNode13"
-#define EARTH_NODE_21 "EarthNodeBuff"
+#define EARTH_NODE_21 "Ward of Stones (Spell Slot)"
 #define EARTH_NODE_22 "EarthNode22"
 #define EARTH_NODE_23 "EarthNode23"
-#define EARTH_NODE_31 "EarthNodeDebuff"
+#define EARTH_NODE_31 "Prickly Ballet (Spell Slot)"
 #define EARTH_NODE_32 "EarthNode33"
 #define EARTH_NODE_33 "EarthNode34"
 #define EARTH_NODE_CROWN "EarthNodePinnacle"
