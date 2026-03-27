@@ -829,6 +829,7 @@ obj/Items/Sword
 	var/iconAltY=0
 	var/ClassAlt=null
 	var/noHistory = TRUE
+	var/HighFrequency = 0
 	icon_state="Inventory"
 	TechType="Forge"
 	UpdatesDescription=1
@@ -879,7 +880,26 @@ obj/Items/Sword
 			HitSparkSize=1
 
 
-
+	HighFrequency
+		name="Bastard Sword"
+		Unobtainable=0
+		icon='LightSword.dmi'
+		DamageEffectiveness=1.025
+		AccuracyEffectiveness=0.9
+		SpeedEffectiveness=1.25
+		HitSparkSize=0.8
+		ShatterCounter=800
+		ShatterMax=800
+		Cost=40
+		Class="Light"
+		Ascended=4
+		ExtraClass=1
+		HighFrequency=1
+		TechType="MilitaryTechnology"
+		SubType="Melee Weaponry"
+		unsheatheIcon = 'KATANA SILVER.dmi'
+		unsheatheOffsetX = -16
+		unsheatheOffsetY = -16
 	Light
 		name="Bastard Sword"
 		Unobtainable=0
