@@ -9,22 +9,27 @@ race
 		desc = "Distant thoughts, either a dream or a nightmare, made manifest within the soul of a living being. They are chaotic and unstable, only able to imitate mortal life and individuality."
 		visual = 'Eldritch.png'
 
-		passives = list("VenomResistance" = 2, "Void" = 1, "SoulFire" = 0.25, "DeathField" = 2.5, "VoidField" = 2.5)
+		passives = list("Void" = 1, "DebuffResistance"=0.2, "PureDamage"=1, "PureReduction"=1, "BuffMastery"=5)
 		locked = TRUE
+
+		power = 3.5
 		strength = 1.5
-		endurance = 2.25
-		speed = 1.5
+		endurance = 2
+		speed = 2
 		force = 1.5
-		offense = 1.5
-		defense = 1.75
-		regeneration = 2.5
+		offense = 2
+		defense = 2
+		regeneration = 3
+		intellect = 2
+		imagination = 1
 		anger = 1
-		intellect = 1.5
-		imagination = 0.67
-		skills = list(/obj/Skills/Utility/Telepathy, /obj/Skills/Teleport/Traverse_Depths,/obj/Skills/Buffs/SpecialBuffs/FadeIntoShadows)
+		skills = list(/obj/Skills/Utility/Telepathy, /obj/Skills/Teleport/Traverse_Depths,/obj/Skills/Buffs/SpecialBuffs/FadeIntoShadows, /obj/Skills/Buffs/SlotlessBuffs/Regeneration)
 
 		onFinalization(mob/user)
 			..()
-			user.Secret="Eldritch"
-			user.giveSecret("Eldritch")
+			var/obj/Skills/Buffs/regen = user.findOrAddSkill(/obj/Skills/Buffs/SlotlessBuffs/Regeneration);
+			regen.RegenerateLimbs=1;
+			var/eldType = alert(user, "Is your true eldritch nature Reflected from the Greater Depths, or are you Shrouded in the haze of the Sea of Darkness?", "Reflected", "Shrouded");
+			user.Secret="Eldritch ([eldType])"
+			user.giveSecret("Eldritch ([eldType])")
 			user.secretDatum.nextTierUp = 999

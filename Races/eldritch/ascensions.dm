@@ -13,11 +13,24 @@ ascension
 			endurance = 0.25
 			defense = 0.25
 			speed = 0.25
-			passives = list("DebuffResistance" = 0.5, "SoulFire" = 0.25, "DeathField" = 2.5, "VoidField" = 2.5, "PureDamage"=1, "PureReduction"=1, "BlockChance"=5, "BuffMastery"=1)
-			on_ascension_message = "Your dreams are twisted by chaos... What do you dream of?"
+			anger=0.2;
+			passives = list("DebuffResistance"=0.2, "PureDamage"=1, "PureReduction"=1, "BuffMastery"=2, "BlockChance"=5, "CritChance"=5, "CriticalBlock"=0.1, "CriticalDamage"=0.1);
+			onAscension(mob/owner)
+				switch(owner.Secret)
+					if("Eldritch (Shrouded)")
+						on_ascension_message = "Your dreams are twisted by chaos... but what do you dream of?"
+						passives["Unnerve"] = 1;
+						passives["Harden"] = 1;
+						passives["HardStyle"] = 1;
+					if("Eldritch (Reflected)")
+						on_ascension_message = "You catch a distant glimpse of ᛉᛜꓦᚱᛢᛊᚳᚪ ᛫᛫᛫"
+						passives["SoftStyle"] = 1;
+						passives["ManaSteal"] = 2.5;
+						passives["Soulfire"] = 0.25;
+				..()
+				
 			postAscension(mob/owner)
 				owner.secretDatum.tierUp(2, owner)
-
 				switch(owner.race.ascensions[1].choiceSelected)
 					if(/ascension/sub_ascension/eldritch/hunter)
 						owner.race.ascensions[3].choices.Remove("Hunter");
@@ -33,7 +46,7 @@ ascension
 			endurance = 0.25
 			defense = 0.25
 			speed = 0.25
-			passives = list("DebuffResistance" = 0.5, "SoulFire" = 0.5, "DeathField" = 2.5, "VoidField" = 2.5, "PureDamage"=1, "PureReduction"=1, "BlockChance"=5, "BuffMastery"=1)
+			passives = list("Null"=1, "DebuffResistance"=0.2, "PureDamage"=1, "PureReduction"=1, "BuffMastery"=2, "BlockChance"=5, "CritChance"=5, "CriticalBlock"=0.1, "CriticalDamage"=0.1);
 			on_ascension_message = "Your delusions are embraced by mayhem..."
 			onAscension(mob/owner)
 				switch(owner.race.ascensions[1].choiceSelected)
@@ -59,7 +72,7 @@ ascension
 			defense = 0.25
 			speed = 0.25
 			enhanceChips = 14;
-			passives = list("MovementMastery"=2, "DebuffResistance" = 0.5, "SoulFire" = 1, "DeathField" = 2.5, "VoidField" = 2.5, "PureDamage"=1, "PureReduction"=1, "BlockChance"=5, "CriticalBlock"=0.1, "BuffMastery"=1)
+			passives = list("DebuffResistance"=0.2, "PureDamage"=1, "PureReduction"=1, "BuffMastery"=2, "BlockChance"=5, "CritChance"=5, "CriticalBlock"=0.1, "CriticalDamage"=0.1);
 			on_ascension_message = "Your fantasies are bleeding entropy... But what fantasy do you chase?"
 			onAscension(mob/owner)
 				switch(owner.race.ascensions[1].choiceSelected)
@@ -83,7 +96,7 @@ ascension
 			offense = 0.25
 			defense = 0.25
 			speed = 0.25
-			passives = list("DebuffResistance" = 0.5, "SoulFire" = 1, "DeathField" = 2.5, "VoidField" = 2.5, "PureDamage"=1, "PureReduction"=1, "BlockChance"=5, "CriticalBlock"=0.1, "BuffMastery"=1)
+			passives = list("DebuffResistance"=0.2, "PureDamage"=1, "PureReduction"=1, "BuffMastery"=2, "BlockChance"=5, "CritChance"=5, "CriticalBlock"=0.1, "CriticalDamage"=0.1);
 			on_ascension_message = "Your illusory self is beginning to fray at the edges.\nYou can't keep manifesting like this forever...Can you...?"
 			onAscension(mob/owner)
 				switch(owner.race.ascensions[1].choiceSelected)
@@ -117,7 +130,7 @@ ascension
 			offense = 0.25
 			defense = 0.25
 			speed = 0.25
-			passives = list("DebuffReversal" = 1, "SoulFire" = 2, "DeathField" = 2.5, "VoidField" = 2.5, "PureDamage"=1, "PureReduction"=1, "BlockChance"=5, "CriticalBlock"=0.1, "BuffMastery"=1)
+			passives = list("DebuffResistance"=0.2, "PureDamage"=1, "PureReduction"=1, "BuffMastery"=2, "BlockChance"=5, "CritChance"=5, "CriticalBlock"=0.1, "CriticalDamage"=0.1);
 			on_ascension_message = "You are."
 			onAscension(mob/owner)
 				switch(owner.race.ascensions[1].choiceSelected)
@@ -151,7 +164,7 @@ ascension
 			offense = 0.25
 			defense = 0.75
 			speed = 0.75
-			passives = list("DebuffReversal" = 1, "PureDamage"=5, "BlockChance"=25, "CriticalBlock"=0.25, "BuffMastery"=5, "GiantSwings"=1, "Extend"=1, "Gum Gum"=1, "Pressure"=2, "Siphon"=2, "Brutalize"=2, "Null"=2)
+			passives = list("DebuffReversal" = 1, "PureDamage"=5, "BlockChance"=25, "CriticalBlock"=0.25, "BuffMastery"=5, "GiantSwings"=1, "Extend"=1, "Gum Gum"=1, "Pressure"=2, "Siphon"=2, "Brutalize"=2)
 			on_ascension_message = "...unfortunately. ᚾᛁᛖᛊ   ᚾᛜ   ᛖᚣⲔᛊ   ᚾᚺᚣᚾ   ᚣ   ᚹᚱᛜᛒᚳᛊᛖ   ᚪᛜᚱ   ᛊꓦᛊᚱᛉᛜᚢᛊ   ᛊᚳᛢᛊ ᛫"
 			postAscension(mob/owner)
 				owner.secretDatum.tierUp(7, owner)
