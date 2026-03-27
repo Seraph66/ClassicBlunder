@@ -1002,7 +1002,7 @@ obj/Skills/Utility
 					if(Chosen:Ascended + 1 > glob.progress.maxAscension && !usr.MasterCrafts)
 						usr<<"Ascending [Chosen] is beyond your abilities."
 						return
-					Cost*=5*(2**Chosen:Ascended)
+					Cost*=5*(3**Chosen:Ascended)
 
 				//T2
 				if("Poison")
