@@ -180,7 +180,7 @@ globalTracker/var
     for(var/k in selectedNode.grantsSkills)
         msg += "\n- Access to the [k] magic skill.";
     for(var/sp in selectedNode.grantsSpellPassives)
-        msg += "\n- Access to the [sp] bundle of magic passives.";
+        msg += "\n- Access to the \[[findLastSlash(sp)]\] bundle of magic passives.";
     for(var/mp in selectedNode.grantsMagePassives)
         msg += "\n- Access to the [mp] bundle of mage passives.";
     for(var/k in selectedNode.grantsKnowledges)
@@ -298,9 +298,14 @@ globalTracker/var
     SpendRPP(glob.MagicNodeRPPCost);
     acquiredMagicNodes |= mn;
     availableMagicNodes |= mn.unlocksNodes;
-    if(mn.nodeType=="Spell Passive") findOrAddSkill(/obj/Skills/Utility/Enchant_Spell);
+    obtainNode(mn);
     src << "Unlocked node [mn.name]!";
     updateSelectionNodes();
+
+/mob/proc/obtainNode(magic_node/mn)
+    switch(mn.nodeType)
+        if("Spell Passive") unlockSpellPassive(mn);
+    unlockMagicKnowledge(mn);
 
 /mob/proc/unlockMagicTree(element)
     if(element in accessedMagicTrees)

@@ -38,6 +38,7 @@ magic_node/fire_tree
         xLoc = FIRE_NODE_31_X;
         yLoc = FIRE_NODE_31_Y;
         nodeType = "Spell Passive"
+        grantsSpellPassives = list(/spell_passive/fire/blaze);
         unlocksNodes = list(FIRE_NODE_21, FIRE_NODE_41);
     
     fire_node_32
@@ -45,6 +46,7 @@ magic_node/fire_tree
         xLoc = FIRE_NODE_32_X;
         yLoc = FIRE_NODE_32_Y;
         nodeType = "Spell Passive"
+        grantsSpellPassives = list(/spell_passive/fire/magma);
         unlocksNodes = list(FIRE_NODE_22, FIRE_NODE_42);
     
     fire_node_41
@@ -80,6 +82,7 @@ magic_node/fire_tree
         xLoc = FIRE_NODE_61_X
         yLoc = FIRE_NODE_61_Y
         nodeType = "Spell Passive"
+        grantsSpellPassives = list(/spell_passive/fire/ash);
         unlocksNodes = list(FIRE_NODE_CROWN, FIRE_NODE_51);
     
     fire_node_62
@@ -87,6 +90,7 @@ magic_node/fire_tree
         xLoc = FIRE_NODE_62_X
         yLoc = FIRE_NODE_62_Y
         nodeType = "Spell Passive"
+        grantsSpellPassives = list(/spell_passive/fire/nuclear);
         unlocksNodes = list(FIRE_NODE_CROWN, FIRE_NODE_52);
     
     fire_node_crown

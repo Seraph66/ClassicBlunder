@@ -24,6 +24,7 @@
         xLoc = WATER_NODE_21_X;
         yLoc = WATER_NODE_21_Y;
         nodeType = "Spell Passive"
+        grantsSpellPassives = list(/spell_passive/water/barotrauma);
         unlocksNodes = list(WATER_NODE_31, WATER_NODE_CENTER);
 
     water_node_22
@@ -31,6 +32,7 @@
         xLoc = WATER_NODE_22_X;
         yLoc = WATER_NODE_22_Y;
         nodeType = "Spell Passive"
+        grantsSpellPassives = list(/spell_passive/water/overflow);
         unlocksNodes = list(WATER_NODE_32, WATER_NODE_CENTER);
 
     water_node_31
@@ -73,6 +75,7 @@
         xLoc = WATER_NODE_61_X;
         yLoc = WATER_NODE_61_Y;
         nodeType = "Spell Passive"
+        grantsSpellPassives = list(/spell_passive/water/flashfreeze);
         unlocksNodes = list(WATER_NODE_41, WATER_NODE_TOP);
 
     water_node_62
@@ -80,6 +83,7 @@
         xLoc = WATER_NODE_62_X;
         yLoc = WATER_NODE_62_Y;
         nodeType = "Spell Passive"
+        grantsSpellPassives = list(/spell_passive/water/sublimate);
         unlocksNodes = list(WATER_NODE_42, WATER_NODE_TOP);
 
     water_node_top

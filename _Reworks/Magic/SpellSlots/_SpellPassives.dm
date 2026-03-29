@@ -1,5 +1,11 @@
 /mob/var/list/acquiredSpellPassives=list();
 
+/mob/proc/unlockSpellPassive(magic_node/mn)
+    findOrAddSkill(/obj/Skills/Utility/Enchant_Spell);//give enchant spell obj if it doesn't already exist
+    for(var/type in mn.grantsSpellPassives)
+        var/spell_passive/sp = new type;
+        acquiredSpellPassives |= sp;
+
 /obj/Skills/Utility
     var/tmp/enchanting=0;
     Enchant_Spell
