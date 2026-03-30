@@ -24,6 +24,7 @@ magic_node/light_tree
         xLoc = LIGHT_NODE_12_X;
         yLoc = LIGHT_NODE_12_Y;
         nodeType = "Spell Passive"
+        grantsSpellPassives = list(/spell_passive/light/sanctified)
         unlocksNodes = list(LIGHT_NODE_13);
     
     light_node_13
@@ -45,6 +46,7 @@ magic_node/light_tree
         xLoc = LIGHT_NODE_22_X;
         yLoc = LIGHT_NODE_22_Y;
         nodeType = "Spell Passive"
+        grantsSpellPassives = list(/spell_passive/light/farsight)
         unlocksNodes = list(LIGHT_NODE_23, LIGHT_NODE_21);
     
     light_node_23
@@ -66,6 +68,7 @@ magic_node/light_tree
         xLoc = LIGHT_NODE_32_X
         yLoc = LIGHT_NODE_32_Y
         nodeType = "Spell Passive"
+        grantsSpellPassives = list(/spell_passive/light/mirrored)
         unlocksNodes = list(LIGHT_NODE_33, LIGHT_NODE_31);
     
     light_node_33
@@ -87,6 +90,7 @@ magic_node/light_tree
         xLoc = LIGHT_NODE_42_X
         yLoc = LIGHT_NODE_42_Y
         nodeType = "Spell Passive"
+        grantsSpellPassives = list(/spell_passive/light/cauterizing)
         unlocksNodes = list(LIGHT_NODE_CROWN, LIGHT_NODE_43);
     
     light_node_43

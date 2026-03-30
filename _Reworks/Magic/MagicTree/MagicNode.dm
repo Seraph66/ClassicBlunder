@@ -180,7 +180,7 @@ globalTracker/var
     for(var/k in selectedNode.grantsSkills)
         msg += "\n- Access to the [k] magic skill.";
     for(var/sp in selectedNode.grantsSpellPassives)
-        msg += "\n- Access to the \[[findLastSlash(sp)]\] bundle of magic passives.";
+        msg += "\n- Access to the [copytext("[sp]", findLastSlash("[sp]"))] bundle of spell passives.";//needs quotes on the argument to be able to be modifiable by findLastSlash proc
     for(var/mp in selectedNode.grantsMagePassives)
         msg += "\n- Access to the [mp] bundle of mage passives.";
     for(var/k in selectedNode.grantsKnowledges)
@@ -233,8 +233,8 @@ globalTracker/var
 
 /mob/proc/canUnlockMagicTree(element)
     if(RPPSpendable < glob.MagicNodeRPPCost)
-        alert(src, "You don't have enough RPP to buy this tree / node!", "ERROR", "OK");
-        return;
+        alert(src, "You don't have enough RPP to unlock the [element] Magic Tree! ([RPPSpendable] / [glob.MagicNodeRPPCost])", "ERROR", "OK");
+        return 0;
     if(!(element in VALID_MAGIC_ELEMENTS))
         alert(src, "Uhm? Somehow, you've tried to unlock an element that doesn't exist in the valid element list...", "ERROR", "OK");
         return; //if this isn't a real element

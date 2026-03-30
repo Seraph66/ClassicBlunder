@@ -31,6 +31,7 @@ magic_node/space_tree
         xLoc = SPACE_NODE_22_X;
         yLoc = SPACE_NODE_22_Y;
         nodeType = "Spell Passive"
+        grantsSpellPassives = list(/spell_passive/space/constellation)
         unlocksNodes = list(SPACE_NODE_32, SPACE_NODE_33);
     
     space_node_31
@@ -38,6 +39,7 @@ magic_node/space_tree
         xLoc = SPACE_NODE_31_X;
         yLoc = SPACE_NODE_31_Y;
         nodeType = "Spell Passive"
+        grantsSpellPassives = list(/spell_passive/space/nebula)
         unlocksNodes = list(SPACE_NODE_41, SPACE_NODE_42, SPACE_NODE_21);
     
     space_node_32
@@ -59,6 +61,7 @@ magic_node/space_tree
         xLoc = SPACE_NODE_41_X
         yLoc = SPACE_NODE_41_Y
         nodeType = "Spell Passive"
+        grantsSpellPassives = list(/spell_passive/space/quasar)
         unlocksNodes = list(SPACE_NODE_42, SPACE_NODE_31);
     
     space_node_42
@@ -66,6 +69,7 @@ magic_node/space_tree
         xLoc = SPACE_NODE_42_X
         yLoc = SPACE_NODE_42_Y
         nodeType = "Spell Passive"
+        grantsSpellPassives = list(/spell_passive/space/supernova)
         unlocksNodes = list(SPACE_NODE_41, SPACE_NODE_5, SPACE_NODE_31, SPACE_NODE_32);
     
     space_node_43

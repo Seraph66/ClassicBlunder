@@ -24,6 +24,7 @@ magic_node/time_tree
         xLoc = TIME_NODE_11_X;
         yLoc = TIME_NODE_11_Y;
         nodeType = "Spell Passive"
+        grantsSpellPassives = list(/spell_passive/time/echo)
         unlocksNodes = list(TIME_NODE_21, TIME_NODE_12);
     
     time_node_12
@@ -38,6 +39,7 @@ magic_node/time_tree
         xLoc = TIME_NODE_13_X;
         yLoc = TIME_NODE_13_Y;
         nodeType = "Spell Passive"
+        grantsSpellPassives = list(/spell_passive/time/paradox)
         unlocksNodes = list(TIME_NODE_32, TIME_NODE_14);
     
     time_node_14
@@ -73,6 +75,7 @@ magic_node/time_tree
         xLoc = TIME_NODE_32_X
         yLoc = TIME_NODE_32_Y
         nodeType = "Spell Passive"
+        grantsSpellPassives = list(/spell_passive/time/passage)
         unlocksNodes = list(TIME_NODE_31, TIME_NODE_13, TIME_NODE_CROWN);
     
     time_node_33
@@ -87,6 +90,7 @@ magic_node/time_tree
         xLoc = TIME_NODE_34_X
         yLoc = TIME_NODE_34_Y
         nodeType = "Spell Passive"
+        grantsSpellPassives = list(/spell_passive/time/stasis)
         unlocksNodes = list(TIME_NODE_33, TIME_NODE_22);
     
     time_node_crown

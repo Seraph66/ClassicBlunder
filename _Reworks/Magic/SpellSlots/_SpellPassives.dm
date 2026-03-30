@@ -192,9 +192,9 @@
             name="Disaster"
         ravenous//cost hp, refund hp if hit
             name="Ravenous"
-        Vampyric
+        vampyric
             name="Vampyric"
-        Hemomantic//more like homo amirite
+        hemomantic//more like homo amirite
             name="Hemomantic"
 
     space
