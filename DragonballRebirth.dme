@@ -481,6 +481,7 @@
 #include "_Reworks\Tech\magic\scrolls.dm"
 #include "_Reworks\Tech\magic\tomeRework.dm"
 #include "_Reworks\Unsorted\AdminSandstorm.dm"
+#include "_Reworks\Unsorted\AdminScreenShatter.dm"
 #include "_Reworks\Unsorted\adminStuff.dm"
 #include "_Reworks\Unsorted\PreWipe.dm"
 #include "_Reworks\Unsorted\SameHouse.dm"

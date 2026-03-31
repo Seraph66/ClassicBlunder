@@ -628,3 +628,139 @@ proc
 
 
 //Proc definitions for object types
+
+
+/obj/screen/glass_shard
+	icon = 'Icons/Effects/GlassEffect.dmi'
+	layer = 20
+	mouse_opacity = 0
+	appearance_flags = KEEP_TOGETHER
+	var/rel_x = 0
+	var/rel_y = 0
+
+/proc/ScreenShatter(mob/target)
+	set waitfor = 0
+	if(!target?.client)
+		return
+
+	var/client/C = target.client
+
+	var/vw = 15
+	var/vh = 15
+	if(isnum(C.view))
+		vw = C.view * 2 + 1
+		vh = vw
+	else
+		var/view_text = "[C.view]"
+		var/x_pos = findtext(view_text, "x")
+		if(x_pos)
+			vw = text2num(copytext(view_text, 1, x_pos))
+			vh = text2num(copytext(view_text, x_pos + 1))
+
+	var/eff_w = min(vw, 31)
+	var/eff_h = min(vh, 31)
+	var/off_x = round((vw - eff_w) / 2)
+	var/off_y = round((vh - eff_h) / 2)
+	var/cx = round(eff_w / 2) + 1
+	var/cy = round(eff_h / 2) + 1
+
+	var/obj/flash_overlay = new
+	flash_overlay.screen_loc = "CENTER"
+	flash_overlay.layer = 21
+	flash_overlay.mouse_opacity = 0
+	flash_overlay.appearance_flags = PIXEL_SCALE
+	flash_overlay.alpha = 0
+	var/icon/flash_icon = new('Icons/Effects/GlassEffect.dmi', "1")
+	flash_icon.DrawBox("#FFFFFF", 1, 1, 32, 32)
+	flash_overlay.icon = flash_icon
+	var/matrix/flash_scale = matrix()
+	flash_scale.Scale(35, 35)
+	flash_overlay.transform = flash_scale
+	C.screen += flash_overlay
+
+	animate(flash_overlay, alpha = 255, time = 12)
+	sleep(12)
+
+	if(!target?.client)
+		C.screen -= flash_overlay
+		del flash_overlay
+		return
+
+	var/list/all_tiles = list()
+
+	for(var/tx = 1 to eff_w)
+		for(var/ty = 1 to eff_h)
+			var/sx = tx + off_x
+			var/sy = ty + off_y
+			var/tile_rot = pick(0, 90, 180, 270)
+			var/matrix/T = matrix()
+			if(prob(50))
+				T.Scale(-1, 1)
+			if(tile_rot)
+				T.Turn(tile_rot)
+			var/obj/screen/glass_shard/tile = new
+			tile.icon_state = "1"
+			tile.screen_loc = "[sx],[sy]"
+			tile.rel_x = tx - cx
+			tile.rel_y = ty - cy
+			tile.transform = T
+			for(var/sn = 2 to 8)
+				tile.overlays += image('Icons/Effects/GlassEffect.dmi', icon_state = "[sn]")
+			C.screen += tile
+			all_tiles += tile
+
+	sleep(5)
+
+	if(!target?.client)
+		for(var/obj/screen/glass_shard/tile in all_tiles)
+			del tile
+		C.screen -= flash_overlay
+		del flash_overlay
+		return
+
+	var/list/all_shards = list()
+	for(var/obj/screen/glass_shard/tile in all_tiles)
+		tile.overlays.Cut()
+		tile.appearance_flags = 0
+		all_shards += tile
+		for(var/sn = 2 to 8)
+			var/obj/screen/glass_shard/piece = new
+			piece.icon_state = "[sn]"
+			piece.screen_loc = tile.screen_loc
+			piece.transform = tile.transform
+			C.screen += piece
+			all_shards += piece
+
+	animate(flash_overlay, alpha = 0, time = 10)
+
+	sleep(5)
+
+	if(!target?.client)
+		for(var/obj/screen/glass_shard/shard in all_shards)
+			del shard
+		C.screen -= flash_overlay
+		del flash_overlay
+		return
+
+	for(var/obj/screen/glass_shard/shard in all_shards)
+		var/fly_angle = rand(0, 359)
+		var/fly_dist = rand(500, 1100)
+		var/fly_x = cos(fly_angle) * fly_dist
+		var/fly_y = sin(fly_angle) * fly_dist - rand(100, 250)
+		var/spin = rand(-2880, 2880)
+		var/matrix/rot_matrix = matrix()
+		rot_matrix.Turn(spin)
+		animate(shard, pixel_x = fly_x, pixel_y = fly_y, alpha = 0, transform = rot_matrix, time = rand(6, 14), easing = QUAD_EASING | EASE_IN)
+
+	sleep(10)
+
+	if(target?.client)
+		C.screen -= flash_overlay
+	del flash_overlay
+
+	sleep(10)
+
+	for(var/obj/screen/glass_shard/shard in all_shards)
+		if(target?.client)
+			target.client.screen -= shard
+		del shard
