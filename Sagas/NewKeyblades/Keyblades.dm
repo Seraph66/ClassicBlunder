@@ -1,7 +1,7 @@
 mob/Admin3/verb
 	Grant_Keychain()
 		set category="Debug"
-		usr.ChooseKeyblade()
+		usr.ChooseKeychain()
 	//	Log("Admin", "[ExtractInfo(usr)] unlocked a keychain for [ExtractInfo(m)]!")
 	Grant_Martial_Skill()
 		set category="Debug"
@@ -9,6 +9,12 @@ mob/Admin3/verb
 	//	Log("Admin", "[ExtractInfo(usr)] unlocked a Martial Keyblade Skill for [ExtractInfo(m)]!")
 
 mob/proc/
+/*	Drive_Mastery(var/Form)
+		switch(Form)
+			if("Valor")
+			if("Wisdom")
+			if("Limit")
+			if("Master")*/
 	ChooseMartialSkill(var/Level)
 		var/list/Choices
 		var/confirm
@@ -66,7 +72,7 @@ mob/proc/
 					src.AddSkill(new/obj/Skills/Queue/Stun_Impact)
 				if("Explosion")
 					src.AddSkill(new/obj/Skills/Queue/Explosion)
-	ChooseKeyblade()
+	ChooseKeychain()
 		var/list/Options=glob.Keychains
 		var/keybladedecision
 		var/Choice

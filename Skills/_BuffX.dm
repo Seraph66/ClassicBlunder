@@ -3661,12 +3661,28 @@ NEW VARIABLES
 
 							usr.LimitCounter+=1
 				src.Trigger(usr)
+		Limit_Form
+			FlashChange=1
+			ABuffNeeded=list("Keyblade")
+			ManaLeak=1
+			ManaThreshold=1
+			passives = list("ManaLeak"= 1, "TechniqueMastery" = 5, "PureDamage" = 3, "PureReduction" = 3, "StunningStrike" = 1, "LifeGeneration" = 5, "Conductor" = 20)
+			StrMult=1.5
+			EndMult=1.5
+			KenWaveIcon='SparkleRed.dmi'
+			KenWaveSize=3
+			KenWaveX=105
+			KenWaveY=105
+			ActiveMessage="glows with limitless valor!"
+			OffMessage="de-syncs their keyblade..."
+			verb/Limit_Form()
+				set category="Skills"
 		Wisdom_Form
 			FlashChange=1
 			ABuffNeeded=list("Keyblade")
 			ManaLeak=1
 			ManaThreshold=1
-			passives = list("ManaLeak"= 1, "QuickCast"= 2, "TechniqueMastery" = 5, "Skimming" = 1, "DualCast" = 1, "SpecialStrike" = 1, "MasterfulCasting" = 1)
+			passives = list("ManaLeak"= 1, "QuickCast"= 2, "TechniqueMastery" = 5, "Skimming" = 2, "DualCast" = 1, "SpecialStrike" = 1, "MasterfulCasting" = 1)
 			ForMult=1.5
 			DefMult=1.5
 			KenWave=1
