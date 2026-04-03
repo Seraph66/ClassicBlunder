@@ -33,6 +33,9 @@ globalTracker/var/LOWER_DEBUFF_CLAMP = 0.001
 		if("Poison")
 			if(Antivenomed)
 				damage = damage / 2
+		if("Frenzy")
+			if(src.IsDarkDragonPlayer())
+				return 0
 
 	return clamp(damage, glob.LOWER_DEBUFF_CLAMP, glob.MAX_DEBUFF_CLAMP)
 
@@ -65,6 +68,8 @@ globalTracker/var/LOWER_DEBUFF_CLAMP = 0.001
 				currentPoi+=dmg
 	if(!src.GetDebuffReversal())
 		Health-=dmg
+		if(typeOfDebuff == "Frenzy" && !IsDarkDragonPlayer() && dmg > 0)
+			WoundSelf(dmg * 0.5)
 	if(Health<=0 && !KO)
 		if(src.passive_handler.Get("Color of Courage")&& src.Health>glob.TRIPLEHELIX_MAX_NEG_HP)
 			return
@@ -72,6 +77,10 @@ globalTracker/var/LOWER_DEBUFF_CLAMP = 0.001
 			Unconscious(null, "succumbing to Poison!")
 		if(typeOfDebuff == "Burn")
 			Unconscious(null, "burning up!")
+	if(typeOfDebuff == "Frenzy")
+		if(src.IsDarkDragonPlayer())
+			reduceDebuffStacks(typeOfDebuff)
+		return
 	reduceDebuffStacks(typeOfDebuff)
 
 /mob/proc/reduceDebuffStacks(typeOfDebuff)
@@ -102,6 +111,14 @@ globalTracker/var/LOWER_DEBUFF_CLAMP = 0.001
 					BlindingVenom=0
 					if(client.client_plane_master)
 						client.client_plane_master.filters = null
+		if("Frenzy")
+			if(!src.IsDarkDragonPlayer())
+				return
+			var/frenzyBase = clamp(vars["Frenzy"] / glob.BASE_DEBUFF_REDUCTION_DIVISOR, glob.BASE_DEBUFF_REDUCTION_DIVISOR_LOWER,glob.BASE_DEBUFF_REDUCTION_DIVISOR_UPPER)
+			if(Frenzy>0)
+				Frenzy -= (frenzyBase + ((GetEnd(0.15)+GetStr(0.15)) * (1+ (GetDebuffResistance() / 4))  )) * 0.1
+			if(Frenzy<0)
+				Frenzy = 0
 
 /mob/var/tmp/last_implode
 mob/proc/implodeDebuff(n, type)

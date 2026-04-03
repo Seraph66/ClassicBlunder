@@ -229,6 +229,7 @@ obj
 				NeedsHealth
 
 				DirectWounds//Deals (this value) of wound % per hit.
+				FrenzyDebuff
 
 			skillDescription()
 				..()
@@ -2527,6 +2528,27 @@ obj
 						Distance = 6 + (3 * usr.AscensionsAcquired)
 						ForOffense = 0.3 + (0.1 * usr.AscensionsAcquired)
 						StrOffense = 0.3 + (0.1 * usr.AscensionsAcquired)
+					usr.Activate(src)
+			Frenzy_Breath
+				ElementalClass="Dark"
+				StrOffense=1.5
+				SpecialAttack=1
+				DamageMult=15
+				WindUp=0.5
+				Distance=20
+				Area="Arc"
+				Icon='fevExplosion - Hellfire.dmi'
+				HitSparkIcon='fevExplosion - Hellfire.dmi'
+				FrenzyDebuff=100
+				Cooldown=90
+				verb/Frenzy_Breath()
+					set category="Skills"
+					if(!altered)
+						DamageMult = 6 + (1.5 * usr.AscensionsAcquired)
+						Cooldown = 60 - (5 * usr.AscensionsAcquired)
+						Distance = 6 + (4 * usr.AscensionsAcquired)
+						StrOffense = 1 + (0.25 * usr.AscensionsAcquired)
+						FrenzyDebuff = 40 + (10 * usr.AscensionsAcquired)
 					usr.Activate(src)
 			Poison_Gas
 				ElementalClass="Poison"
@@ -5846,6 +5868,7 @@ obj
 			Crippling
 			Shocking
 			Poisoning
+			FrenzyDebuff
 
 			grabNerf = 0
 			BuffAffected = 0
@@ -6026,6 +6049,8 @@ obj
 				src.Toxic+=Z.Toxic
 			if(Z.Crippling)
 				src.Crippling+=Z.Crippling
+			if(Z.FrenzyDebuff)
+				src.FrenzyDebuff = Z.FrenzyDebuff
 			if(Z.DirectWounds)
 				src.DirectWounds=Z.DirectWounds;
 			if(Z.ObjIcon)
@@ -6393,6 +6418,8 @@ obj
 					m.AddCrippling(Crippling, Owner)
 				if(Shearing)
 					m.AddShearing(Shearing, Owner)
+				if(FrenzyDebuff)
+					m.AddFrenzy(FrenzyDebuff, Owner)
 
 				if(Cleansing && src.Owner.shouldCleanse(m))
 					m.CleanseDebuff(Cleansing*10);
@@ -7084,6 +7111,7 @@ obj
 				src.Deluge=AH.Deluge
 				src.Stunner=AH.Stunner
 				src.Destructive=AH.Destructive
+				src.FrenzyDebuff=AH.FrenzyDebuff
 				src.Bang=AH.Bang
 				src.Bolt=AH.Bolt
 				src.Scratch=AH.Scratch
@@ -7152,6 +7180,7 @@ obj
 				src.Deluge=AH.Deluge
 				src.Stunner=AH.Stunner
 				src.Destructive=AH.Destructive
+				src.FrenzyDebuff=AH.FrenzyDebuff
 				src.Bang=AH.Bang
 				src.Bolt=AH.Bolt
 				src.Scratch=AH.Scratch
@@ -7221,6 +7250,7 @@ obj
 				src.Stunner=AH.Stunner
 				src.Deluge=AH.Deluge
 				src.Destructive=AH.Destructive
+				src.FrenzyDebuff=AH.FrenzyDebuff
 				src.Bang=AH.Bang
 				src.Bolt=AH.Bolt
 				src.Scratch=AH.Scratch

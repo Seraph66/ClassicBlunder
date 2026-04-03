@@ -1251,7 +1251,12 @@ mob/proc/Update_Stat_Labels()
 			src<<output("CHL: [round(Slow, 1)]","BarSlow")
 		else
 			winshow(src, "BarSlow",0)
-		if(src.Sheared>0)
+		if(src.Frenzy>0)
+			winshow(src, "BarFrenzy",1)
+			src<<output("FRENZY: [round(Frenzy, 1)]","BarFrenzy")
+		else
+			winshow(src, "BarFrenzy",0)
+		if(src.Sheared>0 && !(src.Frenzy>0 && !src.IsDarkDragonPlayer()))
 			winshow(src, "BarPotion",1)
 			src<<output("SHR: [round(Sheared, 1)]","BarPotion")
 		else

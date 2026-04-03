@@ -11019,6 +11019,25 @@ NEW VARIABLES
 						if(!User.BuffOn(src))
 							adjust(User)
 						..()
+				Frenzy_Mantle
+					NeedsHealth = 50
+					TooMuchHealth = 75
+					ActiveMessage = "adorns themselves in a mantle of dark energy... has your shadow always been this prominent?"
+					OffMessage = "releases their mantle of darkness..."
+					Cooldown = 120
+					adjust(mob/p)
+						if(altered) return
+						var/asc = p.AscensionsAcquired
+						strAdd = 0.075 * asc
+						spdAdd = 0.075 * asc
+						ElementalOffense = "Dark"
+						ElementalDefense = "Dark"
+						passives = list("AsuraStrike" = asc/3, "PhysPleroma" = asc/2, "AbyssMod" = asc/2, \
+							"HellPower" = asc/6, "HellRisen" = asc/4, "Shadowbringer" = 1, "FrenzyCarrier" = 1)
+					Trigger(mob/User, Override = FALSE)
+						if(!User.BuffOn(src))
+							adjust(User)
+						..()
 				Hoarders_Riches
 					// Gold Dragon Racial. Have money? Be OP.
 					ActiveMessage = "gains the faint glitter of gold in their hues!"

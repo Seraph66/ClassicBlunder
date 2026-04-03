@@ -18,7 +18,7 @@ race
 		imagination = 2
 
 		onFinalization(mob/user)
-			user.Class = input(user,"Pick an element to represent you.", "Dragon Element") in list("Fire","Metal", "Gold", "Wind", "Water")
+			user.Class = input(user,"Pick an element to represent you.", "Dragon Element") in list("Fire","Metal", "Gold", "Wind", "Water","Dark")
 			switch(user.Class)
 				if("Fire")
 					skills = list(/obj/Skills/AutoHit/Dragon_Roar, /obj/Skills/AutoHit/Fire_Breath, /obj/Skills/Buffs/SlotlessBuffs/Autonomous/Dragon_Rage/Heat_Of_Passion)
@@ -44,4 +44,8 @@ race
 					passives["Blubber"] = 0.25
 				if("Poison")
 					skills = list(/obj/Skills/AutoHit/Dragon_Roar, /obj/Skills/AutoHit/Poison_Gas, /obj/Skills/Buffs/SlotlessBuffs/Autonomous/Dragon_Rage/Melt_Down)
+				if("Dark")
+					skills = list(/obj/Skills/AutoHit/Dragon_Roar, /obj/Skills/AutoHit/Frenzy_Breath, /obj/Skills/Buffs/SlotlessBuffs/Autonomous/Dragon_Rage/Frenzy_Mantle)
+					passives["Fury"] = 1
+					passives["Momentum"] = 1
 			..()

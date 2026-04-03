@@ -70,13 +70,19 @@
                 ActiveMessage="swarms the area with a flood!"
                 TurfReplace='PlainWater.dmi'
                 Area="Circle"
-				SpecialAttack=1
-				HitSparkIcon='Hit Effect Pearl.dmi'
-				HitSparkX=-32
-				HitSparkY=-32
-				HitSparkTurns=1
-				HitSparkSize=1
-				TurfStrike=1
+                SpecialAttack=1
+                HitSparkIcon='Hit Effect Pearl.dmi'
+                HitSparkX=-32
+                HitSparkY=-32
+                HitSparkTurns=1
+                HitSparkSize=1
+                TurfStrike=1
+            if("Dark")
+                TurfErupt=1
+                Stunner = 5 + asc
+                Distance = 4 + asc
+                Rounds = 1
+                DamageMult = 0.25 + (asc * 1)
     verb/Dragon_Roar()
         set category="Skills"
         adjust(usr)

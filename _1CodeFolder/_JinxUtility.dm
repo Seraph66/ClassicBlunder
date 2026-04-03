@@ -250,6 +250,8 @@ mob
 				var/final_damage = max(0,val)
 				defender.LoseHealth(final_damage)
 
+			src.ApplyFrenzyCombatHooks(defender, max(0, val), UnarmedAttack, SwordAttack, SpiritAttack)
+
 			if(defender.Flying)
 				var/obj/Items/check = defender.EquippedFlyingDevice()
 				if(istype(check))
@@ -917,23 +919,29 @@ mob
 			if(src.TotalCapacity>=100)
 				src.TotalCapacity=100
 		HealHealth(var/val)
-			if(src.Sheared)
+			if(src.GetEffectiveShearForStackingEffects())
 				if(src.HasShearImmunity())
 					val=val
 					src.Sheared=0
 				if(src.HasHellPower())
-					src.Sheared-=val/(2/src.GetHellPower())
-					if(src.Sheared<0)
-						val+=(-1)*src.Sheared
-						src.Sheared=0
-					else
+					if(src.Sheared > 0)
+						src.Sheared-=val/(2/src.GetHellPower())
+						if(src.Sheared<0)
+							val+=(-1)*src.Sheared
+							src.Sheared=0
+						else
+							val=val*0.5
+					else if(!src.IsDarkDragonPlayer() && src.Frenzy > 0)
 						val=val*0.5
 				else
-					src.Sheared-=val
-					if(src.Sheared<0)
-						val=(-1)*src.Sheared
-						src.Sheared=0
-					else
+					if(src.Sheared > 0)
+						src.Sheared-=val
+						if(src.Sheared<0)
+							val=(-1)*src.Sheared
+							src.Sheared=0
+						else
+							val=val/4
+					else if(!src.IsDarkDragonPlayer() && src.Frenzy > 0)
 						val=val/4
 			if(src.PotionCD)
 				val/=glob.HEALTH_POTION_NERF
@@ -967,15 +975,18 @@ mob
 			src.ManaAmount+=val
 			src.MaxMana()
 		HealWounds(var/val, var/StableHeal=0)
-			if(src.Sheared)
+			if(src.GetEffectiveShearForStackingEffects())
 				if(src.HasShearImmunity())
 					val=val
 					src.Sheared=0
-				src.Sheared-=val
-				if(src.Sheared<0)
-					val=(-1)*src.Sheared
-					src.Sheared=0
-				else
+				if(src.Sheared > 0)
+					src.Sheared-=val
+					if(src.Sheared<0)
+						val=(-1)*src.Sheared
+						src.Sheared=0
+					else
+						val=val/2
+				else if(!src.IsDarkDragonPlayer() && src.Frenzy > 0)
 					val=val/2
 			if(src.PotionCD)
 				val/=1.25
@@ -1555,6 +1566,8 @@ mob
 			// Demon Devil Trigger sins bonus
 			Mod += getDevilTriggerSinBonusMult()
 			Mod += getMazokuSinBonusMult()
+			if(IsDarkDragonPlayer() && Frenzy > 0)
+				Mod += 0.5 * (min(Frenzy, glob.DEBUFF_STACK_MAX) / glob.DEBUFF_STACK_MAX)
 			var/STM=GetStrTransMult()
 			Str*=STM
 			Str*=Mod
@@ -1995,6 +2008,8 @@ mob
 			// Demon Devil Trigger sins bonus
 			Mod += getDevilTriggerSinBonusMult()
 			Mod += getMazokuSinBonusMult()
+			if(IsDarkDragonPlayer() && Frenzy > 0)
+				Mod += 0.5 * (min(Frenzy, glob.DEBUFF_STACK_MAX) / glob.DEBUFF_STACK_MAX)
 			var/SpTM=GetSpdTransMult()
 			Spd*=SpTM
 			Spd*=Mod
@@ -2092,6 +2107,8 @@ mob
 			// Demon Devil Trigger sins bonus
 			Mod += getDevilTriggerSinBonusMult()
 			Mod += getMazokuSinBonusMult()
+			if(IsDarkDragonPlayer() && Frenzy > 0)
+				Mod += 0.5 * (min(Frenzy, glob.DEBUFF_STACK_MAX) / glob.DEBUFF_STACK_MAX)
 			var/OTM=GetOffTransMult()
 			Off*=OTM
 			Off*=Mod

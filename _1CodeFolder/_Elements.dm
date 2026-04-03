@@ -523,7 +523,7 @@ mob
 				return
 			if(src.Stasis)
 				return
-			Value = Value*(1-(src.Sheared/glob.DEBUFF_STACK_RESISTANCE))
+			Value = Value*(1-(src.GetEffectiveShearForStackingEffects()/glob.DEBUFF_STACK_RESISTANCE))
 			src.Sheared+=Value
 			if(src.Sheared>100)
 				src.Sheared=100
@@ -628,6 +628,9 @@ mob
 				doDebuffDamage("Poison")
 			if(src.Burn)
 				doDebuffDamage("Burn")
+
+			if(src.Frenzy)
+				doDebuffDamage("Frenzy")
 
 			if(src.Shatter)
 				if(src.Shatter > glob.DEBUFF_STACK_MAX)

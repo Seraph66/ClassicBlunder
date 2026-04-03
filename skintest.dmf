@@ -2018,6 +2018,21 @@ window "mapwindow"
 		border = sunken
 		saved-params = ""
 		text = "Shear"
+	elem "BarFrenzy"
+		type = LABEL
+		pos = 520,413
+		size = 92x20
+		anchor1 = 50,100
+		anchor2 = -1,-1
+		font-family = "@Microsoft JhengHei Light"
+		font-size = 6
+		font-style = "bold"
+		text-color = #c040ff
+		background-color = #000000
+		is-visible = false
+		border = sunken
+		saved-params = ""
+		text = "Frenzy"
 	elem "BarShock"
 		type = LABEL
 		pos = 294,436

@@ -503,6 +503,7 @@ mob/var
 	Poison=0
 	BlindingVenom = 0
 	Burn=0
+	Frenzy=0
 	Slow=0
 	Shatter=0
 	Harden=0

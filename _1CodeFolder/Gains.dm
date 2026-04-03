@@ -187,6 +187,7 @@ var/game_loop/mainLoop = new(0, "newGainLoop")
 			reduceErodeStolen()
 
 		if(MeditateTime == 15)
+			src.ClearHostileFrenzyFromMeditate()
 			if(src.Lunacy)
 				src << "Your mind is your own, alone, once more. <font color='black'>...</font color>"
 				src.ClearLunacy();

@@ -399,6 +399,7 @@
 #include "_Reworks\Combat\Damage\Melee\styleEffects.dm"
 #include "_Reworks\Combat\Damage\Melee\warping.dm"
 #include "_Reworks\Combat\Debuffs\burn.dm"
+#include "_Reworks\Combat\Debuffs\frenzy.dm"
 #include "_Reworks\Combat\Debuffs\poison.dm"
 #include "_Reworks\Combat\Monsters\dominatingBuff.dm"
 #include "_Reworks\Combat\Monsters\hellrisen.dm"

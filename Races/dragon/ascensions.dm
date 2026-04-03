@@ -36,6 +36,11 @@ ascension
 						ecoAdd = 2
 						endurance = 0.5
 						speed = 0.25
+					if("Dark")
+						passives += list("Fury" = 1, "Momentum" = 1)
+						strength = 0.35
+						speed = 0.35
+						offense = 0.35
 				..()
 
 		two
@@ -73,6 +78,11 @@ ascension
 						ecoAdd = 1
 						endurance = 0.5
 						speed = 0.25
+					if("Dark")
+						passives += list("Fury" = 1, "Momentum" = 1)
+						strength = 0.25
+						speed = 0.25
+						offense = 0.25
 				..()
 
 		three
@@ -111,6 +121,11 @@ ascension
 						ecoAdd = 1
 						endurance = 0.5
 						speed = 0.25
+					if("Dark")
+						passives += list("Fury" = 1, "Momentum" = 1)
+						strength = 0.25
+						speed = 0.25
+						offense = 0.25
 				passives["Incomplete"] = -0.25
 				..()
 		four
@@ -148,6 +163,11 @@ ascension
 						ecoAdd = 1
 						endurance = 0.5
 						speed = 0.25
+					if("Dark")
+						passives += list("Fury" = 1, "Momentum" = 1)
+						strength = 0.25
+						speed = 0.25
+						offense = 0.25
 				..()
 		five
 			unlock_potential = ASCENSION_FIVE_POTENTIAL
@@ -184,6 +204,11 @@ ascension
 						ecoAdd = 1
 						endurance = 0.5
 						speed = 0.25
+					if("Dark")
+						passives += list("Fury" = 1, "Momentum" = 1)
+						strength = 0.25
+						speed = 0.25
+						offense = 0.25
 				..()
 		six
 			unlock_potential = ASCENSION_SIX_POTENTIAL
@@ -220,4 +245,9 @@ ascension
 						ecoAdd = 1
 						endurance = 0.5
 						speed = 0.25
+					if("Dark")
+						passives += list("Fury" = 1, "Momentum" = 1)
+						strength = 0.5
+						speed = 0.5
+						offense = 0.5
 				..()
