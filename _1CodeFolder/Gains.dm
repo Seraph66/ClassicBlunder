@@ -788,6 +788,10 @@ mob
 								src.underlays+=image('The Ripple.dmi', pixel_x=-32, pixel_y=-32)
 						if(src.Secret=="Senjutsu"&&src.CheckSlotless("Senjutsu Focus"))
 							src << "You managed to mold some natural energy!"
+						if(src.PoseTime >= 5 && src.passive_handler.Get("Stylish"))
+							if(!src.CheckSlotless("Half Moon Form") && !src.CheckSlotless("Full Moon Form"))
+								src.gainStyleRating(1, TRUE)
+								src.PoseTime = 0
 
 			if(src.Stasis||src.StasisFrozen)
 				src.Stasis-=world.tick_lag

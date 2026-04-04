@@ -1037,9 +1037,6 @@ mob/Players/verb
 							src.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Restraint_Release)
 						if(src.Secret=="Senjutsu"&&src.CheckSlotless("Senjutsu Focus"))
 							src.ManaAmount+=25
-					if(src.PoseTime >= 5 && src.passive_handler.Get("Stylish"))
-						src.gainStyleRating(1, TRUE)
-						src.PoseTime = 0
 
 				else
 					var/PoseBuff=(src.PoseTime/4)

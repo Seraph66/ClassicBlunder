@@ -27,8 +27,7 @@ mob
 
 			if(mult < 0)
 				mult = 0
-			if(mult > 3)
-				mult = 3
+			// HopeFactor is not capped here.
 
 			return mult
 

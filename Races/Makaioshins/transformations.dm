@@ -58,7 +58,7 @@ transformation
 					KenShockwave(user, icon='KenShockwaveBloodlust.dmi', Size=ShockSize, Blend=2, Time=8)
 					ShockSize/=2
 		satan_mode
-			passives = list()
+			passives = list("HolyMod" = 5, "AbyssMod" = 5, "SpiritPower" = 2, "PhysPleroma" = 3, "Purity" = 1, "BeyondPurity" = 1)
 			autoAnger = 1
 			unlock_potential = 90
 			form_aura_icon = 'Amazing Super Demon Aura.dmi'
@@ -87,3 +87,8 @@ transformation
 				for(var/wav=5, wav>0, wav--)
 					KenShockwave(user, icon='KenShockwaveBloodlust.dmi', Size=ShockSize, Blend=2, Time=8)
 					ShockSize/=2
+				for(var/mob/M in view(user))
+					if(M.client)
+						ScreenShatter(M)
+					if(user.client)
+						ScreenShatter(user)

@@ -1245,6 +1245,10 @@ mob
 				if(passive_handler.Get("MirrorStats") < 0)
 					passive_handler.Set("MirrorStats", 0)
 				DevilTriggerEnvyMirrorPending = 0
+			// Deactivate the shockwave buff when Devil Trigger ends
+			var/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Sloth_Factor/sf = FindSkill(/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Sloth_Factor)
+			if(sf && sf.SlotlessOn)
+				sf.Trigger(src, TRUE)
 
 		getDevilTriggerSinBonusMult()
 			if(!isInDemonDevilTrigger())
@@ -1252,6 +1256,7 @@ mob
 				return 0
 
 			var/mult = 0
+			var/pride_bonus = 0
 
 			// EnvyFactor
 			if(passive_handler && passive_handler.Get("EnvyFactor"))
@@ -1282,24 +1287,25 @@ mob
 			if(DevilTriggerSlothBonus > 0)
 				mult += DevilTriggerSlothBonus
 
-			// PrideFactor
+			// PrideFactor (uncapped; other sin bonuses stay capped at 3)
 			if(passive_handler && passive_handler.Get("PrideFactor") && Target && istype(Target, /mob/Players))
 				var/healthDiff = Health - Target:Health
 				if(healthDiff > 0)
 					var/steps = round(healthDiff / 10)
 					if(steps > 0)
-						var/pride_bonus = 0.25 * steps * passive_handler.Get("PrideFactor")
-						mult += pride_bonus
+						pride_bonus = 0.25 * steps * passive_handler.Get("PrideFactor")
 
 			//these aren't actually multipliers btw teehee, they are additive. They started out as multiplicative but I changed my mind after the fact
 			if(mult < 0)
 				mult = 0
 
-			if(passive_handler && passive_handler.Get("PrideFactor") && mult < 1.5)
-				mult = 1.5
-
 			if(mult > 3)
 				mult = 3
+
+			mult += pride_bonus
+
+			if(passive_handler && passive_handler.Get("PrideFactor") && mult < 1.5)
+				mult = 1.5
 
 			return mult
 
@@ -1349,6 +1355,10 @@ mob
 		resetSlothTracking()
 			DevilTriggerSlothBonus = 0
 			LastSlothTick = world.time
+			// Deactivate the shockwave buff when the demon moves
+			var/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Sloth_Factor/sf = FindSkill(/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Sloth_Factor)
+			if(sf && sf.SlotlessOn)
+				sf.Trigger(src, TRUE)
 
 		updateSlothSinBonus()
 			if(!isInDemonDevilTrigger()) return
@@ -1366,6 +1376,14 @@ mob
 			var/inc = 1 / 10 * passive_handler.Get("SlothFactor")
 			DevilTriggerSlothBonus += inc
 			LastSlothTick = world.time
+
+			// Activate the Sloth_Factor shockwave buff once the bonus is running
+			var/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Sloth_Factor/sf = findOrAddSkill(/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Sloth_Factor)
+			// Recovery: SlotlessOn saved as 1 but loop died (e.g. after relog)
+			if(sf.SlotlessOn && !sf.waveLoopRunning)
+				sf.startWaveLoop(src)
+			else if(!sf.SlotlessOn)
+				sf.Trigger(src, TRUE)
 
 		GetStrMult()
 			return src.StrMultTotal

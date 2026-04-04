@@ -237,7 +237,7 @@ transformation
 			form_aura_x = -32
 			transformation_message = "usrName pulls their Devil Trigger."
 			transform(mob/user, forceTrans)
-				if(!forceTrans && user.StyleRating < 7)
+				if(!forceTrans && user.StyleRating < 5)
 					user << "You need at least an S Style Rating to pull your Devil Trigger!"
 					return
 				..()
@@ -269,7 +269,7 @@ transformation
 			form_aura_x = -32
 			transformation_message = "usrName pulls their Sin Devil Trigger."
 			transform(mob/user, forceTrans)
-				if(!forceTrans && user.StyleRating < 9)
+				if(!forceTrans && user.StyleRating < 7)
 					user << "You need an SSS Style Rating to pull your Sin Devil Trigger!"
 					return
 				..()
