@@ -138,15 +138,15 @@
             name="Sublimate"
         
     fire
-        spellElement="Fire"
+        spellElement="Fire";
         blaze//fire
-            name="Blaze"
+            name="Blaze";
             passives = list("Scorching" = 4);
             autohitOnlyPassives = list("StrOffense" = 0.5, "ForOffense" = 0.5, "DamageMult"=1.2);
             projectileOnlyPassives = list("StrRate" = 0.5, "ForRate"=0.5, "DamageMult"=1.2);
             buffOnlyPassives = list("PureDamage"=2);
         magma
-            name="Magma"
+            name="Magma";
             passives = list("MagmicInfusion" = 1, "Scorching" = 2);//magmic infusion is a variable that belongs to all skills and it triggers magmic shield when the skill goes on CD
         ashfield
             name="Ashfield"
