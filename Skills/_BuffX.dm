@@ -13992,7 +13992,7 @@ mob
 				src.overlays-=im
 			if(B.MakesSword)
 				var/obj/Items/Sword/s=src.EquippedSword()
-				if(s.Conjured)
+				if(s&&s.Conjured)
 					s.AlignEquip(src)
 					del s
 				if(B.MakesSword==3)

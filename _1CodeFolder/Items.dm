@@ -1239,154 +1239,169 @@ obj/Items/Symbiotic
 
 
 obj/Items/proc/AlignEquip(mob/A, dontUnEquip = FALSE)
+	if(suffix && A == src.loc)
+		if(!dontUnEquip)
+			UnEquip(A)
+	else
+		Equip(A)
+
+
+obj/Items/proc/UnEquip(mob/A)
+	if(!suffix || A != src.loc) return
 	var/placement=FLOAT_LAYER-3
 	if(src.LayerPriority)
 		placement-=src.LayerPriority
 	if(istype(src,/obj/Items/Wearables))
 		if(src.IsHat)
 			placement=FLOAT_LAYER-1
-	if(suffix&&(A==src.loc))
-		if(istype(src, /obj/Items/Sword/Medium/Legendary/WeaponSoul/Blade_of_Ruin))
-			var/obj/Items/Sword/Medium/Legendary/WeaponSoul/Blade_of_Ruin/s = src
-			if(!s.putAway(A))
-				return
-		if(!dontUnEquip)
-			if(istype(src, /obj/Items/Sword))
-				var/obj/Items/Sword/sord = src
-				if(Augmented)
-					for(var/obj/Skills/Buffs/x in Techniques)
-						if(x.Using || A.CheckSlotless(x.BuffName))
-							A << "You can't remove [src] while you have [x.BuffName] active!"
-							return
-				for(var/obj/Skills/s in A)
-					for(var/obj/Skills/x in Techniques)
-						if(x == s)
-							A.DeleteSkill(x, FALSE)
-				if(!A.UsingLightSaber() && (suffix == "*Equipped*" || "*Equipped (Second)*" || "*Equipped (Third)*"))
-					if(A.equippedSword == src)
-						A.equippedSword = null
-					suffix = null
-				else if(!sord.Conjured && name != "Keyblade")
-					if(A.equippedSword == src)
-						A.equippedSword = null
-					suffix = null
-				else if(sord.Conjured)
-					if(A.equippedSword == src)
-						A.equippedSword = null
-					suffix = null
-					del sord
-
-
-			else
-				if(istype(src, /obj/Items/Armor))
-					A.equippedArmor = null
-				suffix=null
-		if(src.EquipIcon)
-			var/image/im=image(icon=src.EquipIcon, pixel_x=src.pixel_x, pixel_y=src.pixel_y, layer=placement)
-			A.overlays-=im
-		else
-			var/image/im=image(icon=src.icon, pixel_x=src.pixel_x, pixel_y=src.pixel_y, layer=placement)
-			if(istype(src, /obj/Items/Sword)||istype(src, /obj/Items/Armor)||istype(src, /obj/Items/Enchantment/Staff))
-				var/image/im2=image(icon=src.icon, pixel_x=src.pixel_x, pixel_y=src.pixel_y, layer=placement)
-				im2.transform*=3
-				im2.appearance_flags+=512
-				if(A.ArmamentGlow && !istype(src, /obj/Items/Armor))
-					im.filters += A.ArmamentGlow
-					im2.filters += A.ArmamentGlow
-				A.overlays-=im2
-			A.overlays-=im
-
+	if(istype(src, /obj/Items/Sword/Medium/Legendary/WeaponSoul/Blade_of_Ruin))
+		var/obj/Items/Sword/Medium/Legendary/WeaponSoul/Blade_of_Ruin/s = src
+		if(!s.putAway(A))
+			return
+	if(istype(src, /obj/Items/Sword))
+		var/obj/Items/Sword/sord = src
+		if(Augmented)
+			for(var/obj/Skills/Buffs/x in Techniques)
+				if(x.Using || A.CheckSlotless(x.BuffName))
+					A << "You can't remove [src] while you have [x.BuffName] active!"
+					return
+		for(var/obj/Skills/s in A)
+			for(var/obj/Skills/x in Techniques)
+				if(x == s)
+					A.DeleteSkill(x, FALSE)
+		if(!A.UsingLightSaber() && (suffix == "*Equipped*" || "*Equipped (Second)*" || "*Equipped (Third)*"))
+			if(A.equippedSword == src)
+				A.equippedSword = null
+			suffix = null
+		else if(!sord.Conjured && name != "Keyblade")
+			if(A.equippedSword == src)
+				A.equippedSword = null
+			suffix = null
+		else if(sord.Conjured)
+			if(A.equippedSword == src)
+				A.equippedSword = null
+			suffix = null
+			del sord
 	else
-		if(A==src.loc)
-			if(istype(src, /obj/Items/Sword))
-				if(istype(src, /obj/Items/Sword/Medium/Legendary/WeaponSoul/Blade_of_Ruin))
-					var/obj/Items/Sword/Medium/Legendary/WeaponSoul/Blade_of_Ruin/s = src
-					if(!A.dainsleifDrawn)
-						var/confirm = input(A, "Are you sure you want to draw Dainsleif?") in list("Yes", "No")
-						if(confirm == "No") return
-						s.drawDainsleif(A)
-					spawn(-1) s.dainsleifDrain(A)
-				if(A.NeedsSecondSword() && A.EquippedSword() && !A.EquippedSecondSword())
-					var/found = 0
-					for(var/obj/Items/Sword/s in A)
-						if(s.suffix == "*Equipped (Second)*")
-							found = 1
-							break
-					if(!found)
-						if(Techniques.len>0)
-							for(var/obj/Skills/x in Techniques) // they should be skill objects
-								A.AddSkill(x)
-								if(istype(x, /obj/Skills/Buffs/SlotlessBuffs/Augmented_Gear))
-									x.verbs -= list(/obj/Skills/Buffs/SlotlessBuffs/Augmented_Gear/verb/Augmented_Gear)
-									x.verbs += new /obj/Skills/Buffs/SlotlessBuffs/Augmented_Gear/verb/Augmented_Gear(x, x?:BuffName)
-								if(istype(x, /obj/Skills/Buffs/SlotlessBuffs/Posture))
-									x.verbs -= list(/obj/Skills/Buffs/SlotlessBuffs/Posture/verb/Posture)
-									x.verbs += new /obj/Skills/Buffs/SlotlessBuffs/Posture/verb/Posture(x, x?:BuffName)
-						suffix = "*Equipped (Second)*"
-				else if(A.NeedsThirdSword() && A.EquippedSword() && !A.EquippedThirdSword())
-					var/found = 0
-					for(var/obj/Items/Sword/s in A)
-						if(s.suffix == "*Equipped (Third)*")
-							found = 1
-							break
-					if(!found)
-						if(Techniques.len>0)
-							for(var/obj/Skills/x in Techniques) // they should be skill objects
-								A.AddSkill(x)
-								if(istype(x, /obj/Skills/Buffs/SlotlessBuffs/Augmented_Gear))
-									x.verbs -= list(/obj/Skills/Buffs/SlotlessBuffs/Augmented_Gear/verb/Augmented_Gear)
-									x.verbs += new /obj/Skills/Buffs/SlotlessBuffs/Augmented_Gear/verb/Augmented_Gear(x, x?:BuffName)
-								if(istype(x, /obj/Skills/Buffs/SlotlessBuffs/Posture))
-									x.verbs -= list(/obj/Skills/Buffs/SlotlessBuffs/Posture/verb/Posture)
-									x.verbs += new /obj/Skills/Buffs/SlotlessBuffs/Posture/verb/Posture(x, x?:BuffName)
-						suffix = "*Equipped (Third)*"
-				else if(!A.equippedSword)
-					A.equippedSword = src
-					suffix = "*Equipped*"
-				else
-					return 1
-			else
-				if(istype(src, /obj/Items/Armor))
-					A.equippedArmor = src
-
-				// TODO: replace this whole damn proc with 'onEquip()' calls for items. holy shit just clean up the whole equip code
-				if(istype(src, /obj/Items/Symbiotic/Kamui/KamuiSenketsu))
-					var/obj/Items/Symbiotic/Kamui/KamuiSenketsu/KS = src
-					if(A.Saga=="Kamui" && A.KamuiType == "Junketsu")
-						KS.wornByJunketsu = TRUE
-				if(istype(src, /obj/Items/Symbiotic/Kamui/KamuiJunketsu))
-					var/obj/Items/Symbiotic/Kamui/KamuiJunketsu/KJ = src
-					if(A.Saga=="Kamui" && A.KamuiType == "Senketsu" && A.SagaLevel >= 4 && !KJ.wornBySenketsu)
-						KJ.wornBySenketsu = TRUE
-						A << "A bit of your blood seems to infuse into Junketsu..."
-						src.Techniques += list("/obj/Skills/Buffs/SpecialBuffs/Kamui_Senpu", "/obj/Skills/Buffs/SpecialBuffs/Kamui_Senpu_Zanken")
-					if(A.Saga == "Kamui" && A.KamuiType == "Junketsu" && KJ.wornBySenketsu && !KJ.wornInform)
-						A << "The remanents of the Senketsu wearer's blood have awoken something new in your Kamui!"
-						A << "Kamui Senpu & Kamui Senpu Zanken beckon to your imperial will!"
-						KJ.wornInform = TRUE
-
-				suffix="*Equipped*"
-		else if(istype(src,/obj/Items/Gear/Mobile_Suit))
-			src.suffix="*Equipped*"
-		if(src.EquipIcon)
-			var/image/im=image(icon=src.EquipIcon, pixel_x=src.pixel_x, pixel_y=src.pixel_y, layer=placement)
-			A.overlays+=im
-		else
-			var/image/im=image(icon=src.icon, pixel_x=src.pixel_x, pixel_y=src.pixel_y, layer=placement)
-			if(istype(src, /obj/Items/Sword) || istype(src, /obj/Items/Enchantment/Staff))
-				if(A.ArmamentGlow)
-					im.filters += A.ArmamentGlow
-			if(A.CheckActive("Mobile Suit")&&(istype(src, /obj/Items/Sword)||istype(src, /obj/Items/Armor)||istype(src, /obj/Items/Enchantment/Staff)))
-				if(src:Conjured)
-					im.transform*=3
-					im.appearance_flags+=512
-			A.overlays+=im
+		suffix=null
+		if(istype(src, /obj/Items/Armor))
+			A.equippedArmor = null
+	for(var/b in A.SlotlessBuffs)
+		var/obj/Skills/Buffs/SlotlessBuffs/sb = A.SlotlessBuffs[b]
+		if(sb && sb.KillSword)
+			sb.Trigger(A)
+	if(src.EquipIcon)
+		var/image/im=image(icon=src.EquipIcon, pixel_x=src.pixel_x, pixel_y=src.pixel_y, layer=placement)
+		A.overlays-=im
+	else
+		var/image/im=image(icon=src.icon, pixel_x=src.pixel_x, pixel_y=src.pixel_y, layer=placement)
+		if(istype(src, /obj/Items/Sword)||istype(src, /obj/Items/Armor)||istype(src, /obj/Items/Enchantment/Staff))
+			var/image/im2=image(icon=src.icon, pixel_x=src.pixel_x, pixel_y=src.pixel_y, layer=placement)
+			im2.transform*=3
+			im2.appearance_flags+=512
+			if(A.ArmamentGlow && !istype(src, /obj/Items/Armor))
+				im.filters += A.ArmamentGlow
+				im2.filters += A.ArmamentGlow
+			A.overlays-=im2
+		A.overlays-=im
 	if(src.UnderlayIcon)
 		var/image/im=image(icon=src.UnderlayIcon, pixel_x=src.UnderlayX, pixel_y=src.UnderlayY)
-		if(src.suffix=="*Equipped*")
-			A.underlays+=im
+		A.underlays-=im
+
+
+obj/Items/proc/Equip(mob/A)
+	if(suffix) return
+	var/placement=FLOAT_LAYER-3
+	if(src.LayerPriority)
+		placement-=src.LayerPriority
+	if(istype(src,/obj/Items/Wearables))
+		if(src.IsHat)
+			placement=FLOAT_LAYER-1
+	if(A==src.loc)
+		if(istype(src, /obj/Items/Sword))
+			if(istype(src, /obj/Items/Sword/Medium/Legendary/WeaponSoul/Blade_of_Ruin))
+				var/obj/Items/Sword/Medium/Legendary/WeaponSoul/Blade_of_Ruin/s = src
+				if(!A.dainsleifDrawn)
+					var/confirm = input(A, "Are you sure you want to draw Dainsleif?") in list("Yes", "No")
+					if(confirm == "No") return
+					s.drawDainsleif(A)
+				spawn(-1) s.dainsleifDrain(A)
+			if(A.NeedsSecondSword() && A.EquippedSword() && !A.EquippedSecondSword())
+				var/found = 0
+				for(var/obj/Items/Sword/s in A)
+					if(s.suffix == "*Equipped (Second)*")
+						found = 1
+						break
+				if(!found)
+					if(Techniques.len>0)
+						for(var/obj/Skills/x in Techniques) // they should be skill objects
+							A.AddSkill(x)
+							if(istype(x, /obj/Skills/Buffs/SlotlessBuffs/Augmented_Gear))
+								x.verbs -= list(/obj/Skills/Buffs/SlotlessBuffs/Augmented_Gear/verb/Augmented_Gear)
+								x.verbs += new /obj/Skills/Buffs/SlotlessBuffs/Augmented_Gear/verb/Augmented_Gear(x, x?:BuffName)
+							if(istype(x, /obj/Skills/Buffs/SlotlessBuffs/Posture))
+								x.verbs -= list(/obj/Skills/Buffs/SlotlessBuffs/Posture/verb/Posture)
+								x.verbs += new /obj/Skills/Buffs/SlotlessBuffs/Posture/verb/Posture(x, x?:BuffName)
+					suffix = "*Equipped (Second)*"
+			else if(A.NeedsThirdSword() && A.EquippedSword() && !A.EquippedThirdSword())
+				var/found = 0
+				for(var/obj/Items/Sword/s in A)
+					if(s.suffix == "*Equipped (Third)*")
+						found = 1
+						break
+				if(!found)
+					if(Techniques.len>0)
+						for(var/obj/Skills/x in Techniques) // they should be skill objects
+							A.AddSkill(x)
+							if(istype(x, /obj/Skills/Buffs/SlotlessBuffs/Augmented_Gear))
+								x.verbs -= list(/obj/Skills/Buffs/SlotlessBuffs/Augmented_Gear/verb/Augmented_Gear)
+								x.verbs += new /obj/Skills/Buffs/SlotlessBuffs/Augmented_Gear/verb/Augmented_Gear(x, x?:BuffName)
+							if(istype(x, /obj/Skills/Buffs/SlotlessBuffs/Posture))
+								x.verbs -= list(/obj/Skills/Buffs/SlotlessBuffs/Posture/verb/Posture)
+								x.verbs += new /obj/Skills/Buffs/SlotlessBuffs/Posture/verb/Posture(x, x?:BuffName)
+					suffix = "*Equipped (Third)*"
+			else if(!A.equippedSword)
+				A.equippedSword = src
+				suffix = "*Equipped*"
+			else
+				return 1
 		else
-			A.underlays-=im
+			if(istype(src, /obj/Items/Armor))
+				A.equippedArmor = src
+			// TODO: replace this whole damn proc with 'onEquip()' calls for items. holy shit just clean up the whole equip code
+			if(istype(src, /obj/Items/Symbiotic/Kamui/KamuiSenketsu))
+				var/obj/Items/Symbiotic/Kamui/KamuiSenketsu/KS = src
+				if(A.Saga=="Kamui" && A.KamuiType == "Junketsu")
+					KS.wornByJunketsu = TRUE
+			if(istype(src, /obj/Items/Symbiotic/Kamui/KamuiJunketsu))
+				var/obj/Items/Symbiotic/Kamui/KamuiJunketsu/KJ = src
+				if(A.Saga=="Kamui" && A.KamuiType == "Senketsu" && A.SagaLevel >= 4 && !KJ.wornBySenketsu)
+					KJ.wornBySenketsu = TRUE
+					A << "A bit of your blood seems to infuse into Junketsu..."
+					src.Techniques += list("/obj/Skills/Buffs/SpecialBuffs/Kamui_Senpu", "/obj/Skills/Buffs/SpecialBuffs/Kamui_Senpu_Zanken")
+				if(A.Saga == "Kamui" && A.KamuiType == "Junketsu" && KJ.wornBySenketsu && !KJ.wornInform)
+					A << "The remanents of the Senketsu wearer's blood have awoken something new in your Kamui!"
+					A << "Kamui Senpu & Kamui Senpu Zanken beckon to your imperial will!"
+					KJ.wornInform = TRUE
+			suffix="*Equipped*"
+	else if(istype(src,/obj/Items/Gear/Mobile_Suit))
+		src.suffix="*Equipped*"
+	if(src.EquipIcon)
+		var/image/im=image(icon=src.EquipIcon, pixel_x=src.pixel_x, pixel_y=src.pixel_y, layer=placement)
+		A.overlays+=im
+	else
+		var/image/im=image(icon=src.icon, pixel_x=src.pixel_x, pixel_y=src.pixel_y, layer=placement)
+		if(istype(src, /obj/Items/Sword) || istype(src, /obj/Items/Enchantment/Staff))
+			if(A.ArmamentGlow)
+				im.filters += A.ArmamentGlow
+		if(A.CheckActive("Mobile Suit")&&(istype(src, /obj/Items/Sword)||istype(src, /obj/Items/Armor)||istype(src, /obj/Items/Enchantment/Staff)))
+			if(src:Conjured)
+				im.transform*=3
+				im.appearance_flags+=512
+		A.overlays+=im
+	if(src.UnderlayIcon)
+		var/image/im=image(icon=src.UnderlayIcon, pixel_x=src.UnderlayX, pixel_y=src.UnderlayY)
+		A.underlays+=im
 	return 1
 
 
