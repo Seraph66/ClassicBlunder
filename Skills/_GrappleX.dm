@@ -314,15 +314,48 @@ obj/Skills/Grapple
 				OneAndDone=1
 				StrRate=1
 				DamageMult = 2.5 + (p.Potential / 50)
+				EnergyDamage=0
+			else if(p.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(p) && p.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic))
+				Effect="DarkSuplex"
+				TriggerMessage="channels dark energy into"
+				EffectMult=0.5
+				Stunner=5
+				OneAndDone=1
+				StrRate=1
+				DamageMult = 2.5 + (p.Potential / 50)
+				EnergyDamage=1
+			else if(p.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(p) && p.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption))
+				Effect="CorruptSuplex"
+				TriggerMessage="curses with ruinous energy and slams"
+				EffectMult=0.5
+				Stunner=5
+				OneAndDone=1
+				StrRate=1
+				DamageMult = 2.5 + (p.Potential / 50)
+				EnergyDamage=0
 			else
 				Effect="Suplex"
 				DamageMult=3
 				EffectMult=1
 				Stunner=3
 				StrRate=1
+				EnergyDamage=0
 		verb/Suplex()
 			set category="Skills"
 			adjust(usr)
+			if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic))
+				usr.endDemonMagicCast()
+				usr.gainStyleRating(1)
+			else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/HellFire))
+				var/obj/Skills/Buffs/SlotlessBuffs/Hellraiser/hr = usr.SlotlessBuffs["Hellraiser"]
+				if(!hr)
+					hr = new/obj/Skills/Buffs/SlotlessBuffs/Hellraiser()
+				hr.stackBuff(usr)
+				usr.endDemonMagicCast()
+				usr.gainStyleRating(1)
+			else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption))
+				usr.endDemonMagicCast()
+				usr.gainStyleRating(1)
 			src.Activate(usr)
 	Burning_Finger
 		NewCost = TIER_2_COST
@@ -481,6 +514,17 @@ obj/Skills/Grapple
 			EffectMult=1
 			Cooldown=60
 			TriggerMessage="tries to commit double suicide with "
+		Dark_Binding
+			Copyable = 0
+			NeedsSword = 1
+			DamageMult=8
+			StrRate=1.5
+			Stunner=4
+			EnergyDamage=1
+			Effect="DarkSuplex"
+			EffectMult=1
+			Cooldown=60
+			TriggerMessage="binds with dark energy and slams "
 		Form_Ataru
 			Copyable=4
 			SkillCost=TIER_3_COST
@@ -665,7 +709,7 @@ obj/Skills/Grapple
 							Trg.MortallyWounded += 1
 							OMsg(User, "<b><font color=#ff0000>[User] has dealt a mortal blow to [Trg]!</font></b>")
 				OMsg(User, "[User] [src.TriggerMessage] [Trg]!")
-				if(src.Effect in list("Suplex", "Drain", "Lotus", "SuperSuplex"))
+				if(src.Effect in list("Suplex", "Drain", "Lotus", "SuperSuplex", "DarkSuplex", "CorruptSuplex"))
 					src.OneAndDone=1
 				var/Times=src.EffectMult
 				if(src.OneAndDone)
@@ -689,6 +733,18 @@ obj/Skills/Grapple
 						if("SuperSuplex")
 							LotusEffect(User, Trg, src.EffectMult)
 							SuplexEffect(User, Trg)
+						if("DarkSuplex")
+							SuplexEffect(User, Trg)
+							animate(Trg, color=list(0.5,0,0.5, 0,0,0, 0.5,0,0.5, 0,0,0), time=10, flags=ANIMATION_RELATIVE)
+							sleep(10)
+							animate(Trg, color=Trg.MobColor, time=10, flags=ANIMATION_RELATIVE)
+							sleep(10)
+						if("CorruptSuplex")
+							SuplexEffect(User, Trg)
+							var/obj/Skills/Buffs/SlotlessBuffs/Ruin/ruin = Trg.SlotlessBuffs["Ruin"]
+							if(!ruin)
+								ruin = new/obj/Skills/Buffs/SlotlessBuffs/Ruin()
+							ruin.applyStack(Trg)
 						if("Strike")
 							User.HitEffect(Trg)
 						if("Drain")
@@ -757,6 +813,18 @@ obj/Skills/Grapple
 			if("SuperSuplex")
 				LotusEffect(User, Trg, src.EffectMult)
 				SuplexEffect(User, Trg)
+			if("DarkSuplex")
+				SuplexEffect(User, Trg)
+				animate(Trg, color=list(0.5,0,0.5, 0,0,0, 0.5,0,0.5, 0,0,0), time=10, flags=ANIMATION_RELATIVE)
+				sleep(10)
+				animate(Trg, color=Trg.MobColor, time=10, flags=ANIMATION_RELATIVE)
+				sleep(10)
+			if("CorruptSuplex")
+				SuplexEffect(User, Trg)
+				var/obj/Skills/Buffs/SlotlessBuffs/Ruin/ruin = Trg.SlotlessBuffs["Ruin"]
+				if(!ruin)
+					ruin = new/obj/Skills/Buffs/SlotlessBuffs/Ruin()
+				ruin.applyStack(Trg)
 			if("Strike")
 				User.HitEffect(Trg)
 			if("Drain")

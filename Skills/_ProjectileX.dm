@@ -32,6 +32,7 @@ obj
 			pixel_y=0
 			var
 				CorruptionGain
+				RuinOnHit
 
 				FoxFire
 				while_warping = FALSE
@@ -2312,6 +2313,54 @@ obj
 				Deflectable=1
 				Distance=10
 				Instinct=2
+
+			DarkKinshasaProjectile
+				IconLock='shadowflameball.dmi'
+				IconSize=0.75
+				Dodgeable=-1
+				Radius=0.5
+				Striking=1
+				ZoneAttack=1
+				ZoneAttackX=0
+				ZoneAttackY=0
+				FireFromSelf=1
+				FireFromEnemy=0
+				Variation=0
+				StrRate=0.5
+				EndRate=0.5
+				ForRate=0.5
+				Knockback=5
+				MultiHit=2
+				DamageMult=0.25
+				AccMult = 1.25
+				Deflectable=0
+				Distance=8
+				Instinct=2
+				CorruptionGain=1
+
+			CorruptKinshasaProjectile
+				IconLock='shadowflameball.dmi'
+				IconSize=0.75
+				Dodgeable=-1
+				Radius=0.5
+				Striking=1
+				ZoneAttack=1
+				ZoneAttackX=0
+				ZoneAttackY=0
+				FireFromSelf=1
+				FireFromEnemy=0
+				Variation=0
+				StrRate=0.5
+				EndRate=0.5
+				ForRate=0.5
+				Knockback=5
+				MultiHit=2
+				DamageMult=0.25
+				AccMult = 1.25
+				Deflectable=0
+				Distance=8
+				Instinct=2
+				RuinOnHit=1
 
 			GaleStrikeProjectile
 				IconLock='Boosting Winds.dmi'
@@ -5408,6 +5457,7 @@ obj
 					src.Knockback=Z.Knockback
 					src.MiniDivide=Z.MiniDivide
 					src.CorruptionGain = Z.CorruptionGain
+					src.RuinOnHit = Z.RuinOnHit
 					src.Divide=Z.Divide
 					src.Trail=Z.Trail
 					src.MultiTrail=Z.MultiTrail
@@ -6097,6 +6147,11 @@ obj
 									src.Owner.DoDamage(a, EffectiveDamage, SpiritAttack=1, Destructive=src.Destructive)
 									if(CorruptionGain)
 										Owner.gainCorruption((EffectiveDamage * 1.5) * glob.CORRUPTION_GAIN)
+									if(RuinOnHit && m)
+										var/obj/Skills/Buffs/SlotlessBuffs/Ruin/ruin = m.SlotlessBuffs["Ruin"]
+										if(!ruin)
+											ruin = new/obj/Skills/Buffs/SlotlessBuffs/Ruin()
+										ruin.applyStack(m)
 									if(m)
 										AlreadyHit["[m.ckey]"]++
 									if(Piercing && PiercingBang)

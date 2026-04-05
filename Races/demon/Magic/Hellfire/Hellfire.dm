@@ -107,6 +107,31 @@
     var/dmgRoll = GetDamageMod()
     . *= dmgRoll
 
+/obj/Skills/Buffs/SlotlessBuffs/Hellraiser
+    name = "Hellraiser"
+    BuffName = "Hellraiser"
+    Slotless = 1
+    TimerLimit = 30
+    TopOverlayLock = 'DarkShock.dmi'
+
+    proc/stackBuff(mob/p)
+        if(SlotlessOn)
+            // Buff already active: stack passives and refresh duration
+            p.passive_handler.decreaseList(current_passives)
+            var/new_flicker = min(6, current_passives["Flicker"] + 0.5)
+            var/new_pursuer = min(6, current_passives["Pursuer"] + 0.5)
+            var/new_mastery = min(6, current_passives["TechniqueMastery"] + 0.25)
+            current_passives = list("Flicker" = new_flicker, "Pursuer" = new_pursuer, "TechniqueMastery" = new_mastery)
+            passives = current_passives
+            p.passive_handler.increaseList(current_passives)
+            Timer = 0
+        else
+            // First application
+            passives = list("Flicker" = 0.5, "Pursuer" = 0.5, "TechniqueMastery" = 0.25)
+            p.AddSlotlessBuff(src)
+            current_passives = passives
+            p.passive_handler.increaseList(passives)
+
 
 
 

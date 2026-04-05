@@ -223,14 +223,45 @@ obj
 					Rounds = 2 + round(p.Potential/25)
 					HealthCost=2
 					WoundCost=2
+					ManaCost=0
+					TurfShift=0
+					TurfShiftDuration=0
+				else if(p.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(p) && p.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic))
+					GrabTrigger="/obj/Skills/Grapple/Sword/Dark_Binding"
+					Rounds = 2 + round(p.Potential/25)
+					HealthCost=0
+					WoundCost=0
+					ManaCost=3
+					TurfShift='blackflameaura.dmi'
+					TurfShiftDuration=2
 				else
 					GrabTrigger="/obj/Skills/AutoHit/Oni_Giri"
 					HealthCost=0
 					WoundCost=0
+					ManaCost=0
 					Rounds = 2
+					TurfShift=0
+					TurfShiftDuration=0
+				if(p.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(p) && p.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption))
+					CorruptionDebuff = 1
+				else
+					CorruptionDebuff = 0
 			verb/Three_Thousand_Worlds()
 				set category="Skills"
 				adjust(usr)
+				if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic))
+					usr.endDemonMagicCast()
+					usr.gainStyleRating(1)
+				else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/HellFire))
+					var/obj/Skills/Buffs/SlotlessBuffs/Hellraiser/hr = usr.SlotlessBuffs["Hellraiser"]
+					if(!hr)
+						hr = new/obj/Skills/Buffs/SlotlessBuffs/Hellraiser()
+					hr.stackBuff(usr)
+					usr.endDemonMagicCast()
+					usr.gainStyleRating(1)
+				else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption))
+					usr.endDemonMagicCast()
+					usr.gainStyleRating(1)
 				usr.Activate(src)
 		Oni_Giri
 			Copyable=0
@@ -312,7 +343,30 @@ obj
 					Knockback = 0.001
 					PullIn = Size + 4
 					Shearing = 5 + (pot/5)
-
+					TurfErupt=0
+					TurfShift=0
+					TurfShiftDuration=0
+					HitSparkIcon='Slash.dmi'
+					HitSparkX=-32
+					HitSparkY=-32
+				else if(p.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(p) && p.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic))
+					var/pot = p.Potential
+					ControlledRush=0
+					Rush=0
+					ChargeTech=0
+					ChargeTime=0
+					Size = 2 + (round(pot/25))
+					WindUp=0.75
+					Knockback = 0.001
+					PullIn = Size + 4
+					Shearing = 5 + (pot/5)
+					TurfErupt=1
+					TurfEruptOffset=4
+					TurfShift='blackflameaura.dmi'
+					TurfShiftDuration=2
+					HitSparkIcon='Hit Effect Dark.dmi'
+					HitSparkX=-32
+					HitSparkY=-32
 				else
 					ControlledRush=1
 					Rush=3
@@ -325,9 +379,32 @@ obj
 					Knockback = 1
 					PullIn = 0
 					Shearing = 1
+					TurfErupt=0
+					TurfShift='Dirt1.dmi'
+					TurfShiftDuration=1
+					HitSparkIcon='Slash.dmi'
+					HitSparkX=-32
+					HitSparkY=-32
+				if(p.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(p) && p.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption))
+					CorruptionDebuff = 1
+				else
+					CorruptionDebuff = 0
 			verb/Drill_Spin()
 				set category="Skills"
 				adjust(usr)
+				if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic))
+					usr.endDemonMagicCast()
+					usr.gainStyleRating(1)
+				else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/HellFire))
+					var/obj/Skills/Buffs/SlotlessBuffs/Hellraiser/hr = usr.SlotlessBuffs["Hellraiser"]
+					if(!hr)
+						hr = new/obj/Skills/Buffs/SlotlessBuffs/Hellraiser()
+					hr.stackBuff(usr)
+					usr.endDemonMagicCast()
+					usr.gainStyleRating(1)
+				else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption))
+					usr.endDemonMagicCast()
+					usr.gainStyleRating(1)
 				usr.Activate(src)
 		Rising_Spire
 			SkillCost=TIER_2_COST

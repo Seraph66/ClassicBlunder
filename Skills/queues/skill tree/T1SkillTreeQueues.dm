@@ -119,12 +119,29 @@ obj
 				adjust(mob/p)
 					if(p.isInnovative(HUMAN, "Unarmed") && !isInnovationDisable(p))
 						Projectile="/obj/Skills/Projectile/KinshasaProjectile"
+					else if(p.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(p) && p.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic))
+						Projectile="/obj/Skills/Projectile/DarkKinshasaProjectile"
+					else if(p.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(p) && p.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption))
+						Projectile="/obj/Skills/Projectile/CorruptKinshasaProjectile"
 					else
 						Projectile=null
 				verb/Kinshasa()
 					set category="Skills"
 					set name="Kinshasa"//Verb name.
 					adjust(usr)
+					if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic))
+						usr.endDemonMagicCast()
+						usr.gainStyleRating(1)
+					else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/HellFire))
+						var/obj/Skills/Buffs/SlotlessBuffs/Hellraiser/hr = usr.SlotlessBuffs["Hellraiser"]
+						if(!hr)
+							hr = new/obj/Skills/Buffs/SlotlessBuffs/Hellraiser()
+						hr.stackBuff(usr)
+						usr.endDemonMagicCast()
+						usr.gainStyleRating(1)
+					else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption))
+						usr.endDemonMagicCast()
+						usr.gainStyleRating(1)
 					usr.SetQueue(src)
 			Piston_Kick
 				SkillCost=TIER_1_COST

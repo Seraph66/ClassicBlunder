@@ -30,7 +30,32 @@ obj
 					Distance= 12
 					DistanceAround=4
 					DamageMult= 2 + p.Potential/100
+					Stunner=0
+					Shearing=0
+					HitSparkIcon='Hit Effect Pearl.dmi'
+					HitSparkX=-32
+					HitSparkY=-32
+					HitSparkTurns=1
+					HitSparkSize=3
 					ActiveMessage="traps their foe in a bubble of Pressure with a thrust of their blade!"
+				else if(p.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(p) && p.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic))
+					Area="Around Target"
+					Slow=3
+					Knockback=0
+					Rounds= 2 + round(p.Potential/25)
+					Size= 1 + round(p.Potential/50)
+					WindUp=0.5
+					Distance= 12
+					DistanceAround=4
+					DamageMult= 2 + p.Potential/100
+					Stunner=1
+					Shearing=round(p.Potential/25)
+					HitSparkIcon='Hit Effect Dark.dmi'
+					HitSparkX=-32
+					HitSparkY=-32
+					HitSparkTurns=1
+					HitSparkSize=3
+					ActiveMessage="traps their foe in a bubble of Dark Pressure with a thrust of their blade!"
 				else
 					Area="Wave"
 					Slow=0
@@ -40,9 +65,33 @@ obj
 					WindUp=0
 					Distance = 6
 					DamageMult=2.8
+					Stunner=0
+					Shearing=0
+					HitSparkIcon='Hit Effect Pearl.dmi'
+					HitSparkX=-32
+					HitSparkY=-32
+					HitSparkTurns=1
+					HitSparkSize=3
+				if(p.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(p) && p.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption))
+					CorruptionDebuff = 1
+				else
+					CorruptionDebuff = 0
 			verb/Sword_Pressure()
 				set category="Skills"
 				adjust(usr)
+				if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic))
+					usr.endDemonMagicCast()
+					usr.gainStyleRating(1)
+				else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/HellFire))
+					var/obj/Skills/Buffs/SlotlessBuffs/Hellraiser/hr = usr.SlotlessBuffs["Hellraiser"]
+					if(!hr)
+						hr = new/obj/Skills/Buffs/SlotlessBuffs/Hellraiser()
+					hr.stackBuff(usr)
+					usr.endDemonMagicCast()
+					usr.gainStyleRating(1)
+				else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption))
+					usr.endDemonMagicCast()
+					usr.gainStyleRating(1)
 				usr.Activate(src)
 			verb/Disable_Innovate()
 				set category = "Other"
@@ -271,7 +320,23 @@ obj
 					DamageMult = 1 + (round(pot/100))
 					EnergyCost = 6 + (round(pot/25))
 					Rush=0
+					HitSparkIcon='Slash - Zan.dmi'
+					HitSparkX=-16
+					HitSparkY=-16
 					FollowUp="/obj/Skills/AutoHit/Cross_Slash_Inno_Follow"
+				else if(p.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(p) && p.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic))
+					Area="Wave"
+					PassThrough = 1
+					var/pot = p.Potential
+					Distance = 4 + (round(pot/25))
+					Size = 2 + (round(pot/25))
+					DamageMult = 1 + (round(pot/100))
+					EnergyCost = 6 + (round(pot/25))
+					Rush=0
+					HitSparkIcon='Slash - Hellfire.dmi'
+					HitSparkX=-16
+					HitSparkY=-16
+					FollowUp="/obj/Skills/AutoHit/Cross_Slash_Demon_Follow"
 				else
 					Distance = 3
 					PassThrough = 0
@@ -285,10 +350,30 @@ obj
 					Launcher = 0
 					ControlledRush = 0
 					Rush = 1
+					HitSparkIcon='Slash - Zan.dmi'
+					HitSparkX=-16
+					HitSparkY=-16
 					FollowUp=null
+				if(p.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(p) && p.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption))
+					CorruptionDebuff = 1
+				else
+					CorruptionDebuff = 0
 			verb/Cross_Slash()
 				set category="Skills"
 				adjust(usr)
+				if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic))
+					usr.endDemonMagicCast()
+					usr.gainStyleRating(1)
+				else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/HellFire))
+					var/obj/Skills/Buffs/SlotlessBuffs/Hellraiser/hr = usr.SlotlessBuffs["Hellraiser"]
+					if(!hr)
+						hr = new/obj/Skills/Buffs/SlotlessBuffs/Hellraiser()
+					hr.stackBuff(usr)
+					usr.endDemonMagicCast()
+					usr.gainStyleRating(1)
+				else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption))
+					usr.endDemonMagicCast()
+					usr.gainStyleRating(1)
 				usr.Activate(src)
 
 		Cross_Slash_Inno_Follow
@@ -315,6 +400,39 @@ obj
 				var/pot = p.Potential
 				Size = 1 + round(pot/25)
 				DamageMult = 0.5
+				StepsDamage = 0.1 + round(pot/500)
+				Launcher = 2 + round(pot/25)
+				ComboMaster = 1
+				Rounds = 5
+
+		Cross_Slash_Demon_Follow
+			name = "Infernal Divide"
+			Copyable=0
+			NeedsSword=1
+			Area="Circle"
+			Distance=3
+			StrOffense=1
+			NoAttackLock=1
+			DamageMult=1
+			Icon='DarknessFlameAura.dmi'
+			IconX=-32
+			IconY=-32
+			HitSparkIcon='Slash - Hellfire.dmi'
+			HitSparkX=-16
+			HitSparkY=-16
+			HitSparkTurns=1
+			HitSparkSize=1.5
+			HitSparkDispersion=1
+			TurfStrike=1
+			TurfShift='blackflameaura.dmi'
+			TurfShiftDuration=3
+			Cooldown=30
+			ActiveMessage="erupts their blade in a burst of infernal hellfire!"
+			adjust(mob/p)
+				var/pot = p.Potential
+				Size = 1 + round(pot/25)
+				DamageMult = 0.5
+				Shearing = round(pot/20)
 				StepsDamage = 0.1 + round(pot/500)
 				Launcher = 2 + round(pot/25)
 				ComboMaster = 1

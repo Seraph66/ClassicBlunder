@@ -175,3 +175,29 @@
 				d.Trigger(User, 1)
 				// jump out of true form
 			d.Cooldown()
+
+/obj/Skills/Buffs/SlotlessBuffs/Ruin
+	name = "Ruin"
+	BuffName = "Ruin"
+	Slotless = 1
+	TimerLimit = 30
+	TopOverlayLock = 'DoomAura1.dmi'
+	StrMult = 0.95
+	ForMult = 0.95
+	var/stacks = 1
+
+	proc/applyStack(mob/target)
+		if(SlotlessOn)
+			target.StrMultTotal -= (StrMult - 1)
+			target.ForMultTotal -= (ForMult - 1)
+			stacks = min(6, stacks + 1)
+			StrMult = 1 - (0.05 * stacks)
+			ForMult = 1 - (0.05 * stacks)
+			target.StrMultTotal += (StrMult - 1)
+			target.ForMultTotal += (ForMult - 1)
+			Timer = 0
+		else
+			stacks = 1
+			StrMult = 0.95
+			ForMult = 0.95
+			target.AddSlotlessBuff(src)

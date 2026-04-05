@@ -143,6 +143,7 @@ obj/Skills
 	var/BuffSelf
 	var/BuffSelfDelay = 0
 	var/BuffAffected
+	var/CorruptionDebuff = 0
 
 	 //we street fighter now vars
 	var/Grapple //IT GRAPPLES

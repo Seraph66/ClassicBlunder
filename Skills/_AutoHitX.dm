@@ -1247,6 +1247,19 @@ obj
 										usr.gainStyleRating(1)
 									else
 										return
+								else if(usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/HellFire))
+									var/obj/Skills/Buffs/SlotlessBuffs/Hellraiser/hr = usr.SlotlessBuffs["Hellraiser"]
+									if(!hr)
+										hr = new/obj/Skills/Buffs/SlotlessBuffs/Hellraiser()
+									hr.stackBuff(usr)
+									usr.endDemonMagicCast()
+									usr.gainStyleRating(1)
+								else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption))
+									src.CorruptionDebuff = 1
+									usr.endDemonMagicCast()
+									usr.gainStyleRating(1)
+								else
+									src.CorruptionDebuff = 0
 					usr.Activate(src)
 				verb/Disable_Innovate()
 					set category = "Other"
@@ -1324,14 +1337,44 @@ obj
 						Rounds= 10 + (p.Potential/10)
 						DamageMult = 1 + (p.Potential/100)
 						PullIn = 6
+						Shearing = 0
+						TurfShift = 0
+						TurfShiftDuration = 0
+					else if(p.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(p) && p.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic))
+						Rounds = 10 + (p.Potential/10)
+						DamageMult = 1 + (p.Potential/100)
+						PullIn = 6
+						Shearing = 2 + (p.Potential/20)
+						TurfShift = 'blackflameaura.dmi'
+						TurfShiftDuration = 3
 					else
 						Size = 2
 						Rounds= 20
 						DamageMult = 0.55
 						PullIn = 0
+						Shearing = 0
+						TurfShift = 0
+						TurfShiftDuration = 0
+					if(p.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(p) && p.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption))
+						CorruptionDebuff = 1
+					else
+						CorruptionDebuff = 0
 				verb/Spinning_Clothesline()
 					set category="Skills"
 					adjust(usr)
+					if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic))
+						usr.endDemonMagicCast()
+						usr.gainStyleRating(1)
+					else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/HellFire))
+						var/obj/Skills/Buffs/SlotlessBuffs/Hellraiser/hr = usr.SlotlessBuffs["Hellraiser"]
+						if(!hr)
+							hr = new/obj/Skills/Buffs/SlotlessBuffs/Hellraiser()
+						hr.stackBuff(usr)
+						usr.endDemonMagicCast()
+						usr.gainStyleRating(1)
+					else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption))
+						usr.endDemonMagicCast()
+						usr.gainStyleRating(1)
 					usr.Activate(src)
 				verb/Disable_Innovate()
 					set category = "Other"
@@ -1390,6 +1433,8 @@ obj
 						Rounds=10
 						TurfErupt=1.25
 						TurfEruptOffset=6
+						TurfShift=0
+						TurfShiftDuration=0
 						IgnoreAlreadyHit=1
 						ComboMaster=1
 						Launcher=3
@@ -1404,6 +1449,35 @@ obj
 						HitSparkY=0
 						Instinct=1
 						Earthshaking=25
+						Shearing=0
+					else if(p.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(p) && p.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic))
+						Area="Around Target"
+						NoLock=1
+						NoAttackLock=1
+						StrOffense=1
+						DamageMult=1 + p.Potential/200
+						Distance=5
+						DistanceAround=4
+						Rounds=10
+						TurfErupt=1.25
+						TurfEruptOffset=6
+						TurfShift='blackflameaura.dmi'
+						TurfShiftDuration=3
+						IgnoreAlreadyHit=1
+						ComboMaster=1
+						Launcher=3
+						Icon='Ki Fist Sprite.dmi'
+						Size=3
+						IconX=-30
+						IconY=0
+						Falling=1//animates towards pixel_z=0 while it is displayed
+						HitSparkIcon='Hit Effect Dark.dmi'
+						WindUp=0
+						HitSparkX=-32
+						HitSparkY=-32
+						Instinct=1
+						Earthshaking=25
+						Shearing=3 + round(p.Potential/30)
 					else
 						Area="Wide Wave"
 						NoLock=0
@@ -1415,6 +1489,8 @@ obj
 						Rounds=0
 						TurfErupt=0
 						TurfEruptOffset=0
+						TurfShift=0
+						TurfShiftDuration=0
 						IgnoreAlreadyHit=0
 						ComboMaster=0
 						Launcher=0
@@ -1429,9 +1505,27 @@ obj
 						HitSparkY=0
 						Instinct=0
 						Earthshaking=0
+						Shearing=0
+					if(p.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(p) && p.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption))
+						CorruptionDebuff = 1
+					else
+						CorruptionDebuff = 0
 				verb/Hyper_Crash()
 					set category="Skills"
 					adjust(usr)
+					if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic))
+						usr.endDemonMagicCast()
+						usr.gainStyleRating(1)
+					else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/HellFire))
+						var/obj/Skills/Buffs/SlotlessBuffs/Hellraiser/hr = usr.SlotlessBuffs["Hellraiser"]
+						if(!hr)
+							hr = new/obj/Skills/Buffs/SlotlessBuffs/Hellraiser()
+						hr.stackBuff(usr)
+						usr.endDemonMagicCast()
+						usr.gainStyleRating(1)
+					else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption))
+						usr.endDemonMagicCast()
+						usr.gainStyleRating(1)
 					usr.Activate(src)
 				verb/Disable_Innovate()
 					set category = "Other"
@@ -3338,7 +3432,6 @@ obj
 						Rounds = 2
 						Stunner=2
 						Distance= 4 + (round(pot/10))
-						Rounds = 2
 						HitSparkIcon='Slash.dmi'
 						HitSparkX=-32
 						HitSparkY=-32
@@ -3347,6 +3440,30 @@ obj
 						HitSparkDispersion=1
 						TurfStrike=1
 						TurfShift='Dark.dmi'
+						TurfShiftDuration=3
+					else if(p.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(p) && p.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic))
+						var/pot = p.Potential
+						Area="Wave"
+						ComboMaster=1
+						GuardBreak=1
+						StrOffense=1
+						PassThrough=1
+						PreShockwave=1
+						PostShockwave=0
+						Shockwave=2
+						Shockwaves=2
+						DamageMult= 5 + (pot/100)
+						Rounds = 2
+						Stunner=3
+						Distance= 4 + (round(pot/10))
+						HitSparkIcon='Slash - Hellfire.dmi'
+						HitSparkX=-32
+						HitSparkY=-32
+						HitSparkTurns=1
+						HitSparkSize=1
+						HitSparkDispersion=1
+						TurfStrike=1
+						TurfShift='blackflameaura.dmi'
 						TurfShiftDuration=3
 					else
 						Area="Target"
@@ -3362,7 +3479,6 @@ obj
 						Rounds = 0
 						Stunner=0
 						Distance= 10
-						Rounds = 0
 						HitSparkIcon=0
 						HitSparkX=0
 						HitSparkY=0
@@ -3372,9 +3488,26 @@ obj
 						TurfStrike=0
 						TurfShift=0
 						TurfShiftDuration=0
+					if(p.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(p) && p.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption))
+						CorruptionDebuff = 1
+					else
+						CorruptionDebuff = 0
 				verb/Jet_Slicer()
 					set category="Skills"
 					adjust(usr)
+					if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic))
+						usr.endDemonMagicCast()
+						usr.gainStyleRating(1)
+					else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/HellFire))
+						var/obj/Skills/Buffs/SlotlessBuffs/Hellraiser/hr = usr.SlotlessBuffs["Hellraiser"]
+						if(!hr)
+							hr = new/obj/Skills/Buffs/SlotlessBuffs/Hellraiser()
+						hr.stackBuff(usr)
+						usr.endDemonMagicCast()
+						usr.gainStyleRating(1)
+					else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption))
+						usr.endDemonMagicCast()
+						usr.gainStyleRating(1)
 					usr.Activate(src)
 			Crowd_Cutter
 				SkillCost=TIER_3_COST
@@ -5884,6 +6017,7 @@ obj
 			buffAffectedType = 0
 			buffAffectedCompare = 0
 			buffAffectedBoon = 0
+			CorruptionDebuff = 0
 
 			PullIn
 
@@ -6035,6 +6169,7 @@ obj
 			src.buffAffectedType  = Z.buffAffectedType
 			src.buffAffectedCompare = Z.buffAffectedCompare
 			src.buffAffectedBoon = Z.buffAffectedBoon
+			src.CorruptionDebuff = Z.CorruptionDebuff
 			PullIn = Z.PullIn
 			if(Z.Burning)
 				src.Burning+=Z.Burning
@@ -6663,6 +6798,11 @@ obj
 							m.AddSkill(S)
 						S.Password = m.name
 
+				if(CorruptionDebuff)
+					var/obj/Skills/Buffs/SlotlessBuffs/Ruin/ruin = m.SlotlessBuffs["Ruin"]
+					if(!ruin)
+						ruin = new/obj/Skills/Buffs/SlotlessBuffs/Ruin()
+					ruin.applyStack(m)
 
 
 
