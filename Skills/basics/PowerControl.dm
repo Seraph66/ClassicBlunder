@@ -36,15 +36,13 @@ mob/proc/PowerUp() // Handles Normal (read: Not Kaioken/Shin) power up related c
     if(canDoATransform())
         Transform();
         return;
-    if(!canPC(goingUp=1)) return 0;
+    if(hasSecret("Shin") && ActiveBuff && canMangPU())
+        if(!KO) MangPowerUp() // This proc is at line 189
     if(passive_handler.Get("Kaioken"))
-        KaiokenPowerUp() // This proc is at line 101
-        
+        if(!KO) KaiokenPowerUp() // This proc is at line 101
         return
-    if(Secret == "Shin" && ((usingShinBuff() && !MangOnCD())|| usingMangBuff()) && ActiveBuff)
-        MangPowerUp() // This proc is at line 189
-    if(HasPULock())
-        return
+    if(!canPC(goingUp=1)) return 0;
+    if(HasPULock()) return
     if(!PoweringUp)
         PoweringUp=1
         if(PowerControl>=100)
