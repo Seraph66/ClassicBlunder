@@ -1008,6 +1008,38 @@ obj/Items/Sword
 							AccuracyEffectiveness=0.875
 							SpeedEffectiveness=1
 
+			Ea
+				name = "Ea"
+				icon='Soul_Eater.dmi'
+				pixel_x = -16
+				pixel_y = -16
+				Ascended = 6
+				Destructable = 0
+				ShatterTier = 0
+				NoSaga = 1
+				Unobtainable = 1
+				Element = "Ultima"
+				passives = list("PureDamage"=5, "PridefulRage"=1, "SpiritSword"=2, "SweepingStrike"=1, "Extend"=2)
+
+				// Ea can only be dismissed via the Summon Ea skill
+				AlignEquip(mob/A, dontUnEquip = FALSE)
+					if(suffix && A == src.loc)
+						A << "<font color='red'>Ea can only be dismissed using the Summon Ea skill.</font>"
+					else
+						Equip(A)
+
+				Equip(mob/A)
+					..()
+					if(A)
+						A.ElementalOffense = "Ultima"
+						A.ElementalDefense = "Ultima"
+
+				UnEquip(mob/A)
+					..()
+					if(A)
+						if(A.ElementalOffense == "Ultima") A.ElementalOffense = null
+						if(A.ElementalDefense == "Ultima") A.ElementalDefense = null
+
 			WeaponSoul
 				Destructable = 0
 				Saga="Weapon Soul"
