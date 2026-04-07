@@ -2,8 +2,6 @@ mob/var
 	EldritchPacted
 	ReflectedPactType="None"
 	ReflectedPactOwner
-	ReflectedFrozen=1
-	ReflectedFrozenTimer=1
 obj/Skills/Utility
 	Offer_Pact
 		desc="Offer a pact for power."
@@ -27,13 +25,16 @@ obj/Skills/Utility
 				src.Using=0
 				return
 			var/Confirm=alert(usr, "Do you wish to offer [Choice] a pact?  It will cost [Commas(Cost)] mana fragments.", "Offer Pact", "No", "Yes")
+			if(Confirm=="No")
+				src.Using=0
+				return
 			if(!usr.HasMoney(Cost)) //note to self, make this fragments instead of money
 				usr << "You don't have enough fragments.  It requires [Commas(Cost)]."
 				src.Using=0
 				return
 			OMsg(usr, "[usr] begins weaving a pact to grant [Choice] power...")
 			var/list/PactTypes=list("Devotion (Balanced)", "Power (Strength)", "Knowledge (Force)", "Ambition (Speed)", "Survival (Endurance)")
-			var/choice
+			var/choice2
 			choice2=input(Choice, "What skill do you want?", "Martial Keyblade Skill") in PactTypes
 			switch(choice2)
 				if("Devotion (Balanced)")

@@ -1966,6 +1966,7 @@ mob
 
 		GetSpd(Mult=1)
 			var/Spd=src.SpdMod
+			var/EldritchMod=0
 			if(src.EldritchPacted)
 				switch(src.ReflectedPactType)
 					if("Devotion")
@@ -2114,6 +2115,7 @@ mob
 
 		GetOff(var/Mult=1)
 			var/Off=src.OffMod
+			var/EldritchMod=0
 			if(src.EldritchPacted)
 				switch(src.ReflectedPactType)
 					if("Devotion")
@@ -2226,6 +2228,7 @@ mob
 
 		GetDef(var/Mult=1)
 			var/Def=src.DefMod
+			var/EldritchMod=0
 			if(src.EldritchPacted)
 				switch(src.ReflectedPactType)
 					if("Devotion")
