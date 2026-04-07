@@ -484,7 +484,7 @@ obj/Skills/AutoHit/Lesser_Division
 	Instinct=2
 	TurfErupt=1
 	TurfEruptOffset=6
-	HitSparkIcon='Icons/Effects/Arcane Division.dmi'
+	//HitSparkIcon='Icons/Effects/Arcane Division.dmi' I have to come back to fix this//
 	HitSparkX=-16
 	HitSparkY=-16
 	HitSparkSize=1

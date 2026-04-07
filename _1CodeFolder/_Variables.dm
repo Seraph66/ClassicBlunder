@@ -542,6 +542,10 @@ mob/var
 	//JJBA vars
 	TimeStop
 	TimeFrozen
+
+	//Eldritch Reflected state
+	ReflectedFrozen=0
+	ReflectedFrozenTimer=0
 	WorldImmune=0
 
 	//gates

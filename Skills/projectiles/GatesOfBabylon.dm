@@ -14,36 +14,38 @@ var/list/gob_weapon_pool = null
 // Particle effect for Enuma Elish charge-up
 /particles/ea_gathering
 	icon      = 'particle.dmi'
-	width     = 700
-	height    = 700
-	count     = 120
-	spawning  = 5
-	lifespan  = 45
-	fade      = 10
-	scale     = generator("num", 2.0, 4.5)
-	// Spawn scattered around/below the focal point (at the user's body level)
-	position  = generator("box", list(-72, -88, 0), list(72, -20, 0))
-	gravity   = list(0, 2.0)    // pulled upward toward the focal point
-	friction  = 0.10
-	drift     = generator("box", list(-0.8, -0.8, 0), list(0.8, 0.8, 0))
-	color     = "#ff3311"
+	width     = 800
+	height    = 800
+	count     = 80
+	spawning  = 4
+
+	scale     = generator("num", 18.0, 36.0)
+	// Spawn scattered below and around the user, wide horizontal spread
+	position  = generator("box", list(-200, -120, 0), list(200, 60, 0))
+	// pulls them toward the orb (center)
+	gravity   = list(0, 2.0)
+	// landing right at the orb center, then fade out
+	friction  = 0.25
+	lifespan  = 30
+	fade      = 12
+	drift     = generator("box", list(-0.8, -0.3, 0), list(0.8, 0.3, 0))
+
+	color     = "#ff5522"
 
 proc/BuildGoBWeaponPool()
 	var/list/pool = list()
 
 	for(var/C in typesof(/obj/Items/Sword))
 		var/obj/Items/Sword/S = new C
-		// Skip abstract/placeholder types
+		// Skip abstract/placeholder types with no icon or name
 		if(!S.icon || !S.name)
 			del S
 			continue
-		// might add more conditions here later
-		if(!S.LegendaryItem)
+		// No Ea for GoB summon
+		if(istype(S, /obj/Items/Sword/Medium/Legendary/Ea))
 			del S
 			continue
-		// Skip Celestial weapons maybe
-		// Keeping this here depending on what I decide later for Celestial weps
-		// if(istype(S, /obj/Items/Sword/Celestial)) { del S; continue; }
+		// Everything else is fair game
 
 		pool += list(list(
 			"icon"      = S.icon,
@@ -487,18 +489,22 @@ obj/Skills/Projectile/Enuma_Elish
 
 		if(!shooter || !shooter.loc) return
 
-		var/turf/above = locate(shooter.x, shooter.y + 2, shooter.z)
-		if(!istype(above, /turf)) above = shooter.loc
+		// EaVisual spawns at the shooter's tile and is shifted 2 tiles up
 
-		var/obj/EaVisual/ev = new(above)
+		var/obj/EaVisual/ev = new(shooter.loc)
+		if(!ev) return
+
+		ev.pixel_x = -158
+		ev.pixel_y = 32
 		ev.transform = matrix().Scale(0.2)
-		ev.particles = new/particles/ea_gathering
-		ev.filters += filter(type = "bloom", threshold = 0.1, size = 6, offset = 0)
 
+		var/obj/EaParticleEmitter/pe = new(shooter.loc)
+
+		// Keep both the visual and emitter above the shooter as they move
 		spawn()
 			while(ev && ev.loc && shooter && shooter.loc)
-				var/turf/t = locate(shooter.x, shooter.y + 2, shooter.z)
-				if(istype(t, /turf)) ev.loc = t
+				ev.loc = shooter.loc
+				if(pe && pe.loc) pe.loc = shooter.loc
 				sleep(1)
 
 		for(var/step = 1 to 5)
@@ -507,8 +513,8 @@ obj/Skills/Projectile/Enuma_Elish
 			animate(ev, transform = matrix().Scale(0.2 + (step * 0.2)), time = 18)
 
 		var/turf/fire_pos = (ev && ev.loc) ? ev.loc : shooter.loc
+		if(pe) del pe
 		if(ev)
-			ev.particles = null
 			animate(ev, alpha = 0, time = 5)
 			sleep(5)
 			if(ev) del ev
@@ -566,12 +572,30 @@ obj/Skills/Summon_Ea
 			usr << "<font color='gold'><b>Ea, the Sword of Rupturing Heaven, descends from the treasury!</b></font>"
 
 
-obj/EaVisual
-	name         = "Enuma Elish"
-	icon         = 'Hellnova.dmi'
-	density      = 0
-	layer        = FLOAT_LAYER
+// Particle emitter for the Enuma Elish charge-up sequence
+obj/EaParticleEmitter
+	density       = 0
+	layer         = 20
 	mouse_opacity = 0
-	alpha        = 220
+	appearance_flags = PIXEL_SCALE
+	Savable       = 0
+	Buildable     = 0
+	particles     = new/particles/ea_gathering
+
+	New()
+		. = ..()
+		// Black glow outline around each particle
+		filters = list(filter(type="outline", size=6, color=rgb(0, 0, 0)))
+
+
+obj/EaVisual
+	name          = "Enuma Elish"
+	icon          = 'Hellnova.dmi'
+	density       = 0
+	layer         = 20
+	mouse_opacity = 0
+	alpha         = 255
+	Savable       = 0
+	Buildable     = 0
 	Savable      = 0
 	Buildable    = 0
