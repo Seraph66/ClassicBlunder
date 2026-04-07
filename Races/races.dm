@@ -225,7 +225,7 @@ race
 				return vars[stat]
 		getSecondStat(stat)
 			if(length(secondary_stats_per_class))
-				return stats_per_class[getClass()][STAT3INDEX[stat]]
+				return secondary_stats_per_class[getClass()][STAT3INDEX[stat]]
 			else
 				return vars[stat]
 		onDeselection(mob/user)

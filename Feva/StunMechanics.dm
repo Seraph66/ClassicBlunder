@@ -57,6 +57,11 @@ proc
 					mob << "You are no longer Shellshocked..."
 			else
 				return 1
+		if(mob.ReflectedFrozen)
+			if(mob.ReflectedFrozenTimer<=world.time)
+				mob.ReflectedFrozen=0
+			else
+				return 1
 	StunClear(mob/mob)
 		if(mob.Stunned)
 			if(mob.CheckSlotless("Mind Dominated") || mob.passive_handler["Shellshocked"]) // this should b some passive that causes this
@@ -71,6 +76,8 @@ proc
 				var/mod = (mob.HasMythical() * 0.5) + mob.passive_handler.Get("Juggernaut") * 0.25
 				mob.StunImmune=world.time+(glob.STUN_IMMUNE_TIMER*(1+mod))
 				mob << "You can't be stunned for another [glob.STUN_IMMUNE_TIMER*(1+mod)/10]"
+		if(mob.ReflectedFrozen)
+			mob.ReflectedFrozen=0
 	StunImmuneCheck(mob/mob)
 		if(mob.StunImmune)
 			if(mob.StunImmune<world.time)

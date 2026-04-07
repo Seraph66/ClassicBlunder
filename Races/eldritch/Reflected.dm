@@ -1,0 +1,10 @@
+mob/var
+	EldritchPacted
+	EldritchStr
+	EldritchEnd
+	EldritchFor
+	EldritchSpd
+	EldritchOff
+	EldritchDef
+	ReflectedFrozen=1
+	ReflectedFrozenTimer=1

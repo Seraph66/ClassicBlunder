@@ -10,6 +10,7 @@ mob/Admin3/verb
 
 mob/proc/
 /*	Drive_Mastery(var/Form)
+		var/DrivePassives=list()
 		switch(Form)
 			if("Valor")
 			if("Wisdom")

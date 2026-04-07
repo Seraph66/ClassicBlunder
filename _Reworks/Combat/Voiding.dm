@@ -113,7 +113,7 @@ mob/proc/StartFresh()
 	corpse.transform = matrix(-90, MATRIX_ROTATE)
 	corpse.overlays += icon('Injured Blood.dmi')
 	corpse.overlays += icon('EyesDragon.dmi') // this is to stop blinking and give a more 'dead eye' look.
-	corpse.name = "[src]'s corpse"
+	corpse.name = "Corpse of [src]"
 	corpse.loc = oldLoc
 /*	PinataExplosion(corpse)
 	OMsg(src, "[src]'s body explodes into a shower of confetti and loot!")*/
@@ -180,7 +180,7 @@ mob/proc/Void(override, zombie, forceVoid, extraChance = 0, extraRolls = 0)
 
 	// handle the rolling here maybe
 	var/NotYet=0
-	if(src.passive_handler.Get("Undying"))
+	if(src.passive_handler.Get("Undying")||src.passive_handler.Get("Reflected"))
 		NotYet=1
 	if(override&&!NotYet)
 		if(zombie)
@@ -267,12 +267,17 @@ mob/proc/Void(override, zombie, forceVoid, extraChance = 0, extraRolls = 0)
 				void_timer = world.realtime + 50
 			voiding = TRUE
 			Conscious()
-			src.loc = locate(glob.VOID_LOCATION[1], glob.VOID_LOCATION[2], glob.VOID_LOCATION[3])
-			if(NotYet)
-				src<<"Your story has not yet ended. Cast the final die, and awaken anew."
-				src.AddSkill(new/obj/Skills/Utility/TheUndying)
-				src.UndyingLoc=oldLoc
-			applyVoidNerf()
+			if(NotYet&&src.passive_handler.Get("Reflected"))
+				src.ReflectedFrozen=1
+				src.ReflectedFrozenTimer=world.time + 48 HOURS
+				src<<"<b>Your body yet refuses to leave this world. You are frozen in place, while recovering from your injuries.</b>"
+			else
+				src.loc = locate(glob.VOID_LOCATION[1], glob.VOID_LOCATION[2], glob.VOID_LOCATION[3])
+				if(NotYet)
+					src<<"Your story has not yet ended. Cast the final die, and awaken anew."
+					src.AddSkill(new/obj/Skills/Utility/TheUndying)
+					src.UndyingLoc=oldLoc
+				applyVoidNerf()
 	if(src.Grab)
 		src.Grab_Release()
 	var/mob/m=src.IsGrabbed()
