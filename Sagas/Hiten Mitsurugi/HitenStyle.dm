@@ -22,6 +22,7 @@
         passives["TripleStrike"] = (1 / SAGA_TIERS * p.SagaLevel);
         passives["BlurringStrikes"] = (p.SagaLevel);
 
+        if(p.SagaLevel>=3) passives["CoolerAfterImages"] = p.SagaLevel
         if(p.SagaLevel>=4) Finisher="/obj/Skills/Queue/Finisher/True_Flash_Strike"
     verb/Hiten_Mitsurugi_Ryuu()
         set hidden=1

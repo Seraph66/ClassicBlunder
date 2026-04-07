@@ -1,3 +1,34 @@
+/mob/proc/DevilSummonerRestoreVerbs()
+	if(Saga != "Devil Summoner") return
+	if(SagaLevel >= 1)
+		src.verbs += /mob/proc/verb_SummonDemon
+		src.verbs += /mob/proc/verb_CallDemon
+	if(SagaLevel >= 2)
+		src.verbs += /mob/proc/verb_RecordDemon
+		src.verbs += /mob/proc/verb_OpenCompendium
+	if(SagaLevel >= 3)
+		src.verbs += /mob/proc/verb_OpenFusion
+	if(!demon_party) demon_party = list()
+	if(!demon_compendium) demon_compendium = list()
+	demon_active = null
+	demon_active_name = ""
+	demon_summon_cooldown = 0
+	demon_call_cooldown = 0
+
+/mob/proc/DevilSummonerLogout()
+	if(Saga != "Devil Summoner") return
+	if(demon_active)
+		var/mob/Player/AI/Demon/d = demon_active
+		if(d)
+			for(var/datum/party_demon/pd in demon_party)
+				if(pd.demon_name == d.name)
+					pd.current_hp = d.demon_hp
+					break
+			d.ai_owner = null
+			del(d)
+		demon_active = null
+		demon_active_name = ""
+
 /mob/proc/verb_SummonDemon()
 	set name     = "Summon Demon"
 	set category = "Devil Summoner"

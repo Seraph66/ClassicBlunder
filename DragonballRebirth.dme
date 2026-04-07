@@ -582,6 +582,7 @@
 #include "Races\eldritch\eldritchMinion.dm"
 #include "Races\eldritch\Lunacy.dm"
 #include "Races\eldritch\race.dm"
+#include "Races\eldritch\Reflected.dm"
 #include "Races\Elf\buffs.dm"
 #include "Races\Elf\racials.dm"
 #include "Races\Elf\time_stop.dm"

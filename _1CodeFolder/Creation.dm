@@ -460,9 +460,11 @@ mob/Players
 					if(PACT_BROKEN_SUBJECT_PENALTY)
 						whoToInflict = PACT_SUBJECT
 				p.breakPact(TRUE, whoToInflict)
+		DevilSummonerRestoreVerbs()
 		initShortcuts();
 		return
 	Logout()
+		DevilSummonerLogout()
 		players -= src
 		if(dancing) transform=dancing
 		last_online = world.realtime

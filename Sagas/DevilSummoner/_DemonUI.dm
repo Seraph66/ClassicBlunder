@@ -24,7 +24,7 @@
 				winset(src, slot,  "image=[dd.demon_portrait];is-visible=true")
 				// Indicate active demon with a highlight
 				var/tag = (pd.demon_name == demon_active_name) ? "[pd.demon_name] *" : pd.demon_name
-				winset(src, label, "text=[tag];is-visible=true")
+				winset(src, label, "text='[tag]';is-visible=true")
 			else
 				winset(src, slot,  "image=;is-visible=false")
 				winset(src, label, "text=;is-visible=false")
@@ -34,17 +34,20 @@
 
 /mob/verb/DemonSlotClick(index as num)
 	set hidden = TRUE
+	if(Saga != "Devil Summoner") return
 	if(!demon_party || index < 1 || index > demon_party.len) return
+	if(world.time < demon_summon_cooldown)
+		var/remaining = round((demon_summon_cooldown - world.time) / 10)
+		src << "Summon Demon is on cooldown. ([remaining]s remaining)"
+		return
 	var/datum/party_demon/pd = demon_party[index]
 	if(!pd) return
 
 	winshow(src, "DemonSummonWindow", FALSE)
 
 	if(pd.demon_name == demon_active_name)
-		// Unsummon current demon
 		DemonUnsummon()
 	else
-		// Swap to selected demon
 		DemonSummonFromParty(pd.demon_name)
 
 /mob/proc/OpenFusionUI()
@@ -193,7 +196,10 @@
 		var/card_class = in_party ? "card withdrawn" : "card"
 		var/link = in_party ? "" : "href='byond://?src=\ref[world];demon_withdraw=[dname]'"
 
-		html += "<div class='[card_class]' [link]>"
+		if(in_party)
+			html += "<div class='[card_class]'>"
+		else
+			html += "<a class='[card_class]' [link] style='text-decoration:none;display:block;'>"
 		html += DemonPortraitHTML(dd, 110)
 		html += "<div class='dname'>[dname]</div>"
 		html += "<div class='dinfo'>[dd.demon_race] Lv[dd.demon_lvl]</div>"
@@ -201,7 +207,10 @@
 			html += "<div class='dinfo' style='color:#c8a840;'>* Recorded Lv[cd.recorded_level]</div>"
 		if(in_party)
 			html += "<div class='dinfo' style='color:#446644;'>\[In Party\]</div>"
-		html += "</div>"
+		if(in_party)
+			html += "</div>"
+		else
+			html += "</a>"
 
 	html += "</div></body></html>"
 	return html
@@ -257,11 +266,11 @@
 	for(var/datum/party_demon/pd in player.demon_party)
 		var/datum/demon_data/dd = DEMON_DB[pd.demon_name]
 		if(!dd) continue
-		html += "<div class='card' href='byond://?src=\ref[world];demon_record=[pd.demon_name]'>"
+		html += "<a class='card' href='byond://?src=\ref[world];demon_record=[pd.demon_name]' style='text-decoration:none;display:block;'>"
 		html += DemonPortraitHTML(dd, 110)
 		html += "<div class='dname'>[pd.demon_name]</div>"
 		html += "<div class='dinfo'>[dd.demon_race] Lv[pd.party_level]</div>"
-		html += "</div>"
+		html += "</a>"
 
 	html += "</div></body></html>"
 	return html

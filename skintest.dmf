@@ -4234,7 +4234,7 @@ window "DemonSummonWindow"
 		border = line
 		saved-params = ""
 		text = ""
-		command = "DemonSlotClick \"1\""
+		command = "DemonSlotClick 1"
 	elem "DemonSlotName_1"
 		type = LABEL
 		pos = 10,188
@@ -4257,7 +4257,7 @@ window "DemonSummonWindow"
 		border = line
 		saved-params = ""
 		text = ""
-		command = "DemonSlotClick \"2\""
+		command = "DemonSlotClick 2"
 	elem "DemonSlotName_2"
 		type = LABEL
 		pos = 180,188
@@ -4280,7 +4280,7 @@ window "DemonSummonWindow"
 		border = line
 		saved-params = ""
 		text = ""
-		command = "DemonSlotClick \"3\""
+		command = "DemonSlotClick 3"
 	elem "DemonSlotName_3"
 		type = LABEL
 		pos = 350,188
@@ -4303,7 +4303,7 @@ window "DemonSummonWindow"
 		border = line
 		saved-params = ""
 		text = ""
-		command = "DemonSlotClick \"4\""
+		command = "DemonSlotClick 4"
 	elem "DemonSlotName_4"
 		type = LABEL
 		pos = 520,188
@@ -4326,7 +4326,7 @@ window "DemonSummonWindow"
 		border = line
 		saved-params = ""
 		text = ""
-		command = "DemonSlotClick \"5\""
+		command = "DemonSlotClick 5"
 	elem "DemonSlotName_5"
 		type = LABEL
 		pos = 690,188
@@ -4349,7 +4349,7 @@ window "DemonSummonWindow"
 		border = line
 		saved-params = ""
 		text = ""
-		command = "DemonSlotClick \"6\""
+		command = "DemonSlotClick 6"
 	elem "DemonSlotName_6"
 		type = LABEL
 		pos = 10,378
@@ -4372,7 +4372,7 @@ window "DemonSummonWindow"
 		border = line
 		saved-params = ""
 		text = ""
-		command = "DemonSlotClick \"7\""
+		command = "DemonSlotClick 7"
 	elem "DemonSlotName_7"
 		type = LABEL
 		pos = 180,378
@@ -4395,7 +4395,7 @@ window "DemonSummonWindow"
 		border = line
 		saved-params = ""
 		text = ""
-		command = "DemonSlotClick \"8\""
+		command = "DemonSlotClick 8"
 	elem "DemonSlotName_8"
 		type = LABEL
 		pos = 350,378
@@ -4418,7 +4418,7 @@ window "DemonSummonWindow"
 		border = line
 		saved-params = ""
 		text = ""
-		command = "DemonSlotClick \"9\""
+		command = "DemonSlotClick 9"
 	elem "DemonSlotName_9"
 		type = LABEL
 		pos = 520,378
@@ -4441,7 +4441,7 @@ window "DemonSummonWindow"
 		border = line
 		saved-params = ""
 		text = ""
-		command = "DemonSlotClick \"10\""
+		command = "DemonSlotClick 10"
 	elem "DemonSlotName_10"
 		type = LABEL
 		pos = 690,378
@@ -4466,5 +4466,5 @@ window "DemonSummonWindow"
 		background-color = #2a2a3e
 		saved-params = "is-checked"
 		text = "Close"
-		command = ".winshow DemonSummonWindow 0"
+		command = ".winset \"DemonSummonWindow.is-visible=false\""
 

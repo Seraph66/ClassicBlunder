@@ -54,9 +54,13 @@
 	proc/DemonUpdate()
 		if(!ai_owner) return
 
+		if(ai_owner.PureRPMode)
+			FollowOwner()
+			return
+
 		var/mob/target = ai_owner.Target
 
-		if(!target || ai_owner.PureRPMode)
+		if(!target)
 			FollowOwner()
 			return
 
@@ -111,6 +115,7 @@
 		del(src)
 
 	DoDamage(mob/attacker, damage_type/damage)
+		if(ai_owner && ai_owner.PureRPMode) return
 		. = ..()
 		if(!ai_owner) return
 		for(var/datum/party_demon/pd in ai_owner.demon_party)
