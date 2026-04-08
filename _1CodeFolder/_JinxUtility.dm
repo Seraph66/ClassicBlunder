@@ -114,7 +114,7 @@ mob
 
 			fieldAndDefense(defender, UnarmedAttack, SwordAttack, SpiritAttack, val)
 
-			if(defender.passive_handler["Determination(Purple)"||defender.passive_handler["Determination(White)"]])
+			if(defender.passive_handler["Determination(Purple)"] || defender.passive_handler["Determination(White)"])
 				defender.HealMana(defender.SagaLevel / 60, 1)
 				if(defender.ManaAmount>=100 && defender.RebirthHeroType=="Cyan"&&!defender.passive_handler["Determination(White)"])
 					defender.passive_handler.Set("Determination(Green)", 1)

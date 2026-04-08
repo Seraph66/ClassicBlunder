@@ -1105,7 +1105,7 @@ obj/Skills/Utility
 									del Chosen
 							//:o
 						usr.TakeMoney(Cost)
-			if(Choice2!="Ultima (True)"||Choice2!="Ultima!?")
+			if(Choice2 != "Ultima (True)" && Choice2 != "Ultima!?")
 				usr << "You feel exhausted."
 				usr.GainFatigue(50/max(1,usr.ArmamentEnchantmentUnlocked))
 			if(Choice2=="Ultima!?")

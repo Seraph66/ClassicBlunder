@@ -36,8 +36,8 @@ mob/proc/Anger(var/Enraged=0)
 				if(src.ActiveBuff)
 					if(src.ActiveBuff.SpecialBuffLock)
 						src.ActiveBuff.Trigger(src)
-				for(var/sb in usr.SlotlessBuffs)
-					var/obj/Skills/Buffs/SB = usr.SlotlessBuffs[sb]
+				for(var/sb in src.SlotlessBuffs)
+					var/obj/Skills/Buffs/SB = src.SlotlessBuffs[sb]
 					if(SB)
 						if(SB.SpecialBuffLock)
 							SB.Trigger(src)
@@ -59,8 +59,8 @@ mob/proc/Anger(var/Enraged=0)
 						src.ActiveBuff.Trigger(src,Override=1)
 				if(src.SpecialBuff)
 					src.SpecialBuff.Trigger(src,Override=1)
-				for(var/sb in usr.SlotlessBuffs)
-					var/obj/Skills/Buffs/SB = usr.SlotlessBuffs[sb]
+				for(var/sb in src.SlotlessBuffs)
+					var/obj/Skills/Buffs/SB = src.SlotlessBuffs[sb]
 					if(SB)
 						if(SB.SpecialBuffLock)
 							SB.Trigger(src,Override=1)
@@ -1374,6 +1374,10 @@ The average damage was [average] over [looplength] times.
 	whiffs = 0
 	flowdodge = 0
 	s = Target.EquippedSword()
+	s2 = Target.EquippedSecondSword()
+	if(!s2 && Target.UsingDualWield()) s2 = s
+	s3 = Target.EquippedThirdSword()
+	if(!s3 && Target.UsingTrinityStyle()) s3 = s
 	st = Target.EquippedStaff()
 	atkArmor = Target.EquippedArmor()
 	swordAtk = FALSE
@@ -1488,6 +1492,10 @@ mob/var/minhitroll = 0
 	whiffs = 0
 	flowdodge = 0
 	s = Target.EquippedSword()
+	s2 = Target.EquippedSecondSword()
+	if(!s2 && Target.UsingDualWield()) s2 = s
+	s3 = Target.EquippedThirdSword()
+	if(!s3 && Target.UsingTrinityStyle()) s3 = s
 	st = Target.EquippedStaff()
 	atkArmor = EquippedArmor()
 	swordAtk = FALSE

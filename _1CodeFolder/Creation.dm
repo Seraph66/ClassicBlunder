@@ -302,8 +302,6 @@ mob/Players
 			src.ModifyPrime=0
 		if(src.ModifyLate)
 			src.ModifyLate=0
-		if(src.ModifyPrime)
-			src.ModifyPrime=0
 
 		// var/Dif=glob.progress.Era-src.EraAge
 

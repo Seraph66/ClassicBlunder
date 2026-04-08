@@ -1951,16 +1951,19 @@ NEW VARIABLES
 				proc/changeVariables(mob/p)
 					if(altered) return
 					var/SuperSaiyanBuff=1
-					if(p.isRace(SAIYAN)&&p.transActive>=1||p.isRace(HALFSAIYAN)&&p.transActive>=1||p.passive_handler.Get("SuperSaiyanSignature"))
-						if(p.race.transformations[1].mastery==100)
-							SuperSaiyanBuff=1.1
-						if(p.race.transformations[2].mastery==100)
-							SuperSaiyanBuff=1.2
-						if(p.race.transformations[3].mastery==100)
-							SuperSaiyanBuff=1.3
+					if((p.isRace(SAIYAN) && p.transActive >= 1) || (p.isRace(HALFSAIYAN) && p.transActive >= 1) || p.passive_handler.Get("SuperSaiyanSignature"))
+						if(p.race && p.race.transformations && p.race.transformations.len >= 1)
+							if(p.race.transformations[1].mastery == 100)
+								SuperSaiyanBuff = 1.1
+						if(p.race && p.race.transformations && p.race.transformations.len >= 2)
+							if(p.race.transformations[2].mastery == 100)
+								SuperSaiyanBuff = 1.2
+						if(p.race && p.race.transformations && p.race.transformations.len >= 3)
+							if(p.race.transformations[3].mastery == 100)
+								SuperSaiyanBuff = 1.3
 						ActiveMessage="is taken over by a violent rage as a mask forms on their face, tainting their golden aura!"
 					AngerMult = 1.3 + (0.1 * Mastery*SuperSaiyanBuff)
-					var/toTen = (10/usr.Intimidation) * (10  * Mastery) // give them 100 per mastery
+					var/toTen = (10 / max(1, usr.Intimidation)) * (10 * Mastery) // give them 100 per mastery
 					Intimidation = 1 + toTen
 					passives = list("Maki" = 1, "Curse" = 1, "AutoAnger" = 1, "VaizardHealth" = 1)
 					var/pRedBoost = 0
