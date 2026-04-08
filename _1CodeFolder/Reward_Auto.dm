@@ -26,56 +26,44 @@
 mob
 	proc
 		reward_auto()
-			/*
-				if it is past 6pm
-					check to see when the last day they gained something was
-						if the day is lower than the days of wipe go to the next check
-
-						give a difference in daily pot based on how many days are different, generally 1
-						then set the rewards last gained to the current day
-
-			*/
 			if(RewardsLastGained < DaysOfWipe())
-				var/Dif=((glob.progress.DaysOfWipe-RewardsLastGained))
-				Dif=round(Dif)
+				var/Dif = glob.progress.DaysOfWipe - RewardsLastGained
+				Dif = round(Dif)
 				if(DEBUGGING)
 					Dif = 1
 				if(Dif > glob.progress.DaysOfWipe)
-					Dif=glob.progress.DaysOfWipe
-				var/Statement=1
-				while(Dif>0)
-					src << "Gaining routine RPP for [Statement] day\s."
-					reward_self()
-					Statement++
-					Dif--
-				RewardsLastGained=glob.progress.DaysOfWipe
-		reward_self()
-			var/AddRPP=glob.progress.RPPDaily/6
-			var/YourRPP=AddRPP
+					Dif = glob.progress.DaysOfWipe
+				if(Dif > 0)
+					src << "Gaining routine rewards for [Dif] missed day\s."
+					reward_self(Dif)
+				RewardsLastGained = glob.progress.DaysOfWipe
+		reward_self(var/days = 1)
+			var/AddRPP = glob.progress.RPPDaily / 6
+			var/YourRPP = AddRPP
 			DaysOfWipe()//mak sure globalrpp set.
 
-			if(YourRPP>0)
-				var/EMult=glob.progress.RPPBaseMult
-				EMult*=src.GetRPPMult()
-				YourRPP*=EMult
+			if(YourRPP > 0)
+				var/EMult = glob.progress.RPPBaseMult
+				EMult *= src.GetRPPMult()
+				YourRPP *= EMult
+				var/totalRPP = round(YourRPP * days)
+				GiveRPP(totalRPP)
 
-				GiveRPP(round(YourRPP))
-
-			if((src.EraBody!="Child"||!src.EraBody)&&!src.Dead)
+			if((src.EraBody != "Child" || !src.EraBody) && !src.Dead)
 				src << "You gain money from routine tasks."
 				var/extraMoney = 0
 				if(!information)
 					information = new()
 				if(information.rankingTier == "Ranker" || information.rankingTier == "Top Ranker")
 					var/currentRanking = information.rankingNumber
-					// 10,000 at 30 pot, only count intervals of 10
-					var/currentPot = round(glob.progress.totalPotentialToDate,10)
+					var/currentPot = round(glob.progress.totalPotentialToDate, 10)
 					var/baseSupporterMoney = 500
 					extraMoney = baseSupporterMoney * currentPot - ((currentRanking-1) * 1000)
 					if(extraMoney > 0)
 						src << "PLACEHOLDER: You gain [extraMoney] money from your ranking."
 					else
 						extraMoney = 0
-				src.GiveMoney(max(0,round(glob.progress.EconomyIncome*src.EconomyMult*src.Intelligence)) + extraMoney)
+				var/dailyMoney = max(0, round(glob.progress.EconomyIncome * src.EconomyMult * src.Intelligence)) + extraMoney
+				src.GiveMoney(dailyMoney * days)
 
 			moneyGrindedDaily = 0

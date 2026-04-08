@@ -1142,8 +1142,9 @@ mob/proc
 				src.EraAge=0
 				src.EraBody="Adult"
 
+			// Always set RewardsLastGained for new characters so they don't get catch-up rewards for days before they existed
+			src.RewardsLastGained = glob.progress.DaysOfWipe
 			if(glob.progress.WipeStart)
-				src.RewardsLastGained=glob.progress.DaysOfWipe-1
 				src.PotentialLastDailyGain=glob.progress.WipeStart
 				if(src.Potential==DaysOfWipe())//if its a bad boi who gets free potential
 					src.PotentialLastDailyGain=glob.progress.DaysOfWipe-1
