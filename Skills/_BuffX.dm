@@ -12561,6 +12561,26 @@ mob
 					src.ActiveBuff.OffMessage="calms their evolution..."
 					src.ActiveBuff.OverlayTransLock=1
 					src.ActiveBuff.AuraLock=1
+				if(src.isRace(MAKYO))
+					src.ActiveBuff.IconReplace=1
+					src.ActiveBuff.icon=src.ExpandBase
+					src.ActiveBuff.passives["EnergyLeak"] = max(6-AscensionsAcquired,1)
+					src.ActiveBuff.passives["GiantForm"] = round(AscensionsAcquired/2)
+					src.ActiveBuff.passives["Godspeed"] = AscensionsAcquired
+					src.ActiveBuff.AutoAnger=0
+					src.ActiveBuff.AngerStorage=0
+					if(src.passive_handler.Get("StarPower"))
+						src.ActiveBuff.AutoAnger=1
+						src.ActiveBuff.AngerMult=2
+						src.ActiveBuff.passives["PUSpike"] = 50
+						src.ActiveBuff.passives["Pursuer"] = 2 * AscensionsAcquired
+					else
+						if(AscensionsAcquired)
+							src.ActiveBuff.AngerPoint = 5 * AscensionsAcquired
+						src.ActiveBuff.passives["Pursuer"] = 0.5 * AscensionsAcquired
+						src.ActiveBuff.AngerMult = round(2/(8-AscensionsAcquired), 0.01)
+						src.ActiveBuff.passives["PUSpike"] = round(25/(5-AscensionsAcquired))
+						src.ActiveBuff.PUSpike=round(25/(5-AscensionsAcquired))
 				if(src.Saga=="Cosmo")
 					src.ActiveBuff.ActiveMessage="burns their Cosmo with full strength!!!"
 					src.ActiveBuff.OffMessage="calms their Cosmo..."

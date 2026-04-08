@@ -2,6 +2,50 @@ ascension
 	makyo
 		one
 			unlock_potential = ASCENSION_ONE_POTENTIAL
+			passives = list("Juggernaut" = 0.5, "DemonicDurability" = 1, "HeavyHitter" = 0.5)
+			strength = 0.5
+			force = 0.25
+			intimidation = 25
+		two
+			unlock_potential = ASCENSION_TWO_POTENTIAL
+			passives = list("Pressure" = 1, "DemonicDurability" = 1, "HeavyHitter" = 0.5)
+			endurance = 0.25
+			offense = 0.5
+			intimidation = 50
+		three
+			unlock_potential = ASCENSION_THREE_POTENTIAL
+			passives = list("Juggernaut" = 1, "DemonicDurability" = 0.5, "HeavyHitter" = 0.5)
+			strength = 0.5
+			endurance = 0.25
+			force = 0.5
+			intimidation = 50
+		four
+			unlock_potential = ASCENSION_FOUR_POTENTIAL
+			passives = list("Juggernaut" = 0.5, "DemonicDurability" = 0.5, "HeavyHitter" = 1)
+			strength = 0.5
+			endurance = 0.25
+			force = 0.5
+			intimidation = 25
+		five
+			unlock_potential = ASCENSION_FIVE_POTENTIAL
+			passives = list("Juggernaut" = 0.5, "DemonicDurability" = 0.5, "HeavyHitter" = 2)
+			strength = 1
+			endurance = 0.25
+			force = 1
+			intimidation = 25
+
+		six
+			unlock_potential = ASCENSION_SIX_POTENTIAL
+			passives = list("Juggernaut" = 0.5, "DemonicDurability" = 0.5, "HeavyHitter" = 2)
+			strength = 1
+			endurance = 0.25
+			force = 1
+			intimidation = 25
+
+/*ascension
+	makyo
+		one
+			unlock_potential = ASCENSION_ONE_POTENTIAL
 			choices = list("Winter" = /ascension/sub_ascension/makyo/winter, "Summer"= /ascension/sub_ascension/makyo/summer, "Fall" = /ascension/sub_ascension/makyo/fall, "Spring" = /ascension/sub_ascension/makyo/spring)
 			choiceTitle = "From which Court do you Hail?"
 			choiceMessage ="As you've grown, the Court of Seasons calls, which House are you most attuned to?\n\nSummer:Passionate yet fickle, you burn too bright for most, for you know in no time at all you shall be snuffed out...\n\nWinter: Stagnant and solitary, slow to act, yet bringing forth the inevitable end once roused...\n\nFall: The most mystical and  mysterious of all, wise beyond your years and yet always in the midst of fading...\n\nSpring: The most vivacious and inexperienced, always creating new marvels while rarely perfecting what you bring to bloom..."
@@ -154,3 +198,4 @@ ascension
 				onAscension(mob/owner)
 					owner.Class = "Fall"
 					..()
+					*/
