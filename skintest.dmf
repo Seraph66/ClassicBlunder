@@ -4199,7 +4199,7 @@ window "DemonSummonWindow"
 	elem "DemonSummonWindow"
 		type = MAIN
 		pos = 0,0
-		size = 870x430
+		size = 460x360
 		anchor1 = -1,-1
 		anchor2 = -1,-1
 		background-color = #0a0a0a
@@ -4213,7 +4213,7 @@ window "DemonSummonWindow"
 	elem "DemonSummonTitle"
 		type = LABEL
 		pos = 0,0
-		size = 870x28
+		size = 460x28
 		anchor1 = 0,0
 		anchor2 = 100,7
 		font-family = "Maiandra GD"
@@ -4226,8 +4226,8 @@ window "DemonSummonWindow"
 		text = "CHOOSE DEMON"
 	elem "DemonSlot_1"
 		type = BUTTON
-		pos = 10,28
-		size = 160x160
+		pos = 10,30
+		size = 64x128
 		anchor1 = -1,-1
 		anchor2 = -1,-1
 		background-color = #1a1a2e
@@ -4237,11 +4237,11 @@ window "DemonSummonWindow"
 		command = "DemonSlotClick 1"
 	elem "DemonSlotName_1"
 		type = LABEL
-		pos = 10,188
-		size = 160x20
+		pos = 10,158
+		size = 64x18
 		anchor1 = -1,-1
 		anchor2 = -1,-1
-		font-size = 9
+		font-size = 8
 		text-color = #cccccc
 		background-color = #111111
 		border = none
@@ -4249,8 +4249,8 @@ window "DemonSummonWindow"
 		text = ""
 	elem "DemonSlot_2"
 		type = BUTTON
-		pos = 180,28
-		size = 160x160
+		pos = 84,30
+		size = 64x128
 		anchor1 = -1,-1
 		anchor2 = -1,-1
 		background-color = #1a1a2e
@@ -4260,11 +4260,11 @@ window "DemonSummonWindow"
 		command = "DemonSlotClick 2"
 	elem "DemonSlotName_2"
 		type = LABEL
-		pos = 180,188
-		size = 160x20
+		pos = 84,158
+		size = 64x18
 		anchor1 = -1,-1
 		anchor2 = -1,-1
-		font-size = 9
+		font-size = 8
 		text-color = #cccccc
 		background-color = #111111
 		border = none
@@ -4272,8 +4272,8 @@ window "DemonSummonWindow"
 		text = ""
 	elem "DemonSlot_3"
 		type = BUTTON
-		pos = 350,28
-		size = 160x160
+		pos = 158,30
+		size = 64x128
 		anchor1 = -1,-1
 		anchor2 = -1,-1
 		background-color = #1a1a2e
@@ -4283,11 +4283,11 @@ window "DemonSummonWindow"
 		command = "DemonSlotClick 3"
 	elem "DemonSlotName_3"
 		type = LABEL
-		pos = 350,188
-		size = 160x20
+		pos = 158,158
+		size = 64x18
 		anchor1 = -1,-1
 		anchor2 = -1,-1
-		font-size = 9
+		font-size = 8
 		text-color = #cccccc
 		background-color = #111111
 		border = none
@@ -4295,8 +4295,8 @@ window "DemonSummonWindow"
 		text = ""
 	elem "DemonSlot_4"
 		type = BUTTON
-		pos = 520,28
-		size = 160x160
+		pos = 232,30
+		size = 64x128
 		anchor1 = -1,-1
 		anchor2 = -1,-1
 		background-color = #1a1a2e
@@ -4306,11 +4306,11 @@ window "DemonSummonWindow"
 		command = "DemonSlotClick 4"
 	elem "DemonSlotName_4"
 		type = LABEL
-		pos = 520,188
-		size = 160x20
+		pos = 232,158
+		size = 64x18
 		anchor1 = -1,-1
 		anchor2 = -1,-1
-		font-size = 9
+		font-size = 8
 		text-color = #cccccc
 		background-color = #111111
 		border = none
@@ -4318,8 +4318,8 @@ window "DemonSummonWindow"
 		text = ""
 	elem "DemonSlot_5"
 		type = BUTTON
-		pos = 690,28
-		size = 160x160
+		pos = 306,30
+		size = 64x128
 		anchor1 = -1,-1
 		anchor2 = -1,-1
 		background-color = #1a1a2e
@@ -4329,11 +4329,11 @@ window "DemonSummonWindow"
 		command = "DemonSlotClick 5"
 	elem "DemonSlotName_5"
 		type = LABEL
-		pos = 690,188
-		size = 160x20
+		pos = 306,158
+		size = 64x18
 		anchor1 = -1,-1
 		anchor2 = -1,-1
-		font-size = 9
+		font-size = 8
 		text-color = #cccccc
 		background-color = #111111
 		border = none
@@ -4341,8 +4341,8 @@ window "DemonSummonWindow"
 		text = ""
 	elem "DemonSlot_6"
 		type = BUTTON
-		pos = 10,218
-		size = 160x160
+		pos = 380,30
+		size = 64x128
 		anchor1 = -1,-1
 		anchor2 = -1,-1
 		background-color = #1a1a2e
@@ -4352,11 +4352,11 @@ window "DemonSummonWindow"
 		command = "DemonSlotClick 6"
 	elem "DemonSlotName_6"
 		type = LABEL
-		pos = 10,378
-		size = 160x20
+		pos = 380,158
+		size = 64x18
 		anchor1 = -1,-1
 		anchor2 = -1,-1
-		font-size = 9
+		font-size = 8
 		text-color = #cccccc
 		background-color = #111111
 		border = none
@@ -4364,8 +4364,8 @@ window "DemonSummonWindow"
 		text = ""
 	elem "DemonSlot_7"
 		type = BUTTON
-		pos = 180,218
-		size = 160x160
+		pos = 10,178
+		size = 64x128
 		anchor1 = -1,-1
 		anchor2 = -1,-1
 		background-color = #1a1a2e
@@ -4375,11 +4375,11 @@ window "DemonSummonWindow"
 		command = "DemonSlotClick 7"
 	elem "DemonSlotName_7"
 		type = LABEL
-		pos = 180,378
-		size = 160x20
+		pos = 10,306
+		size = 64x18
 		anchor1 = -1,-1
 		anchor2 = -1,-1
-		font-size = 9
+		font-size = 8
 		text-color = #cccccc
 		background-color = #111111
 		border = none
@@ -4387,8 +4387,8 @@ window "DemonSummonWindow"
 		text = ""
 	elem "DemonSlot_8"
 		type = BUTTON
-		pos = 350,218
-		size = 160x160
+		pos = 84,178
+		size = 64x128
 		anchor1 = -1,-1
 		anchor2 = -1,-1
 		background-color = #1a1a2e
@@ -4398,11 +4398,11 @@ window "DemonSummonWindow"
 		command = "DemonSlotClick 8"
 	elem "DemonSlotName_8"
 		type = LABEL
-		pos = 350,378
-		size = 160x20
+		pos = 84,306
+		size = 64x18
 		anchor1 = -1,-1
 		anchor2 = -1,-1
-		font-size = 9
+		font-size = 8
 		text-color = #cccccc
 		background-color = #111111
 		border = none
@@ -4410,8 +4410,8 @@ window "DemonSummonWindow"
 		text = ""
 	elem "DemonSlot_9"
 		type = BUTTON
-		pos = 520,218
-		size = 160x160
+		pos = 158,178
+		size = 64x128
 		anchor1 = -1,-1
 		anchor2 = -1,-1
 		background-color = #1a1a2e
@@ -4421,11 +4421,11 @@ window "DemonSummonWindow"
 		command = "DemonSlotClick 9"
 	elem "DemonSlotName_9"
 		type = LABEL
-		pos = 520,378
-		size = 160x20
+		pos = 158,306
+		size = 64x18
 		anchor1 = -1,-1
 		anchor2 = -1,-1
-		font-size = 9
+		font-size = 8
 		text-color = #cccccc
 		background-color = #111111
 		border = none
@@ -4433,8 +4433,8 @@ window "DemonSummonWindow"
 		text = ""
 	elem "DemonSlot_10"
 		type = BUTTON
-		pos = 690,218
-		size = 160x160
+		pos = 232,178
+		size = 64x128
 		anchor1 = -1,-1
 		anchor2 = -1,-1
 		background-color = #1a1a2e
@@ -4444,11 +4444,57 @@ window "DemonSummonWindow"
 		command = "DemonSlotClick 10"
 	elem "DemonSlotName_10"
 		type = LABEL
-		pos = 690,378
-		size = 160x20
+		pos = 232,306
+		size = 64x18
 		anchor1 = -1,-1
 		anchor2 = -1,-1
-		font-size = 9
+		font-size = 8
+		text-color = #cccccc
+		background-color = #111111
+		border = none
+		saved-params = ""
+		text = ""
+	elem "DemonSlot_11"
+		type = BUTTON
+		pos = 306,178
+		size = 64x128
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		background-color = #1a1a2e
+		border = line
+		saved-params = ""
+		text = ""
+		command = "DemonSlotClick 11"
+	elem "DemonSlotName_11"
+		type = LABEL
+		pos = 306,306
+		size = 64x18
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		font-size = 8
+		text-color = #cccccc
+		background-color = #111111
+		border = none
+		saved-params = ""
+		text = ""
+	elem "DemonSlot_12"
+		type = BUTTON
+		pos = 380,178
+		size = 64x128
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		background-color = #1a1a2e
+		border = line
+		saved-params = ""
+		text = ""
+		command = "DemonSlotClick 12"
+	elem "DemonSlotName_12"
+		type = LABEL
+		pos = 380,306
+		size = 64x18
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		font-size = 8
 		text-color = #cccccc
 		background-color = #111111
 		border = none
@@ -4456,7 +4502,7 @@ window "DemonSummonWindow"
 		text = ""
 	elem "DemonSummonClose"
 		type = BUTTON
-		pos = 310,402
+		pos = 105,330
 		size = 250x25
 		anchor1 = -1,-1
 		anchor2 = -1,-1

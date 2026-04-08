@@ -14,7 +14,7 @@
 
 /mob/proc/RefreshDemonSummonWindow()
 	var/party_size = demon_party ? demon_party.len : 0
-	for(var/i = 1 to 10)
+	for(var/i = 1 to 12)
 		var/slot = "DemonSlot_[i]"
 		var/label = "DemonSlotName_[i]"
 		if(i <= party_size)
@@ -22,7 +22,6 @@
 			var/datum/demon_data/dd = DEMON_DB[pd.demon_name]
 			if(dd)
 				winset(src, slot,  "image=[dd.demon_portrait];is-visible=true")
-				// Indicate active demon with a highlight
 				var/tag = (pd.demon_name == demon_active_name) ? "[pd.demon_name] *" : pd.demon_name
 				winset(src, label, "text='[tag]';is-visible=true")
 			else
@@ -83,7 +82,7 @@
 	pairs = valid_pairs + invalid_pairs
 
 	demon_fusion_page = max(1, min(demon_fusion_page, ceil(pairs.len / 5)))
-	src << browse(BuildFusionHTML(pairs, demon_fusion_page), "window=DemonFusion;size=640,560")
+	src << browse(BuildFusionHTML(pairs, demon_fusion_page), "window=DemonFusion;size=440,460")
 
 /proc/BuildFusionHTML(list/pairs, page)
 	var/total_pages = max(1, ceil(pairs.len / 5))
@@ -94,7 +93,7 @@
 	html += "body {[DS_STYLE] margin:0; padding:0;}"
 	html += ".header {[DS_HEADER_STYLE]}"
 	html += ".row {display:flex;align-items:center;border-bottom:1px solid #2a1a4e;padding:6px 8px;gap:8px;}"
-	html += ".dname {font-size:10px;color:#9a88cc;text-align:center;width:96px;}"
+	html += ".dname {font-size:10px;color:#9a88cc;text-align:center;width:40px;}"
 	html += ".plus {font-size:20px;color:#6a4a9e;margin:0 4px;}"
 	html += ".eq {font-size:20px;color:#6a4a9e;margin:0 4px;}"
 	html += ".fuseBtn {[DS_BTN_VALID] margin-left:auto;}"
@@ -117,35 +116,31 @@
 
 		html += "<div class='row'>"
 
-		// Demon A
 		html += "<div>"
-		html += DemonPortraitHTML(da, 96)
+		html += DemonPortraitHTML(da, 32)
 		html += "<div class='dname'>[name_a]<br><span style='color:#7a6aaa;'>[da ? da.demon_race : "?"] Lv[da ? da.demon_lvl : "?"]</span></div>"
 		html += "</div>"
 
 		html += "<div class='plus'>+</div>"
 
-		// Demon B
 		html += "<div>"
-		html += DemonPortraitHTML(db, 96)
+		html += DemonPortraitHTML(db, 32)
 		html += "<div class='dname'>[name_b]<br><span style='color:#7a6aaa;'>[db ? db.demon_race : "?"] Lv[db ? db.demon_lvl : "?"]</span></div>"
 		html += "</div>"
 
 		html += "<div class='eq'>=</div>"
 
-		// Result
 		if(valid)
 			var/result_clean = element ? copytext(result, findtext(result, "_", 9) + 1) : result
 			var/datum/demon_data/dr = DEMON_DB[result_clean]
 			html += "<div>"
-			html += DemonPortraitHTML(dr, 96)
+			html += DemonPortraitHTML(dr, 32)
 			html += "<div class='dname'>[result_clean]<br>"
 			if(dr) html += "<span style='color:#7a6aaa;'>[dr.demon_race] Lv[dr.demon_lvl]</span>"
 			html += "</div></div>"
-			// Fuse button
 			html += "<a class='fuseBtn' href='byond://?src=\ref[world];demon_fuse_a=[name_a];demon_fuse_b=[name_b]'>FUSE</a>"
 		else
-			html += "<div>[InvalidPortraitHTML(96)]<div class='dname' style='color:#663333;'>Invalid</div></div>"
+			html += "<div>[InvalidPortraitHTML(32)]<div class='dname' style='color:#663333;'>Invalid</div></div>"
 
 		html += "</div>"  // end row
 
@@ -167,17 +162,17 @@
 	if(!demon_compendium || !demon_compendium.len)
 		src << "Your compendium is empty. Use Record Demon to save a demon."
 		return
-	src << browse(BuildCompendiumHTML(src), "window=DemonCompendium;size=680,520")
+	src << browse(BuildCompendiumHTML(src), "window=DemonCompendium;size=480,420")
 
 /proc/BuildCompendiumHTML(mob/player)
 	var/html = "<html><head><style>"
 	html += "body {[DS_STYLE] margin:0; padding:0;}"
 	html += ".header {[DS_HEADER_STYLE]}"
 	html += ".grid {display:flex;flex-wrap:wrap;gap:12px;padding:12px;}"
-	html += ".card {background:#110820;border:1px solid #3a2a6e;padding:6px;text-align:center;width:130px;cursor:pointer;}"
+	html += ".card {background:#110820;border:1px solid #3a2a6e;padding:6px;text-align:center;width:52px;cursor:pointer;}"
 	html += ".card:hover {border-color:#8a5abe;}"
-	html += ".dname {font-size:11px;color:#c8b8ff;margin-top:4px;}"
-	html += ".dinfo {font-size:10px;color:#7a6aaa;}"
+	html += ".dname {font-size:9px;color:#c8b8ff;margin-top:4px;}"
+	html += ".dinfo {font-size:8px;color:#7a6aaa;}"
 	html += ".withdrawn {opacity:0.4;}"
 	html += "</style></head><body>"
 	html += "<div class='header'>COMPENDIUM -- [player.demon_compendium.len] Recorded</div>"
@@ -188,7 +183,6 @@
 		var/datum/demon_data/dd = DEMON_DB[dname]
 		if(!dd) continue
 
-		// Check if already in party (greyed out)
 		var/in_party = FALSE
 		for(var/datum/party_demon/pd in player.demon_party)
 			if(pd.demon_name == dname) { in_party = TRUE; break }
@@ -200,7 +194,7 @@
 			html += "<div class='[card_class]'>"
 		else
 			html += "<a class='[card_class]' [link] style='text-decoration:none;display:block;'>"
-		html += DemonPortraitHTML(dd, 110)
+		html += DemonPortraitHTML(dd, 32)
 		html += "<div class='dname'>[dname]</div>"
 		html += "<div class='dinfo'>[dd.demon_race] Lv[dd.demon_lvl]</div>"
 		if(cd.recorded_level > cd.base_level)
@@ -234,7 +228,7 @@
 	var/html = "<html><head><style>body{[DS_STYLE]margin:8px;}</style></head><body>"
 	html += "<b style='font-size:14px;color:#e8d0ff;'>[demon_name]</b><br>"
 	html += "<i style='color:#9a88cc;'>[dd.demon_race] -- Base Lv[cd.base_level]</i><br><br>"
-	html += DemonPortraitHTML(dd, 110)
+	html += DemonPortraitHTML(dd, 32)
 	html += "<br><br>"
 	html += "<a href='byond://?src=\ref[world];demon_withdraw_confirm=[demon_name];level=base' style='[DS_BTN_STYLE] display:block; margin-bottom:6px;'>Withdraw at Base Lv[cd.base_level] ([base_cost] Mana Bits)</a>"
 	if(cd.recorded_level > cd.base_level)
@@ -248,17 +242,17 @@
 	if(!demon_party || !demon_party.len)
 		src << "You have no demons in your party to record."
 		return
-	src << browse(BuildRecordDemonHTML(src), "window=DemonRecord;size=560,300")
+	src << browse(BuildRecordDemonHTML(src), "window=DemonRecord;size=400,260")
 
 /proc/BuildRecordDemonHTML(mob/player)
 	var/html = "<html><head><style>"
 	html += "body {[DS_STYLE] margin:0; padding:0;}"
 	html += ".header {[DS_HEADER_STYLE]}"
 	html += ".grid {display:flex;flex-wrap:wrap;gap:12px;padding:12px;}"
-	html += ".card {background:#110820;border:1px solid #3a2a6e;padding:6px;text-align:center;width:130px;cursor:pointer;}"
+	html += ".card {background:#110820;border:1px solid #3a2a6e;padding:6px;text-align:center;width:52px;cursor:pointer;}"
 	html += ".card:hover {border-color:#d4a0ff;}"
-	html += ".dname {font-size:11px;color:#c8b8ff;margin-top:4px;}"
-	html += ".dinfo {font-size:10px;color:#7a6aaa;}"
+	html += ".dname {font-size:9px;color:#c8b8ff;margin-top:4px;}"
+	html += ".dinfo {font-size:8px;color:#7a6aaa;}"
 	html += "</style></head><body>"
 	html += "<div class='header'>RECORD DEMON -- Choose a demon to save to your compendium</div>"
 	html += "<div class='grid'>"
@@ -267,7 +261,7 @@
 		var/datum/demon_data/dd = DEMON_DB[pd.demon_name]
 		if(!dd) continue
 		html += "<a class='card' href='byond://?src=\ref[world];demon_record=[pd.demon_name]' style='text-decoration:none;display:block;'>"
-		html += DemonPortraitHTML(dd, 110)
+		html += DemonPortraitHTML(dd, 32)
 		html += "<div class='dname'>[pd.demon_name]</div>"
 		html += "<div class='dinfo'>[dd.demon_race] Lv[pd.party_level]</div>"
 		html += "</a>"

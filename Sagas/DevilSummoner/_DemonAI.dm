@@ -2,13 +2,16 @@
 	var/datum/demon_data/demon_data = null
 	var/demon_owner_key = ""
 
-	// Timing variables
-	var/next_melee_tick   = 0       // melee dash
-	var/next_skill_tick   = 0       // special skill use
-	var/demon_melee_rate  = 25      // ticks between melee attacks
-	var/demon_skill_rate  = 150     // (~15s)
+	var/next_melee_tick   = 0
+	var/next_skill_tick   = 0
+	var/demon_melee_rate  = 25
+	var/demon_skill_rate  = 150
 
 	var/demon_hp = 100
+	var/next_attack_multiplier = 1
+	var/demon_reflect_until = 0
+	var/image/reflect_overlay_self = null
+	var/image/reflect_overlay_owner = null
 
 	New()
 		..()
@@ -36,7 +39,6 @@
 		Potential = owner.Potential * 0.5
 		potential_power_mult = owner.potential_power_mult * 0.5
 
-		// Range: Spd 1 = every 30 ticks; Spd 32 = every ~8 ticks
 		demon_melee_rate = max(8, 30 - round(dd.demon_spd * 0.7))
 
 		aiGain()
@@ -60,6 +62,12 @@
 
 		var/mob/target = ai_owner.Target
 
+		if(!(next_skill_tick - world.time > 0))
+			if(DemonUseSkill(target))
+				next_skill_tick = world.time + demon_skill_rate
+			else
+				next_skill_tick = world.time + 50
+
 		if(!target)
 			FollowOwner()
 			return
@@ -70,11 +78,6 @@
 			else
 				DemonMeleeAttack(target)
 				next_melee_tick = world.time + demon_melee_rate
-
-		// Periodic special skill
-		if(!(next_skill_tick - world.time > 0))
-			DemonSpecialSkill(target)
-			next_skill_tick = world.time + demon_skill_rate
 
 	proc/FollowOwner()
 		if(!ai_owner) return
@@ -91,22 +94,16 @@
 	proc/DemonMeleeAttack(mob/target)
 		if(!target || !target.client) return
 		if(ai_owner && "[ai_owner.ckey]" in target.ai_alliances) return
-		var/dmg = max(1, round(StrMod * 0.1))
+		if(ai_owner && ai_owner.party && ai_owner.party.members && (target in ai_owner.party.members)) return
+		var/dmg = max(1, round(StrMod * 0.1 * next_attack_multiplier))
+		if(next_attack_multiplier > 1)
+			if(ai_owner) ai_owner << "<font color='#ffaa00'>[name]'s charged attack connects!</font>"
+			next_attack_multiplier = 1
 		target.DoDamage(src, TrueDamage(dmg))
 		Bump(target)
 
-	// Special skill
-	proc/DemonSpecialSkill(mob/target)
-		if(!target || !demon_data) return
-		// Placeholder
-		if(get_dist(src, target) > 15) return
-		var/dmg = max(2, round(ForMod * 0.2))
-		target.DoDamage(src, TrueDamage(dmg))
-		src << "[demon_data.demon_name] used [demon_data.demon_skill]!"
-		if(ai_owner) ai_owner << "[demon_data.demon_name] used [demon_data.demon_skill]!"
-
-	// Demon death
 	proc/DemonDespawn()
+		DemonRemoveReflectOverlays()
 		if(ai_owner)
 			ai_owner.ai_followers -= src
 			ai_owner.demon_active = null
@@ -116,6 +113,16 @@
 
 	DoDamage(mob/attacker, damage_type/damage)
 		if(ai_owner && ai_owner.PureRPMode) return
+		if(ai_owner && istype(attacker, /mob))
+			if(attacker == ai_owner) return
+			if(ai_owner.party && ai_owner.party.members && (attacker in ai_owner.party.members)) return
+		if(demon_reflect_until > world.time && istype(attacker, /mob))
+			var/reflect_dmg = max(1, round(ForMod * 0.3))
+			demon_reflect_until = 0
+			DemonRemoveReflectOverlays()
+			if(ai_owner) ai_owner << "<font color='#88ddff'>[name]'s barrier reflects the attack!</font>"
+			attacker.DoDamage(src, TrueDamage(reflect_dmg))
+			return
 		. = ..()
 		if(!ai_owner) return
 		for(var/datum/party_demon/pd in ai_owner.demon_party)

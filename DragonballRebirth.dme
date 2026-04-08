@@ -656,6 +656,7 @@
 #include "Sagas\DevilSummoner\_DemonBase.dm"
 #include "Sagas\DevilSummoner\_DemonData.dm"
 #include "Sagas\DevilSummoner\_DemonFusion.dm"
+#include "Sagas\DevilSummoner\_DemonSkills.dm"
 #include "Sagas\DevilSummoner\_DemonUI.dm"
 #include "Sagas\DevilSummoner\_DemonVerbs.dm"
 #include "Sagas\DevilSummoner\_DevilSummoner.dm"

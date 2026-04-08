@@ -21,6 +21,7 @@ var/global/list/DEMON_SPECIAL_FUSIONS = list()
 	var/demon_icon       = 'Icons/base/default/frisky-male_black_brown.dmi'
 	var/demon_icon_state = "walking"
 	var/demon_portrait   = 'Icons/DevilSummoner/portrait_placeholder.dmi'
+	var/demon_portrait2  = 'Icons/DevilSummoner/portrait_placeholder.dmi'
 
 /datum/party_demon
 	var/demon_name    = ""
@@ -36,3 +37,4 @@ var/global/list/DEMON_SPECIAL_FUSIONS = list()
 	..()
 	InitDemonDatabase()
 	InitFusionData()
+	InitDemonSkillVFX()
