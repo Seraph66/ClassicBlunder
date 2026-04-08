@@ -143,18 +143,12 @@ mob/proc/GetAssess()
 mob
 	proc
 		GetHealthBPMult()
-			var/Return=0
-			Return=min(src.TotalInjury/100,0.25)*(-1)
-			if(Return>0)
-				Return=0
+			var/Return = min(src.TotalInjury / 100, 0.25) * (-1)
 			return Return
 		GetEnergyBPMult()
-			var/Return=0
-			Return=min(src.TotalFatigue/100,0.5)*(-1)
-			if(Return>0)
-				Return=0
+			var/Return = min(src.TotalFatigue / 100, 0.5) * (-1)
 			if(src.passive_handler.Get("Anaerobic"))
-				Return=min(src.TotalFatigue-20/100,0.5)
+				Return = min((src.TotalFatigue - 20) / 100, 0.5)
 			return Return
 
 
