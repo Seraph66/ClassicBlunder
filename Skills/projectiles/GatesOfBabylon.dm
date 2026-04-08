@@ -597,5 +597,3 @@ obj/EaVisual
 	alpha         = 255
 	Savable       = 0
 	Buildable     = 0
-	Savable      = 0
-	Buildable    = 0

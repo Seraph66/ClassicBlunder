@@ -46,7 +46,7 @@
 				usr << "You have [current_charges] charges of true form left."
 			else
 				return 0
-		Trigger(usr)
+		src.Trigger(usr)
 
 //Sloth AOE
 

@@ -89,7 +89,7 @@ race
 	src.KeybladeColor=Color
 	var/inp = input(src, "What path of magic will you fall under?") in list("Fire", "Ice", "Thunder")
 	src.KeybladePath = inp
-	switch(KeybladePath)
+	switch(src.KeybladePath)
 		if("Fire")
 			src.AddSkill(new/obj/Skills/Projectile/Magic/Fire)
 		if("Ice")

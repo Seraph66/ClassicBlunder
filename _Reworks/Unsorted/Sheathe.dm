@@ -28,10 +28,17 @@
                 if(istype(src, /obj/Items/Sword) || istype(src, /obj/Items/Enchantment/Staff))
                     if(usr.ArmamentGlow)
                         im.filters += usr.ArmamentGlow
-                if(usr.CheckActive("Mobile Suit")&&(istype(src, /obj/Items/Sword)||istype(src, /obj/Items/Armor)||istype(src, /obj/Items/Enchantment/Staff)))
-                    if(src:Conjured)
-                        im.transform*=3
-                        im.appearance_flags+=512
+                if(usr.CheckActive("Mobile Suit") && (istype(src, /obj/Items/Sword) || istype(src, /obj/Items/Armor) || istype(src, /obj/Items/Enchantment/Staff)))
+                    var/is_conjured = FALSE
+                    if(istype(src, /obj/Items/Sword))
+                        var/obj/Items/Sword/sw = src
+                        is_conjured = sw.Conjured
+                    else if(istype(src, /obj/Items/Armor))
+                        var/obj/Items/Armor/ar = src
+                        is_conjured = ar.Conjured
+                    if(is_conjured)
+                        im.transform *= 3
+                        im.appearance_flags += 512
                 usr.overlays+=im
                 suffix="*Equipped*"
     proc/removeUnsheathedState()
@@ -56,10 +63,17 @@
                 if(istype(src, /obj/Items/Sword) || istype(src, /obj/Items/Enchantment/Staff))
                     if(usr.ArmamentGlow)
                         im.filters += usr.ArmamentGlow
-                if(usr.CheckActive("Mobile Suit")&&(istype(src, /obj/Items/Sword)||istype(src, /obj/Items/Armor)||istype(src, /obj/Items/Enchantment/Staff)))
-                    if(src:Conjured)
-                        im.transform*=3
-                        im.appearance_flags+=512
+                if(usr.CheckActive("Mobile Suit") && (istype(src, /obj/Items/Sword) || istype(src, /obj/Items/Armor) || istype(src, /obj/Items/Enchantment/Staff)))
+                    var/is_conjured = FALSE
+                    if(istype(src, /obj/Items/Sword))
+                        var/obj/Items/Sword/sw = src
+                        is_conjured = sw.Conjured
+                    else if(istype(src, /obj/Items/Armor))
+                        var/obj/Items/Armor/ar = src
+                        is_conjured = ar.Conjured
+                    if(is_conjured)
+                        im.transform *= 3
+                        im.appearance_flags += 512
                 usr.overlays+=im
                 suffix="*Equipped*"
     verb/Unsheathe()

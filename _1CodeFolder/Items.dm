@@ -1426,10 +1426,17 @@ obj/Items/proc/Equip(mob/A)
 		if(istype(src, /obj/Items/Sword) || istype(src, /obj/Items/Enchantment/Staff))
 			if(A.ArmamentGlow)
 				im.filters += A.ArmamentGlow
-		if(A.CheckActive("Mobile Suit")&&(istype(src, /obj/Items/Sword)||istype(src, /obj/Items/Armor)||istype(src, /obj/Items/Enchantment/Staff)))
-			if(src:Conjured)
-				im.transform*=3
-				im.appearance_flags+=512
+		if(A.CheckActive("Mobile Suit") && (istype(src, /obj/Items/Sword) || istype(src, /obj/Items/Armor) || istype(src, /obj/Items/Enchantment/Staff)))
+			var/is_conjured = FALSE
+			if(istype(src, /obj/Items/Sword))
+				var/obj/Items/Sword/sw = src
+				is_conjured = sw.Conjured
+			else if(istype(src, /obj/Items/Armor))
+				var/obj/Items/Armor/ar = src
+				is_conjured = ar.Conjured
+			if(is_conjured)
+				im.transform *= 3
+				im.appearance_flags += 512
 		A.overlays+=im
 	if(src.UnderlayIcon)
 		var/image/im=image(icon=src.UnderlayIcon, pixel_x=src.UnderlayX, pixel_y=src.UnderlayY)

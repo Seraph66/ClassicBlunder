@@ -79,7 +79,7 @@
 		else
 			Distance--
 			if(StormFall)
-				animate(src, pizel_z =-1, flags=ANIMATION_RELATIVE)
+				animate(src, pixel_z = -1, flags = ANIMATION_RELATIVE)
 	else
 		walk(src, dir, Speed)
 		

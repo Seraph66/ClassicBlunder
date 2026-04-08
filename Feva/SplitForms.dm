@@ -1,13 +1,14 @@
 mob/Player
 	FevaSplits
 		var
-			OneHitWonder=0
-			Creator
-			PowerCheck=0.75
+			OneHitWonder = 0
+			mob/Creator
+			PowerCheck = 0.75
 			HostileNPC
 		Del()
-			animate(src,alpha=0,time=5)
-			Creator:Splits:Remove(src)
+			animate(src, alpha = 0, time = 5)
+			if(Creator)
+				Creator.Splits.Remove(src)
 			spawn(5)
 				..()
 		proc
@@ -32,33 +33,30 @@ mob/Player
 			Target_Search()
 				if(Target)
 					return
-				if(!Target)
-					for(var/mob/Players/P in ohearers(src))
-						if(P.Target==Creator)
-							continue
+				for(var/mob/Players/P in ohearers(src))
+					if(P.Target == Creator)
+						continue
+					Target = P
+					return
 			Chase_Target()
 				if(get_dist(src, src.Target) >= 12)
-					Target=null
+					Target = null
 				if(Knockbacked)
 					if(prob(45))
 						for(var/obj/Skills/Aerial_Recovery/P in contents)
 							if(!P.Using)
-								src.SkillX("Aerial Recovery",P)
+								src.SkillX("Aerial Recovery", P)
 					else
 						return
-				if(Target&&(world.time > NextAttack))
-					if(Target:KO)
-						Target=null
-					walk_to(src,Target,1,1)
+				if(Target && (world.time > NextAttack))
+					if(Target.KO)
+						Target = null
+					walk_to(src, Target, 1, 1)
 			Attack_Target()
-//				var/Sword
-				var/Attacked=0
-
-				if(!Attacked)
-					if(Target in get_step(src,src.dir))
-						Melee1()
-						if(OneHitWonder)
-							del src
+				if(Target in get_step(src, src.dir))
+					Melee1()
+					if(OneHitWonder)
+						del src
 
 
 			Rinse_Repeat()
@@ -157,7 +155,7 @@ obj/Skills/Feva
 				FS.hostile=2
 				FS.ai_hostility=2
 				FS.ai_owner=usr
-				usr.Splits:Add(FS)
+				usr.Splits.Add(FS)
 				for(var/obj/Skills/S in usr.contents)
 					var/X = new S.type
 					//usr<<"[FS] Split was given [X]."
@@ -263,7 +261,7 @@ obj/Skills/Feva
 				FS.DefMod=usr.GetDef()
 
 				FS.Target=usr.Target
-				usr.Splits:Add(FS)
+				usr.Splits.Add(FS)
 				for(var/obj/Skills/S in usr.contents)
 					var/X = new S.type
 					//usr<<"[FS] Split was given [X]."

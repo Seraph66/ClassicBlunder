@@ -1,7 +1,7 @@
 mob/var
 	EldritchPacted
 	ReflectedPactType="None"
-	ReflectedPactOwner
+	ReflectedPactOwner = null
 obj/Skills/Utility
 	Offer_Pact
 		desc="Offer a pact for power."

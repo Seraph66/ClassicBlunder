@@ -60,7 +60,7 @@
 		return
 
 	var/mob/Player/AI/Demon/d = demon_active
-	if(d && d)
+	if(d)
 		d.loc = locate(src.x, src.y, src.z)
 		src << "You call [d.name] to your side."
 		demon_call_cooldown = world.time + 150  // 15 seconds

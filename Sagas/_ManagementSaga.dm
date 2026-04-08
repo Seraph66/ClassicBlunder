@@ -440,7 +440,7 @@ mob/Admin3/verb
 					if(P.KeybladeType=="Shield")
 						var/inp = input(P, "What path of magic will you fall under?") in list("Fire", "Ice", "Thunder")
 						P.KeybladePath = inp
-						switch(KeybladePath)
+						switch(P.KeybladePath)
 							if("Fire")
 								P.AddSkill(new/obj/Skills/Projectile/Magic/Fire)
 							if("Ice")
@@ -1512,7 +1512,7 @@ mob
 							if("Staff")
 								src.AddSkill(new/obj/Skills/Buffs/NuStyle/SwordStyle/Command/Spell_Weaver_Style)
 								src << "You've developed the flexibility necessary to combine spells with swordplay: <b>Spell Weaver Style</b>!"
-						switch(KeybladePath)
+						switch(src.KeybladePath)
 							if("Fire")
 								AddSkill(new/obj/Skills/Projectile/Magic/Fira)
 							if("Ice")
@@ -1589,7 +1589,7 @@ mob
 						else
 							src.AddSkill(new/obj/Skills/Buffs/SpecialBuffs/Dark_Mode)
 							src << "Your reliance on darkness will empower you when pressed to your limits!"
-						switch(KeybladePath)
+						switch(src.KeybladePath)
 							if("Magic")
 								AddSkill(new/obj/Skills/AutoHit/Magic/Holy)
 								AddSkill(new/obj/Skills/AutoHit/Magic/Gravity)
