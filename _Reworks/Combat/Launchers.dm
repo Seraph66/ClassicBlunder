@@ -9,6 +9,8 @@
 		return // TODO: MAKE AI LAUNCHABLE
 	if(target.LaunchImmune)
 		return
+	if(target.passive_handler.Get("Trample") && target.is_dashing)
+		return
 	if(world.time < target.Grounded)
 		return
 	if(target.Launched>0)

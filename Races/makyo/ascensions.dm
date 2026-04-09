@@ -2,7 +2,7 @@ ascension
 	makyo
 		one
 			unlock_potential = ASCENSION_ONE_POTENTIAL
-			passives = list("Juggernaut" = 0.5, "DemonicDurability" = 1, "HeavyHitter" = 0.5)
+			passives = list("Juggernaut" = 0.5, "DemonicDurability" = 1, "HeavyHitter" = 0.5, "Trample" = 1)
 			skills = list(/obj/Skills/Buffs/SlotlessBuffs/Makyo/Expand)
 			strength = 0.5
 			force = 0.25

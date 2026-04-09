@@ -11,6 +11,8 @@ proc
 			return
 		if(m.StunImmune && !ignoreImmune)
 			return
+		if(m.passive_handler.Get("Trample") && m.is_dashing)
+			return
 		if(m.CheckSlotless("Great Ape"))
 			amount *= 0.75
 		if(m.HasMythical() > 0.25 || m.passive_handler.Get("Juggernaut"))
