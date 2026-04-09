@@ -544,7 +544,7 @@ obj/Effects/KenShockwave
 			spawn(Lifetime)
 				EffectFinish()
 proc
-	KenShockwave(atom/M,icon='KenShockwave.dmi',Size=1,PixelX=0,PixelY=0,Blend=0, Time=12)  //M is the person that makes t
+	KenShockwave(atom/M,icon='Icons/Effects/KenShockwave.dmi',Size=1,PixelX=0,PixelY=0,Blend=0, Time=12)  //M is the person that makes t
 		set waitfor=0
 		if(Size>5)
 			Size=5
