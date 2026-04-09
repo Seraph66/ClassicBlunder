@@ -311,7 +311,8 @@ mob/Admin3/verb
 		for(var/mob/Players/m in players)
 			if(m.ActiveBuff)
 				if(m.CheckActive("Eight Gates"))
-					m.ActiveBuff:Stop_Cultivation()
+					var/obj/Skills/Buffs/ActiveBuffs/Eight_Gates/eg = m.ActiveBuff
+					eg.Stop_Cultivation()
 				else
 					m.ActiveBuff.Trigger(m)
 			if(m.SpecialBuff)
@@ -473,11 +474,12 @@ proc/ConvertTime(var/amount)
 	var/end=round(size)
 	return "[Value(end,1)] [ending]\s"
 
-proc/ExtractInfo(var/x)
-	if(istype(x,/mob))
-		if(x:client)
-			return "[x:key]</a href>([x])"
-	return "[x]([x:type])"
+proc/ExtractInfo(var/atom/x)
+	if(istype(x, /mob))
+		var/mob/mx = x
+		if(mx.client)
+			return "[mx.key]</a href>([mx])"
+	return "[x]([x.type])"
 
 
 Admin_Help_Object
@@ -745,10 +747,11 @@ mob/Admin2/verb
 			return
 		Log("Admin","[ExtractInfo(usr)] has deleted [A]([A.type]).")
 		if(ismob(A))
-			if(A:client)
+			var/mob/mob_a = A
+			if(mob_a.client)
 				Log("Admin","[ExtractInfo(usr)] booted [ExtractInfo(A)].")
 				world<<"<font color=#FFFF00>[A] has been booted"
-				del(A:client)
+				del(mob_a.client)
 		del(A)
 
 
@@ -838,7 +841,8 @@ mob/Admin2/verb
 		else
 			Log("Admin","[ExtractInfo(usr)] renamed [ExtractInfo(A)] from [Old_Name].")
 			if(isplayer(A))
-				glob.IDs[A:UniqueID] = "[A.name]"
+				var/mob/Players/pa = A
+				glob.IDs[pa.UniqueID] = "[A.name]"
 
 
 	Warper(_x as num,_y as num,_z as num)

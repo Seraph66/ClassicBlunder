@@ -1076,7 +1076,8 @@ mob
 				if(src.ActiveBuff.HealthThreshold&&!src.ActiveBuff.AllOutAttack)
 					if(src.Health<src.ActiveBuff.HealthThreshold*(1-src.HealthCut)||src.KO)
 						if(src.CheckActive("Eight Gates"))
-							src.ActiveBuff:Stop_Cultivation()
+							var/obj/Skills/Buffs/ActiveBuffs/Eight_Gates/eg = src.ActiveBuff
+							eg.Stop_Cultivation()
 							GatesActive=0
 						else
 							src.ActiveBuff.Trigger(src,Override=1)
@@ -1102,7 +1103,8 @@ mob
 				if(src.ActiveBuff.FatigueThreshold&&!src.ActiveBuff.AllOutAttack)
 					if(src.TotalFatigue>=src.ActiveBuff.FatigueThreshold)
 						if(src.CheckActive("Eight Gates"))
-							src.ActiveBuff:Stop_Cultivation()
+							var/obj/Skills/Buffs/ActiveBuffs/Eight_Gates/eg2 = src.ActiveBuff
+							eg2.Stop_Cultivation()
 							GatesActive=0
 						else
 							src.ActiveBuff.Trigger(src,Override=1)
@@ -1133,7 +1135,8 @@ mob
 					src.ActiveBuff.Timer+=world.tick_lag
 					if(src.ActiveBuff.Timer>=src.ActiveBuff.TimerLimit)//If the timer has filled up entirely...
 						if(src.CheckActive("Eight Gates"))
-							src.ActiveBuff:Stop_Cultivation()
+							var/obj/Skills/Buffs/ActiveBuffs/Eight_Gates/eg3 = src.ActiveBuff
+							eg3.Stop_Cultivation()
 							GatesActive=0
 						else
 							src.ActiveBuff.Trigger(src,Override=1)//toggle it off.

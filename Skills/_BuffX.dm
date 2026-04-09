@@ -11772,7 +11772,8 @@ mob
 				if(B.ActiveBuffLock)
 					if(src.ActiveBuff)
 						if(src.CheckActive("Eight Gates"))
-							src.ActiveBuff:Stop_Cultivation()
+							var/obj/Skills/Buffs/ActiveBuffs/Eight_Gates/eg = src.ActiveBuff
+							eg.Stop_Cultivation()
 						else
 							src.ActiveBuff.Trigger(src, Override=1)
 				if(B.SpecialBuffLock)

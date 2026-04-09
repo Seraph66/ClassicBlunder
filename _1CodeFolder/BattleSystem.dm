@@ -190,7 +190,8 @@ mob/proc/Unconscious(mob/P,var/text)
 		src.Gate8Getups++
 		if(src.Gate8Getups>=2)
 			if(src.CheckActive("Eight Gates"))
-				src.ActiveBuff:Stop_Cultivation()//deactivate...
+				var/obj/Skills/Buffs/ActiveBuffs/Eight_Gates/eg = src.ActiveBuff
+				eg.Stop_Cultivation()//deactivate...
 				GatesActive=0
 		return
 	var/RedTenacity=0

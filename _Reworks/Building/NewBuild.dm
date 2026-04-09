@@ -112,7 +112,9 @@ client
 			return T && isturf(T) && T.CanBuildOver(mob)
 
 		IsValidObject(obj/O)
-			return O && istype(O, /obj/Turfs) && (mob.Admin || O:Builder == ckey)
+			if(!O || !istype(O, /obj/Turfs)) return FALSE
+			var/obj/Turfs/ot = O
+			return mob.Admin || ot.Builder == ckey
 
 		PaintTurfs()
 			set waitfor = FALSE
@@ -161,7 +163,8 @@ client
 				if(istype(T,/turf/CustomTurf))
 					usr.CustomTurfIcon=T.icon
 					usr.CustomTurfState=T.icon_state
-					usr.CustomTurfRoof = T:Roof
+					var/turf/CustomTurf/ct = T
+					usr.CustomTurfRoof = ct.Roof
 					usr.CustomTurfDensity=T.density
 					usr.CustomTurfOpacity=T.opacity
 				else
@@ -182,13 +185,14 @@ client
 					B.Creates=O
 					B.name="-[O.name]-"
 					if(istype(O,/obj/Turfs/CustomObj1))
+						var/obj/Turfs/CustomObj1/co = O
 						usr.CustomObj1Icon=O.icon
 						usr.CustomObj1State=O.icon_state
 						usr.CustomObj1Layer=O.layer
 						usr.CustomObj1Density=O.density
 						usr.CustomObj1X=O.pixel_x
 						usr.CustomObj1Y=O.pixel_y
-						usr.CustomObjEdge = O:edge
+						usr.CustomObjEdge = co.edge
 					else
 						B.icon=O.icon
 						B.icon_state=O.icon_state

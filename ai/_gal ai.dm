@@ -1354,7 +1354,8 @@ mob/Player/AI
 			if(src.ActiveBuff.HealthThreshold&&!src.ActiveBuff.AllOutAttack)
 				if(src.Health<src.ActiveBuff.HealthThreshold*(1-src.HealthCut)||src.KO)
 					if(src.CheckActive("Eight Gates"))
-						src.ActiveBuff:Stop_Cultivation()
+						var/obj/Skills/Buffs/ActiveBuffs/Eight_Gates/eg = src.ActiveBuff
+						eg.Stop_Cultivation()
 					else
 						src.ActiveBuff.Trigger(src)
 					goto DRAINS_ACTIVE
@@ -1382,7 +1383,8 @@ mob/Player/AI
 			if(src.ActiveBuff.FatigueThreshold&&!src.ActiveBuff.AllOutAttack)
 				if(src.TotalFatigue>=src.ActiveBuff.FatigueThreshold)
 					if(src.CheckActive("Eight Gates"))
-						src.ActiveBuff:Stop_Cultivation()
+						var/obj/Skills/Buffs/ActiveBuffs/Eight_Gates/eg = src.ActiveBuff
+						eg.Stop_Cultivation()
 					else
 						src.ActiveBuff.Trigger(src)
 					goto DRAINS_ACTIVE
@@ -1412,7 +1414,8 @@ mob/Player/AI
 				src.ActiveBuff.Timer+=world.tick_lag
 				if(src.ActiveBuff.Timer>=src.ActiveBuff.TimerLimit)//If the timer has filled up entirely...
 					if(src.CheckActive("Eight Gates"))
-						src.ActiveBuff:Stop_Cultivation()
+						var/obj/Skills/Buffs/ActiveBuffs/Eight_Gates/eg = src.ActiveBuff
+						eg.Stop_Cultivation()
 					else
 						src.ActiveBuff.Trigger(src)//toggle it off.
 					goto DRAINS_ACTIVE

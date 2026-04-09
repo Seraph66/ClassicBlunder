@@ -2395,7 +2395,8 @@ obj/Items/Tech
 								if(!m.CheckSlotless("FullMoonForm"))
 									if(m.ActiveBuff)
 										if(m.CheckActive("Eight Gates"))
-											m.ActiveBuff:Stop_Cultivation()
+											var/obj/Skills/Buffs/ActiveBuffs/Eight_Gates/eg = m.ActiveBuff
+											eg.Stop_Cultivation()
 											m.GatesActive=0
 										else
 											m.ActiveBuff.Trigger(m)
