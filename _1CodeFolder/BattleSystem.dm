@@ -1601,7 +1601,7 @@ proc/Accuracy_Formula(mob/Offender,mob/Defender,AccMult=1,BaseChance=glob.WorldD
 		if(Offender.SenseRobbed>=4&&(Offender.SenseUnlocked<=Offender.SenseRobbed&&Offender.SenseUnlocked>5))
 			AccMult*=(1-(Offender.SenseRobbed*0.1))
 		if(Defender.SenseRobbed>=4&&(Defender.SenseUnlocked<=Defender.SenseRobbed&&Defender.SenseUnlocked>5))
-			AccMult/=(1-(Offender.SenseRobbed*0.1))
+			AccMult/=max(0.1, 1-(Defender.SenseRobbed*0.1))
 
 
 		// if(Defender.Adrenaline)
