@@ -99,7 +99,7 @@ transformation
 			defense = 1.2
 			strength = 1.2
 			force = 1.2
-			pot_trans = 2
+			pot_trans = 20
 			transformation_message = "usrName manifests the true nature of their body!"
 			adjust_transformation_visuals(mob/user)
 				if(!form_hair_icon&&user.Hair_Base)
@@ -119,7 +119,7 @@ transformation
 					defense = 1.2 + (mdivS)
 					strength = 1.2 + (mdivS)
 					force = 1.2 + (mdivS)
-					passives = list("Instinct" = 1+(mdivP*12), "Flow" = 1+(mdivP*10), "Flicker" = 1+(mdivP*10), "Pursuer" = 2+(mdivP*10), "BuffMastery" = 3+(mdivP*12), "PureDamage" = 1+(mdivP*12), "PureReduction" = 1+(mdivP*12))
+					passives = list("Instinct" = 1+(mdivP*14), "Flow" = 1+(mdivP*11), "Flicker" = 1+(mdivP*11), "Pursuer" = 2+(mdivP*12), "BuffMastery" = 3+(mdivP*14), "PureDamage" = 1+(mdivP*14), "PureReduction" = 1+(mdivP*14))
 
 			transform_animation(mob/user)
 				var/ShockSize=5

@@ -21,7 +21,7 @@ ascension
 							speed=0.5 * SMod
 							strength=1 * SMod
 							endurance=0.5 * SMod
-							passives = list("SwordAscension" = 1, "Godspeed"=1, "Persistence"=1)
+							passives = list("SwordAscension" = 1, "Godspeed"=1, "Persistence"=1, "SwordAscensionSecond" = 1, "SwordAscensionThird" = 1)
 						if("Sorcerer")
 							endurance=0.5 * SMod
 							force=0.5 * SMod
@@ -58,7 +58,7 @@ ascension
 							speed=0.5 * SMod
 							strength=1 * SMod
 							endurance=0.5 * SMod
-							passives = list("SwordAscension" = 1, "Godspeed"=1, "PureDamage"=1, "Persistence"=1)
+							passives = list("SwordAscension" = 1, "Godspeed"=1, "PureDamage"=1, "Persistence"=1, "SwordAscensionSecond" = 1, "SwordAscensionThird" = 1)
 						if("Sorcerer")
 							endurance=0.5 * SMod
 							force=0.5 * SMod
@@ -95,7 +95,7 @@ ascension
 							speed=0.5 * SMod
 							strength=1 * SMod
 							endurance=0.5 * SMod
-							passives = list("SwordAscension" = 1, "Godspeed"=1, "PureDamage"=1, "Steady" = 1, "Persistence"=1)
+							passives = list("SwordAscension" = 1, "Godspeed"=1, "PureDamage"=1, "Steady" = 1, "Persistence"=1, "SwordAscensionSecond" = 1, "SwordAscensionThird" = 1)
 						if("Sorcerer")
 							endurance=0.5 * SMod
 							force=0.5 * SMod
@@ -132,7 +132,7 @@ ascension
 							speed=0.5 * SMod
 							strength=1 * SMod
 							endurance=0.5 * SMod
-							passives = list("SwordAscension" = 1, "Godspeed"=1, "PureDamage"=1, "Steady" = 1, "Persistence"=1)
+							passives = list("SwordAscension" = 1, "Godspeed"=1, "PureDamage"=1, "Steady" = 1, "Persistence"=1, "SwordAscensionSecond" = 1, "SwordAscensionThird" = 1)
 						if("Sorcerer")
 							endurance=0.5 * SMod
 							force=0.5 * SMod
@@ -169,7 +169,7 @@ ascension
 							speed=0.5 * SMod
 							strength=1 * SMod
 							endurance=0.5 * SMod
-							passives = list("SwordAscension" = 1, "Godspeed"=1, "PureDamage"=1, "Persistence"=1)
+							passives = list("SwordAscension" = 1, "Godspeed"=1, "PureDamage"=1, "Persistence"=1, "SwordAscensionSecond" = 1, "SwordAscensionThird" = 1)
 						if("Sorcerer")
 							endurance=0.5 * SMod
 							force=0.5 * SMod
@@ -206,7 +206,7 @@ ascension
 							speed=1 * SMod
 							strength=1 * SMod
 							endurance=1 * SMod
-							passives = list("SwordAscension" = 1, "Godspeed"=1, "PureDamage"=1, "Persistence"=1)
+							passives = list("SwordAscension" = 1, "Godspeed"=1, "PureDamage"=1, "Persistence"=1, "SwordAscensionSecond" = 1, "SwordAscensionThird" = 1)
 						if("Sorcerer")
 							endurance=1 * SMod
 							force=1 * SMod
