@@ -46,40 +46,32 @@ mob
 				else
 					Confirm=alert(src, "[Choice] [Choice.desc] Is this where you want to hail from?", "Choose Spawn ([Choice])", "Yes", "No")
 
-			if(Choice.EconomyChange!=0)
+			if(Choice.EconomyChange!=1)
 				src.EconomyMult*=Choice.EconomyChange
 				src << "Due to growing up in [Choice], you are \..."
 				if(Choice.EconomyChange>1)
 					src << "better at earning money."
-				else if(Choice.EconomyChange==1)
-					src << "the same at earning money."
 				else
 					src << "worse at earning money."
-			if(Choice.LearningChange!=0)
+			if(Choice.LearningChange!=1)
 				src.RPPMult*=Choice.LearningChange
 				src << "Due to growing up in [Choice], you are \..."
 				if(Choice.LearningChange>1)
 					src << "better at learning new skills."
-				if(Choice.LearningChange==1)
-					src << "the same at learning new skills."
 				else
 					src << "worse at learning new skills."
-			if(Choice.IntelligenceChange!=0)
+			if(Choice.IntelligenceChange!=1)
 				src.Intelligence*=Choice.IntelligenceChange
 				src << "Due to growing up in [Choice], you are \..."
 				if(Choice.IntelligenceChange>1)
 					src << "better at thinking logically."
-				else if(Choice.IntelligenceChange==1)
-					src << "the same at thinking logically."
 				else
 					src << "worse at thinking logically."
-			if(Choice.ImaginationChange!=0)
+			if(Choice.ImaginationChange!=1)
 				src.Imagination*=Choice.ImaginationChange
 				src << "Due to growing up in [Choice], you are \..."
 				if(Choice.ImaginationChange>1)
 					src << "better at understanding belief."
-				else if(Choice.ImaginationChange==1)
-					src << "the same at understanding belief."
 				else
 					src << "worse at understanding belief."
 

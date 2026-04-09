@@ -190,7 +190,7 @@ mob/var
 	PotentialStatus="Caught Up"
 	PotentialRate=1
 	PotentialCap=1
-	PotentialHeadStart
+	PotentialHeadStart=0
 	potential_trans=0//entering trans state sets this
 	potential_power_mult=1
 	potential_last_checked=0

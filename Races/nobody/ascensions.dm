@@ -129,7 +129,7 @@ ascension
 							force=0.25 * SMod
 							offense=0.5 * SMod
 							speed=0.5 * SMod
-							passives = list("SlayerMod" = 0.5, "CriticalChance" = 10, "CriticalDamage" = 0.1, "Instinct" = 1)
+							passives = list("SlayerMod" = 0.5, "CriticalChance" = 10, "CriticalDamage" = 0.15, "Instinct" = 1)
 				..()
 		four
 			unlock_potential = ASCENSION_FOUR_POTENTIAL
