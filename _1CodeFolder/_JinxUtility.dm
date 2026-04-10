@@ -694,9 +694,9 @@ mob
 						WoundsInflicted=val/defender.GetEnd(glob.CURSED_WOUNDS_RATE)
 					else if(src.SwordWounds())
 						if(defender.GetEnd(0.5) < 2)
-							WoundsInflicted=val/clamp((1 + defender.GetEnd(0.5))/(GetSwordDamage(s)), 1, 15)
+							WoundsInflicted=val/clamp((1 + defender.GetEnd(0.5))/max(GetSwordDamage(s),0.01), 1, 15)
 						else
-							WoundsInflicted= val / clamp(defender.GetEnd(0.5)/(GetSwordDamage(s)), 1, 15)
+							WoundsInflicted= val / clamp(defender.GetEnd(0.5)/max(GetSwordDamage(s),0.01), 1, 15)
 					else
 						if(defender.GetEnd(0.5) < 2)
 							WoundsInflicted=val/clamp(1 + defender.GetEnd(0.5), 1, 15)
