@@ -114,7 +114,7 @@ ascension
 						speed = 0.5
 				..()
 		six
-			unlock_potential = ASCENSION_FIVE_POTENTIAL
+			unlock_potential = ASCENSION_SIX_POTENTIAL
 			intimidation = 10
 			passives = list("Brutalize" = 0.25, "Tenacity" = 0.5)
 			onAscension(mob/owner)
