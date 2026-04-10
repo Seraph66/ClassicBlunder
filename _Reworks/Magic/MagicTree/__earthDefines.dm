@@ -26,16 +26,16 @@
 
 #define EARTH_NODE_ENTRY "Seismic Entry (Spell Slot)"
 #define EARTH_NODE_12 "EarthNode12"
-#define EARTH_NODE_13 "EarthNode13"
+#define EARTH_NODE_13 "Toxify (Spell Passive)"
 #define EARTH_NODE_21 "Ward of Stones (Spell Slot)"
 #define EARTH_NODE_22 "EarthNode22"
-#define EARTH_NODE_23 "EarthNode23"
+#define EARTH_NODE_23 "Rust (Spell Passive)"
 #define EARTH_NODE_31 "Prickly Ballet (Spell Slot)"
-#define EARTH_NODE_32 "EarthNode33"
+#define EARTH_NODE_32 "Muddy (Spell Passive)"
 #define EARTH_NODE_33 "EarthNode34"
 #define EARTH_NODE_CROWN "EarthNodePinnacle"
 #define EARTH_NODE_42 "EarthNode42"
-#define EARTH_NODE_43 "EarthNode43"
+#define EARTH_NODE_43 "Steelize (Spell Slot)"
 
 #define EARTH_NODES list(EARTH_NODE_ENTRY, EARTH_NODE_12, EARTH_NODE_13, EARTH_NODE_21, EARTH_NODE_22, EARTH_NODE_23, EARTH_NODE_31, EARTH_NODE_32, EARTH_NODE_33,\
 EARTH_NODE_CROWN, EARTH_NODE_42, EARTH_NODE_43)

@@ -31,7 +31,7 @@ magic_node/dark_tree
         nodeType = "Spell Passive"
         grantsSpellPassives = list(/spell_passive/dark/disaster)
         unlocksNodes = list(DARK_NODE_24);
-    dark_node_south21
+    dark_node_21
         name=DARK_NODE_21
         xLoc = DARK_NODE_21_X
         yLoc = DARK_NODE_21_Y
@@ -87,7 +87,7 @@ magic_node/dark_tree
         xLoc = DARK_NODE_52_X
         yLoc = DARK_NODE_52_Y
         nodeType = "Spell Passive"
-        //uhh
+        grantsSpellPassives = list(/spell_passive/dark/anima)
         unlocksNodes = list(DARK_NODE_CROWN, DARK_NODE_42);
     dark_node_crown
         name=DARK_NODE_CROWN

@@ -29,7 +29,7 @@ magic_node/earth_tree
         xLoc = EARTH_NODE_13_X
         yLoc = EARTH_NODE_13_Y
         nodeType = "Spell Passive"
-        grantsSpellPassives = list(/spell_passive/earth/crystallize)
+        grantsSpellPassives = list(/spell_passive/earth/toxify)
         unlocksNodes = list(EARTH_NODE_23);
     
     earth_node_21
@@ -49,7 +49,7 @@ magic_node/earth_tree
         xLoc = EARTH_NODE_23_X
         yLoc = EARTH_NODE_23_Y
         nodeType = "Spell Passive"
-        grantsSpellPassives = list(/spell_passive/earth/hewnearth)
+        grantsSpellPassives = list(/spell_passive/earth/rust)
         unlocksNodes = list(EARTH_NODE_33, EARTH_NODE_21, EARTH_NODE_13);
     
     earth_node_31
@@ -69,7 +69,7 @@ magic_node/earth_tree
         xLoc = EARTH_NODE_33_X
         yLoc = EARTH_NODE_33_Y
         nodeType = "Spell Passive"
-        grantsSpellPassives = list(/spell_passive/earth/blinddust)
+        grantsSpellPassives = list(/spell_passive/earth/muddy)
         unlocksNodes = list(EARTH_NODE_43, EARTH_NODE_23, EARTH_NODE_31);
     
     earth_node_pinnacle
@@ -89,6 +89,6 @@ magic_node/earth_tree
         xLoc = EARTH_NODE_43_X
         yLoc = EARTH_NODE_43_Y
         nodeType = "Spell Passive"
-        grantsSpellPassives = list(/spell_passive/earth/tectonicquake)
+        grantsSpellPassives = list(/spell_passive/earth/steelize)
         unlocksNodes = list(EARTH_NODE_CROWN, EARTH_NODE_33);
     

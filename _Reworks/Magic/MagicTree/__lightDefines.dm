@@ -28,13 +28,13 @@
 #define LIGHT_NODE_12 "LightNodeSouth2"
 #define LIGHT_NODE_13 "LightNodeSouth3"
 #define LIGHT_NODE_21 "Bless (Spell Slot)"
-#define LIGHT_NODE_22 "LightNodeEast2"
+#define LIGHT_NODE_22 "Enshrine (Spell Passive)"
 #define LIGHT_NODE_23 "LightNodeEast3"
 #define LIGHT_NODE_31 "Solar Burst (Spell Slot)"
-#define LIGHT_NODE_32 "LightNodeWest2"
+#define LIGHT_NODE_32 "Mirrored (Spell Passive)"
 #define LIGHT_NODE_33 "LightNodeWest3"
 #define LIGHT_NODE_CROWN "LightNodePinnacle"
-#define LIGHT_NODE_42 "LightNodeNorth2"
+#define LIGHT_NODE_42 "Cleansing (Spell Passive)"
 #define LIGHT_NODE_43 "LightNodeNorth3"
 
 #define LIGHT_NODES list(LIGHT_NODE_ENTRY, LIGHT_NODE_12, LIGHT_NODE_13, LIGHT_NODE_21, LIGHT_NODE_22, LIGHT_NODE_23, LIGHT_NODE_31, LIGHT_NODE_32,\

@@ -25,16 +25,16 @@
 #define TIME_NODE_CROWN_Y 214
 
 #define TIME_NODE_ENTRY "Tempus Cessat (Spell Slot)"
-#define TIME_NODE_11 "TimeNode11"
+#define TIME_NODE_11 "Charge Flux (Spell Passive)"
 #define TIME_NODE_12 "TimeNode12"
-#define TIME_NODE_13 "TimeNode13"
+#define TIME_NODE_13 "Stasis (Spell Passive)"
 #define TIME_NODE_14 "TimeNode14"
 #define TIME_NODE_21 "Haste (Spell Slot)"
 #define TIME_NODE_22 "Wither (Spell Slot)"
 #define TIME_NODE_31 "TimeNode31"
-#define TIME_NODE_32 "TimeNode32"
+#define TIME_NODE_32 "Passage (Spell Passive)"
 #define TIME_NODE_33 "TimeNode33"
-#define TIME_NODE_34 "TimeNode34"
+#define TIME_NODE_34 "Paradox (Spell Passive)"
 #define TIME_NODE_CROWN "TimeNodePinnacle"
 
 #define TIME_NODES list(TIME_NODE_ENTRY, TIME_NODE_11, TIME_NODE_12, TIME_NODE_13, TIME_NODE_14, TIME_NODE_21, TIME_NODE_22, TIME_NODE_31,\

@@ -161,65 +161,93 @@
 
     air
         spellElement="Air"
-        galeforce
-            name="Gale Force"
-        cuttingpressure
-            name="Cutting Pressure"
-        fogcloud
-            name="Fog Cloud"
-        rapidity
-            name="Rapidity"
+        paralyzer
+            name="Paralyzer"
+            passives = list("NerveOverload" = 20);
+        synapse
+            name="Synapse"
+            passives = list("CriticalParalyze" = 20);
+        pinpoint
+            name="Pinpoint"
+            passives = list("CriticalSpark" = 25);
+        whirlwind
+            name="Whirlwind"
+            passives = list("Whirlwind" = 10);
         
     earth
         spellElement="Earth"
-        crystallize
-            name="Crystallize"
-        hewnearth
-            name="Hewn Earth"
-        blinddust
-            name="Blind Dust"
-        tectonicquake
-            name="Tectonic Quake"
+        toxify
+            name="Toxify"
+            passives = list("TrueToxic"=3);
+        rust
+            name="Rust"
+            passives = list("Rust"=5);
+        muddy
+            name="Muddy"
+            passives = list("TurfMud"=15);
+        steelize
+            name="Steelize"
+            passives = list("Reinforcement"=2);
 
     light
         spellElement="Light"
-        sanctified
+        sanctify
             name="Sanctify"
-        farsight
-            name="Far Sight"
+            passives = list("Sanctify" = 10);
+        enshrine
+            name="Enshrine"
+            passives = list("Enshrine" = 5);
         mirrored
             name="Mirrored"
-        cauterizing
-            name="Cauterizing"
+            passives = list("ReturnToSender" = 5);
+        cleansing
+            name="Cleansing"
+            passives = list("Cleansing" = 2);
 
     time
         spellElement="Time"
         paradox
             name="Paradox"
-        echo
-            name="Echo"
+            // lol idk what this one does yet ! ! !
+        chargeflux
+            name="Charge Flux"
+            passives = list("ChargeDelay" = 3);
         stasis
             name="Stasis"
+            passives = list("CooldownDrag" = 20);
         passage
             name="Passage"
+            passives = list("FlashDOT" = 1);
+
     dark
         spellElement="Dark"
         disaster//primordial
             name="Disaster"
+            passives = list("PrimordialInvocation" = 30);
         ravenous//cost hp, refund hp if hit
             name="Ravenous"
+            passives = list("LifeSteal" = 100, "WoundCost" = 5);
         vampyric
             name="Vampyric"
+            passives = list("SkillLeech" = 5);
         hemomantic//more like homo amirite
             name="Hemomantic"
+            passives = list("HealReverse" = 30);
+        anima
+            name="Anima"
+            passives = list("PainSplit" = 15);
 
     space
         spellElement="Space"
         nebula
             name="Nebula"
+            passives = list("UnstableSpace" = 5);
         supernova//gets blink
             name="Supernova"
+            passives = list("ForceField" = 10);//can't approach from 1 tile away
         quasar
             name="Quasar"
+            passives = list("Deport" = 30);//TP them away and shred defense
         constellation
             name="Constellation"
+            passives = list("StarCrossed" = 10);//countdown to warp + random buffs for you

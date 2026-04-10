@@ -23,7 +23,7 @@ magic_node/air_tree
         xLoc = AIR_NODE_SOUTH2_X
         yLoc = AIR_NODE_SOUTH2_Y
         nodeType = "Spell Passive"
-        grantsSpellPassives = list(/spell_passive/air/galeforce);
+        grantsSpellPassives = list(/spell_passive/air/paralyzer);
         unlocksNodes = list(AIR_NODE_EAST2, AIR_NODE_WEST2, AIR_NODE_SOUTH3);
     air_node_south3
         name=AIR_NODE_SOUTH3
@@ -48,14 +48,14 @@ magic_node/air_tree
         xLoc = AIR_NODE_EAST3_X
         yLoc = AIR_NODE_EAST3_Y
         nodeType = "Spell Passive"
-        grantsSpellPassives = list(/spell_passive/air/cuttingpressure);
+        grantsSpellPassives = list(/spell_passive/air/synapse);
         unlocksNodes = list(AIR_NODE_EAST2, AIR_NODE_NORTH3, AIR_NODE_SOUTH3);
     air_node_west
         name=AIR_NODE_WEST
         xLoc = AIR_NODE_WEST_X
         yLoc = AIR_NODE_WEST_Y
         nodeType = "Spell Passive"
-        grantsSpellPassives = list(/spell_passive/air/fogcloud);
+        grantsSpellPassives = list(/spell_passive/air/pinpoint);
         unlocksNodes = list(AIR_NODE_CROWN, AIR_NODE_WEST2);
     air_node_west2
         name=AIR_NODE_WEST2
@@ -80,7 +80,7 @@ magic_node/air_tree
         xLoc = AIR_NODE_NORTH2_X
         yLoc = AIR_NODE_NORTH2_Y
         nodeType = "Spell Passive"
-        grantsSpellPassives = list(/spell_passive/air/rapidity);
+        grantsSpellPassives = list(/spell_passive/air/whirlwind);
         unlocksNodes = list(AIR_NODE_CROWN, AIR_NODE_NORTH3, AIR_NODE_EAST2, AIR_NODE_WEST2);
     air_node_north3
         name=AIR_NODE_NORTH3
