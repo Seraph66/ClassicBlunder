@@ -42,6 +42,7 @@
 	_dd2.demon_def = 6
 	_dd2.demon_skills = list("Mazio")
 	_dd2.demon_unique = FALSE
+	_dd2.demon_icon = 'Icons/DevilSummoner/Shiisaa.dmi'
 	DEMON_DB["Shiisaa"] = _dd2
 
 	// Kamapua'a (Avatar, Lv 32)
@@ -177,6 +178,7 @@
 	_dd11.demon_def = 2
 	_dd11.demon_skills = list("Extra Cancel")
 	_dd11.demon_unique = FALSE
+	_dd11.demon_icon = 'Icons/DevilSummoner/Itsumade.dmi'
 	DEMON_DB["Itsumade"] = _dd11
 
 	// Moh Shuvuu (Avian, Lv 16)
@@ -192,6 +194,7 @@
 	_dd12.demon_def = 4
 	_dd12.demon_skills = list("Bufu")
 	_dd12.demon_unique = FALSE
+	_dd12.demon_icon = 'Icons/DevilSummoner/Moh Shuvuu.dmi'
 	DEMON_DB["Moh Shuvuu"] = _dd12
 
 	// Hamsa (Avian, Lv 24)
@@ -207,6 +210,7 @@
 	_dd13.demon_def = 5
 	_dd13.demon_skills = list("Diarama")
 	_dd13.demon_unique = FALSE
+	_dd13.demon_icon = 'Icons/DevilSummoner/Hamsa.dmi'
 	DEMON_DB["Hamsa"] = _dd13
 
 	// Suparna (Avian, Lv 31)
@@ -252,6 +256,7 @@
 	_dd16.demon_def = 9
 	_dd16.demon_skills = list("Mazandyne")
 	_dd16.demon_unique = FALSE
+	_dd16.demon_icon = 'Icons/DevilSummoner/Babd Catha.dmi'
 	DEMON_DB["Badb Catha"] = _dd16
 
 	// Anzu (Avian, Lv 54)
@@ -267,6 +272,7 @@
 	_dd17.demon_def = 8
 	_dd17.demon_skills = list("Makarakarn")
 	_dd17.demon_unique = FALSE
+	_dd17.demon_icon = 'Icons/DevilSummoner/Anzu.dmi'
 	DEMON_DB["Anzu"] = _dd17
 
 	// Feng Huang (Avian, Lv 62)
@@ -327,6 +333,7 @@
 	_dd21.demon_def = 2
 	_dd21.demon_skills = list("Agi")
 	_dd21.demon_unique = FALSE
+	_dd21.demon_icon = 'Icons/DevilSummoner/Kabuso.dmi'
 	DEMON_DB["Kabuso"] = _dd21
 
 	// Hairy Jack (Beast, Lv 10)
@@ -357,6 +364,7 @@
 	_dd23.demon_def = 5
 	_dd23.demon_skills = list("Media")
 	_dd23.demon_unique = FALSE
+	_dd23.demon_icon = 'Icons/DevilSummoner/Nekomata.dmi'
 	DEMON_DB["Nekomata"] = _dd23
 
 	// Orthrus (Beast, Lv 27)
@@ -387,6 +395,7 @@
 	_dd25.demon_def = 6
 	_dd25.demon_skills = list("Mabufu")
 	_dd25.demon_unique = FALSE
+	_dd25.demon_icon = 'Icons/DevilSummoner/Cait Sith.dmi'
 	DEMON_DB["Cait Sith"] = _dd25
 
 	// Nue (Beast, Lv 42)
@@ -402,6 +411,7 @@
 	_dd26.demon_def = 8
 	_dd26.demon_skills = list("Berserk")
 	_dd26.demon_unique = FALSE
+	_dd26.demon_icon = 'Icons/DevilSummoner/Nue.dmi'
 	DEMON_DB["Nue"] = _dd26
 
 	// Myrmecolion (Beast, Lv 50)
@@ -432,6 +442,7 @@
 	_dd28.demon_def = 9
 	_dd28.demon_skills = list("Agidyne")
 	_dd28.demon_unique = FALSE
+	_dd28.demon_icon = 'Icons/DevilSummoner/Cerberus.dmi'
 	DEMON_DB["Cerberus"] = _dd28
 
 	// Fenrir (Beast, Lv 66)
@@ -522,6 +533,7 @@
 	_dd34.demon_def = 6
 	_dd34.demon_skills = list("Agidyne")
 	_dd34.demon_unique = TRUE
+	_dd34.demon_icon = 'Icons/DevilSummoner/Yama.dmi'
 	DEMON_DB["Yama"] = _dd34
 
 	// Inti (Deity, Lv 45)
@@ -582,6 +594,7 @@
 	_dd38.demon_def = 8
 	_dd38.demon_skills = list("Deathbound")
 	_dd38.demon_unique = TRUE
+	_dd38.demon_icon = 'Icons/DevilSummoner/Lugh.dmi'
 	DEMON_DB["Lugh"] = _dd38
 
 	// Alilat (Deity, Lv 61)
@@ -672,6 +685,7 @@
 	_dd44.demon_def = 7
 	_dd44.demon_skills = list("Extra Cancel")
 	_dd44.demon_unique = FALSE
+	_dd44.demon_icon = 'Icons/DevilSummoner/Power.dmi'
 	DEMON_DB["Power"] = _dd44
 
 	// Lailah (Divine, Lv 32)
@@ -702,6 +716,7 @@
 	_dd46.demon_def = 9
 	_dd46.demon_skills = list("Drain")
 	_dd46.demon_unique = FALSE
+	_dd46.demon_icon = 'Icons/DevilSummoner/Aniel.dmi'
 	DEMON_DB["Aniel"] = _dd46
 
 	// Kazfiel (Divine, Lv 50)
@@ -717,6 +732,7 @@
 	_dd47.demon_def = 9
 	_dd47.demon_skills = list("Judgement")
 	_dd47.demon_unique = FALSE
+	_dd47.demon_icon = 'Icons/DevilSummoner/Kazfiel.dmi'
 	DEMON_DB["Kazfiel"] = _dd47
 
 	// Remiel (Divine, Lv 59)
@@ -762,6 +778,7 @@
 	_dd50.demon_def = 3
 	_dd50.demon_skills = list("Elec Dance")
 	_dd50.demon_unique = FALSE
+	_dd50.demon_icon = 'Icons/DevilSummoner/Toubyou.dmi'
 	DEMON_DB["Toubyou"] = _dd50
 
 	// Bai Suzhen (Dragon, Lv 20)
@@ -777,6 +794,7 @@
 	_dd51.demon_def = 4
 	_dd51.demon_skills = list("Diarama")
 	_dd51.demon_unique = FALSE
+	_dd51.demon_icon = 'Icons/DevilSummoner/Bai Suzhen.dmi'
 	DEMON_DB["Bai Suzhen"] = _dd51
 
 	// Basilisk (Dragon, Lv 28)
@@ -867,6 +885,7 @@
 	_dd57.demon_def = 11
 	_dd57.demon_skills = list("Maziodyne")
 	_dd57.demon_unique = FALSE
+	_dd57.demon_icon = 'Icons/DevilSummoner/Vritra.dmi'
 	DEMON_DB["Vritra"] = _dd57
 
 	// Vasuki (Dragon, Lv 73)
@@ -957,6 +976,7 @@
 	_dd63.demon_def = 2
 	_dd63.demon_skills = list("Bufu")
 	_dd63.demon_unique = FALSE
+	_dd63.demon_icon = 'Icons/DevilSummoner/Pixie.dmi'
 	DEMON_DB["Pixie"] = _dd63
 
 	// Knocker (Fairy, Lv 7)
@@ -1002,6 +1022,7 @@
 	_dd66.demon_def = 5
 	_dd66.demon_skills = list("Diarama")
 	_dd66.demon_unique = FALSE
+	_dd66.demon_icon = 'Icons/DevilSummoner/Jack Frost.dmi'
 	DEMON_DB["Jack Frost"] = _dd66
 
 	// Pyro Jack (Fairy, Lv 29)
@@ -1017,6 +1038,7 @@
 	_dd67.demon_def = 6
 	_dd67.demon_skills = list("Agidyne")
 	_dd67.demon_unique = FALSE
+	_dd67.demon_icon = 'Icons/DevilSummoner/Pyro Jack.dmi'
 	DEMON_DB["Pyro Jack"] = _dd67
 
 	// Lorelei (Fairy, Lv 37)
@@ -1107,6 +1129,7 @@
 	_dd73.demon_def = 3
 	_dd73.demon_skills = list("Anger Hit")
 	_dd73.demon_unique = FALSE
+	_dd73.demon_icon = 'Icons/DevilSummoner/Gagyson.dmi'
 	DEMON_DB["Gagyson"] = _dd73
 
 	// Abraxas (Fallen, Lv 19)
@@ -1122,6 +1145,7 @@
 	_dd74.demon_def = 3
 	_dd74.demon_skills = list("Force Dance")
 	_dd74.demon_unique = FALSE
+	_dd74.demon_icon = 'Icons/DevilSummoner/Abraxas.dmi'
 	DEMON_DB["Abraxas"] = _dd74
 
 	// Flauros (Fallen, Lv 26)
@@ -1167,6 +1191,7 @@
 	_dd77.demon_def = 9
 	_dd77.demon_skills = list("Shield All")
 	_dd77.demon_unique = TRUE
+	_dd77.demon_icon = 'Icons/DevilSummoner/Botis.dmi'
 	DEMON_DB["Botis"] = _dd77
 
 	// Nisroc (Fallen, Lv 41)
@@ -1197,6 +1222,7 @@
 	_dd79.demon_def = 8
 	_dd79.demon_skills = list("Agidyne")
 	_dd79.demon_unique = TRUE
+	_dd79.demon_icon = 'Icons/DevilSummoner/Bifrons.dmi'
 	DEMON_DB["Bifrons"] = _dd79
 
 	// Orobas (Fallen, Lv 49)
@@ -1212,6 +1238,7 @@
 	_dd80.demon_def = 7
 	_dd80.demon_skills = list("Makarakarn")
 	_dd80.demon_unique = FALSE
+	_dd80.demon_icon = 'Icons/DevilSummoner/Orobas.dmi'
 	DEMON_DB["Orobas"] = _dd80
 
 	// Decarabia (Fallen, Lv 56)
@@ -1227,6 +1254,7 @@
 	_dd81.demon_def = 6
 	_dd81.demon_skills = list("Maragidyne")
 	_dd81.demon_unique = FALSE
+	_dd81.demon_icon = 'Icons/DevilSummoner/Decarabia.dmi'
 	DEMON_DB["Decarabia"] = _dd81
 
 	// Murmur (Fallen, Lv 64)
@@ -1242,6 +1270,7 @@
 	_dd82.demon_def = 8
 	_dd82.demon_skills = list("Death Call")
 	_dd82.demon_unique = FALSE
+	_dd82.demon_icon = 'Icons/DevilSummoner/Murmur.dmi'
 	DEMON_DB["Murmur"] = _dd82
 
 	// Agares (Fallen, Lv 71)
@@ -1272,6 +1301,7 @@
 	_dd84.demon_def = 13
 	_dd84.demon_skills = list("None")
 	_dd84.demon_unique = FALSE
+	_dd84.demon_icon = 'Icons/DevilSummoner/Nebiros.dmi'
 	DEMON_DB["Nebiros"] = _dd84
 
 	// Satan (Fallen, Lv 99)
@@ -1317,6 +1347,7 @@
 	_dd87.demon_def = 4
 	_dd87.demon_skills = list("Elec Dance")
 	_dd87.demon_unique = FALSE
+	_dd87.demon_icon = 'Icons/DevilSummoner/Lilim.dmi'
 	DEMON_DB["Lilim"] = _dd87
 
 	// Leanan Sidhe (Femme, Lv 26)
@@ -1347,6 +1378,7 @@
 	_dd89.demon_def = 5
 	_dd89.demon_skills = list("Drain")
 	_dd89.demon_unique = FALSE
+	_dd89.demon_icon = 'Icons/DevilSummoner/Yuki Jyorou.dmi'
 	DEMON_DB["Yuki Jyorou"] = _dd89
 
 	// Peri (Femme, Lv 38)
@@ -1422,6 +1454,7 @@
 	_dd94.demon_def = 9
 	_dd94.demon_skills = list("Assassinate")
 	_dd94.demon_unique = FALSE
+	_dd94.demon_icon = 'Icons/DevilSummoner/Rangda.dmi'
 	DEMON_DB["Rangda"] = _dd94
 
 	// Anat (Femme, Lv 66)
@@ -1467,6 +1500,7 @@
 	_dd97.demon_def = 12
 	_dd97.demon_skills = list("None")
 	_dd97.demon_unique = TRUE
+	_dd97.demon_icon = 'Icons/DevilSummoner/Lilith.dmi'
 	DEMON_DB["Lilith"] = _dd97
 
 	// Ghost Q (Fiend, Lv 26)
@@ -1482,6 +1516,7 @@
 	_dd98.demon_def = 5
 	_dd98.demon_skills = list("Berserk")
 	_dd98.demon_unique = TRUE
+	_dd98.demon_icon = 'Icons/DevilSummoner/Ghost Q.dmi'
 	DEMON_DB["Ghost Q"] = _dd98
 
 	// Sage of Time (Fiend, Lv 41)
@@ -1497,6 +1532,7 @@
 	_dd99.demon_def = 6
 	_dd99.demon_skills = list("Death Call")
 	_dd99.demon_unique = TRUE
+	_dd99.demon_icon = 'Icons/DevilSummoner/Sage of Time.dmi'
 	DEMON_DB["Sage of Time"] = _dd99
 
 	// Billiken (Fiend, Lv 50)
@@ -1512,6 +1548,7 @@
 	_dd100.demon_def = 8
 	_dd100.demon_skills = list("Life Drain")
 	_dd100.demon_unique = TRUE
+	_dd100.demon_icon = 'Icons/DevilSummoner/Billiken.dmi'
 	DEMON_DB["Billiken"] = _dd100
 
 	// Trumpeter (Fiend, Lv 63)
@@ -1542,6 +1579,7 @@
 	_dd102.demon_def = 12
 	_dd102.demon_skills = list("None")
 	_dd102.demon_unique = TRUE
+	_dd102.demon_icon = 'Icons/DevilSummoner/Alice.dmi'
 	DEMON_DB["Alice"] = _dd102
 
 	// Tam Lin (Genma, Lv 6)
@@ -1587,6 +1625,7 @@
 	_dd105.demon_def = 3
 	_dd105.demon_skills = list("Elec Dance")
 	_dd105.demon_unique = FALSE
+	_dd105.demon_icon = 'Icons/DevilSummoner/Ictinike.dmi'
 	DEMON_DB["Ictinike"] = _dd105
 
 	// Tlaloc (Genma, Lv 28)
@@ -1632,6 +1671,7 @@
 	_dd108.demon_def = 6
 	_dd108.demon_skills = list("Mazio")
 	_dd108.demon_unique = TRUE
+	_dd108.demon_icon = 'Icons/DevilSummoner/Cu Chulainn.dmi'
 	DEMON_DB["Cu Chulainn"] = _dd108
 
 	// Kama (Genma, Lv 42)
@@ -1737,6 +1777,7 @@
 	_dd115.demon_def = 2
 	_dd115.demon_skills = list("Agi")
 	_dd115.demon_unique = FALSE
+	_dd115.demon_icon = 'Icons/DevilSummoner/Poltergeist.dmi'
 	DEMON_DB["Poltergeist"] = _dd115
 
 	// Agathion (Ghost, Lv 6)
@@ -1752,6 +1793,7 @@
 	_dd116.demon_def = 3
 	_dd116.demon_skills = list("Agi")
 	_dd116.demon_unique = FALSE
+	_dd116.demon_icon = 'Icons/DevilSummoner/Agathion.dmi'
 	DEMON_DB["Agathion"] = _dd116
 
 	// Tenong Cut (Ghost, Lv 16)
@@ -1767,6 +1809,7 @@
 	_dd117.demon_def = 5
 	_dd117.demon_skills = list("Berserk")
 	_dd117.demon_unique = FALSE
+	_dd117.demon_icon = 'Icons/DevilSummoner/Tenong Cut.dmi'
 	DEMON_DB["Tenong Cut"] = _dd117
 
 	// Kumbhanda (Ghost, Lv 25)
@@ -1797,6 +1840,7 @@
 	_dd119.demon_def = 7
 	_dd119.demon_skills = list("Extra Cancel")
 	_dd119.demon_unique = FALSE
+	_dd119.demon_icon = 'Icons/DevilSummoner/Loa.dmi'
 	DEMON_DB["Loa"] = _dd119
 
 	// Pisaca (Ghost, Lv 41)
@@ -1827,6 +1871,7 @@
 	_dd121.demon_def = 9
 	_dd121.demon_skills = list("Bufudyne")
 	_dd121.demon_unique = TRUE
+	_dd121.demon_icon = 'Icons/DevilSummoner/Kudlak.dmi'
 	DEMON_DB["Kudlak"] = _dd121
 
 	// Purple Mirror (Ghost, Lv 61)
@@ -1857,6 +1902,7 @@
 	_dd123.demon_def = 4
 	_dd123.demon_skills = list("Mow Down")
 	_dd123.demon_unique = TRUE
+	_dd123.demon_icon = 'Icons/DevilSummoner/Neko Shogun.dmi'
 	DEMON_DB["Neko Shogun"] = _dd123
 
 	// Hagen (Hero, Lv 39)
@@ -1947,6 +1993,7 @@
 	_dd129.demon_def = 3
 	_dd129.demon_skills = list("Dia")
 	_dd129.demon_unique = FALSE
+	_dd129.demon_icon = 'Icons/DevilSummoner/Obariyon.dmi'
 	DEMON_DB["Obariyon"] = _dd129
 
 	// Ogre (Jaki, Lv 8)
@@ -2007,6 +2054,7 @@
 	_dd133.demon_def = 6
 	_dd133.demon_skills = list("Brutal Hit")
 	_dd133.demon_unique = FALSE
+	_dd133.demon_icon = 'Icons/DevilSummoner/Wendigo.dmi'
 	DEMON_DB["Wendigo"] = _dd133
 
 	// Legion (Jaki, Lv 39)
@@ -2022,6 +2070,7 @@
 	_dd134.demon_def = 10
 	_dd134.demon_skills = list("Bufudyne")
 	_dd134.demon_unique = FALSE
+	_dd134.demon_icon = 'Icons/DevilSummoner/Legion.dmi'
 	DEMON_DB["Legion"] = _dd134
 
 	// Girimehkala (Jaki, Lv 47)
@@ -2052,6 +2101,7 @@
 	_dd136.demon_def = 8
 	_dd136.demon_skills = list("Deathbound")
 	_dd136.demon_unique = FALSE
+	_dd136.demon_icon = 'Icons/DevilSummoner/Rakshasa.dmi'
 	DEMON_DB["Rakshasa"] = _dd136
 
 	// Grendel (Jaki, Lv 64)
@@ -2082,6 +2132,7 @@
 	_dd138.demon_def = 11
 	_dd138.demon_skills = list("Mabufudyne")
 	_dd138.demon_unique = TRUE
+	_dd138.demon_icon = 'Icons/DevilSummoner/Black Frost.dmi'
 	DEMON_DB["Black Frost"] = _dd138
 
 	// Ubelluris (Kishin, Lv 20)
@@ -2127,6 +2178,7 @@
 	_dd141.demon_def = 8
 	_dd141.demon_skills = list("Might Call")
 	_dd141.demon_unique = TRUE
+	_dd141.demon_icon = 'Icons/DevilSummoner/Hitokotonusi.dmi'
 	DEMON_DB["Hitokotonusi"] = _dd141
 
 	// Take-Mikazuchi (Kishin, Lv 43)
@@ -2142,6 +2194,7 @@
 	_dd142.demon_def = 8
 	_dd142.demon_skills = list("Mazio")
 	_dd142.demon_unique = TRUE
+	_dd142.demon_icon = 'Icons/DevilSummoner/Take-Mikazuchi.dmi'
 	DEMON_DB["Take-Mikazuchi"] = _dd142
 
 	// Zouchouten (Kishin, Lv 50)
@@ -2157,6 +2210,7 @@
 	_dd143.demon_def = 9
 	_dd143.demon_skills = list("Agidyne")
 	_dd143.demon_unique = TRUE
+	_dd143.demon_icon = 'Icons/DevilSummoner/Zouchouten.dmi'
 	DEMON_DB["Zouchouten"] = _dd143
 
 	// Jikokuten (Kishin, Lv 57)
@@ -2172,6 +2226,7 @@
 	_dd144.demon_def = 11
 	_dd144.demon_skills = list("Ziodyne")
 	_dd144.demon_unique = TRUE
+	_dd144.demon_icon = 'Icons/DevilSummoner/Jikokuten.dmi'
 	DEMON_DB["Jikokuten"] = _dd144
 
 	// Koumoukuten (Kishin, Lv 64)
@@ -2187,6 +2242,7 @@
 	_dd145.demon_def = 12
 	_dd145.demon_skills = list("Mazandyne")
 	_dd145.demon_unique = TRUE
+	_dd145.demon_icon = 'Icons/DevilSummoner/Koumokuten.dmi'
 	DEMON_DB["Koumoukuten"] = _dd145
 
 	// Bishamonten (Kishin, Lv 71)
@@ -2202,6 +2258,7 @@
 	_dd146.demon_def = 13
 	_dd146.demon_skills = list("Hassohappa")
 	_dd146.demon_unique = TRUE
+	_dd146.demon_icon = 'Icons/DevilSummoner/Bishamonten.dmi'
 	DEMON_DB["Bishamonten"] = _dd146
 
 	// Ometeotl (Kishin, Lv 75)
@@ -2292,6 +2349,7 @@
 	_dd152.demon_def = 5
 	_dd152.demon_skills = list("Media")
 	_dd152.demon_unique = FALSE
+	_dd152.demon_icon = 'Icons/DevilSummoner/Brigid.dmi'
 	DEMON_DB["Brigid"] = _dd152
 
 	// Scathach (Megami, Lv 43)
@@ -2307,6 +2365,7 @@
 	_dd153.demon_def = 6
 	_dd153.demon_skills = list("Recarm")
 	_dd153.demon_unique = TRUE
+	_dd153.demon_icon = 'Icons/DevilSummoner/Scathach.dmi'
 	DEMON_DB["Scathach"] = _dd153
 
 	// Laksmi (Megami, Lv 51)
@@ -2322,6 +2381,7 @@
 	_dd154.demon_def = 8
 	_dd154.demon_skills = list("Mediarahan")
 	_dd154.demon_unique = FALSE
+	_dd154.demon_icon = 'Icons/DevilSummoner/Laksmi.dmi'
 	DEMON_DB["Laksmi"] = _dd154
 
 	// Isis (Megami, Lv 55)
@@ -2367,6 +2427,7 @@
 	_dd157.demon_def = 8
 	_dd157.demon_skills = list("Prayer")
 	_dd157.demon_unique = TRUE
+	_dd157.demon_icon = 'Icons/DevilSummoner/Norn.dmi'
 	DEMON_DB["Norn"] = _dd157
 
 	// Pallas Athena (Megami, Lv 69)
@@ -2562,6 +2623,7 @@
 	_dd170.demon_def = 13
 	_dd170.demon_skills = list("None")
 	_dd170.demon_unique = TRUE
+	_dd170.demon_icon = 'Icons/DevilSummoner/Shiva.dmi'
 	DEMON_DB["Shiva"] = _dd170
 
 	// Makara (Snake, Lv 14)
@@ -2592,6 +2654,7 @@
 	_dd172.demon_def = 7
 	_dd172.demon_skills = list("Assassinate")
 	_dd172.demon_unique = FALSE
+	_dd172.demon_icon = 'Icons/DevilSummoner/Nozuchi.dmi'
 	DEMON_DB["Nozuchi"] = _dd172
 
 	// Pendragon (Snake, Lv 30)
@@ -2682,6 +2745,7 @@
 	_dd178.demon_def = 13
 	_dd178.demon_skills = list("Hassohappa")
 	_dd178.demon_unique = FALSE
+	_dd178.demon_icon = 'Icons/DevilSummoner/Yamata no Orochi.dmi'
 	DEMON_DB["Orochi"] = _dd178
 
 	// Ananta (Snake, Lv 72)
@@ -2727,6 +2791,7 @@
 	_dd181.demon_def = 3
 	_dd181.demon_skills = list("Anger Hit")
 	_dd181.demon_unique = FALSE
+	_dd181.demon_icon = 'Icons/DevilSummoner/Kobold.dmi'
 	DEMON_DB["Kobold"] = _dd181
 
 	// Bilwis (Touki, Lv 10)
@@ -2742,6 +2807,7 @@
 	_dd182.demon_def = 4
 	_dd182.demon_skills = list("Fatal Strike")
 	_dd182.demon_unique = FALSE
+	_dd182.demon_icon = 'Icons/DevilSummoner/Bilwis.dmi'
 	DEMON_DB["Bilwis"] = _dd182
 
 	// Gozuki (Touki, Lv 18)
@@ -2787,6 +2853,7 @@
 	_dd185.demon_def = 6
 	_dd185.demon_skills = list("Assassinate")
 	_dd185.demon_unique = FALSE
+	_dd185.demon_icon = 'Icons/DevilSummoner/Ikusa.dmi'
 	DEMON_DB["Ikusa"] = _dd185
 
 	// Berserker (Touki, Lv 38)
@@ -2832,6 +2899,7 @@
 	_dd188.demon_def = 7
 	_dd188.demon_skills = list("Deathbound")
 	_dd188.demon_unique = FALSE
+	_dd188.demon_icon = 'Icons/DevilSummoner/Yaksa.dmi'
 	DEMON_DB["Yaksa"] = _dd188
 
 	// Nata Taishi (Touki, Lv 59)
@@ -2952,6 +3020,7 @@
 	_dd196.demon_def = 11
 	_dd196.demon_skills = list("Megidolaon")
 	_dd196.demon_unique = TRUE
+	_dd196.demon_icon = 'Icons/DevilSummoner/Loki.dmi'
 	DEMON_DB["Loki"] = _dd196
 
 	// Mot (Tyrant, Lv 68)
@@ -3012,6 +3081,7 @@
 	_dd200.demon_def = 15
 	_dd200.demon_skills = list("None")
 	_dd200.demon_unique = TRUE
+	_dd200.demon_icon = 'Icons/DevilSummoner/Belial.dmi'
 	DEMON_DB["Belial"] = _dd200
 
 	// Beelzebub (Tyrant, Lv 91)
@@ -3027,6 +3097,7 @@
 	_dd201.demon_def = 11
 	_dd201.demon_skills = list("None")
 	_dd201.demon_unique = TRUE
+	_dd201.demon_icon = 'Icons/DevilSummoner/Beelzebub.dmi'
 	DEMON_DB["Beelzebub"] = _dd201
 
 	// Lucifer (Tyrant, Lv 99)
@@ -3042,6 +3113,7 @@
 	_dd202.demon_def = 14
 	_dd202.demon_skills = list("None")
 	_dd202.demon_unique = TRUE
+	_dd202.demon_icon = 'Icons/DevilSummoner/Lucifer.dmi'
 	DEMON_DB["Lucifer"] = _dd202
 
 	// Orcus (Vile, Lv 23)
@@ -3087,6 +3159,7 @@
 	_dd205.demon_def = 9
 	_dd205.demon_skills = list("Holy Dance")
 	_dd205.demon_unique = TRUE
+	_dd205.demon_icon = 'Icons/DevilSummoner/Pazuzu.dmi'
 	DEMON_DB["Pazuzu"] = _dd205
 
 	// Abaddon (Vile, Lv 48)
@@ -3102,6 +3175,7 @@
 	_dd206.demon_def = 9
 	_dd206.demon_skills = list("Bufudyne")
 	_dd206.demon_unique = FALSE
+	_dd206.demon_icon = 'Icons/DevilSummoner/Abaddon.dmi'
 	DEMON_DB["Abaddon"] = _dd206
 
 	// Arioch (Vile, Lv 56)
@@ -3117,6 +3191,7 @@
 	_dd207.demon_def = 9
 	_dd207.demon_skills = list("Deathbound")
 	_dd207.demon_unique = TRUE
+	_dd207.demon_icon = 'Icons/DevilSummoner/Arioch.dmi'
 	DEMON_DB["Arioch"] = _dd207
 
 	// Tao Tie (Vile, Lv 62)
@@ -3177,6 +3252,7 @@
 	_dd211.demon_def = 3
 	_dd211.demon_skills = list("Amrita")
 	_dd211.demon_unique = FALSE
+	_dd211.demon_icon = 'Icons/DevilSummoner/Hare of Inaba.dmi'
 	DEMON_DB["Hare of Inaba"] = _dd211
 
 	// Waira (Wilder, Lv 17)
@@ -3192,6 +3268,7 @@
 	_dd212.demon_def = 3
 	_dd212.demon_skills = list("Berserk")
 	_dd212.demon_unique = FALSE
+	_dd212.demon_icon = 'Icons/DevilSummoner/Waira.dmi'
 	DEMON_DB["Waira"] = _dd212
 
 	// Garm (Wilder, Lv 25)
@@ -3252,6 +3329,7 @@
 	_dd216.demon_def = 9
 	_dd216.demon_skills = list("Mazan")
 	_dd216.demon_unique = FALSE
+	_dd216.demon_icon = 'Icons/DevilSummoner/Mothman.dmi'
 	DEMON_DB["Mothman"] = _dd216
 
 	// Taown (Wilder, Lv 50)

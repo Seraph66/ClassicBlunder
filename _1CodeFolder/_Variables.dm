@@ -689,27 +689,27 @@ mob/var
 	list/demon_party = null
 	demon_party_cap = 0
 	list/demon_compendium = null
-	demon_active = null
-	demon_active_name = ""
-	demon_summon_cooldown = 0
-	demon_call_cooldown = 0
-	demon_fusion_page = 1
-	demon_record_page = 1
-	demon_meditate_start = 0
-	demon_meditate_healed = FALSE
-	list/demon_skill_hud = null     // list of /obj/DemonSkillSlot screen objects
-	demon_fusion_open = FALSE       
-	demon_compendium_open = FALSE
-	demon_record_open = FALSE
-	demon_withdraw_open = FALSE
-	demon_inherit_open = FALSE
-	// Temp vars for pending fusion inheritance
-	demon_pending_fuse_a = ""
-	demon_pending_fuse_b = ""
-	demon_pending_fuse_result = ""
-	list/demon_pending_fuse_base_skills = null
-	list/demon_pending_fuse_pool = null
-	demon_pending_fuse_open_slots = 0
+
+	tmp/demon_active = null             
+	tmp/demon_active_name = ""
+	tmp/list/demon_skill_hud = null     
+	tmp/demon_summon_cooldown = 0       
+	tmp/demon_call_cooldown = 0
+	tmp/demon_fusion_page = 1
+	tmp/demon_record_page = 1
+	tmp/demon_meditate_start = 0
+	tmp/demon_meditate_healed = FALSE
+	tmp/demon_fusion_open = FALSE
+	tmp/demon_compendium_open = FALSE
+	tmp/demon_record_open = FALSE
+	tmp/demon_withdraw_open = FALSE
+	tmp/demon_inherit_open = FALSE
+	tmp/demon_pending_fuse_a = ""
+	tmp/demon_pending_fuse_b = ""
+	tmp/demon_pending_fuse_result = ""
+	tmp/list/demon_pending_fuse_base_skills = null
+	tmp/list/demon_pending_fuse_pool = null
+	tmp/demon_pending_fuse_open_slots = 0
 
 /proc/reduceGodKi(mob/player, num)
 	player.GodKi -= num

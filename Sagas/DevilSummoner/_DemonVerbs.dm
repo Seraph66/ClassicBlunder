@@ -4,6 +4,12 @@
 		if(pd.demon_name == dname) return TRUE
 	return FALSE
 
+/mob/proc/DemonUIBusy()
+	if(demon_fusion_open)   return TRUE
+	if(demon_inherit_open)  return TRUE
+	if(demon_pending_fuse_result && demon_pending_fuse_result != "") return TRUE
+	return FALSE
+
 /mob/proc/DevilSummonerRestoreVerbs()
 	if(Saga != "Devil Summoner") return
 	if(SagaLevel >= 1)
@@ -27,6 +33,13 @@
 	demon_withdraw_open = FALSE
 	demon_inherit_open = FALSE
 
+	demon_pending_fuse_a = ""
+	demon_pending_fuse_b = ""
+	demon_pending_fuse_result = ""
+	demon_pending_fuse_base_skills = null
+	demon_pending_fuse_pool = null
+	demon_pending_fuse_open_slots = 0
+
 	for(var/datum/party_demon/pd in demon_party)
 		if(!pd.demon_skills || !pd.demon_skills.len)
 			var/datum/demon_data/dd = DEMON_DB[pd.demon_name]
@@ -44,6 +57,14 @@
 	demon_record_open = FALSE
 	demon_withdraw_open = FALSE
 	demon_inherit_open = FALSE
+
+	demon_pending_fuse_a = ""
+	demon_pending_fuse_b = ""
+	demon_pending_fuse_result = ""
+	demon_pending_fuse_base_skills = null
+	demon_pending_fuse_pool = null
+	demon_pending_fuse_open_slots = 0
+
 	if(demon_active)
 		var/mob/Player/AI/Demon/d = demon_active
 		if(d)
@@ -51,6 +72,7 @@
 				if(pd.demon_name == d.name)
 					pd.current_hp = d.demon_hp
 					break
+			ai_followers -= d
 			d.ai_owner = null
 			del(d)
 		demon_active = null
@@ -60,6 +82,10 @@
 /mob/proc/verb_SummonDemon()
 	set name     = "Summon Demon"
 	set category = "Devil Summoner"
+
+	if(DemonUIBusy())
+		src << "Close your current Demon menu before summoning."
+		return
 
 	if(!demon_party || !demon_party.len)
 		src << "You have no demons in your party."
@@ -101,6 +127,10 @@
 		src << "Unlock Tier 2 of Devil Summoner to access the Compendium."
 		return
 
+	if(DemonUIBusy())
+		src << "Close your current Demon menu first."
+		return
+
 	OpenRecordDemonUI()
 
 /mob/proc/verb_OpenCompendium()
@@ -109,6 +139,10 @@
 
 	if(SagaLevel < 2)
 		src << "Unlock Tier 2 of Devil Summoner to access the Compendium."
+		return
+
+	if(DemonUIBusy())
+		src << "Close your current Demon menu first."
 		return
 
 	OpenCompendiumUI()
@@ -121,10 +155,19 @@
 		src << "Unlock Tier 3 of Devil Summoner to access Fusion."
 		return
 
+	if(demon_record_open || demon_compendium_open || demon_withdraw_open)
+		src << "Close your current Demon menu first."
+		return
+
 	OpenFusionUI()
 
 
 /mob/proc/DemonSummonFromParty(demon_name)
+	if(DemonUIBusy())
+		src << "Complete or cancel your current Demon action first."
+		winshow(src, "DemonSummonWindow", FALSE)
+		return
+
 	var/datum/party_demon/pd = null
 	for(var/datum/party_demon/p in demon_party)
 		if(p.demon_name == demon_name)
@@ -207,6 +250,9 @@
 
 
 /mob/proc/ExecuteFusion(name_a, name_b)
+	if(DemonUIBusy())
+		return
+
 	var/datum/party_demon/pd_a = null
 	var/datum/party_demon/pd_b = null
 	for(var/datum/party_demon/pd in demon_party)
@@ -214,6 +260,13 @@
 		if(pd.demon_name == name_b) pd_b = pd
 	if(!pd_a || !pd_b)
 		src << "One or both demons are no longer in your party."
+		return
+
+	if(pd_a.current_hp <= 0)
+		src << "<b>[name_a]</b> is defeated. Meditate to restore them before fusing."
+		return
+	if(pd_b.current_hp <= 0)
+		src << "<b>[name_b]</b> is defeated. Meditate to restore them before fusing."
 		return
 
 	var/result_name = GetFusionResultByLevel(name_a, pd_a.party_level,
@@ -277,6 +330,28 @@
 	FinishFusion(name_a, name_b, result_name, list())
 
 /mob/proc/FinishFusion(name_a, name_b, result_name, list/inherited_skills)
+	if(!DemonInParty(name_a) || !DemonInParty(name_b))
+		src << "<font color='#ff6666'>Fusion cancelled: one or both ingredients are no longer in your party.</font>"
+		demon_pending_fuse_a = ""
+		demon_pending_fuse_b = ""
+		demon_pending_fuse_result = ""
+		demon_pending_fuse_base_skills = null
+		demon_pending_fuse_pool = null
+		demon_pending_fuse_open_slots = 0
+		demon_inherit_open = FALSE
+		return
+
+	if(DemonInParty(result_name))
+		src << "<font color='#ff6666'>Fusion cancelled: [result_name] is already in your party.</font>"
+		demon_pending_fuse_a = ""
+		demon_pending_fuse_b = ""
+		demon_pending_fuse_result = ""
+		demon_pending_fuse_base_skills = null
+		demon_pending_fuse_pool = null
+		demon_pending_fuse_open_slots = 0
+		demon_inherit_open = FALSE
+		return
+
 	if(demon_active_name == name_a || demon_active_name == name_b)
 		DemonUnsummon()
 
@@ -322,6 +397,14 @@
 	var/element_race = parts[3]
 	var/shift_up = (element_race == "Aquans" || element_race == "Aeros")
 	var/target_demon = name_a
+
+	for(var/datum/party_demon/pd in demon_party)
+		if(pd.demon_name == name_a && pd.current_hp <= 0)
+			src << "<b>[name_a]</b> is defeated. Meditate to restore them before fusing."
+			return
+		if(pd.demon_name == name_b && pd.current_hp <= 0)
+			src << "<b>[name_b]</b> is defeated. Meditate to restore them before fusing."
+			return
 
 	var/result_name = GetElementFusionResult(element_race, target_demon, shift_up)
 	if(!result_name)
@@ -376,6 +459,9 @@
 
 
 /mob/proc/ExecuteWithdraw(demon_name, level_choice)
+	if(DemonUIBusy())
+		src << "Complete or cancel your current Demon action first."
+		return
 	if(!demon_compendium || !(demon_name in demon_compendium)) return
 	var/datum/compendium_demon/cd = demon_compendium[demon_name]
 	var/datum/demon_data/dd = DEMON_DB[demon_name]
@@ -435,7 +521,9 @@
 	// Overwrite confirmation if already recorded
 	if(demon_name in demon_compendium)
 		var/confirm = alert(src, "[demon_name] is already recorded. Overwrite the recorded version?", "Confirm Overwrite", "Overwrite", "Cancel")
-		if(confirm != "Overwrite") return
+		if(confirm != "Overwrite")
+			demon_record_open = FALSE
+			return
 
 	var/datum/compendium_demon/cd
 	if(demon_name in demon_compendium)

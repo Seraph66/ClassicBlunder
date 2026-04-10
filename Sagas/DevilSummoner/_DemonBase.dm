@@ -19,7 +19,7 @@ var/global/list/DEMON_SPECIAL_FUSIONS = list()
 	var/list/demon_skills = list()
 	var/demon_unique     = FALSE // TRUE = not a normal fusion result target
 	var/demon_icon       = 'Icons/base/default/frisky-male_black_brown.dmi'
-	var/demon_icon_state = "walking"
+	var/demon_icon_state = ""
 	var/demon_portrait   = 'Icons/DevilSummoner/portrait_placeholder.dmi'
 	var/demon_portrait2  = 'Icons/DevilSummoner/portrait_placeholder.dmi'
 
