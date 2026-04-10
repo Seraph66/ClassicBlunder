@@ -3759,9 +3759,9 @@ obj/Items/Gear
 		Health=1000000000000
 		proc/changeType(mob/player)
 			if(MechType)
-				switch(input(player, "Do you want to change your mech's type? Each type has a different boon") in list("Yes","No")=="No")
-					if("Yes")
-						MechType = input(player, "What type?") in list("Speed","Tank","Assault")
+				var/answer = input(player, "Do you want to change your mech's type? Each type has a different boon") in list("Yes","No")
+				if(answer == "Yes")
+					MechType = input(player, "What type?") in list("Speed","Tank","Assault")
 			else
 				MechType = input(player, "What type of mech do you want to use?", "Mech Type") in list("Speed","Tank","Assault")
 		proc/setup(mob/player)

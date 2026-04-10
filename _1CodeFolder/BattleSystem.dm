@@ -242,13 +242,13 @@ mob/proc/Unconscious(mob/P,var/text)
 			src.VaizardHealth+=20
 			src.HealthAnnounce10+=3
 			return
-	if(src.passive_handler.Get("Alter The Future")&&src.passive_handler.Get("TheAlmighty"))
+	if(src.passive_handler.Get("Alter the Future")&&src.passive_handler.Get("The Almighty"))
 		if(src.HealthAnnounce10<=4)
-			if(prob(src.passive_handler.Get("Alter The Future")))
+			if(prob(src.passive_handler.Get("Alter the Future")))
 				src.KO=0
 				src.OMessage(15, "...but [src] rewrites the future to prevent their defeat!", "<font color=red>[src]([src.key]) rewrites the future!")
 				src.Health=10
-				src.passive_handler.Decrease("Alter The Future", 25)
+				src.passive_handler.Decrease("Alter the Future", 25)
 				src.VaizardHealth+=20
 				src.HealthAnnounce10+=1
 				return
@@ -1633,8 +1633,8 @@ proc/Accuracy_Formula(mob/Offender,mob/Defender,AccMult=1,BaseChance=glob.WorldD
 		// START OF REAL FUNCTION
 		var/OffenseModifier
 		var/DefenseModifier
-		var/OffenseAdvantage = Offender.Power / Defender.Power
-		var/DefenseAdvantage = Defender.Power / Offender.Power
+		var/OffenseAdvantage = Offender.Power / max(Defender.Power,0.01)
+		var/DefenseAdvantage = Defender.Power / max(Offender.Power,0.01)
 		var/Offense
 		var/Defense
 		var/TotalAccuracy
@@ -1649,7 +1649,7 @@ proc/Accuracy_Formula(mob/Offender,mob/Defender,AccMult=1,BaseChance=glob.WorldD
 			Offense = Offender.GetOff(glob.ACC_OFF)+Offender.GetSpd(glob.ACC_OFF_SPD)
 			Defense = Defender.GetDef(glob.ACC_DEF)+Defender.GetSpd(glob.ACC_DEF_SPD)
 
-			var/mod = clamp(((Offense/Defense) * AccMult) * OffenseAdvantage, glob.MIN_JORDAN_ACC_MOD, glob.MAX_JORDAN_ACC_MOD)
+			var/mod = clamp(((Offense/max(Defense,0.01)) * AccMult) * OffenseAdvantage, glob.MIN_JORDAN_ACC_MOD, glob.MAX_JORDAN_ACC_MOD)
 
 
 
@@ -1689,7 +1689,7 @@ proc/Accuracy_Formula(mob/Offender,mob/Defender,AccMult=1,BaseChance=glob.WorldD
 
 			Offense= OffenseModifier * (Offender.GetOff(glob.ACC_OFF)+Offender.GetSpd(glob.ACC_OFF_SPD))
 			Defense= DefenseModifier * (Defender.GetDef(glob.ACC_DEF)+Defender.GetSpd(glob.ACC_DEF_SPD)) * glob.EXTRA_DEF_MOD
-			TotalAccuracy = (BaseChance/100) * ((Offense*AccMult) / Defense) * 100
+			TotalAccuracy = (BaseChance/100) * ((Offense*AccMult) / max(Defense,0.01)) * 100
 			if(glob.DEBUG_MESSAGES_ACCURACY)
 				Offender << "--------------------"
 				Offender << "Offense: [Offense]"
@@ -1770,8 +1770,8 @@ proc/Deflection_Formula(var/mob/Offender,var/mob/Defender,var/AccMult=1,var/Base
 
 		var/OffenseModifier
 		var/DefenseModifier
-		var/OffenseAdvantage = Offender.Power / Defender.Power
-		var/DefenseAdvantage = Defender.Power / Offender.Power
+		var/OffenseAdvantage = Offender.Power / max(Defender.Power,0.01)
+		var/DefenseAdvantage = Defender.Power / max(Offender.Power,0.01)
 		if(glob.CLAMP_POWER)
 			if(!Offender.ignoresPowerClamp())
 				OffenseAdvantage = clamp(OffenseAdvantage,glob.MIN_POWER_DIFF, glob.MAX_POWER_DIFF)
@@ -1789,7 +1789,7 @@ proc/Deflection_Formula(var/mob/Offender,var/mob/Defender,var/AccMult=1,var/Base
 
 		var/Offense= OffenseModifier * (Offender.GetOff(glob.ACC_OFF)+Offender.GetSpd(glob.ACC_OFF_SPD))
 		var/Defense= DefenseModifier * (Defender.GetDef(glob.ACC_DEF)+Defender.GetSpd(glob.ACC_DEF_SPD))
-		var/TotalAccuracy = BaseChance * ((Offense*AccMult) / Defense) * 100
+		var/TotalAccuracy = BaseChance * ((Offense*AccMult) / max(Defense,0.01)) * 100
 
 		TotalAccuracy = clamp(TotalAccuracy, glob.LOWEST_ACC, 100)
 		if(Defender.passive_handler.Get("TotalDeflection"))

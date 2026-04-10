@@ -1372,13 +1372,13 @@ mob
 			return Return
 		HasDebuffResistance()
 			if(src.HasDebuffReversal()) return 0;
-			if(passive_handler.Get("DebuffResistance")||passive_handler.Get("Determination(Green")||passive_handler.Get("Determination(White)"))
+			if(passive_handler.Get("DebuffResistance")||passive_handler.Get("Determination(Green)")||passive_handler.Get("Determination(White)"))
 				return 1
 			return 0
 		GetDebuffResistance()
 			var/GreenVal=0
 			if(src.HasDebuffReversal()) return 0;
-			if(passive_handler.Get("Determination(Green")||passive_handler.Get("Determination(White)"))
+			if(passive_handler.Get("Determination(Green)")||passive_handler.Get("Determination(White)"))
 				GreenVal=round(ManaAmount/20,1)
 			return passive_handler.Get("DebuffResistance") + GreenVal
 		HasVenomImmune()

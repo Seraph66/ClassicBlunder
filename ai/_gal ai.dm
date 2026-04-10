@@ -1276,6 +1276,7 @@ mob/Player/AI
 			animate(src,alpha=0,time=30)
 			sleep(30)
 			del(src)
+			return
 
 		if(src.KOTimer)
 			src.KOTimer--

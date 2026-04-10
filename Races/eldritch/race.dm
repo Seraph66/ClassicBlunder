@@ -9,7 +9,7 @@ race
 		desc = "Distant thoughts, either a dream or a nightmare, made manifest within the soul of a living being. They are chaotic and unstable, only able to imitate mortal life and individuality."
 		visual = 'Eldritch.png'
 
-		passives = list("Void" = 1, "DebuffResistance"=0.2, "PureDamage"=1, "PureReduction"=1, "BuffMastery"=5)
+		passives = list("Void" = 1, "DebuffResistance"=0.2, "PureDamage"=1, "PureReduction"=1, "BuffMastery"=5, "Obfuscated Origin" = 1)
 		locked = TRUE
 
 		power = 3.5
@@ -33,3 +33,6 @@ race
 			user.Secret="Eldritch ([eldType])"
 			user.giveSecret("Eldritch ([eldType])")
 			user.secretDatum.nextTierUp = 999
+			if(eldType == "Reflected")
+				user.AddSkill(new /obj/Skills/Utility/Offer_Pact)
+				user.AddSkill(new /obj/Skills/Utility/Revoke_Pact)

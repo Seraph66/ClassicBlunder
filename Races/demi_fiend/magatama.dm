@@ -301,7 +301,7 @@ obj/Items/Magatama/Marogareh
 obj/Items/Magatama/Wadatsumi
 	name = "Wadatsumi"
 	desc = "A Magatama of frozen seas. Those who ingest it command the bitter cold and the rhythmic power of ocean waves."
-	base_passives = list("IceAge" = 50, "Chilling" = 2, "Familiar" = 1, "WaveDance" = 1)
+	base_passives = list("IceAge" = 50, "Chilling" = 2, "Familiar" = 1, "WaveDancer" = 1)
 	passive_scaling = list("IceAge" = 0.5, "Chilling" = 0.2, "Familiar" = 0.05)
 	ascension_passives = list("1" = list("BlizzardBringer" = 1))
 	magatama_skills = list(/obj/Skills/AutoHit/DemiFiend/Ice_Breath)

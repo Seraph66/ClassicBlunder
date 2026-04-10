@@ -14,7 +14,7 @@ ascension
 			defense = 0.25
 			speed = 0.25
 			anger=0.2;
-			passives = list("DebuffResistance"=0.2, "PureDamage"=1, "PureReduction"=1, "BuffMastery"=2, "BlockChance"=5, "CritChance"=5, "CriticalBlock"=0.1, "CriticalDamage"=0.1);
+			passives = list("DebuffResistance"=0.2, "PureDamage"=1, "PureReduction"=1, "BuffMastery"=2, "BlockChance"=5, "CriticalChance"=5, "CriticalBlock"=0.1, "CriticalDamage"=0.1);
 			onAscension(mob/owner)
 				switch(owner.Secret)
 					if("Eldritch (Shrouded)")
@@ -46,7 +46,7 @@ ascension
 			endurance = 0.25
 			defense = 0.25
 			speed = 0.25
-			passives = list("Null"=1, "DebuffResistance"=0.2, "PureDamage"=1, "PureReduction"=1, "BuffMastery"=2, "BlockChance"=5, "CritChance"=5, "CriticalBlock"=0.1, "CriticalDamage"=0.1);
+			passives = list("Null"=1, "DebuffResistance"=0.2, "PureDamage"=1, "PureReduction"=1, "BuffMastery"=2, "BlockChance"=5, "CriticalChance"=5, "CriticalBlock"=0.1, "CriticalDamage"=0.1);
 			on_ascension_message = "Your delusions are embraced by mayhem..."
 			onAscension(mob/owner)
 				switch(owner.race.ascensions[1].choiceSelected)
@@ -72,7 +72,7 @@ ascension
 			defense = 0.25
 			speed = 0.25
 			enhanceChips = 14;
-			passives = list("DebuffResistance"=0.2, "PureDamage"=1, "PureReduction"=1, "BuffMastery"=2, "BlockChance"=5, "CritChance"=5, "CriticalBlock"=0.1, "CriticalDamage"=0.1);
+			passives = list("DebuffResistance"=0.2, "PureDamage"=1, "PureReduction"=1, "BuffMastery"=2, "BlockChance"=5, "CriticalChance"=5, "CriticalBlock"=0.1, "CriticalDamage"=0.1);
 			on_ascension_message = "Your fantasies are bleeding entropy... But what fantasy do you chase?"
 			onAscension(mob/owner)
 				switch(owner.race.ascensions[1].choiceSelected)
@@ -96,7 +96,7 @@ ascension
 			offense = 0.25
 			defense = 0.25
 			speed = 0.25
-			passives = list("DebuffResistance"=0.2, "PureDamage"=1, "PureReduction"=1, "BuffMastery"=2, "BlockChance"=5, "CritChance"=5, "CriticalBlock"=0.1, "CriticalDamage"=0.1);
+			passives = list("DebuffResistance"=0.2, "PureDamage"=1, "PureReduction"=1, "BuffMastery"=2, "BlockChance"=5, "CriticalChance"=5, "CriticalBlock"=0.1, "CriticalDamage"=0.1);
 			on_ascension_message = "Your illusory self is beginning to fray at the edges.\nYou can't keep manifesting like this forever...Can you...?"
 			onAscension(mob/owner)
 				switch(owner.race.ascensions[1].choiceSelected)
@@ -130,7 +130,7 @@ ascension
 			offense = 0.25
 			defense = 0.25
 			speed = 0.25
-			passives = list("DebuffResistance"=0.2, "PureDamage"=1, "PureReduction"=1, "BuffMastery"=2, "BlockChance"=5, "CritChance"=5, "CriticalBlock"=0.1, "CriticalDamage"=0.1);
+			passives = list("DebuffResistance"=0.2, "PureDamage"=1, "PureReduction"=1, "BuffMastery"=2, "BlockChance"=5, "CriticalChance"=5, "CriticalBlock"=0.1, "CriticalDamage"=0.1);
 			on_ascension_message = "You are."
 			onAscension(mob/owner)
 				switch(owner.race.ascensions[1].choiceSelected)

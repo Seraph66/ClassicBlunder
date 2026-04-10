@@ -1301,7 +1301,7 @@ obj/Items/proc/UnEquip(mob/A)
 			for(var/obj/Skills/x in Techniques)
 				if(x == s)
 					A.DeleteSkill(x, FALSE)
-		if(!A.UsingLightSaber() && (suffix == "*Equipped*" || "*Equipped (Second)*" || "*Equipped (Third)*"))
+		if(!A.UsingLightSaber() && findtext(suffix, "*Equipped"))
 			if(A.equippedSword == src)
 				A.equippedSword = null
 			suffix = null

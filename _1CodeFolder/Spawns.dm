@@ -13,10 +13,11 @@ obj/Special
 		var/list/SpecialPermissions=list()
 
 		//These are all additions; they can be negative to lower the various attributes.
-		var/EconomyChange=0
-		var/LearningChange=0
-		var/IntelligenceChange=0
-		var/ImaginationChange=0
+		var/EconomyChange=1
+		var/LearningChange=1
+		var/IntelligenceChange=1
+		var/ImaginationChange=1
+		var/SpawnLocation="None"
 
 
 mob
@@ -45,37 +46,39 @@ mob
 				else
 					Confirm=alert(src, "[Choice] [Choice.desc] Is this where you want to hail from?", "Choose Spawn ([Choice])", "Yes", "No")
 
-			if(Choice.EconomyChange!=0)
+			if(Choice.EconomyChange!=1)
 				src.EconomyMult*=Choice.EconomyChange
 				src << "Due to growing up in [Choice], you are \..."
-				if(Choice.EconomyChange>=1)
+				if(Choice.EconomyChange>1)
 					src << "better at earning money."
 				else
 					src << "worse at earning money."
-			if(Choice.LearningChange!=0)
+			if(Choice.LearningChange!=1)
 				src.RPPMult*=Choice.LearningChange
 				src << "Due to growing up in [Choice], you are \..."
-				if(Choice.LearningChange>=1)
+				if(Choice.LearningChange>1)
 					src << "better at learning new skills."
 				else
 					src << "worse at learning new skills."
-			if(Choice.IntelligenceChange!=0)
+			if(Choice.IntelligenceChange!=1)
 				src.Intelligence*=Choice.IntelligenceChange
 				src << "Due to growing up in [Choice], you are \..."
-				if(Choice.IntelligenceChange>=1)
+				if(Choice.IntelligenceChange>1)
 					src << "better at thinking logically."
 				else
 					src << "worse at thinking logically."
-			if(Choice.ImaginationChange!=0)
+			if(Choice.ImaginationChange!=1)
 				src.Imagination*=Choice.ImaginationChange
 				src << "Due to growing up in [Choice], you are \..."
-				if(Choice.ImaginationChange>=1)
+				if(Choice.ImaginationChange>1)
 					src << "better at understanding belief."
 				else
 					src << "worse at understanding belief."
 
 			src.Spawn=Choice.name
 			src << "Your native location is [src.Spawn]."
+			src.SpawnArea = Choice.SpawnLocation
+			src << "Your native location displays as [src.SpawnArea]."
 			MoveToSpawn(src)
 			src.loc = locate(Choice.gotoX, Choice.gotoY, Choice.gotoZ)
 

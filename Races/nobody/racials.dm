@@ -23,6 +23,7 @@
 		SwordX=-8
 		SwordY=-4
 		SwordElement="Void"
+		SwordUnbreakable=1
 		verb/Transfigure_Void_Blade()
 			set category="Utility"
 			var/Choice

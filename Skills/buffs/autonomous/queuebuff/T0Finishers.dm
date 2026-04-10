@@ -101,7 +101,7 @@
     Emperor_Time
         IconLock='SweatDrop.dmi'
         IconApart=1
-        passives = list("Flow" = 1, "Instinct" = 1, "SweepingStrikes" = 1)
+        passives = list("Flow" = 1, "Instinct" = 1, "SweepingStrike" = 1)
         SpdMult = 1.15
         OffMult = 1.15
     Judgment_Chain

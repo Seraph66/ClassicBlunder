@@ -778,6 +778,7 @@ obj/Skills/Arcane_Regrowth
 		if(!usr.is_arcane_beast)
 			usr << "Due to a lack of a bond, you no longer have access to Regrowth."
 			del(src)
+			return
 
 		if(world.realtime > last_click + 20)
 			last_click = world.realtime
@@ -943,6 +944,7 @@ obj/Skills/Companion/arcane_follower
 			for(var/mob/Player/AI/Nympharum/aa in usr.ai_followers)
 				aa.EndLife(1)
 			del src
+			return
 
 
 

@@ -156,14 +156,14 @@
 /obj/Skills/Buffs/SlotlessBuffs/Makyo/Fall/Shedding_Leaves
 	EndMult=0.6
 	TimerLimit=60
-	passives= list("DebuffImmunity"=1, "ManaGeneration"= 10, "EnergyGeneration" =10,"PureReduction"= -5)
+	passives= list("DebuffResistance"=1, "ManaGeneration"= 10, "EnergyGeneration" =10,"PureReduction"= -5)
 	verb/Shed_Leaves()
 		set category="Skills"
 		src.Trigger(usr)
 /obj/Skills/Buffs/SlotlessBuffs/Makyo/Fall/Harvest_Time
 	SpdMult=0.25
 	TimerLimit=60
-	passives= list("SlayerMod"=5, "FavoredPrey"= "Mortal", "GodspeedDisabled"= 1, "Extend" = 1, "Gum-Gum" = 1)
+	passives= list("SlayerMod"=5, "FavoredPrey"= "Mortal", "GodspeedDisabled"= 1, "Extend" = 1, "Gum Gum" = 1)
 	verb/Time_to_Harvest()
 		set category="Skills"
 		src.Trigger(usr)

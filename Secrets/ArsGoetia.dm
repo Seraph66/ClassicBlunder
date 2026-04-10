@@ -25,7 +25,7 @@
 				usr.ArsGoetiaOwner=1
 				src.OwnerPassword=usr.TrueName
 				if(!usr.Secret)
-					if(!usr.race.type in glob.NoSagaRaces)
+					if(!(usr.race.type in glob.NoSagaRaces))
 						usr.Secret = "Eldritch"
 						usr.giveSecret("Eldritch")
 						usr<<"The power of the Depths floods your body, giving you a permanent Eldritch nature."
@@ -51,7 +51,7 @@
 				usr.ArsGoetiaOwner=1
 				src.OwnerPassword=usr.TrueName
 				if(!usr.Secret)
-					if(!usr.race.type in glob.NoSagaRaces)
+					if(!(usr.race.type in glob.NoSagaRaces))
 						usr.Secret = "Eldritch"
 						usr.giveSecret("Eldritch")
 						usr<<"The power of the Depths floods your body, giving you a permanent Eldritch nature."

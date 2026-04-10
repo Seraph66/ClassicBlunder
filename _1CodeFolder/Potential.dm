@@ -16,7 +16,7 @@ mob
 
 			src.potential_max()
 
-			if(src.Potential<src.PotentialCap && src.PotentialStatus!="Distracted")
+			if(src.Potential<src.PotentialCap && src.PotentialStatus!="Caught Up")
 
 				if(npc)
 					switch(src.PotentialStatus)
@@ -76,12 +76,14 @@ mob
 		potential_max()
 			if(ECCHARACTER) return
 			var/Max=glob.progress.totalPotentialToDate
+			if(Max<PotentialHeadStart)
+				Max=PotentialHeadStart
 			PotentialCap = Max
 			// Max+=src.PotentialRate
 			Max=round(Max)
 			if(src.Potential>=Max && src.PotentialRate>0)//ecs will have potentialrate 0 and so they can be any level
 				src.Potential=Max
-				src.PotentialStatus="Distracted"
+				src.PotentialStatus="Caught Up"
 			else if(src.Potential>Max*0.8 && src.Potential<Max)
 				src.PotentialStatus="Average"
 			else

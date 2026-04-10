@@ -12,7 +12,7 @@
 	offAdd = 0.5
 	adjust(mob/p)
 		var/asc = p.AscensionsAcquired
-		passives = list("SweepingStrikes" = 1, "Extend" = 1 + (asc/4), "Gum Gum" = 1 + (asc/4), "ComboMaster" = 1)
+		passives = list("SweepingStrike" = 1, "Extend" = 1 + (asc/4), "Gum Gum" = 1 + (asc/4), "ComboMaster" = 1)
 		Cooldown = 90 - (10 *p.AscensionsAcquired)
 		TimerLimit = 30 + (6 *p.AscensionsAcquired)
 	verb/Pheonix_Form()

@@ -164,7 +164,7 @@ proc/removeDuplicates(list/list1)
     switch(hardRace)
         if(MAJIN)
             . = getMajinRacials()
-        if("Half Saiyan")
+        if(HALFSAIYAN)
             . += "Tenacity"
             . += "Brutalize"
             . += "Adrenaline"

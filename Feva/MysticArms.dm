@@ -31,6 +31,7 @@ obj
 				spawn(1)
 					if(!SanityCheck())
 						del src
+						return
 					icon_state = Priority
 
 					if(Target && Target in get_step(src, src.dir))
@@ -86,12 +87,14 @@ obj
 					spawn(1)
 						if(!SanityCheck())
 							del src
+							return
 						flick("Blast", Owner)
 						walk_to(src, Owner, 0, 1)
 
 						if(Master && src in get_step(Master, Master.dir))
 							spawn(1)
 								del src
+								return
 							if(Holding)
 								Master.Grab()
 						else

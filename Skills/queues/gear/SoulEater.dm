@@ -163,7 +163,7 @@ obj
 				Finisher="/obj/Skills/Queue/Finisher/Dark_Firaga"
 			else if(SE.SEType=="Shield")
 				passives = list("HybridStyle" = "MysticStyle", "SweepingStrike" = 1, "BladeFisting" = 1, "MagicSword" = 1, "AbyssMod" = 2,\
-				 "Hardening"=1, "Momentum" = 2, "BlockChance" = 15, "DoubleStrike" = 3, "NeedsSecondSword" = 1)
+				 "Harden"=1, "Momentum" = 2, "BlockChance" = 15, "DoubleStrike" = 3, "NeedsSecondSword" = 1)
 				StyleEnd = 1.3
 				StyleStr = 1.15
 				StyleFor = 1.15

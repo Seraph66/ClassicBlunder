@@ -8,7 +8,7 @@
 		StyleStr = 1.5
 		Finisher="/obj/Skills/Queue/Finisher/The_Big_Bang_Punch"
 		passives = list("LikeWater" = 4, "Fa Jin" = 3, "Interception" = 3, "Sunyata" = 5 , "Gum Gum" = 2, "Acupuncture" = 2, \
-						"Flow" = 2, "Instinct" = 2, "Momentum" = 3, "Hardening" = 2, "Pressure" = 3, "HardStyle" = 1, \
+						"Flow" = 2, "Instinct" = 2, "Momentum" = 3, "Harden" = 2, "Pressure" = 3, "HardStyle" = 1, \
 						"FluidForm" = 4, "DoubleStrike" = 2)
 		verb/God_Fist()
 			set hidden=1
@@ -36,7 +36,7 @@
 		StyleStr = 2
 		Finisher="/obj/Skills/Queue/Finisher/Stone_Cold_Stunner"
 		passives = list("Heavy Strike" = "Wrestling", "Muscle Power" =8, "Grippy" = 7, \
-		"Scoop" = 5, "Iron Grip" = 1, "DeathField" = 5, "Gum Gum" = 3, "Hardening" = 4, \
+		"Scoop" = 5, "Iron Grip" = 1, "DeathField" = 5, "Gum Gum" = 3, "Harden" = 4, \
 		"Momentum" = 4, "CallousedHands"=0.15)
 		verb/Giga_Galaxy_Wrestling()
 			set hidden=1
@@ -48,11 +48,11 @@
 		StyleFor=1.75
 		StyleEnd=1.5
 		StyleActive="High Roller"
-		passives = list("HybridStyle" = "MysticStyle","Fury" = 2, "Momentum" = 2,  "Hardening" = 2, "SpiritHand" = 2, "Instinct" = 2, \
+		passives = list("HybridStyle" = "MysticStyle","Fury" = 2, "Momentum" = 2,  "Harden" = 2, "SpiritHand" = 2, "Instinct" = 2, \
 							"Flow" = 2, "SpiritFlow" = 2, "Combustion" = 50, "Scorching" = 6, "Shattering" = 5)
 		Finisher="/obj/Skills/Queue/Finisher/Jackpot"
 		adjust(mob/p)
-			passives = list("HybridStyle" = "MysticStyle","Fury" = 4, "Momentum" = 4,  "Hardening" = 2, "SpiritHand" = 4, "Instinct" = 2, \
+			passives = list("HybridStyle" = "MysticStyle","Fury" = 4, "Momentum" = 4,  "Harden" = 2, "SpiritHand" = 4, "Instinct" = 2, \
 							"Flow" = 2, "SpiritFlow" = 2, "Combustion" = 50, "Scorching" = 6, "Shattering" = 5, "HardStyle" = 1)
 		verb/High_Roller_Style()
 			set hidden=1

@@ -9,8 +9,8 @@ world
 	status="The Fourth Fate"
 	turf=/turf/Special/Blank
 	mob= /mob/Creation
-	hub="AmatsuDarkfyre.RoleplayRebirth"
-	hub_password="silverion"
+	hub="SunshineJesse.TheFourthFate"
+	hub_password="Bernkastel"
 	fps=20
 	cache_lifespan=2
 	view=12

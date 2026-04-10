@@ -742,6 +742,7 @@ obj/Skills/Utility
 					Choice.JaganPowerNerf=0.5
 					OMsg(usr, "[usr] bestows [Choice] with a powerful demonic eye, but it will leech [Choice]'s life until they learn to control it properly...")
 					del src
+					return
 				else
 					OMsg(usr, "[Choice] refuses [usr]'s offer of power...")
 					src.Using=0
@@ -1586,6 +1587,7 @@ obj/Skills/Utility
 				usr.contents+=CS
 				usr << "You've successfully crystallized three powerful commands!"
 				del src
+				return
 			src.Using=0
 
 	Seal_Break
@@ -1651,6 +1653,7 @@ obj/Skills/Utility
 				MC.loc=usr.loc
 				usr << "You've successfully drawn your magic circle!"
 				del src
+				return
 			src.Using=0
 
 	Create_Magic_Crest
@@ -1672,6 +1675,7 @@ obj/Skills/Utility
 				MC.ObjectUse(usr)
 				usr << "You've created your own Magic Crest!  After filling it with knowledge of your spells, pass it on to a worthy successor to let them to do the same."
 				del src
+				return
 			src.Using=0
 
 	Pocket_Dimension

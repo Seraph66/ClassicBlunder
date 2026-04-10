@@ -241,8 +241,8 @@ mob/Players/Stat()
 				stat("Donate RPP:", "[round(usr.RPPDonate)]")
 			if(usr.PotentialRate>0)
 				switch(usr.PotentialStatus)
-					if("Distracted")
-						stat("Focus Status: ", "<font color='red'>[usr.PotentialStatus]</font color>")
+					if("Caught Up")
+						stat("Focus Status: ", "<font color='blue'>[usr.PotentialStatus]</font color>")
 					if("Average")
 						stat("Focus Status: ", "<font color='yellow'>[usr.PotentialStatus]</font color>")
 					if("Focused")
@@ -433,7 +433,9 @@ mob/Players/Stat()
 /mob/proc/outputVitals()
 	var/vaiHealth = hasClearSight()&&Target.VaizardHealth ? " ([Target.VaizardHealth])" : ""
 	var/healthDisplay = "[Target.Health][vaiHealth]%"
-
+	var/SpawnDisplay="[Target.SpawnArea]"
+	if(src.Target.passive_handler.Get("Obfuscated Origin"))
+		SpawnDisplay = "<font color='red'><b>Unknowable</b></font color>"
 	if(Target.BioArmor) healthDisplay = getBioArmorDisplay()
 	var/powReplace=Get_Sense_Reading(Target)
 	if(TrgIsBatshitCrazy() && !hasClearSight())
@@ -457,6 +459,7 @@ mob/Players/Stat()
 		stat("Energy: ","<font color=#FF0000>Because I do not believe you <i>do.</i></font color>")
 	else
 		stat("Energy: ","[(Target.Energy/Target.EnergyMax)*100]%")
+	stat("Origin:","[SpawnDisplay]");
 
 
 

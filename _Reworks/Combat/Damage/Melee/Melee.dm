@@ -1017,16 +1017,16 @@
 					else
 						src.ClearQueue()
 						src.Activate(new/obj/Skills/AutoHit/Heavenly_Ring_Dance)
-						for(var/obj/Skills/Buffs/SlotlessBuffs/Heavenly_Ring_Dance/TH in usr.AutoHits)
-							usr.UseBuff(TH)
+						for(var/obj/Skills/Buffs/SlotlessBuffs/Heavenly_Ring_Dance/TH in src.AutoHits)
+							src.UseBuff(TH)
 
 					NextAttack+=30
 					sleep(10)
 					src.Target.Frozen=0
 				else
 					src.Activate(new/obj/Skills/AutoHit/Heavenly_Ring_Dance_Burst)
-					for(var/obj/Skills/Buffs/SlotlessBuffs/Heavenly_Ring_Dance/TH in usr.AutoHits)
-						usr.UseBuff(TH)
+					for(var/obj/Skills/Buffs/SlotlessBuffs/Heavenly_Ring_Dance/TH in src.AutoHits)
+						src.UseBuff(TH)
 			else if(src.CheckSlotless("Libra Armory")&&src.AttackQueue)
 				GetAndUseSkill(/obj/Skills/Projectile/Libra_Slash, Projectiles, TRUE)
 				src.ClearQueue()

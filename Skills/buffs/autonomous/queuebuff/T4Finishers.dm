@@ -3,7 +3,7 @@
 		IconLock='SweatDrop.dmi'
 		IconApart=1
 		passives = list("Deicide" = 10, "Half-Sword" = 1, "Zornhau" = 1, "EndlessNine" = 1, "LifeGeneration" = 3, \
-		                "KBRes" = 4, "Hardening" = 3, "Unnerve" = 2, "Pressure" = 1, "TensionLock" = 1, "PureDamage"=4)
+		                "KBRes" = 4, "Harden" = 3, "Unnerve" = 2, "Pressure" = 1, "TensionLock" = 1, "PureDamage"=4)
 		StrMult=1.5
 		EndMult=1.75
 		VaizardHealth=3

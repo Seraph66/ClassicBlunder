@@ -694,9 +694,9 @@ mob
 						WoundsInflicted=val/defender.GetEnd(glob.CURSED_WOUNDS_RATE)
 					else if(src.SwordWounds())
 						if(defender.GetEnd(0.5) < 2)
-							WoundsInflicted=val/clamp((1 + defender.GetEnd(0.5))/(GetSwordDamage(s)), 1, 15)
+							WoundsInflicted=val/clamp((1 + defender.GetEnd(0.5))/max(GetSwordDamage(s),0.01), 1, 15)
 						else
-							WoundsInflicted= val / clamp(defender.GetEnd(0.5)/(GetSwordDamage(s)), 1, 15)
+							WoundsInflicted= val / clamp(defender.GetEnd(0.5)/max(GetSwordDamage(s),0.01), 1, 15)
 					else
 						if(defender.GetEnd(0.5) < 2)
 							WoundsInflicted=val/clamp(1 + defender.GetEnd(0.5), 1, 15)
@@ -867,7 +867,7 @@ mob
 				if(PrideDrain<0.01)
 					PrideDrain=0.01
 				val*=PrideDrain
-				if(src.Health>=85&!passive_handler.Get("PowerStressed"))
+				if(src.Health>=85&&!passive_handler.Get("PowerStressed"))
 					val*=0
 			src.Energy-=val
 			if(src.Energy<0)
@@ -1529,7 +1529,7 @@ mob
 					if(SlotlessBuffs["What Must Be Done"].Password)
 						Mod+=min(0.5, SlotlessBuffs["What Must Be Done"].Mastery/10)
 			if(src.InfinityModule)
-				var/obj/Skills/Buffs/ActiveBuffs/Ki_Control/ki = usr.FindSkill(/obj/Skills/Buffs/ActiveBuffs/Ki_Control)
+				var/obj/Skills/Buffs/ActiveBuffs/Ki_Control/ki = src.FindSkill(/obj/Skills/Buffs/ActiveBuffs/Ki_Control)
 				if(ki && "Str" in ki.selectedStats)
 					Mult += round(glob.progress.totalPotentialToDate,5) / 150 * ki.StrMult
 			if(glob.racials.DEVIL_ARM_STAT_MULTS)
@@ -1714,7 +1714,7 @@ mob
 					if(SlotlessBuffs["What Must Be Done"].Password)
 						Mod+=min(0.5, SlotlessBuffs["What Must Be Done"].Mastery/10)
 			if(src.InfinityModule)
-				var/obj/Skills/Buffs/ActiveBuffs/Ki_Control/ki = usr.FindSkill(/obj/Skills/Buffs/ActiveBuffs/Ki_Control)
+				var/obj/Skills/Buffs/ActiveBuffs/Ki_Control/ki = src.FindSkill(/obj/Skills/Buffs/ActiveBuffs/Ki_Control)
 				if(ki && "For" in ki.selectedStats)
 					Mult += round(glob.progress.totalPotentialToDate,5) / 150 * ki.ForMult
 			// if((isRace(SAIYAN) || isRace(HALFSAIYAN))&&transActive&&!src.SpecialBuff)
@@ -1834,6 +1834,20 @@ mob
 
 		GetEnd(var/Mult=1)
 			var/End=src.EndMod
+			var/EldritchMod=0
+			if(src.EldritchPacted)
+				switch(src.ReflectedPactType)
+					if("Devotion")
+						EldritchMod=0.5
+					if("Power")
+						EldritchMod=0.25
+					if("Knowledge")
+						EldritchMod=0.25
+					if("Ambition")
+						EldritchMod=0
+					if("Survival")
+						EldritchMod=1
+			End+=EldritchMod
 			End+=src.EndAscension
 			var/enhanced = getEnhanced("Endurance")
 			End+=EnhancedEndurance ? enhanced : 0
@@ -1870,7 +1884,7 @@ mob
 					if(SlotlessBuffs["What Must Be Done"].Password)
 						Mod+=min(0.5, SlotlessBuffs["What Must Be Done"].Mastery/10)
 			if(src.InfinityModule)
-				var/obj/Skills/Buffs/ActiveBuffs/Ki_Control/ki = usr.FindSkill(/obj/Skills/Buffs/ActiveBuffs/Ki_Control)
+				var/obj/Skills/Buffs/ActiveBuffs/Ki_Control/ki = src.FindSkill(/obj/Skills/Buffs/ActiveBuffs/Ki_Control)
 				if(ki && "End" in ki.selectedStats)
 					Mult += round(glob.progress.totalPotentialToDate,5) / 150 * ki.EndMult
 			// if((isRace(SAIYAN) || isRace(HALFSAIYAN))&&transActive&&!src.SpecialBuff)
@@ -2011,7 +2025,7 @@ mob
 				Mod+=0.75
 			if(Saga&&src.Saga=="Eight Gates")
 				Mod+=0.01*GatesActive
-			if(passive_handler["Determination(Red)"||passive_handler["Determination(Yellow)"]]||passive_handler.Get("Determination(White)"))
+			if(passive_handler["Determination(Red)"]||passive_handler["Determination(Yellow)"]||passive_handler.Get("Determination(White)"))
 				Mod+=(0.025*ManaAmount)
 			if(Secret == "Heavenly Restriction")
 				if(secretDatum?:hasImprovement("Speed"))
@@ -2020,7 +2034,7 @@ mob
 				if(SlotlessBuffs["What Must Be Done"].Password)
 					Mod+=min(0.5, SlotlessBuffs["What Must Be Done"].Mastery/10)
 			if(src.InfinityModule)
-				var/obj/Skills/Buffs/ActiveBuffs/Ki_Control/ki = usr.FindSkill(/obj/Skills/Buffs/ActiveBuffs/Ki_Control)
+				var/obj/Skills/Buffs/ActiveBuffs/Ki_Control/ki = src.FindSkill(/obj/Skills/Buffs/ActiveBuffs/Ki_Control)
 				if(ki && "Spd" in ki.selectedStats)
 					Mult += round(glob.progress.totalPotentialToDate,5) / 150 * ki.SpdMult
 			// if((isRace(SAIYAN) || isRace(HALFSAIYAN))&&transActive&&!src.SpecialBuff)
@@ -2952,7 +2966,7 @@ mob
 				src.AddCyberCancel(ConversionCancel)
 		GetAndroidIntegrated()
 			var/Count=0
-			for(var/obj/Skills/S in usr)
+			for(var/obj/Skills/S in src)
 				if(istype(S, /obj/Skills/Buffs/SlotlessBuffs/Gear/Integrated))
 					Count++
 					continue
@@ -2965,9 +2979,9 @@ mob
 				if(istype(S, /obj/Skills/AutoHit/Gear/Integrated))
 					Count++
 					continue
-			if(Count>=2+usr.AscensionsAcquired)
+			if(Count>=2+src.AscensionsAcquired)
 				src << "You already have the full number of integrated gears possible!"
-				return 2+usr.AscensionsAcquired
+				return 2+src.AscensionsAcquired
 			return Count
 
 		ForceCancelBeam()

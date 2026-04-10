@@ -47,7 +47,7 @@ Party
 					src.members << "[m] has joined the party!"
 				src.highest_potential()
 		remove_member(var/mob/m)
-			if((!m in src.members))
+			if(!(m in src.members))
 				return
 			src.members << "[m] has been removed from the party!"
 			src.members.Remove(m)

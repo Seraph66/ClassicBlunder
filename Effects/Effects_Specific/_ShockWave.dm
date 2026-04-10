@@ -123,7 +123,9 @@ obj/shockwave
 					pos_y += 32
 					y--
 
-				if(!loc) del src
+				if(!loc)
+					del src
+					return
 				if(TurfCall) if(!(loc in Called)) {call(loc,TurfCall)(arglist(TurfCallArg));Called+=loc}
 				var/list/atom/movable/AL=new
 				for(var/atom/movable/A in loc) if(!istype(A,/obj/shockwave)) AL += A
@@ -138,10 +140,18 @@ obj/shockwave
 						Called+=O
 
 
-				if(StopAtMob)if(locate(/mob)in AL)  del src
-				if(StopAtObj)if(locate(/obj)in AL)  del src
-				if(StopAtDenseTurf) if(loc.density) del src
-				if(StopAtOpacTurf)if(loc.opacity)del src
+				if(StopAtMob)if(locate(/mob)in AL)
+					del src
+					return
+				if(StopAtObj)if(locate(/obj)in AL)
+					del src
+					return
+				if(StopAtDenseTurf) if(loc.density)
+					del src
+					return
+				if(StopAtOpacTurf)if(loc.opacity)
+					del src
+					return
 
 
 				pixel_x = pos_x

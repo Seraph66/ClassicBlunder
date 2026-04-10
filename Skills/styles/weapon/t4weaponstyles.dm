@@ -21,7 +21,7 @@
 		StyleStr=1.75
 		Finisher="/obj/Skills/Queue/Finisher/Demonic_Nine_Flashes"
 		passives = list("Iaido" = 8, "AsuraStrike" = 1, "TripleStrike" = 2, "DoubleStrike" = 3, "Iaijutsu" = 3, \
-			"Fury" = 5, "NeedsSecondSword" = 1, "NeedsThirdSword" = 1, "BlurringStrikes" = 2, "SweepingStrikes" = 1, \
+			"Fury" = 5, "NeedsSecondSword" = 1, "NeedsThirdSword" = 1, "BlurringStrikes" = 2, "SweepingStrike" = 1, \
 			"Iaijutsu" = 3, "Disarm" = 3, "Parry" = 3, "Fury" = 5, "Unnerve" = 2, "Pressure" = 2 )
 		verb/Kyutoryu()
 			set hidden=1
