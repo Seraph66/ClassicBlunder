@@ -144,7 +144,7 @@ ArmamentEnchantment -> tome creation (articact manufactioning + ArmamentEnchantm
     name = "TomeCreation"
     breakthrough = TRUE
     requires = list("ArmamentEnchantment","Magical Communication")
-
+/*
 /knowledgePaths/magic/Tome_Cleansing
     name = "Tome Cleansing"
     requires = list("Tome Expansion")
@@ -183,8 +183,9 @@ ArmamentEnchantment -> tome creation (articact manufactioning + ArmamentEnchantm
     requires = list("Crest Grandmaster")
     description = "Buying this will allow you to put another spell into a crest. It can be purchased an infinite number of times."
     // make this go up to 10 or something
-
+*/
 //TODO: Rename GMK between wipes
+/*
 /knowledgePaths/magic/SummonMagic
     name = "General Magic Knowledge"
     requires = list()
@@ -194,7 +195,7 @@ ArmamentEnchantment -> tome creation (articact manufactioning + ArmamentEnchantm
     name = "SealingMagic"
     breakthrough = TRUE
     requires = list()
-
+*/
 /knowledgePaths/magic/Spell_Sealing // this has been removed
     // allow this to seal a spell in a tome, making it unable to cast it
     name = "Spell Sealing"
