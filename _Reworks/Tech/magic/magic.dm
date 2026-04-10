@@ -44,7 +44,7 @@ ArmamentEnchantment -> tome creation (articact manufactioning + ArmamentEnchantm
     if(src.Secret == "Eldritch")
         var/SecretInformation/Eldritch/s = src.secretDatum
         total += s.secretVariable["Power From Blood"];
-    TotalMagicLevel = total
+    TotalMagicLevel = 10
     return total
 
 
