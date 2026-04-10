@@ -107,8 +107,6 @@ obj/Skills/AutoHit/Desperation
 				return
 			if (usr.HasTarget() && src.cooldown_start == 0 && usr.EquippedSword())
 				spawn()LeaveImage(User=usr, Image='SweepingKick.dmi', PX=usr.pixel_x+ProjAuraX, PY=usr.pixel_y+ProjAuraY, PZ=usr.pixel_z+ProjAuraZ, Size=ProjAuraSize, Under=ProjAuraUnder, Time=(max(1,ProjAuraTime)), AltLoc=0)
-				spawn(50)
-					usr.buffSelf("/obj/Skills/Buffs/SlotlessBuffs/Autonomous/QueueBuff/Finisher/Void_Drain")
 			usr.UseProjectile(src)
 
 
@@ -145,9 +143,6 @@ obj/Skills/AutoHit/Desperation
 			var/asc = usr.AscensionsAcquired
 			DamageMult=0.5*(1+asc/2)
 			Cooldown=300-(10*(asc))
-			if (usr.HasTarget() && src.cooldown_start == 0)
-				spawn(50)
-					usr.buffSelf("/obj/Skills/Buffs/SlotlessBuffs/Autonomous/QueueBuff/Finisher/Void_Drain")
 			usr.SetQueue(src)
 	LunarRave2
 		ActiveMessage="goes for the finishing blow!"

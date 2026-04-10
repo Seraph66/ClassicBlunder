@@ -277,7 +277,7 @@
 
 /mob/proc/OpenWithdrawPopup(demon_name)
 	if(demon_withdraw_open) return
-	if(DemonUIBusy()) return
+	if(DemonFusionBusy()) return
 	if(!demon_compendium || !(demon_name in demon_compendium)) return
 	var/datum/compendium_demon/cd = demon_compendium[demon_name]
 	var/datum/demon_data/dd = DEMON_DB[demon_name]

@@ -273,6 +273,9 @@ mob/Players/Stat()
 				if(src.SlotlessBuffs.len > 0)
 					stat("Augments: ", "[textBuffs]")
 
+		if(src.BioAndroid)
+			BioAndroidStatPanel()
+
 		if(Admin&&usr.Overview==1 && usr.AFKTimer)
 			statpanel("Overview")
 			if(statpanel("Overview"))

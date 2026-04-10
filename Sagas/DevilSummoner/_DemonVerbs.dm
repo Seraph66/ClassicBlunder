@@ -4,7 +4,7 @@
 		if(pd.demon_name == dname) return TRUE
 	return FALSE
 
-/mob/proc/DemonUIBusy()
+/mob/proc/DemonFusionBusy()
 	if(demon_fusion_open)   return TRUE
 	if(demon_inherit_open)  return TRUE
 	if(demon_pending_fuse_result && demon_pending_fuse_result != "") return TRUE
@@ -83,7 +83,7 @@
 	set name     = "Summon Demon"
 	set category = "Devil Summoner"
 
-	if(DemonUIBusy())
+	if(DemonFusionBusy())
 		src << "Close your current Demon menu before summoning."
 		return
 
@@ -127,7 +127,7 @@
 		src << "Unlock Tier 2 of Devil Summoner to access the Compendium."
 		return
 
-	if(DemonUIBusy())
+	if(DemonFusionBusy())
 		src << "Close your current Demon menu first."
 		return
 
@@ -141,7 +141,7 @@
 		src << "Unlock Tier 2 of Devil Summoner to access the Compendium."
 		return
 
-	if(DemonUIBusy())
+	if(DemonFusionBusy())
 		src << "Close your current Demon menu first."
 		return
 
@@ -163,7 +163,7 @@
 
 
 /mob/proc/DemonSummonFromParty(demon_name)
-	if(DemonUIBusy())
+	if(DemonFusionBusy())
 		src << "Complete or cancel your current Demon action first."
 		winshow(src, "DemonSummonWindow", FALSE)
 		return
@@ -250,7 +250,7 @@
 
 
 /mob/proc/ExecuteFusion(name_a, name_b)
-	if(DemonUIBusy())
+	if(DemonFusionBusy())
 		return
 
 	var/datum/party_demon/pd_a = null
@@ -459,7 +459,7 @@
 
 
 /mob/proc/ExecuteWithdraw(demon_name, level_choice)
-	if(DemonUIBusy())
+	if(DemonFusionBusy())
 		src << "Complete or cancel your current Demon action first."
 		return
 	if(!demon_compendium || !(demon_name in demon_compendium)) return
