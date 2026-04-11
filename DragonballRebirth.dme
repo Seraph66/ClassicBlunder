@@ -619,7 +619,6 @@
 #include "Races\eldritch\eldritchDragonDash.dm"
 #include "Races\eldritch\eldritchGrab.dm"
 #include "Races\eldritch\eldritchMinion.dm"
-#include "Races\eldritch\hasEldritchPower.dm"
 #include "Races\eldritch\Lunacy.dm"
 #include "Races\eldritch\race.dm"
 #include "Races\eldritch\Reflected.dm"

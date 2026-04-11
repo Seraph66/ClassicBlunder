@@ -44,7 +44,7 @@ ascension
 			defense = 0.5
 		two
 			unlock_potential = ASCENSION_TWO_POTENTIAL
-			passives = list("HellPower" = 0.25, "KiControlMastery" = 1, "PureDamage" = 1, "PureReduction" = 1
+			passives = list("HellPower" = 0.25, "KiControlMastery" = 1, "PureDamage" = 1, "PureReduction" = 1)
 			strength = 1
 			endurance = 1
 			speed = 1
