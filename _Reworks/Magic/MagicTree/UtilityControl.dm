@@ -120,6 +120,7 @@
 /mob/verb/
     Show_Magic_Tree()
         set category="Utility"
+        set hidden = 1
         if(loadingTree || nodeing) return
         nodeing=1;
         setMagicTreeToElement();
@@ -132,7 +133,7 @@
         nodeing=1;
         setMagicTreeToWater();
         nodeing=0;
-    
+
     Show_Fire_Tree()
         set hidden=1;
         set name=".ShowFireTree"
@@ -140,7 +141,7 @@
         nodeing=1;
         setMagicTreeToFire();
         nodeing=0;
-    
+
     Show_Air_Tree()
         set hidden=1;
         set name=".ShowAirTree";
@@ -148,7 +149,7 @@
         nodeing=1;
         setMagicTreeToAir();
         nodeing=0;
-    
+
     Show_Earth_Tree()
         set hidden=1;
         set name=".ShowEarthTree";
@@ -156,7 +157,7 @@
         nodeing=1;
         setMagicTreeToEarth();
         nodeing=0;
-    
+
     Show_Light_Tree()
         set hidden=1;
         set name=".ShowLightTree";
@@ -164,7 +165,7 @@
         nodeing=1;
         setMagicTreeToLight();
         nodeing=0;
-    
+
     Show_Time_Tree()
         set hidden=1;
         set name=".ShowTimeTree";
@@ -172,7 +173,7 @@
         nodeing=1;
         setMagicTreeToTime();
         nodeing=0;
-    
+
     Show_Dark_Tree()
         set hidden=1;
         set name=".ShowDarkTree";
@@ -180,7 +181,7 @@
         nodeing=1;
         setMagicTreeToDark();
         nodeing=0;
-    
+
     Show_Space_Tree()
         set hidden=1;
         set name=".ShowSpaceTree";
@@ -188,4 +189,3 @@
         nodeing=1;
         setMagicTreeToSpace();
         nodeing=0;
-        

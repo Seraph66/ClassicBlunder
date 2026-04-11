@@ -61,10 +61,10 @@ var/list/allSpellPassives=list();
                 vars["[buffPass]"] = sp.projectileOnlyPassives["[buffPass]"];
             else
                 vars["[buffPass]"] = initial(vars["[buffPass]"]) + sp.projectileOnlyPassives["[buffPass]"];
-        
 
-    
 
+
+/*
 /mob/verb/find_spell_slots()
     set category="Debug"
     set name = "DEBUG: Find Spell Slots"
@@ -73,4 +73,4 @@ var/list/allSpellPassives=list();
         src << "no slots"
         return;
     for(var/x in slots)
-        src << "slot found: [x]";
+        src << "slot found: [x]";*/

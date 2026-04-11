@@ -151,7 +151,7 @@ globalTracker/var/
     proc/getTreePinnacleImage()
     proc/getTreeProjectileImage()
     proc/getTreeSpellPassiveImage()
-    
+
     proc/setNodeImages()
         switch(nodeType)
             if("AOE")
@@ -263,7 +263,7 @@ globalTracker/var
         else if(!hasUnlockedMagicNode(mn)) return 0;
     return 1;
 
-    
+
 
 /mob/proc/canUnlockMagicTree(element)
     if(RPPSpendable < glob.MagicNodeRPPCost)
@@ -351,7 +351,7 @@ globalTracker/var
         magicTreeHyperInvestment(element);
         return;
     accessedMagicTrees |= element;
-    
+
     src << "You've unlocked the ability to choose [element] magic tree nodes!";
     src << "Each node costs [glob.MagicNodeRPPCost] RPP to unlock.";
     unlockEntryNode(element);
@@ -366,7 +366,7 @@ globalTracker/var
         if(unlockTreeChoice(element))
             unlockMagicTree(element);
         nodeing=0;
-
+/*
 /mob/verb/
     debug_fire_magic()
         set name="DEBUG: fire magic"
@@ -386,4 +386,4 @@ globalTracker/var
         set name = "DEBUG: check all spell passives"
         set category = "Debug"
         for(var/x in allSpellPassives)
-            src << "[x] is in spell passives."
+            src << "[x] is in spell passives."*/

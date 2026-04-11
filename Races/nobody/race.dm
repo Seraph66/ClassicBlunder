@@ -91,17 +91,24 @@ race
 	src.Saga="Keyblade"
 	src.SagaLevel=1
 	src.KeybladeColor=Color
-	var/inp = input(src, "What path of magic will you fall under?") in list("Fire", "Ice", "Thunder")
-	src.KeybladePath = inp
-	switch(src.KeybladePath)
-		if("Fire")
-			src.AddSkill(new/obj/Skills/Projectile/Magic/Fire)
-		if("Ice")
-			src.AddSkill(new/obj/Skills/AutoHit/Magic/Blizzard)
-		if("Thunder")
-			src.AddSkill(new/obj/Skills/AutoHit/Magic/Thunder)
-	src.AddSkill(new/obj/Skills/Queue/Ars_Arcanum)
-	src << "You've mastered the magical arts of Fire, Blizzard and Thunder, and Ars Arcanum!"
+	if(src.KeybladeType=="Sword")
+		src.ChooseMartialSkill(1)
+	if(src.KeybladeType=="Shield")
+		var/inp = input(src, "What path of magic will you fall under?") in list("Fire", "Ice", "Thunder")
+		src.KeybladePath = inp
+		switch(src.KeybladePath)
+			if("Fire")
+				src.AddSkill(new/obj/Skills/Projectile/Magic/Fire)
+			if("Ice")
+				src.AddSkill(new/obj/Skills/AutoHit/Magic/Blizzard)
+			if("Thunder")
+				src.AddSkill(new/obj/Skills/AutoHit/Magic/Thunder)
+	if(src.KeybladeType=="Staff")
+		src.KeybladePath="Magical"
+		src.AddSkill(new/obj/Skills/AutoHit/Magic/Thunder)
+		src.AddSkill(new/obj/Skills/AutoHit/Magic/Blizzard)
+		src.AddSkill(new/obj/Skills/Projectile/Magic/Fire)
+		src << "You've mastered the magical arts!"
 	switch(src.KeybladeColor)
 		if("Light")
 			src.KeychainAttached="Kingdom Key"
