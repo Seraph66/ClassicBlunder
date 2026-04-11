@@ -4,11 +4,10 @@
     /mob/Admin2/verb/Edit,
     /mob/Admin2/verb/EditPassiveHandler,
     /mob/Admin2/verb/Delete,
-    /mob/Admin2/verb/AdminHealComplete,
+    /mob/Admin2/verb/AdminHeal,
     /mob/Admin2/verb/Event_Character_Setup,
     /mob/Admin3/verb/SagaManagement,
     /mob/Admin3/verb/SecretManagement,
-    /mob/Admin3/verb/Give_FutureDiary,
     /mob/proc/giveAllSkillTree,
     /mob/proc/giveAllSigs,
 )

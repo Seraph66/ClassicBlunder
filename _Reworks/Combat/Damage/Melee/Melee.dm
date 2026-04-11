@@ -782,9 +782,9 @@
 							log2text("Damage", "After Global Multiplier", "damageDebugs.txt", "[ckey]/[name]")
 							log2text("Damage", damage, "damageDebugs.txt", "[ckey]/[name]")
 							#endif
-							if(enemy.passive_handler["Magmic"] && enemy.SlotlessBuffs["Magmic Shield"])
+							if(enemy.hasMagmicShield())
 								Stun(src, 3, TRUE)
-								enemy.SlotlessBuffs["Magmic Shield"].Trigger(enemy, TRUE)
+								enemy.MagmicShieldOff();
 							damage *= enemy.getMeleeResistValue();//this is 1 if there is no melee resistance passive on the enemy
 							var/dmgValue = DoDamage(enemy, damage, unarmedAtk, swordAtk, SecondStrike, ThirdStrike, AsuraStrike)
 							. = dmgValue

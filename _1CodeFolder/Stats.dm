@@ -273,6 +273,9 @@ mob/Players/Stat()
 				if(src.SlotlessBuffs.len > 0)
 					stat("Augments: ", "[textBuffs]")
 
+		if(src.BioAndroid)
+			BioAndroidStatPanel()
+
 		if(Admin&&usr.Overview==1 && usr.AFKTimer)
 			statpanel("Overview")
 			if(statpanel("Overview"))
@@ -1049,8 +1052,8 @@ mob/proc/
 			Recover("Fatigue",0.5)
 			if(src.ManaDeath)
 				ManaAmount-=5*GetManaCapMult()
-			else if(src.is_arcane_beast || (isRace(YOKAI) && src.AscensionsAcquired>0 && !src.Mechanized && !src.ActiveBuff))
-				if(isRace(YOKAI))
+			else if(src.is_arcane_beast || (isRace(BEASTKIN) && Class=="Trickster" && AscensionsAcquired>0 && !src.Mechanized && !src.ActiveBuff))
+				if(Class == "Trickster")
 					Recover("Mana", 1*GetManaCapMult())
 				else
 					Recover("Mana",1)
@@ -1458,7 +1461,7 @@ mob/proc/Get_Scouter_Reading(mob/B)
 				else
 					AgeRate=1
 
-				if(B.isRace(YOKAI))
+				if(B.isRace(BEASTKIN) && B.Class == "Trickster")
 					if(B.EraBody=="Elder"||(B.EraBody=="Adult"&&B.Aged))
 						AgeRate=1.25
 				if(B.isRace(HALFSAIYAN)&&B.Anger)

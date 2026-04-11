@@ -29,12 +29,14 @@ magic_node/dark_tree
         xLoc = DARK_NODE_12_X
         yLoc = DARK_NODE_12_Y
         nodeType = "Spell Passive"
+        grantsSpellPassives = list(/spell_passive/dark/disaster)
         unlocksNodes = list(DARK_NODE_24);
-    dark_node_south21
+    dark_node_21
         name=DARK_NODE_21
         xLoc = DARK_NODE_21_X
         yLoc = DARK_NODE_21_Y
         nodeType = "Spell Passive"
+        grantsSpellPassives = list(/spell_passive/dark/hemomantic)
         unlocksNodes = list(DARK_NODE_41, DARK_NODE_11);
     dark_node_22
         name=DARK_NODE_22
@@ -53,6 +55,7 @@ magic_node/dark_tree
         xLoc = DARK_NODE_24_X
         yLoc = DARK_NODE_24_Y
         nodeType = "Spell Passive"
+        grantsSpellPassives = list(/spell_passive/dark/ravenous)
         unlocksNodes = list(DARK_NODE_23, DARK_NODE_12);
     dark_node_3
         name=DARK_NODE_3
@@ -71,6 +74,7 @@ magic_node/dark_tree
         xLoc = DARK_NODE_42_X
         yLoc = DARK_NODE_42_Y
         nodeType = "Spell Passive"
+        grantsSpellPassives = list(/spell_passive/dark/vampyric)
         unlocksNodes = list(DARK_NODE_52, DARK_NODE_3);
     dark_node_51
         name=DARK_NODE_51
@@ -83,6 +87,7 @@ magic_node/dark_tree
         xLoc = DARK_NODE_52_X
         yLoc = DARK_NODE_52_Y
         nodeType = "Spell Passive"
+        grantsSpellPassives = list(/spell_passive/dark/anima)
         unlocksNodes = list(DARK_NODE_CROWN, DARK_NODE_42);
     dark_node_crown
         name=DARK_NODE_CROWN

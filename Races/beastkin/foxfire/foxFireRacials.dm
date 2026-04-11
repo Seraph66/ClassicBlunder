@@ -17,7 +17,7 @@
 	Cooldown = 60
 	adjust(mob/p)
 		FoxFire = 2 + p.AscensionsAcquired
-		Blasts= 3 * (p.AscensionsAcquired)
+		Blasts= 3 * max(1, p.AscensionsAcquired);
 		DamageMult= 2.5 + (p.AscensionsAcquired * 0.25)
 
 	verb/Fox_Fire_Barrage()

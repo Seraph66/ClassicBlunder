@@ -16,7 +16,7 @@ var/senjutsuOverloadAlert = FALSE
     var/manaStatPerc = GetManaStats() // 1 per tick
     var/maxStatBoon = 2
     var/baseBoon = glob.MANA_STATS_BASE_BOON // 0.1 extra stat for 1 mana stat
-    if(isRace(YOKAI))
+    if(Class=="Trickster")
         baseBoon = glob.racials.YOKAI_MANA_STATS_BASE_BOON
         manaStatPerc *= 1.5
         maxStatBoon = 4

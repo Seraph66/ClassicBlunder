@@ -419,14 +419,3 @@ mob/proc/levelUpDiary(mob/M)
 // 		usr.UseProjectile(src)
 
 
-// ///
-// /// Admin verbs..
-// /// 
-
-/mob/Admin3/verb/Give_FutureDiary()
-	set category = "Admin"
-	var/mob/P = input(src, "Give Future Diary to who?") in players
-	if (P.futureDiaryLevel < 4)
-		levelUpDiary(P)
-	else 
-		usr << "They are at the max level."

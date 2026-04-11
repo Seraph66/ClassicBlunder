@@ -478,6 +478,8 @@ mob/var
 	BioAndroid=0
 	CyberneticMainframe
 	SampleCollected=0
+	list/bio_samples = null      // collected genetic samples, list of "RaceName:Tier" strings
+	bio_donated_t1 = 0           // 1 if this player has already willfully donated their tier-1 sample
 	Profile=null
 	GimmickDesc=""
 	GimmickTimer

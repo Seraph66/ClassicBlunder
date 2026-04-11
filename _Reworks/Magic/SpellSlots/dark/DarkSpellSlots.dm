@@ -1,0 +1,10 @@
+//dark
+/obj/Skills/AutoHit/Magic/Dark
+    SpellElement="Dark"
+    SpellSlot=1;
+    Shadow_Cleave
+/obj/Skills/Projectile/Magic/Dark
+    SpellElement="Dark"
+    SpellSlot=1;
+    Arachnae_Touch//line
+    Void_Blast//projectile

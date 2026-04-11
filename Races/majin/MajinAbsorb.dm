@@ -140,7 +140,7 @@ proc/removeDuplicates(list/list1)
 
 /mob/proc/getAllRacials()
     . = list()
-    for(var/x in list("Majin", "Half Saiyan", "Saiyan", "Human", "Makyo", "Namekian", "Monster", "Shinjin", "Demon", "Celestial", "Angel", "Makaioshin", "Popo", "Beastkin", "Yokai", "Eldritch", "Dragon"))
+    for(var/x in list("Majin", "Half Saiyan", "Saiyan", "Human", "Makyo", "Namekian", "Monster", "Shinjin", "Demon", "Celestial", "Angel", "Makaioshin", "Popo", "Beastkin", "Eldritch", "Dragon"))
         . += getRacialPassives(x)
     return .
 
@@ -229,9 +229,9 @@ proc/removeDuplicates(list/list1)
             if(Class=="Spirit Walker")
                 . += "Flow"
                 . += "Instinct"
-        if(YOKAI)
-            . += "ManaGeneration"
-            . += "Touch of Death"
+            if(Class=="Trickster")
+                . += "ManaGeneration"
+                . += "Touch of Death"
         if(ELDRITCH)
             . += "Void"
             . += "VenomResistance"

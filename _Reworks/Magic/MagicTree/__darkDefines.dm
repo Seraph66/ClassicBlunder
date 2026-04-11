@@ -26,18 +26,18 @@
 #define DARK_NODE_52_Y 134
 #define DARK_NODE_CROWN_Y 47
 
-#define DARK_NODE_ENTRY "DarkNodeAutohit"
+#define DARK_NODE_ENTRY "Shadow Cleave (Spell Slot)"
 #define DARK_NODE_11 "DarkNode11"
-#define DARK_NODE_12 "DarkNode12"
-#define DARK_NODE_21 "DarkNodeProjectile"
-#define DARK_NODE_22 "DarkNode22"
+#define DARK_NODE_12 "Disaster (Spell Passive)"
+#define DARK_NODE_21 "Hemomantic (Spell Passive)"
+#define DARK_NODE_22 "Void Blast (Spell Slot)"
 #define DARK_NODE_23 "DarkNode23"
-#define DARK_NODE_24 "DarkNodeLine"
-#define DARK_NODE_3 "DarkNode3"
+#define DARK_NODE_24 "Ravenous (Spell Passive)"
+#define DARK_NODE_3 "Arachnae Touch (Spell Slot)"
 #define DARK_NODE_41 "DarkNode41"
-#define DARK_NODE_42 "DarkNode42"
+#define DARK_NODE_42 "Vampyric (Spell Passive)"
 #define DARK_NODE_51 "DarkNode51"
-#define DARK_NODE_52 "DarkNode52"
+#define DARK_NODE_52 "Anima (Spell Passive)"
 #define DARK_NODE_CROWN "DarkNodePinnacle"
 
 #define DARK_NODES list(DARK_NODE_ENTRY, DARK_NODE_11, DARK_NODE_12, DARK_NODE_21, DARK_NODE_22, DARK_NODE_23, DARK_NODE_24, DARK_NODE_3,\

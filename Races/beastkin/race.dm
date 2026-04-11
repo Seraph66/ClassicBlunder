@@ -33,7 +33,7 @@ Inspiration taken from Sett (League of Legends)}",\
 		stats_per_class = list("Heart of The Beastkin" = list(1.25, 2, 0.75, 1, 1, 1.5), "Monkey King" = list(1.25,1.25,1.25,1.25,1.25,1.25),\
 						"Unseen Predator" = list(1.75, 0.75, 1, 1.75, 0.75, 1.5), "Undying Rage" = list(1.75, 0.75, 1.75, 1, 0.75, 1.5), \
 						"Feather Cowl" = list(0.75, 2, 0.75, 1.25, 1.5, 1.25), "Feather Knife" = list(1.5, 0.75, 1, 1.75, 0.75, 1.75), \
-						"Spirit Walker" = list(1, 1.5, 1, 0.75, 0.75, 1), "Shapeshifter" = list(1.25,0.5,1.25,2,1,1.5), \
+						"Spirit Walker" = list(1, 1.5, 1, 0.75, 0.75, 1), \
 						"Trickster" = list(1, 1, 2, 1, 1.5, 1), "Fox Fire" = list(0.75, 1, 2, 1.5, 1.5, 0.75 ))
 		imagination = 1
 		var/MaxGrit = 0
@@ -98,10 +98,14 @@ Inspiration taken from Sett (League of Legends)}",\
 
 				if("Trickster")
 					imagination = 2
-					intellect = 1;
+					intellect = 1.5;
 					p.passive_handler.Increase("Spiritual Tactician", 1)
-					p.AddSkill(new/obj/Skills/Utility/Imitate)
-					p.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Racial/Blend_In)
+					p.passive_handler.Increase("ManaGeneration", 2);
+					p.passive_handler.Increase("Touch of Death", 1);
+					p.findOrAddSkill(/obj/Skills/Buffs/SlotlessBuffs/Spirit_Form);
+					p.findOrAddSkill(/obj/Skills/AutoHit/Mist_Form);
+					p.findOrAddSkill(/obj/Skills/Utility/Imitate);
+					p.findOrAddSkill(/obj/Skills/Buffs/SlotlessBuffs/Racial/Blend_In);
 
 				if("Fox Fire")
 					p.Attunement = "Fox Fire"

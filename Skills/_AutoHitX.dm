@@ -5103,6 +5103,7 @@ mob
 					if(!src.HasSpellFocus(Z))
 						src << "You need a spell focus to use [Z]."
 						return
+			Z.SpellSlotModification();
 			if(Z.GuardBreak)
 				Z.CanBeBlocked=0
 				Z.CanBeDodged=0
@@ -6472,8 +6473,9 @@ obj
 					if(m.HasAutoReversal())
 						if(!src.SpecialAttack||m.passive_handler.Get("TotalReversal"))
 							if(Accuracy_Formula(src.Owner, m, AccMult=Precision, BaseChance=glob.WorldDefaultAcc, IgnoreNoDodge=1) == (HIT || WHIFF))
-								if(m.passive_handler["Magmic"] && m.SlotlessBuffs["Magmic Shield"])
-									m.SlotlessBuffs["Magmic Shield"].Trigger(m, TRUE)
+								if(m.hasMagmicShield())
+									Stun(Owner, 3, TRUE);
+									m.MagmicShieldOff();
 								if(src.Damage>0.1)
 									KenShockwave(m, icon='KenShockwave.dmi', Size=dmgRoll, Time=3)
 									m.Knockback(src.Knockback+(reversalChance*2.5) , src.Owner, Direction=get_dir(m, src.Owner))
@@ -6675,6 +6677,8 @@ obj
 				if(src.FixedDamage)
 					m.LoseHealth(src.FixedDamage)
 					damageDealt = src.FixedDamage
+					if(m.Health <= 0 && !m.KO)
+						m.Unconscious(src.Owner)
 				else
 					damageDealt = src.Owner.DoDamage(m, FinalDmg, src.UnarmedTech, src.SwordTech, Destructive=src.Destructive, innateLifeSteal = LifeSteal, Autohit = TRUE)
 				DEBUGMSG("FINAL TOTAL DAMAGE DEALT! [damageDealt]")

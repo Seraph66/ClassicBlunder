@@ -28,19 +28,6 @@ Tomes:
 #define UPGRADE_BASE_COST 1.5
 
 
-/mob/Admin3/verb/Give_Fragments(mob/p in players)
-    if(!p.client) return
-    var/obj/Items/mineral/m = new()
-    m = locate() in p
-    if(!m)
-        m = new()
-        m.Move(p)
-    m.checkDuplicate(p)
-    var/num = input(src, "How many fragments?") as num
-    m.value += num
-    m.assignState(num)
-
-
 /mob/Admin3/verb/tierUpTome(obj/Items/Enchantment/Tome/t in world)
     set name = "Tier Up Tome"
     src << "later..."

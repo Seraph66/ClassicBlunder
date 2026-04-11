@@ -1,17 +1,6 @@
 
 /obj/Skills/Buffs/
 	var/SlotlessBuffNeeded = null
-/obj/Skills/Buffs/SlotlessBuffs/Magmic_Shield
-	passives = list("Magmic" = 1)
-	Cooldown = 120
-	TimerLimit = 0
-	BuffName = "Magmic Shield"
-	name = "Magmic Shield"
-	SlotlessBuffNeeded = "Earth"
-	ActiveMessage = "erupts a magmic shield before themselves!"
-	verb/Magmic_Shield()
-		set category = "Skills"
-		src.Trigger(usr)
 
 
 /obj/Skills/AutoHit/Hurricane

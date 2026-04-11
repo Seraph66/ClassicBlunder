@@ -42,7 +42,7 @@ race
 				user.NobodyOrigin()
 			if(user.Class=="Reaper")
 				passives = list( "SlayerMod" = 1, "FavoredPrey" = "Mortal", "Extend" = 1, "Gum Gum" = 1, "CriticalChance" = 15, "CriticalDamage" = 0.25, "Instinct" = 1 )
-		//		user.AddSkill(new /obj/Skills/Projectile/Zone_Attacks/Desperation/Deathscythe)
+		//		user.AddSkill(new /obj/Skills/AutoHit/Desperation/Deathscythe)
 				user.NobodyOrigin()
 			..()
 /mob/proc/NobodyOrigin()

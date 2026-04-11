@@ -203,23 +203,50 @@ client/Topic(href,href_list[],hsrc)
 						if("Edit")
 							usr:Edit(hsrc)
 						if("Mute")
-							usr:Mute(hsrc)
+							var/mob/targetM = hsrc
+							var/mob/adminM = usr
+							adminM.AdminDoMute(targetM)
 						if("Observe")
 							usr:Observe_(hsrc)
 						if("Heal")
 							usr:AdminHeal(hsrc)
 						if("Ban")
-							usr:Ban(hsrc)
+							var/mob/targetM = hsrc
+							var/mob/adminM = usr
+							adminM.AdminDoBan(targetM)
 						if("Give")
 							usr:Give_Make(hsrc)
 						if("Revive")
 							usr:AdminRevive(hsrc)
 						if("Summon")
-							usr:Summon(hsrc)
+							var/mob/targetM = hsrc
+							var/mob/adminM = usr
+							targetM.PrevX = targetM.x
+							targetM.PrevY = targetM.y
+							targetM.PrevZ = targetM.z
+							targetM.loc = adminM.loc
+							Log("Admin", "[ExtractInfo(adminM)] summoned [ExtractInfo(targetM)].")
 						if("Teleport")
-							usr:Teleport(hsrc)
+							var/mob/targetM = hsrc
+							var/mob/adminM = usr
+							adminM.PrevX = adminM.x
+							adminM.PrevY = adminM.y
+							adminM.PrevZ = adminM.z
+							adminM.loc = targetM.loc
+							Log("Admin", "[ExtractInfo(adminM)] teleported to [targetM].")
 						if("XYZTeleport")
-							usr:XYZTeleport(hsrc)
+							var/mob/targetM = hsrc
+							var/x = input("x", "[targetM]") as num|null
+							if(isnull(x)) return
+							var/y = input("y", "[targetM]") as num|null
+							if(isnull(y)) return
+							var/z = input("z", "[targetM]") as num|null
+							if(isnull(z)) return
+							targetM.PrevX = targetM.x
+							targetM.PrevY = targetM.y
+							targetM.PrevZ = targetM.z
+							targetM.loc = locate(x, y, z)
+							Log("Admin", "[ExtractInfo(usr)] teleported [ExtractInfo(targetM)] to [x],[y],[z].")
 						if("Log")
 							usr:PlayerLog(hsrc)
 						if("Assess")
@@ -227,11 +254,17 @@ client/Topic(href,href_list[],hsrc)
 						if("Boot")
 							usr:Delete(hsrc)
 						if("KO")
-							usr:AdminKO(hsrc)
+							var/mob/targetM = hsrc
+							var/mob/adminM = usr
+							adminM.AdminDoKO(targetM)
 						if("Kill")
-							usr:AdminKill(hsrc)
+							var/mob/targetM = hsrc
+							var/mob/adminM = usr
+							adminM.AdminDoKill(targetM)
 						if("SendToSpawn")
-							usr:SendToSpawnz(hsrc)
+							var/mob/targetM = hsrc
+							MoveToSpawn(targetM)
+							Log("Admin", "[ExtractInfo(usr)] sent [ExtractInfo(targetM)] to spawn.")
 				else
 					var/View={"<html><head><title>Player Control [hsrc:key]</title><body>
 					<font size=3><font color=red>[hsrc:name]<hr><font size=2><font color=black>"}

@@ -24,13 +24,13 @@
 #define WATER_NODE_TOP_Y 52
 #define WATER_NODE_CROWN_Y 208
 
-#define WATER_NODE_ENTRY "WaterAutohit"
+#define WATER_NODE_ENTRY "Riptide (Spell Slot)"
 #define WATER_NODE_21 "WaterNode21"
 #define WATER_NODE_22 "WaterNode22"
 #define WATER_NODE_31 "WaterNode31"
 #define WATER_NODE_32 "WaterNode32"
-#define WATER_NODE_41 "WaterNodeDebuff"
-#define WATER_NODE_42 "WaterNodeProjectile"
+#define WATER_NODE_41 "Wetten Socks (Spell Slot)"
+#define WATER_NODE_42 "Frost Shamshir (Spell Slot)"
 #define WATER_NODE_CENTER "WaterNodeCenter"
 #define WATER_NODE_61 "WaterNode61"
 #define WATER_NODE_62 "WaterNode62"

@@ -24,17 +24,17 @@
 #define SPACE_NODE_5_Y 144
 #define SPACE_NODE_CROWN_Y 56
 
-#define SPACE_NODE_ENTRY "SpaceNodeAOE"
+#define SPACE_NODE_ENTRY "Flux (Spell Slot)"
 #define SPACE_NODE_21 "SpaceNode21"
-#define SPACE_NODE_22 "SpaceNode22"
-#define SPACE_NODE_31 "SpaceNode31"
-#define SPACE_NODE_32 "SpaceNodeAutohit"
+#define SPACE_NODE_22 "Constellation (Spell Passive)"
+#define SPACE_NODE_31 "Nebula (Spell Passive)"
+#define SPACE_NODE_32 "Flow (Spell Slot)"
 #define SPACE_NODE_33 "SpaceNode33"
-#define SPACE_NODE_41 "SpaceNode41"
-#define SPACE_NODE_42 "SpaceNode42"
+#define SPACE_NODE_41 "Quasar (Spell Passive)"
+#define SPACE_NODE_42 "Supernova (Spell Passive)"
 #define SPACE_NODE_43 "SpaceNode43"
 #define SPACE_NODE_44 "SpaceNode4"
-#define SPACE_NODE_5 "SpaceNodeDebuff"
+#define SPACE_NODE_5 "Friction (Spell Slot)"
 #define SPACE_NODE_CROWN "SpaceNodePinnacle"
 
 #define SPACE_NODES list(SPACE_NODE_ENTRY, SPACE_NODE_21, SPACE_NODE_22, SPACE_NODE_31, SPACE_NODE_32, SPACE_NODE_33, SPACE_NODE_41, SPACE_NODE_42,\

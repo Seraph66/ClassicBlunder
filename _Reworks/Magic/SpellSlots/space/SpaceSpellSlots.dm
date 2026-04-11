@@ -1,0 +1,10 @@
+//space
+/obj/Skills/AutoHit/Magic/Space
+    SpellElement="Space"
+    SpellSlot=1;
+    Flux//aoe
+    Flow//autohit
+/obj/Skills/Buffs/SlotlessBuffs/Magic/Space
+    SpellElement="Space"
+    SpellSlot=1;
+    Friction//debuff

@@ -264,6 +264,11 @@ mob
 				var/final_damage = max(0,val)
 				defender.LoseHealth(final_damage)
 
+			// Overwatch CombatLog hook — record the hit on both sides for admin review.
+			if(val > 0)
+				src.RecordCombatEvent("Hit [defender] for [round(val,0.1)]")
+				defender.RecordCombatEvent("Hit by [src] for [round(val,0.1)]")
+
 			src.ApplyFrenzyCombatHooks(defender, max(0, val), UnarmedAttack, SwordAttack, SpiritAttack)
 
 			if(defender.Flying)

@@ -23,6 +23,7 @@ obj/Skills/proc/Cooldown(var/modify=1, var/Time, mob/p, var/announce_cd=1)
 	if(p)
 		m = p
 	if(!src.Using || Time)
+		if(p) hasMagmicInfusion(p);
 		src.Using=1
 		if(Cooldown==-1)
 			src.Using=1

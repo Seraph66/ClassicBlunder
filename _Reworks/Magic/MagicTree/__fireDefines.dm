@@ -24,17 +24,17 @@
 #define FIRE_NODE_62_Y 145
 #define FIRE_NODE_CROWN_Y 36
 
-#define FIRE_NODE_ENTRY "FireAOE"
+#define FIRE_NODE_ENTRY "Blazing Whip (Spell Slot)"
 #define FIRE_NODE_21 "FireNode21"
 #define FIRE_NODE_22 "FireNode22"
-#define FIRE_NODE_31 "FireNode31"
-#define FIRE_NODE_32 "FireNode32"
-#define FIRE_NODE_41 "FireNodeLine"
-#define FIRE_NODE_42 "FireNodeProjectile"
+#define FIRE_NODE_31 "Blaze Enchantment (Spell Passive)"
+#define FIRE_NODE_32 "Magmic Enchantment (Spell Passive)"
+#define FIRE_NODE_41 "Dragon Arc (Spell Slot)"
+#define FIRE_NODE_42 "Fireball (Spell Slot)"
 #define FIRE_NODE_51 "FireNode51"
 #define FIRE_NODE_52 "FireNode52"
-#define FIRE_NODE_61 "FireNode61"
-#define FIRE_NODE_62 "FireNode62"
+#define FIRE_NODE_61 "Ashfield Enchantment (Spell Passive)"
+#define FIRE_NODE_62 "Nuclear Enchantment (Spell Passive)"
 #define FIRE_NODE_CROWN "FireNodePinnacle"
 
 #define FIRE_NODES list(FIRE_NODE_ENTRY, FIRE_NODE_21, FIRE_NODE_22, FIRE_NODE_31, FIRE_NODE_32, FIRE_NODE_41, FIRE_NODE_42, FIRE_NODE_51, FIRE_NODE_52,\

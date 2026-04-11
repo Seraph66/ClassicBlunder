@@ -140,11 +140,3 @@ obj/Skills/Buffs/NuStyle/Legendary
 			set hidden=1
 			adjust(usr)
 			src.Trigger(usr)
-/mob/Admin3/verb/GiveLegendary()
-	var/mob/p = input(src, "Who?") in players
-	p << "You have become a Legendary Super Saiyan."
-	p.AddSkill(new/obj/Skills/Buffs/NuStyle/Legendary/Legendary_Stance)
-	p.passive_handler.Increase("Fabled King", 1)
-	p.passive_handler.Increase("True Inheritor", 1)
-	p.passive_handler.Increase("Duren", 1)
-	p.AngerMessage="grasps the sun."

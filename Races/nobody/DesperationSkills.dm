@@ -54,13 +54,11 @@ obj/Skills/AutoHit/Desperation
 		Hover=7
 		Variation=0
 		Cooldown = 300
+		NeedsHealth=30
 		ActiveMessage="fires off an impossible amount of energy bolts!"
 		verb/Ultima_Lasers()
-			var/asc = usr.AscensionsAcquired
 			set category="Skills"
-			if(usr.Health>=30)
-				usr << "You need to be under 30% HP to use your Desperation Move!"
-				return
+			var/asc = usr.AscensionsAcquired
 			DamageMult=0.5*(1+asc/2)
 			Cooldown=300-(10*(asc))
 			if (usr.HasTarget() && src.cooldown_start == 0)
@@ -94,6 +92,7 @@ obj/Skills/AutoHit/Desperation
 		FollowUpDelay=-1
 		Cooldown=300
 		EnergyCost=5
+		NeedsHealth=30
 		ActiveMessage="activates their Desperation Move, Magic Hour!"
 		adjust(mob/p)
 			if(!altered)
@@ -102,13 +101,8 @@ obj/Skills/AutoHit/Desperation
 				Cooldown=300-(10*(asc))
 		verb/MagicHour()
 			set category="Skills"
-			if(usr.Health>=30)
-				usr << "You need to be under 30% HP to use your Desperation Move!"
-				return
 			if (usr.HasTarget() && src.cooldown_start == 0 && usr.EquippedSword())
 				spawn()LeaveImage(User=usr, Image='SweepingKick.dmi', PX=usr.pixel_x+ProjAuraX, PY=usr.pixel_y+ProjAuraY, PZ=usr.pixel_z+ProjAuraZ, Size=ProjAuraSize, Under=ProjAuraUnder, Time=(max(1,ProjAuraTime)), AltLoc=0)
-				spawn(50)
-					usr.buffSelf("/obj/Skills/Buffs/SlotlessBuffs/Autonomous/QueueBuff/Finisher/Void_Drain")
 			usr.UseProjectile(src)
 
 
@@ -139,15 +133,9 @@ obj/Skills/AutoHit/Desperation
 		HitStep=/obj/Skills/Queue/Desperation/LunarRave2
 		verb/Lunar_Rave()
 			set category="Skills"
-			if(usr.Health>=30)
-				usr << "You need to be under 30% HP to use your Desperation Move!"
-				return
 			var/asc = usr.AscensionsAcquired
 			DamageMult=0.5*(1+asc/2)
 			Cooldown=300-(10*(asc))
-			if (usr.HasTarget() && src.cooldown_start == 0)
-				spawn(50)
-					usr.buffSelf("/obj/Skills/Buffs/SlotlessBuffs/Autonomous/QueueBuff/Finisher/Void_Drain")
 			usr.SetQueue(src)
 	LunarRave2
 		ActiveMessage="goes for the finishing blow!"

@@ -147,10 +147,41 @@ scaling with potential as well
 		..()
 
 
-/mob/Admin3/verb/GiveWrathful()
-	var/mob/p = input(src, "Who?") in players
-	p << "You have been given the Wrathful buff."
-	p.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Wrathful/Stage_One)
-	p.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Wrathful/Stage_Two)
-	p.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Wrathful/Stage_Three)
-	p.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Wrathful/Stage_Four)
+/mob/Admin3/verb/Give_Rare_Saiyan()
+	set category = "Admin"
+	set name = "Give Rare Saiyan"
+	var/mob/p = input(src, "Who?", "Give Rare Saiyan") in players
+	if(!p) return
+	var/choice = input(usr, "Which rare saiyan for [p]?", "Give Rare Saiyan") as null|anything in list("Hellspawn", "Legendary", "Wrathful", "Cancel")
+	if(!choice || choice == "Cancel") return
+	switch(choice)
+		if("Hellspawn")
+			p << "You have been given the Hellspawn buff."
+			p.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Autonomous/HellbornFury/Stage_One)
+			p.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Autonomous/HellbornFury/Stage_Two)
+			p.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Autonomous/HellbornFury/Stage_Three)
+			p.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Autonomous/HellbornFury/Stage_Four)
+			p.passive_handler.Increase("HellPower", 0.1)
+			p.passive_handler.Increase("Persistence", 2)
+			p.passive_handler.Increase("MaimMastery", 1)
+			p.AddSkill(new/obj/Skills/False_Moon)
+			p.oozaru_type = "Demonic"
+			for(var/transformation/saiyan/ssj in p.race.transformations)
+				p.race.transformations -= ssj
+				del ssj
+			p.race.transformations += new /transformation/saiyan/hellspawn_super_saiyan()
+			p.race.transformations += new /transformation/saiyan/hellspawn_super_saiyan_2()
+			p.race.transformations += new /transformation/saiyan/hellspawn_super_full_power_saiyan_2_limit_breaker()
+		if("Legendary")
+			p << "You have become a Legendary Super Saiyan."
+			p.AddSkill(new/obj/Skills/Buffs/NuStyle/Legendary/Legendary_Stance)
+			p.passive_handler.Increase("Fabled King", 1)
+			p.passive_handler.Increase("True Inheritor", 1)
+			p.passive_handler.Increase("Duren", 1)
+			p.AngerMessage = "grasps the sun."
+		if("Wrathful")
+			p << "You have been given the Wrathful buff."
+			p.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Wrathful/Stage_One)
+			p.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Wrathful/Stage_Two)
+			p.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Wrathful/Stage_Three)
+			p.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Wrathful/Stage_Four)

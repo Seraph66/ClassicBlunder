@@ -24,8 +24,8 @@
 		ManaCost = 10 + (2.5 * p.AscensionsAcquired)
 	verb/Mist_Form()
 		set category = "Skills"
-		if(!usr.isRace(YOKAI))
-			src<< " : / "
+		if(!usr.isRace(BEASTKIN))
+			usr << " : / "
 			return
 		adjust(usr)
 		usr.Activate(src)

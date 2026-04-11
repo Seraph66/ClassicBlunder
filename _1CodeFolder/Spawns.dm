@@ -235,40 +235,6 @@ mob
 
 				glob.Spawns.Add(NewS)
 				src << "Added [NewS] successfully to global list!"
-			Set_Midgar_Spawn()
-				set category="Admin"
-				var/obj/Special/Spawn/NewS=new()
-				NewS.name="The World"
-				NewS.desc="Our miraculous homeland. A small, livable pocket in an otherwise vast  universe, and the only piece of the Old World that remains."
-
-
-				NewS.gotoX=307
-				NewS.gotoY=139
-				NewS.gotoZ=1
-
-				var/eC=input(src, "What is the economy change of the new spawn? This can be negative.", "New Spawn") as num
-				var/lC=input(src, "What is the learning change of the new spawn? This can be negative.", "New Spawn") as num
-				var/tC=input(src, "What is the intelligence change of the new spawn? This can be negative.", "New Spawn") as num
-				var/gC=input(src, "What is the imagination change of the new spawn? This can be negative.", "New Spawn") as num
-				NewS.EconomyChange=eC
-				NewS.LearningChange=lC
-				NewS.IntelligenceChange=tC
-				NewS.ImaginationChange=gC
-
-				var/Enter
-				var/list/raceList = races.Copy()
-				raceList += "Cancel"
-				while(Enter!="Cancel")
-					Enter=input(src, "Enter the race that will be able to select this spawn. You may add additional races after entering. Enter Cancel to stop entering races.", "New Spawn") in raceList
-					if(Enter!="Cancel")
-						var/racename = splittext("[Enter]", "/race/")
-						NewS.DefaultRaces.Add(racename[1])
-						raceList -= Enter
-						src << "Added [racename[1]] to default races for [NewS]."
-
-				glob.Spawns.Add(NewS)
-				src << "Added [NewS] successfully to global list!"
-
 			Spawn_Delete()
 				set category="Admin"
 				var/obj/Special/Spawn/Chois=input(src, "What spawn do you want to delete?", "Delete Spawn") in glob.Spawns

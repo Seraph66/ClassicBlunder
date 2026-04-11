@@ -3286,8 +3286,9 @@ obj/Skills/Utility
 						src.Using=0
 						return
 					M.BioAndroid=1
-				//	M.AddSkill(new/obj/Skills/Utility/BioAbsorb) //will be split up into two verbs: an actual absorb, and Collect Sample
-				//	M.AddSkill(new/obj/Skills/Utility/BioAugmentation)
+					M.AddSkill(new/obj/Skills/Utility/Collect_Sample)
+					M.AddSkill(new/obj/Skills/Utility/Force_Extract)
+					M.AddSkill(new/obj/Skills/Utility/Bio_Augmentation)
 				if("Cybernetic Mainframe")
 					if(M.CyberneticMainframe||M.Saga)
 						OMsg(usr, "[usr] tried to install a [ModChoice] into [M]...but they already have a Cybernetic Mainframe.")

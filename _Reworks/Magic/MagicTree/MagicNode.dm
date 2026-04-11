@@ -9,6 +9,7 @@ globalTracker/var/
     list/SpaceTreeNodes=list();
 
 /proc/initMagicNodes()
+    clearMagicNodes();
     initWaterTree();
     initFireTree();
     initAirTree();
@@ -17,6 +18,7 @@ globalTracker/var/
     initTimeTree();
     initDarkTree();
     initSpaceTree();
+    getAllSpellPassives();
 /proc/clearMagicNodes()
     glob.WaterTreeNodes=list();//resetti the spaghetti
     glob.FireTreeNodes=list();
@@ -178,9 +180,9 @@ globalTracker/var
     var/magic_node/selectedNode = currentMagicTreeNodes[nodeName];
     var/msg = "The node [nodeName] grants the following effects: "
     for(var/k in selectedNode.grantsSkills)
-        msg += "\n- Access to the [k] magic skill.";
+        msg += "\n- Access to the [copytext("[k]", findLastSlash("[k]"))] magic skill.";
     for(var/sp in selectedNode.grantsSpellPassives)
-        msg += "\n- Access to the [sp] bundle of magic passives.";
+        msg += "\n- Access to the [copytext("[sp]", findLastSlash("[sp]"))] bundle of spell passives.";//needs quotes on the argument to be able to be modifiable by findLastSlash proc
     for(var/mp in selectedNode.grantsMagePassives)
         msg += "\n- Access to the [mp] bundle of mage passives.";
     for(var/k in selectedNode.grantsKnowledges)
@@ -233,8 +235,8 @@ globalTracker/var
 
 /mob/proc/canUnlockMagicTree(element)
     if(RPPSpendable < glob.MagicNodeRPPCost)
-        alert(src, "You don't have enough RPP to buy this tree / node!", "ERROR", "OK");
-        return;
+        alert(src, "You don't have enough RPP to unlock the [element] Magic Tree! ([RPPSpendable] / [glob.MagicNodeRPPCost])", "ERROR", "OK");
+        return 0;
     if(!(element in VALID_MAGIC_ELEMENTS))
         alert(src, "Uhm? Somehow, you've tried to unlock an element that doesn't exist in the valid element list...", "ERROR", "OK");
         return; //if this isn't a real element
@@ -298,8 +300,19 @@ globalTracker/var
     SpendRPP(glob.MagicNodeRPPCost);
     acquiredMagicNodes |= mn;
     availableMagicNodes |= mn.unlocksNodes;
+    obtainNode(mn);
     src << "Unlocked node [mn.name]!";
     updateSelectionNodes();
+
+/mob/proc/obtainNode(magic_node/mn)
+    switch(mn.nodeType)
+        if("Spell Passive") unlockSpellPassive(mn);
+    if(mn.isSpellSlot()) unlockSpellSlot(mn);
+    unlockMagicKnowledge(mn);
+
+/magic_node/proc/isSpellSlot()
+    if(nodeType in list("AOE", "Autohit", "Projectile", "Line", "Buff", "Debuff")) return 1;
+    return 0;
 
 /mob/proc/unlockMagicTree(element)
     if(element in accessedMagicTrees)
@@ -321,3 +334,24 @@ globalTracker/var
         if(unlockTreeChoice(element))
             unlockMagicTree(element);
         nodeing=0;
+
+/mob/verb/
+    debug_fire_magic()
+        set name="DEBUG: fire magic"
+        set category="Debug"
+        var/magic_node/fire_tree/fire_node_entry/fne = new;
+        usr << "name: [fne.name]"
+        for(var/p in fne.grantsSkills)
+            usr << "type in grantsSkills: [p]"
+            var/obj/Skills/s = findOrAddSkill(p);
+            usr << "skill obj made: [s.name]"
+    debug_reinit_magictrees()
+        set name = "DEBUG: re initialize magic trees"
+        set category = "Debug"
+        clearMagicNodes()
+        initMagicNodes()
+    debug_check_all_spell_passives()
+        set name = "DEBUG: check all spell passives"
+        set category = "Debug"
+        for(var/x in allSpellPassives)
+            src << "[x] is in spell passives."

@@ -1,0 +1,10 @@
+//light
+/obj/Skills/Buffs/SlotlessBuffs/Magic/Light
+    SpellElement="Light"
+    SpellSlot=1;
+    Bless//buff
+/obj/Skills/Projectile/Magic/Light
+    SpellElement="Light"
+    SpellSlot=1;
+    Lightspeed//line
+    Solar_Burst//projectile

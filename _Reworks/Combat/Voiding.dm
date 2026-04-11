@@ -17,16 +17,66 @@ mob/proc/getVoidRolls(extraRolls = 0)
 			totalExtraVoidRolls--
 	return rolls
 
-/mob/Admin3/verb/AutoVoidKill(mob/A in players)
+/mob/Admin3/verb/AdminVoid()
 	set category = "Admin"
-	set name = "AdminKillFreeVoid"
-	A.Death(null, "ADMIN", 0, 0 , 0, 0, 1 )
-	Log("Admin", "<font color=red>[ExtractInfo(usr)] admin-killed [ExtractInfo(A)] (Free Void)")
-/mob/Admin3/verb/ChangeVoidChance(mob/A in players)
-	set category = "Admin"
-	set name = "AdminVoidChance"
-	A.extraVoidChance = input("How much extra void chance do you want to give [ExtractInfo(A)]? (0-100)", A.extraVoidChance, 0, 100) as num
-	Log("Admin", "<font color=red>[ExtractInfo(usr)] changed [ExtractInfo(A)]'s void chance to [A.extraVoidChance]")
+	set name = "Void"
+	var/list/actions = list(
+		"Admin-kill with free void",
+		"Change target's extra void chance"
+	)
+	if(usr.Admin >= 4)
+		actions += list(
+			"Toggle target's NoVoid flag (Owner)",
+			"Set global void chance (Owner)",
+			"Toggle voids allowed (Owner)",
+			"Change void location (Owner)"
+		)
+	actions += "Cancel"
+	var/choice = input(usr, "Void action:", "Void") as null|anything in actions
+	if(!choice || choice == "Cancel") return
+	switch(choice)
+		if("Admin-kill with free void")
+			var/mob/A = input(usr, "Auto-void-kill whom?", "Void") in players
+			if(!A) return
+			A.Death(null, "ADMIN", 0, 0, 0, 0, 1)
+			Log("Admin", "<font color=red>[ExtractInfo(usr)] admin-killed [ExtractInfo(A)] (Free Void)")
+		if("Change target's extra void chance")
+			var/mob/A = input(usr, "Change whose void chance?", "Void") in players
+			if(!A) return
+			A.extraVoidChance = input("How much extra void chance do you want to give [ExtractInfo(A)]? (0-100)", A.extraVoidChance, 0, 100) as num
+			Log("Admin", "<font color=red>[ExtractInfo(usr)] changed [ExtractInfo(A)]'s void chance to [A.extraVoidChance]")
+		if("Toggle target's NoVoid flag (Owner)")
+			if(usr.Admin < 4) return
+			var/mob/m = input(usr, "Toggle NoVoid on whom?", "Void") in players
+			if(!m) return
+			if(m.NoVoid)
+				m.NoVoid = 0
+				usr << "You let [m] void again..."
+			else
+				m.NoVoid = 1
+				usr << "[m] is not gonna void anymore."
+		if("Set global void chance (Owner)")
+			if(usr.Admin < 4) return
+			var/m = input(src, "What do you want to set Void Chance to? (currently [glob.VoidChance]%)", "Void Chance") as num
+			glob.VoidChance = m
+			world << "<font color='green'>Void Chance set to [m]%!</font color>"
+			Log("Admin", "[ExtractInfo(src)] set Void Chance to [m]%!")
+		if("Toggle voids allowed (Owner)")
+			if(usr.Admin < 4) return
+			if(glob.VoidsAllowed)
+				glob.VoidsAllowed = 0
+				world << "<font color='red'>Voiding from death has been disabled.</font>"
+			else
+				glob.VoidsAllowed = 1
+				world << "<font color='green'>Voiding from death has been enabled.</font>"
+		if("Change void location (Owner)")
+			if(usr.Admin < 4) return
+			var/x = input(usr, "X for void?") as num|null
+			var/y = input(usr, "Y for void?") as num|null
+			var/z = input(usr, "Z for void?") as num|null
+			if(!x || !y || !z) return
+			glob.VOID_LOCATION = list(x, y, z)
+			glob.currentlyVoidingLoc = list(x, y, z)
 /mob/var/extraVoidChance = 0
 
 /mob/proc/applyVoidNerf()

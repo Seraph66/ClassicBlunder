@@ -132,21 +132,3 @@ scaling with potential as well
 		..()
 
 
-/mob/Admin3/verb/GiveHellspawn()
-	var/mob/p = input(src, "Who?") in players
-	p << "You have been given the Hellspawn buff."
-	p.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Autonomous/HellbornFury/Stage_One)
-	p.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Autonomous/HellbornFury/Stage_Two)
-	p.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Autonomous/HellbornFury/Stage_Three)
-	p.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Autonomous/HellbornFury/Stage_Four)
-	p.passive_handler.Increase("HellPower", 0.1)
-	p.passive_handler.Increase("Persistence", 2)
-	p.passive_handler.Increase("MaimMastery", 1)
-	p.AddSkill(new/obj/Skills/False_Moon)
-	p.oozaru_type="Demonic"
-	for(var/transformation/saiyan/ssj in p.race.transformations)
-		p.race.transformations -=ssj
-		del ssj
-	p.race.transformations += new /transformation/saiyan/hellspawn_super_saiyan()
-	p.race.transformations += new /transformation/saiyan/hellspawn_super_saiyan_2()
-	p.race.transformations += new /transformation/saiyan/hellspawn_super_full_power_saiyan_2_limit_breaker()

@@ -4744,12 +4744,19 @@ NEW VARIABLES
 			ActiveMessage="shifts into their spiritual body!"
 			OffMessage="becomes fully physical once more..."
 			ManaDrain = 0.1
-			passives = list("ManaLeak" = 2, "SpiritForm" = 1, "MovementMastery" = 1, "ManaStats" = 0.25, "TechniqueMastery" = -2, "MartialMagic" = 1, "ManaGeneration" = -2, "FatigueLeak" = 3, "Cryokenesis" = 1)
-			ManaLeak = 2
+			passives = list("ManaLeak" = 2, "SpiritForm" = 1, "ManaStats" = 0.25, "TechniqueMastery" = -2, "MartialMagic" = 1, "ManaGeneration" = -2, "FatigueLeak" = 1, "Cryokenesis" = 1)
 			ManaThreshold = 40
 			Cooldown=1
 			adjust(mob/p)
 				passives["Cryokenesis"] = 1 + p.AscensionsAcquired
+				passives["ManaGeneration"] = min(0, (-2) + (p.AscensionsAcquired*0.5));
+				ManaThreshold = 40 - (5*p.AscensionsAcquired);
+				if(p.AscensionsAcquired>=6)//full mastery from two become one, but all in one asc
+					ManaDrain = 0;
+					passives["MovementMastery"] = 5;
+					passives["TechniqueMastery"] = 5;
+					passives["FatigueLeak"] = 0;
+					passives["ManaLeak"] = 0;
 			verb/Spirit_Form()
 				set category="Skills"
 				if(!usr.BuffOn(src))
@@ -11583,6 +11590,7 @@ mob
 	proc
 		UseBuff(var/obj/Skills/Buffs/B, var/Override)
 			. = TRUE
+			B.SpellSlotModification();
 			if(src.BuffOn(B))
 				if(B.MakesArmor)
 					if(src.ActiveBuff)

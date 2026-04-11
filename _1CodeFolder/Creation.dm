@@ -58,6 +58,7 @@ mob/Players
 		winset(usr, null, "browser-options=find")
 		client.perspective=MOB_PERSPECTIVE
 		players += usr
+		OverwatchNotifyLogin(usr, "logged in")
 		usr.density=1
 		usr.client.view=8
 		if(in_tmp_map)
@@ -463,6 +464,7 @@ mob/Players
 		return
 	Logout()
 		DevilSummonerLogout()
+		OverwatchNotifyLogin(src, "logged out")
 		players -= src
 		if(dancing) transform=dancing
 		last_online = world.realtime
@@ -1079,7 +1081,7 @@ mob/proc
 		setStartingRPP()
 		DEBUGMSG("or setting starting rpp. did that kill us?")
 		if(!Warped)
-			if(isRace(BEASTKIN)||isRace(YOKAI))
+			if(isRace(BEASTKIN))
 				var/Choice=input(src, "Do you want to possess animal characteristics?  These options will give you tails and ears.", "Choose your animal traits.") in list("None", "Cat", "Fox", "Racoon", "Wolf", "Lizard", "Crow", "Bull")
 				switch(Choice)
 					if("Cat")
@@ -1104,7 +1106,7 @@ mob/proc
 					src.Hairz("Add")
 
 			if(!src.Timeless)
-				if(!(src.race in list(YOKAI,BEASTKIN,ELDRITCH,SAIYAN)))//these bois spawn in with deathtimers if theyre elder...
+				if(!(src.race in list(BEASTKIN,ELDRITCH,SAIYAN)))//these bois spawn in with deathtimers if theyre elder...
 					var/Age = "Youth"
 					//=alert(src, "Do you want to start as a youth or an elder?  Youths have not yet reached their full potential as fighters. Elders have already passed it, and may teach younger folks.", "Age", "Youth", "Elder")
 					src.EraBody=Age
