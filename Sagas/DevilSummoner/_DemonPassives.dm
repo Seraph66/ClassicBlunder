@@ -90,8 +90,8 @@ var/global/list/DEMON_PASSIVE_DB = list()
 	pdb["Drain Hit"]     = new /datum/demon_passive("Drain Hit",     "Demon gains +50 LifeSteal.",                 "trigger")
 	pdb["Avenge"]        = new /datum/demon_passive("Avenge",        "Demon gains +6 Parry.",                      "trigger")
 	pdb["Dodge"]         = new /datum/demon_passive("Dodge",         "Demon Def x1.5.",                            "trigger")
-	pdb["Watchful"]      = new /datum/demon_passive("Watchful",      "Reduces ambush chance.",                     "trigger")
-	pdb["Vigilant"]      = new /datum/demon_passive("Vigilant",      "Greatly reduces ambush chance.",             "trigger")
+	pdb["Watchful"]      = new /datum/demon_passive("Watchful",      "Reduces ambush chance. (does nothing atm)",                     "trigger")
+	pdb["Vigilant"]      = new /datum/demon_passive("Vigilant",      "Greatly reduces ambush chance. (does nothing atm)",             "trigger")
 	pdb["Ultimate Hit"]  = new /datum/demon_passive("Ultimate Hit",  "Demon's normal attacks inflict all almighty debuffs.","trigger")
 
 	// ===== SPECIALS =====

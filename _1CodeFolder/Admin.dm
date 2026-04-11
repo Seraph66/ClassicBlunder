@@ -1184,31 +1184,33 @@ mob/Admin2/verb
 
 	AdminKill(mob/A in world)
 		set category="Admin"
-		set name="Admin Kill"
-		var/choice = input(usr, "Action on [A]:", "Admin Kill") as null|anything in list("Kill", "KO", "Damage", "Cancel")
+		set name="Admin Kill/KO"
+		var/choice = input(usr, "Action on [A]:", "Admin Kill") as null|anything in list("Kill", "KO", "Cancel")
 		if(!choice || choice == "Cancel") return
 		switch(choice)
 			if("Kill")
 				usr.AdminDoKill(A)
 			if("KO")
 				usr.AdminDoKO(A)
-			if("Damage")
-				var/DamageType = input(usr, "What type of damage? Be careful with poison and burning due to their nature.") in list("Cancel", "True Damage", "Poison", "Burning", "Normal Damage")
-				if(DamageType == "Cancel") return
-				var/Damage = input(usr, "Inflict how much [DamageType]? Put in zero to cancel.") as null|num
-				if(Damage == null) return
-				if(istext(A.Health))
-					A.Health = 100
-					Log("Admin", "<font color=red>[A]'s Health variable was text for some reason! Resetting to 100.")
-				if(DamageType == "True Damage")
-					A.Health -= Damage
-				else if(DamageType == "Poison")
-					A.AddPoison(Damage)
-				else if(DamageType == "Burning")
-					A.AddBurn(Damage)
-				else if(DamageType == "Normal Damage")
-					usr.DoDamage(A, Damage)
-				Log("Admin", "<font color=red>[ExtractInfo(usr)] did [Damage] [DamageType] to [ExtractInfo(A)].")
+	AdminDoDamage(mob/A in world)
+		set category="Admin"
+		set name="Do Damage"
+		var/DamageType = input(usr, "What type of damage? Be careful with poison and burning due to their nature.") in list("Cancel", "True Damage", "Poison", "Burning", "Normal Damage")
+		if(DamageType == "Cancel") return
+		var/Damage = input(usr, "Inflict how much [DamageType]? Put in zero to cancel.") as null|num
+		if(Damage == null) return
+		if(istext(A.Health))
+			A.Health = 100
+			Log("Admin", "<font color=red>[A]'s Health variable was text for some reason! Resetting to 100.")
+		if(DamageType == "True Damage")
+			A.Health -= Damage
+		else if(DamageType == "Poison")
+			A.AddPoison(Damage)
+		else if(DamageType == "Burning")
+			A.AddBurn(Damage)
+		else if(DamageType == "Normal Damage")
+			usr.DoDamage(A, Damage)
+		Log("Admin", "<font color=red>[ExtractInfo(usr)] did [Damage] [DamageType] to [ExtractInfo(A)].")
 	ReMeditate(mob/A in players)
 		set category="Admin"
 		if(A.icon_state!="Meditate")
@@ -1305,6 +1307,15 @@ mob/Admin2/verb
 		if(M.isRace(/race/demi_fiend))
 			M.refreshMagatama()
 		M.ECCHARACTER=TRUE
+		Log("Admin", "[ExtractInfo(src)] triggered [ExtractInfo(M)]'s event character setup!")
+	Head_Start_Setup(mob/Players/M in players)
+		set category="Admin"
+		M.PotentialHeadStart=input(src, "What potential do you want to set [M] to?", "Set Head Start Potential") as num
+		M.Potential=M.PotentialHeadStart
+		M.RPPHeadStart=input(src, "What RPP cap do you want to set [M] to?", "Set Head RPP ") as num
+		M.RPPSpendable=M.RPPHeadStart
+		if(M.isRace(/race/demi_fiend))
+			M.refreshMagatama()
 		Log("Admin", "[ExtractInfo(src)] triggered [ExtractInfo(M)]'s event character setup!")
 
 
@@ -2022,12 +2033,13 @@ mob/Admin4/verb
 		if(!choice || choice == "Cancel") return
 		switch(choice)
 			if("Start wipe (set today as Day 1)")
-				switch(alert(usr, "Are you sure you want to set the start time of the wipe to midnight today?", "Are you sure you want to suffer through another wipe?", "No", "Hell No", "I guess"))
+				switch(alert(usr, "Are you sure you want to set the start time of the wipe to midnight today?", "Are you sure you want to suffer through another wipe?", "Yes", "Hell Fucking Yes", "No"))
 					if("No")
 						return
 					if("Hell No")
 						return
-				glob.progress.DaysOfWipe = 0
+				glob.progress.DaysOfWipe = 1
+			//	glob.progress.totalPotentialToDate = 1
 				glob.progress.WipeStart = world.realtime - world.timeofday
 				Log("Admin", "[ExtractInfo(src)] has set the official start date of the wipe.")
 			if("Restart wipe (to specific day)")

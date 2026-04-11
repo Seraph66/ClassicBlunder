@@ -25,7 +25,8 @@ mob/proc/refund_skill(obj/Skills/refunded_skill)
 		Refund+=(Refund*(refunded_skill.Mastery-1))
 	if(refunded_skill.name in src.SkillsLocked)
 		src.SkillsLocked -= refunded_skill.name
-
+	if(istype(refunded_skill, /obj/Skills/Buffs/NuStyle))
+		Refund=0
 	RPPSpendable+=Refund
 	RPPSpent-=Refund
 	src << "You've have been refunded [refunded_skill] for [Commas(Refund)] RPP."
@@ -101,7 +102,7 @@ mob/proc/refund_skil_old(obj/Skills/refunded_skill)
 	if(istype(refunded_skill, /obj/Skills/Buffs/NuStyle))
 		if(refunded_skill.SignatureTechnique > 0) Refund = 0
 		else src.SignatureSelected -= refunded_skill.name
-		Refund += ((2**(refunded_skill.SignatureTechnique+1)*10)) * max(0,(refunded_skill.Mastery-1))
+		Refund = 0//((2**(refunded_skill.SignatureTechnique+1)*10)) * max(0,(refunded_skill.Mastery-1))
 	else if(refunded_skill.Mastery>1)
 		Refund+=(refunded_skill.SkillCost*(refunded_skill.Mastery-1))
 	if(refunded_skill.name in src.SkillsLocked)

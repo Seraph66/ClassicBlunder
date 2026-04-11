@@ -51,6 +51,8 @@
 /mob/proc/GiveRPP(amount)
     var/maxRPP = getMaxPlayerRPP()
     RPPCurrent = maxRPP
+    if((RPPHeadStart*GetRPPMult())>getMaxPlayerRPP())
+        RPPCurrent=RPPHeadStart
     if(amount+RPPSpendable+RPPSpent > maxRPP)
         RPPSpendable += maxRPP - (RPPSpendable+RPPSpent)
         src<<"You've been given [maxRPP - (RPPSpendable+RPPSpent)] RPP."

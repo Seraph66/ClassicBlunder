@@ -248,11 +248,11 @@ var/list/SkillTree=list(
 ),
 
 "UnarmedStyles"=list(
-			"/obj/Skills/Buffs/NuStyle/UnarmedStyle/Shaolin_Style"=20,
-			"/obj/Skills/Buffs/NuStyle/UnarmedStyle/Shield_Style"=20,
-			"/obj/Skills/Buffs/NuStyle/UnarmedStyle/Turtle_Style"=20,
-			"/obj/Skills/Buffs/NuStyle/UnarmedStyle/Murim_Style"=20,
-			"/obj/Skills/Buffs/NuStyle/UnarmedStyle/Lucha_Libre_Style"=20
+			"/obj/Skills/Buffs/NuStyle/UnarmedStyle/Shaolin_Style"=0,
+			"/obj/Skills/Buffs/NuStyle/UnarmedStyle/Shield_Style"=0,
+			"/obj/Skills/Buffs/NuStyle/UnarmedStyle/Turtle_Style"=0,
+			"/obj/Skills/Buffs/NuStyle/UnarmedStyle/Murim_Style"=0,
+			"/obj/Skills/Buffs/NuStyle/UnarmedStyle/Lucha_Libre_Style"=0
 ),
 "UnarmedStylesT1"=list(
 	"/obj/Skills/Buffs/NuStyle/UnarmedStyle/Red_Cyclone_Style"=9999,
@@ -299,11 +299,11 @@ var/list/SkillTree=list(
 ),
 
 "ElementalStyles"=list(
-			"/obj/Skills/Buffs/NuStyle/MysticStyle/Earth_Moving"=20,
-			"/obj/Skills/Buffs/NuStyle/MysticStyle/Wind_Summoning"=20,
-			"/obj/Skills/Buffs/NuStyle/MysticStyle/Fire_Weaving"=20,
-			"/obj/Skills/Buffs/NuStyle/MysticStyle/Water_Bending"=20,
-			"/obj/Skills/Buffs/NuStyle/MysticStyle/Plague_Bringer"=20
+			"/obj/Skills/Buffs/NuStyle/MysticStyle/Earth_Moving"=0,
+			"/obj/Skills/Buffs/NuStyle/MysticStyle/Wind_Summoning"=0,
+			"/obj/Skills/Buffs/NuStyle/MysticStyle/Fire_Weaving"=0,
+			"/obj/Skills/Buffs/NuStyle/MysticStyle/Water_Bending"=0,
+			"/obj/Skills/Buffs/NuStyle/MysticStyle/Plague_Bringer"=0
 ),
 "ElementalStylesT1"=list(
 			"/obj/Skills/Buffs/NuStyle/MysticStyle/Magma_Walker"=9999,
@@ -324,11 +324,11 @@ var/list/SkillTree=list(
 			"/obj/Skills/Buffs/NuStyle/MysticStyle/Omnimancer"=9999
 ),
 "SwordStyles"=list(
-			"/obj/Skills/Buffs/NuStyle/SwordStyle/Ittoryu_Style"=20,
-			"/obj/Skills/Buffs/NuStyle/SwordStyle/Fencing_Style"=20,
-			"/obj/Skills/Buffs/NuStyle/SwordStyle/Ulfberht_Style"=20,
-			"/obj/Skills/Buffs/NuStyle/SwordStyle/Gladiator_Style"=20,
-			"/obj/Skills/Buffs/NuStyle/SwordStyle/Chain_Style"=20
+			"/obj/Skills/Buffs/NuStyle/SwordStyle/Ittoryu_Style"=0,
+			"/obj/Skills/Buffs/NuStyle/SwordStyle/Fencing_Style"=0,
+			"/obj/Skills/Buffs/NuStyle/SwordStyle/Ulfberht_Style"=0,
+			"/obj/Skills/Buffs/NuStyle/SwordStyle/Gladiator_Style"=0,
+			"/obj/Skills/Buffs/NuStyle/SwordStyle/Chain_Style"=0
 ),
 "SwordStylesT1"=list("/obj/Skills/Buffs/NuStyle/SwordStyle/Fist_of_Khonshu"=9999,
 					"/obj/Skills/Buffs/NuStyle/SwordStyle/Nito_Ichi_Style"=9999,

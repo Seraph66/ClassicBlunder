@@ -162,10 +162,10 @@
 // Screen_loc positions for 4-slot diamond (bottom-right)
 // Slot 1 = top, 2 = left, 3 = right, 4 = bottom
 var/global/list/DEMON_HUD_POSITIONS = list(
-	"RIGHT-2:8,BOTTOM+2:16",
-	"RIGHT-3:0,BOTTOM+1:16",
-	"RIGHT-1:16,BOTTOM+1:16",
-	"RIGHT-2:8,BOTTOM+0:16"
+	"RIGHT-5:8,BOTTOM+4:16",
+	"RIGHT-6:0,BOTTOM+3:16",
+	"RIGHT-4:16,BOTTOM+3:16",
+	"RIGHT-5:8,BOTTOM+2:16"
 )
 
 /mob/proc/BuildDemonSkillHUD(datum/party_demon/pd)

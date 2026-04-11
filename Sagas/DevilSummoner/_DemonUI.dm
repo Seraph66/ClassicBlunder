@@ -40,6 +40,9 @@
 #define DS_BTN_STYLE "background:#2a1a4e;color:#e8d0ff;border:1px solid #6a4a9e;padding:4px 10px;cursor:pointer;text-decoration:none;font-size:11px;"
 #define DS_BTN_VALID "background:#1a3a1e;color:#80ff80;border:1px solid #3a8a3e;padding:4px 10px;cursor:pointer;text-decoration:none;font-size:11px;"
 
+/proc/DemonDeadPortraitRscName(demon_name)
+	return "dead_[DemonPortraitRscName(demon_name)]"
+
 /mob/proc/RefreshDemonSummonWindow()
 	var/party_size = demon_party ? demon_party.len : 0
 	for(var/i = 1 to 12)
@@ -49,9 +52,23 @@
 			var/datum/party_demon/pd = demon_party[i]
 			var/datum/demon_data/dd = DEMON_DB[pd.demon_name]
 			if(dd)
-				winset(src, slot,  "image=[dd.demon_portrait];is-visible=true")
-				var/tag = (pd.demon_name == demon_active_name) ? "[pd.demon_name] *" : pd.demon_name
-				winset(src, label, "text='[tag]';is-visible=true")
+				var/is_dead = (pd.current_hp <= 0)
+				var/portrait_img
+				if(is_dead && dd.demon_portrait)
+					var/icon/gi = new icon(dd.demon_portrait)
+					gi.GrayScale()
+					var/rname = DemonDeadPortraitRscName(pd.demon_name)
+					src << browse_rsc(gi, rname)
+					portrait_img = rname
+				else
+					portrait_img = dd.demon_portrait
+				winset(src, slot, "image=[portrait_img];is-visible=true")
+				if(pd.demon_name == demon_active_name)
+					winset(src, slot,  "background-color=#1a4aaa")
+					winset(src, label, "text='[pd.demon_name]';text-color=#88bbff;background-color=#0a1a4e;is-visible=true")
+				else
+					winset(src, slot,  "background-color=#1a1a2e")
+					winset(src, label, "text='[pd.demon_name]';text-color=#cccccc;background-color=#111111;is-visible=true")
 			else
 				winset(src, slot,  "image=;is-visible=false")
 				winset(src, label, "text=;is-visible=false")

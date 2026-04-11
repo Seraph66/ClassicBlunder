@@ -191,6 +191,7 @@ mob/var
 	PotentialRate=1
 	PotentialCap=1
 	PotentialHeadStart=0
+	RPPHeadStart=0
 	potential_trans=0//entering trans state sets this
 	potential_power_mult=1
 	potential_last_checked=0
@@ -692,9 +693,9 @@ mob/var
 	list/demon_party = null
 	demon_party_cap = 0
 	list/demon_compendium = null
-	demon_last_pick_potential = 0   
-	demon_pending_picks = 0         
-	tmp/demon_soul_dmg_pct = 0      
+	demon_last_pick_potential = 0
+	demon_pending_picks = 0
+	tmp/demon_soul_dmg_pct = 0
 	tmp/demon_soul_transfer_pct = 0 // Multiplier on redirected damage applied to demon_hp
 	tmp/demon_active = null         // Live mob ref - would corrupt savefile
 	tmp/demon_active_name = ""

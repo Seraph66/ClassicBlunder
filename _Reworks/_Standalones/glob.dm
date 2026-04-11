@@ -79,7 +79,8 @@ racials
 progressTracker
 
 	proc/incrementTotal()
-		totalRPPToDate += RPPDaily
+	//	totalRPPToDate += RPPDaily
+		totalRPPToDate = RPPStarting + (RPPDaily*DaysOfWipe)
 		totalPotentialToDate += PotentialDaily
 		if(totalPotentialToDate > 150)
 			totalPotentialToDate = 150
@@ -94,26 +95,26 @@ progressTracker
 		FourthFateEndwipe
 
 //economy
-		EconomyIncome = 1000
-		EconomyCost = 1000
+		EconomyIncome = 3000
+		EconomyCost = 3000
 		EconomyMana = 100
 		EconomyMult = 1
-		DailyGrindCap = 1000
+		DailyGrindCap = 15000
 		maxAscension = 6
 		MoneyName = "Dollars"
 
 
 //potential
 		PotentialDaily = 1
-		totalPotentialToDate = 31
+		totalPotentialToDate = 1
 		MinPotential = 1
 
 
 // rpp
 		totalRPPToDate = 0 // a dynamic variable, that just gets added to every day tick
-		RPPDaily = 15
-		RPPLimit = 0
-		RPPStarting = 80
+		RPPDaily = 10
+		RPPLimit = 1000
+		RPPStarting = 200
 		RPPStartingDays = 0
 		RPPBaseMult = 1
 		MinRPP = 0
@@ -131,10 +132,10 @@ progressTracker
 		SAGA_T3_POT = 35
 
 		T1_STYLES = list(10, 20)
-		T2_STYLES = list(30, 45)
-		T3_STYLES = list(60)
-		T1_SIGS = list(5, 10, 30)
-		T2_SIGS = list(25, 55)
+		T2_STYLES = list(25, 35)
+		T3_STYLES = list(50)
+		T1_SIGS = list(10, 20, 30)
+		T2_SIGS = list(25, 45)
 
 /****************************************************
   *  *  *  *  *  * * GLOBAL TRACKER  *  *  *  *  *  *

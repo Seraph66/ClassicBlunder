@@ -60,7 +60,7 @@
         if(transUnlocked >= 1 || HumanHTException()) return 1;
         return 0;
     HumanHTException()
-        if(isRace(HUMAN) && Potential>=20) return 1;
+        if(isRace(HUMAN) && Potential>=10) return 1;
         return 0;
     canHTM()
         if(src.icon_state=="Meditate") return 0;
@@ -80,4 +80,3 @@
             return 0
         if(transActive == 3 && transUnlocked>=4) return 1;
         return 0;
-    
