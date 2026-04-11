@@ -30,6 +30,33 @@ obj/Skills/AutoHit/Desperation
 			StrOffense=(1 * (1+asc))
 			Cooldown=300-(10*(asc))
 			usr.Activate(src)
+	Deathscythe
+		Area="Target"
+		Distance=60
+		WindUp=3
+		WindupMessage="summons a massive scythe of dripping petals, slowly descending towards their target..."
+		WindupIcon='SparkleRed.dmi'
+		WindupIconY=32
+		WindupColor=rgb(255, 100, 180)
+		FixedDamage=6.5
+		NeedsHealth=20
+		Cooldown=300
+		EnergyCost=20
+		Instinct=1
+		MortalBlow=1
+		HitSparkIcon='SparkleRed.dmi'
+		HitSparkX=-16
+		HitSparkY=-16
+		HitSparkSize=2
+		HitSparkTurns=1
+		ActiveMessage="commands the scythe to strike, reaping the life from their target in a flurry of pink petals!"
+		verb/Deathscythe()
+			set category="Skills"
+			var/asc = usr.AscensionsAcquired
+			FixedDamage = 6.5 + (1 * asc)
+			WindUp = max(1, 3 - (0.25 * asc))
+			Cooldown = 300 - (10 * asc)
+			usr.Activate(src)
 /obj/Skills/Projectile/Zone_Attacks/Desperation
 	UltimaLasers
 		EnergyCost=20
