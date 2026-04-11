@@ -209,9 +209,7 @@ mob/proc/SkillX(var/Wut,var/obj/Skills/Z,var/bypass=0)
 
 			if("ReverseDash")
 				var/Modifier=1
-				if(src.Secret == "Eldritch")
-					if(src.secretDatum.secretVariable["Lunatic Mode"] > 0)
-						src.summonEldritchMinion();
+				if(hasEldritchPower()) summonEldritchMinion();
 				if(src.Secret=="Haki")
 					if(src.secretDatum.secretVariable["HakiSpecialization"]=="Observation")
 						Modifier+=1

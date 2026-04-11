@@ -307,7 +307,11 @@ SecretInformation
 					p << "You have forgotten what it means to be mortal..."
 					nextTierUp = 999
 
-
+	EldritchShrouded
+		name = "Eldritch (Shrouded)"
+	EldritchReflected
+		name = "Eldritch (Reflected)"
+		givenSkills = list("/obj/Skills/Utility/Offer_Pact", "/obj/Skills/Utility/Revoke_Pact");
 	Eldritch
 		name = "Eldritch"
 		secretVariable = list("Madness" = 0, "Madness Active" = 0, "Lunatic Mode" = 0, "Power From Blood" = 0, "Blood Stock" = 0, "Resource Stock" = 0)

@@ -1,7 +1,6 @@
 /mob/proc/
     canSetEldritchRuinate()
-        if(!hasSecret("Eldritch")) return 0;
-        if(!CheckSlotless("True Form")) return 0;
+        if(!hasEldritchPower()) return 0;
         if(AttackQueue) return 0;
         return 1;
     setEldritchRuinate()

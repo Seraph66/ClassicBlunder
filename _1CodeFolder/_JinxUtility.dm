@@ -2830,6 +2830,10 @@ mob
 				defender.name="[Commas(round(defender.Level))] [glob.progress.MoneyName]"
 				defender.checkDuplicate(src)
 			src << "You've gained [Commas(round(Value))] [glob.progress.MoneyName]."
+		GiveMineral(val)
+			for(var/obj/Items/mineral/m in src)
+				m.Add(val);
+				break;
 		TakeManaCapacity(var/Value, ignorePhiloStone = FALSE)
 			var/Remaining=Value
 			if(!ignorePhiloStone)

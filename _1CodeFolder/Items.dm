@@ -881,7 +881,7 @@ obj/Items/Sword
 
 
 	HighFrequency
-		name="Bastard Sword"
+		name="High Frequency Blade"
 		Unobtainable=0
 		icon='LightSword.dmi'
 		DamageEffectiveness=1.025

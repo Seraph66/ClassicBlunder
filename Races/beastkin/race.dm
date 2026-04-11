@@ -27,7 +27,7 @@ Inspiration taken from Sett (League of Legends)}",\
 "XAYAH",\
 "UDYR",\
 "NIDALEE",\
-"???",\
+"<:3c",\
 "AHRI")
 		// attaching this here cause lol
 		stats_per_class = list("Heart of The Beastkin" = list(1.25, 2, 0.75, 1, 1, 1.5), "Monkey King" = list(1.25,1.25,1.25,1.25,1.25,1.25),\
@@ -58,8 +58,6 @@ Inspiration taken from Sett (League of Legends)}",\
 					p.passive_handler.Increase("Nimbus", 1)
 					var/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Racial/Beastkin/Never_Fall/nf = new(p)
 					p.AddSkill(nf)
-
-					p.passive_handler.Increase("Harden", 1)
 					p.passive_handler.Increase("Instinct", 1)
 					
 				if("Unseen Predator")
@@ -89,12 +87,6 @@ Inspiration taken from Sett (League of Legends)}",\
 					p.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Racial/Beastkin/Spirit_Walker/Ram_Form)
 					p.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Racial/Beastkin/Spirit_Walker/Bear_Form)
 					p.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Racial/Beastkin/Spirit_Walker/Turtle_Form)
-
-				if("Shapeshifter")
-					var/obj/Skills/Buffs/SlotlessBuffs/Racial/Beastkin/Shapeshift/s = new()
-					p.AddSkill(s)
-					s.init(p)
-					// set up the shapeshift buff
 
 				if("Trickster")
 					imagination = 2

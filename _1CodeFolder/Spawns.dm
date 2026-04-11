@@ -85,11 +85,7 @@ mob
 
 proc
 	MoveToSpawn(mob/m)
-		if(glob.progress.SpawnLoc==1)
-			m.loc = locate(430, 310, 12)
-		if(glob.progress.SpawnLoc==2)
-			m.loc = locate(250,250,3)
-	/*	var/obj/Special/Spawn/Found
+		var/obj/Special/Spawn/Found
 		for(var/obj/Special/Spawn/S in glob.Spawns)
 			if(S.name==m.Spawn)
 				Found=S
@@ -98,7 +94,7 @@ proc
 			m << "You do not have a spawn that exists in the world. The admins have been notified."
 			Log("Admin", "[ExtractInfo(m)]'s currently listed spawn ([m.Spawn]) does not exist in the world! Assign a new spawn name to them.")
 		else
-			m.loc = locate(Found.gotoX, Found.gotoY, Found.gotoZ)*/
+			m.loc = locate(Found.gotoX, Found.gotoY, Found.gotoZ)
 
 	AddRace(var/Race, var/obj/Special/Spawn/S)
 		if(!(Race in S.DefaultRaces))

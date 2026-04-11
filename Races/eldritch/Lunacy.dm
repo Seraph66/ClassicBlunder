@@ -26,12 +26,14 @@
 
 #define MINIMUM_LUNATIC_MODE 30
 /mob/proc/isLunaticMode()
-    if(src.Secret == "Eldritch")
+    if(hasSecret("Eldritch"))
         if(src.secretDatum.secretVariable["Lunatic Mode"] > 0)
             return 1;
+    if(hasSecret("Eldritch (Shrouded)") && WoundIntent) return 1;
+    if(hasSecret("Eldritch (Reflected)") && get_potential() >= 40) return 1;
     return 0;
 /mob/proc/canLunaticMode()
-    if(src.Secret == "Eldritch")
+    if(hasSecret("Eldritch"))
         if(src.secretDatum.secretVariable["Madness Active"] == 0)
             src << "You must be unleashing your Madness to enter Lunatic Mode!"
             return 0;
@@ -40,7 +42,7 @@
     src << "You do not have enough resources or blood stockpiled to enter Lunatic Mode!"
     return 0;
 /mob/proc/LunaticModeTimer()
-    if(src.Secret == "Eldritch")
+    if(hasSecret("Eldritch"))
         src.secretDatum.secretVariable["Lunatic Mode"] = (src.secretDatum.secretVariable["Lunatic Mode"] - 1);
         if(src.secretDatum.secretVariable["Lunatic Mode"] <= 0)
             src.LunaticModeOff();
@@ -48,6 +50,7 @@
 //I gaze into my navel and contemplate how Transform / Icon Replace effects could be their own dedicated class
 //But enough about that
 /mob/proc/Lunatic_Dash_Effect()
+    if(!hasSecret("Eldritch")) return;
     spawn()
         var/obj/Skills/Buffs/SlotlessBuffs/Eldritch/True_Form/tf = locate(/obj/Skills/Buffs/SlotlessBuffs/Eldritch/True_Form, src);
         if(!tf) return;
@@ -89,20 +92,20 @@ mob/var/LunacyDrank=0;//variable that tracks how crazy you've made someone else
 
 /mob/proc/InflictLunacy(mult, mob/trg)
     if(!src.isLunaticMode()) return
-    var/luna = src.getTotalMagicLevel() / 4;
+    var/luna = src.getTotalMagicLevel() / 2.5;
     luna *= mult;
     trg.Lunacy += luna;
     src.LunacyDrank += luna;
     trg.LunacyEffects(src);
 
 /mob/proc/ClearLunacy()
-    src.Lunacy=0;
+    Lunacy=0;
 
 /mob/proc/LunacyEffects(mob/owner)
-    if(src.Lunacy > 100)
-        src.BrainBreak(owner);
+    if(Lunacy > 100)
+        BrainBreak(owner);
 /mob/proc/BrainBreak(mob/owner)
-    src << "<b>Y██r br██n c█n't h█ndl█ th█ str███!</b>"
+    src << "<b>ᛉᛜꓦᚱ ᛒᚱᚣᛁᚢ ᛈᚣᚢ ᚢᛜᚾ ᚺᚣᚢᚧᚳᛊ ᚾᚺᛊ ᛢᚾᚱᚣᛁᚢ</b>"
     AddConfusing(100);
     ClearLunacy();
     owner.BrainBreakMinions();

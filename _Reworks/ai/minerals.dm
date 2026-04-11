@@ -22,6 +22,9 @@ obj/Items/mineral
 		name = "[Commas(round(value,1))] Mana Bits"
 		if(value <= 0)
 			del(src)
+	proc/Add(num)
+		value += num;
+		name = "[Commas(round(value, 1))] Mana Bits"
 	proc/assignState(val)
 		if(val <= 200)
 			return icon_state = "some"

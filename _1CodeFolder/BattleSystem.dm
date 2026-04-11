@@ -2149,10 +2149,9 @@ mob/proc/Grab_Effects(var/mob/P)
 		if(fb && src.warp_strike_saved_loc)
 			fb.FlashbackTrigger(src, P)
 
-	if(src.Secret=="Eldritch" && P.KO && !P.HasMagicTaken() && !isAI(P) && src.Lethal)
-		var/confirm = src.prompt("You can feel the threads of [P]'s magic circuits. Are they your's, now?", "Take Magic", list("Yes", "No"));
-		if(confirm=="Yes")
-			src.EldritchMagicSteal(P);
+	if(canStealMana(P))//eldritch magic steal
+		var/confirm = prompt("You can feel the threads of [P]'s magic circuits. Are they your's, now?", "Take Magic", list("No", "Yes"));
+		if(confirm=="Yes") EldritchMagicSteal(P);
 
 	if(src.Lethal>=1)
 		if(src.Secret=="Vampire")
