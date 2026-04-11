@@ -339,9 +339,10 @@ obj/Effects
 		//pixel_y
 		Lifetime=10//This is how long it takes for the effect to fade.
 		Size//Multiply icon size by this value
-	New(var/CustomIcon=0, var/CustomX=0, var/CustomY=0, var/CustomTurn=0, var/CustomSize=1, var/Life=0, overwrite_alpha=0)
+	New(loc, var/CustomIcon=0, var/CustomX=0, var/CustomY=0, var/CustomTurn=0, var/CustomSize=1, var/Life=0, overwrite_alpha=0)
+		..()
 		var/matrix/SizeState=matrix()
-		if(CustomIcon)
+		if(CustomIcon && isfile(CustomIcon))
 			src.icon=CustomIcon
 			if(CustomX)
 				src.pixel_x=CustomX
@@ -355,10 +356,10 @@ obj/Effects
 			src.Size=CustomSize
 		if(src.Size)
 			SizeState.Scale(src.Size,src.Size)
-			animate(src, transform=SizeState, time=0)
+			src.transform = SizeState
 		if(src.Turns)
-			SizeState.Turn(pick(45,-45,0,-90,90,135.-135,180))
-			animate(src, transform =SizeState, time=0)
+			SizeState.Turn(pick(45,-45,0,-90,90,135,-135,180))
+			src.transform = SizeState
 		if(Life)
 			src.Lifetime=Life
 		else if(!Lifetime)
@@ -503,7 +504,7 @@ obj
 			New()
 				pixel_x=-32
 				pixel_y=-32
-				animate(src,transform=matrix()*0.1)
+				src.transform = matrix()*0.1
 				spawn(1000) if(src) EffectFinish()
 		Dust
 			layer=EFFECTS_LAYER
