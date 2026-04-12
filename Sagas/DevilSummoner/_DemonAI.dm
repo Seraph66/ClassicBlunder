@@ -117,9 +117,9 @@
 			if(loc == ai_owner.loc) step_away(src, ai_owner)
 
 	proc/DemonMeleeAttack(mob/target)
-		if(!target || !target.client) return
+		if(!target) return
 		if(target == ai_owner) return
-		if(ai_owner && "[ai_owner.ckey]" in target.ai_alliances) return
+		if(ai_owner && istype(target, /mob/Player) && "[ai_owner.ckey]" in target.ai_alliances) return
 		if(ai_owner && ai_owner.party && ai_owner.party.members && (target in ai_owner.party.members)) return
 		var/dmg = max(1, round(StrMod * 0.1 * next_attack_multiplier))
 		if(next_attack_multiplier > 1)
@@ -135,15 +135,15 @@
 		// Double Strike: hit twice
 		if(passive_double_strike)
 			spawn(2)
-				if(src && target && target.client)
+				if(src && target)
 					target.DoDamage(src, TrueDamage(dmg))
 					Bump(target)
 		// Attack All: also hit nearby enemies
 		if(passive_attack_all)
 			for(var/mob/m in oview(1, src))
-				if(m == src || m == target || !m.client) continue
+				if(m == src || m == target) continue
 				if(ai_owner && m == ai_owner) continue
-				if(ai_owner && "[ai_owner.ckey]" in m.ai_alliances) continue
+				if(ai_owner && istype(m, /mob/Player) && "[ai_owner.ckey]" in m.ai_alliances) continue
 				if(ai_owner && ai_owner.party && ai_owner.party.members && (m in ai_owner.party.members)) continue
 				m.DoDamage(src, TrueDamage(round(dmg * 0.6)))
 				DemonPassiveAddAilments(m)

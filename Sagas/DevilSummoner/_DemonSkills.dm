@@ -371,7 +371,7 @@ var/global/list/DEMON_SKILL_VFX = list()
 		if(!target) return FALSE
 		if(ai_owner && target == ai_owner) return FALSE
 		if(get_dist(src, target) > 15) return FALSE
-		if(ai_owner && "[ai_owner.ckey]" in target.ai_alliances) return FALSE
+		if(ai_owner && istype(target, /mob/Player) && "[ai_owner.ckey]" in target.ai_alliances) return FALSE
 		if(ai_owner && ai_owner.party && ai_owner.party.members && (target in ai_owner.party.members)) return FALSE
 		return TRUE
 
@@ -413,9 +413,8 @@ var/global/list/DEMON_SKILL_VFX = list()
 		for(var/mob/m in range(radius, center))
 			if(m == src) continue
 			if(m == center) continue
-			if(!m.client) continue
 			if(ai_owner && m == ai_owner) continue
-			if(ai_owner && "[ai_owner.ckey]" in m.ai_alliances) continue
+			if(ai_owner && istype(m, /mob/Player) && "[ai_owner.ckey]" in m.ai_alliances) continue
 			if(ai_owner && ai_owner.party && ai_owner.party.members && (m in ai_owner.party.members)) continue
 			targets += m
 		return targets
