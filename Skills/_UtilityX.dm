@@ -2763,6 +2763,10 @@ obj/Skills/Utility
 						NewS=new/obj/Skills/Queue/Gear/Integrated/Integrated_Power_Claw
 					if(/obj/Items/Gear/Hook_Grip_Claw)
 						NewS=new/obj/Skills/Queue/Gear/Integrated/Integrated_Hook_Grip_Claw
+					if(/obj/Items/Gear/Missile_Massacre)
+						NewS=new/obj/Skills/Projectile/Gear/Integrated/Integrated_Missile_Massacre
+					if(/obj/Items/Gear/Ultra_Laser)
+						NewS=new/obj/Skills/Projectile/Gear/Integrated/Integrated_Ultra_Laser
 					else
 						usr << "Ruh roh.  Something went wrong.  Yell at Yan."
 						src.Using=0
@@ -2832,6 +2836,7 @@ obj/Skills/Utility
 				ModChoices.Add("Ripper Mode")
 				ModChoices.Add("Armstrong Augmentation")
 				ModChoices.Add("Ray Gear")
+				ModChoices.Add("Hilbert Effect")
 				ModChoices.Add("Overdrive")
 				ModChoices.Add("Infinity Drive")
 				ModChoices.Add("Biological Cybernetics")
@@ -2932,6 +2937,7 @@ obj/Skills/Utility
 				ModChoices.Remove("Ripper Mode")
 				ModChoices.Remove("Armstrong Augmentation")
 				ModChoices.Remove("Ray Gear")
+				ModChoices.Remove("Hilbert Effect")
 				ModChoices.Remove("Overdrive")
 
 			if(M.isRace(ANDROID)||M.CyberneticMainframe)
@@ -3043,6 +3049,10 @@ obj/Skills/Utility
 				if("Ray Gear")
 					Cost=glob.progress.EconomyCost*300
 					ModDesc="Ray Gear provides the augmented with unparalleled firepower and integrates ranged capabilities into their basic combat protocols while sapping their battery."
+				if("Hilbert Effect")
+					Cost=glob.progress.EconomyCost*300
+					ModDesc="The Hilbert Effect allows one to breach into a higher domain, increasing all offensive capabilities while sapping their battery."
+
 				if("Infinity Drive")
 					Cost=glob.progress.EconomyCost*300
 					ModDesc="Infinity Drive allows a fusion-powered augmented to constantly support their overall performance with their nigh-infinite energy outpour."
@@ -3261,6 +3271,14 @@ obj/Skills/Utility
 						src.Using=0
 						return
 					M.AddSkill(new/obj/Skills/Buffs/SpecialBuffs/MilitaryFrames/Ray_Gear)
+					M.FusionPowered=1
+					M.ManaPU=1
+				if("Hilbert Effect")
+					if((M.HasMilitaryFrame()&&!M.isRace(ANDROID))||M.Saga)
+						OMsg(usr, "[usr] tried to install a [ModChoice] into [M]...but their operating memory is already occupied.")
+						src.Using=0
+						return
+					M.AddSkill(new/obj/Skills/Buffs/SpecialBuffs/MilitaryFrames/Hilbert_Effect)
 					M.FusionPowered=1
 					M.ManaPU=1
 				if("Overdrive")

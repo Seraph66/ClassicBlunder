@@ -2867,8 +2867,8 @@ NEW VARIABLES
 				adjust(mob/p)
 					if(altered) return
 					var/totalPot = round(glob.progress.totalPotentialToDate,10)
-					SpdMult = 1.3 + totalPot/150
-					StrMult = 1.3 + totalPot/150
+					SpdMult = 1.3 + totalPot/100
+					StrMult = 1.3 + totalPot/100
 					EndMult = 0.6 + clamp(totalPot/150, 0.1, 0.4)
 					DefMult = 0.6 + clamp(totalPot/150, 0.1, 0.4)
 					var/reducedPot = totalPot/10
@@ -2904,8 +2904,8 @@ NEW VARIABLES
 				adjust(mob/p)
 					if(altered) return
 					var/totalPot = round(glob.progress.totalPotentialToDate,10)
-					SpdMult = 1 + totalPot/150
-					OffMult = 1.1 + totalPot/150
+					SpdMult = 1 + totalPot/100
+					OffMult = 1.1 + totalPot/100
 					DefMult = 0.4 + clamp(totalPot/150, 0.1, 0.4)
 					var/reducedPot = totalPot/10
 					SureHitTimerLimit = -40 + (100-totalPot)
@@ -2938,8 +2938,8 @@ NEW VARIABLES
 				adjust(mob/p)
 					if(altered) return
 					var/totalPot = round(glob.progress.totalPotentialToDate,10)
-					EndMult = 1.2 + totalPot/150
-					StrMult = 1.1 + totalPot/150
+					EndMult = 1.2 + totalPot/100
+					StrMult = 1.1 + totalPot/100
 					DefMult = 0.1 + clamp(totalPot/150, 0.1, 0.4)
 					var/reducedPot = totalPot/10
 					passives = list("ManaLeak" = 1 - totalPot/200, "WeaponBreaker" = 0.3 * reducedPot, \
@@ -2965,14 +2965,46 @@ NEW VARIABLES
 				adjust(mob/p)
 					if(altered) return
 					var/totalPot = round(glob.progress.totalPotentialToDate,10)
-					ForMult = 1.2 + totalPot/150
-					OffMult = 1.1 + totalPot/150
+					ForMult = 1.3 + totalPot/150
+					OffMult = 1.2 + totalPot/150
 					SpdMult = 0.7 + clamp(totalPot/150, 0.1, 0.4)
 					var/reducedPot = totalPot/10
 					passives = list("ManaLeak" = 1 - totalPot/200, "Instinct" = 0.5 * reducedPot, \
 					"QuickCast" = round(reducedPot/10,1), "SpecialStrike" = 1, "MovingCharge" = 1, "SpiritHand" = round(totalPot/4,1))
 
 				verb/Ray_Gear()
+					set category="Skills"
+					adjust(usr)
+					src.Trigger(usr)
+			Hilbert_Effect
+				SignatureTechnique=3
+				CyberSignature=1
+				ManaThreshold=0.001
+				ManaLeak=1
+				ForMult=1.2
+				StrMult=1.2
+				DefMult=0.6
+				FlashChange=1
+				KenWave=2
+				KenWaveSize=0.5
+				KenWaveBlend=2
+				KenWaveIcon='KenShockwavePurple.dmi'
+				IconTint=list(0.7,0.3,0.6, 0.99,0.59,0.88, 0.51,0.11,0.4, 0,0,0)
+				passives = list("ManaLeak" = 1, "MovementMastery" = 10, "SpiritSword" = 0.5, "SpiritHand" = 0.5,"Deicide" = 5)
+				SureHitTimerLimit=30
+				ActiveMessage="breaches into a higher domain through the power of cybernetics!"
+				OffMessage="returns to the standard domain."
+				adjust(mob/p)
+					if(altered) return
+					var/totalPot = round(glob.progress.totalPotentialToDate,10)
+					ForMult = 1.2 + totalPot/100
+					StrMult = 1.2 + totalPot/100
+					DefMult = 0.6 + clamp(totalPot/150, 0.1, 0.4)
+					var/reducedPot = totalPot/10
+					passives = list("ManaLeak" = 1 - totalPot/200, "MovementMastery" = round(totalPot/10,1), \
+					"Deicide" = 5+ round(reducedPot/10,1), "SpiritSword" = 0.5+round(totalPot/4,1), "SpiritHand" = 0.5+round(totalPot/4,1))
+
+				verb/Hilbert_Effect()
 					set category="Skills"
 					adjust(usr)
 					src.Trigger(usr)

@@ -3059,6 +3059,24 @@ obj/Items/Gear
 		desc="A gatling gun capable of unleashing an onslaught of plasma!"
 		Uses=90
 		Integrateable=1
+	Ultra_Laser
+		icon='Minigun.dmi'
+		TechType="MilitaryEngineering"
+		SubType="Any"
+		Techniques=list("/obj/Skills/Projectile/Gear/Ultra_Laser")
+		desc="Handheld mobile armor technology! Fire an explosive laser!"
+		Cost=200
+		Uses=3
+		Integrateable=1
+	Missile_Massacre
+		TechType="MilitaryEngineering"
+		SubType="Any"
+		icon='HomingMissile.dmi'
+		Techniques=list("/obj/Skills/Projectile/Gear/Missile_Massacre")
+		desc="Handheld mobile armor technology! An auto-aiming apparatus that spews a cluster of laser beams!"
+		Cost=200
+		Uses=10
+		Integrateable=1
 
 	Missile_Launcher
 		TechType="MilitaryTechnology"

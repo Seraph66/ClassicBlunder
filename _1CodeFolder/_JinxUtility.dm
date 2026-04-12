@@ -3002,9 +3002,9 @@ mob
 				if(istype(S, /obj/Skills/AutoHit/Gear/Integrated))
 					Count++
 					continue
-			if(Count>=2+src.AscensionsAcquired)
+			if(Count>=3+(usr.AscensionsAcquired*2))
 				src << "You already have the full number of integrated gears possible!"
-				return 2+src.AscensionsAcquired
+				return 3+(usr.AscensionsAcquired*2)
 			return Count
 
 		ForceCancelBeam()

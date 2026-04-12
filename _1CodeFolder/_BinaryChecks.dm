@@ -2614,6 +2614,8 @@ mob
 				return 1
 			if(locate(/obj/Skills/Buffs/SpecialBuffs/MilitaryFrames/Overdrive,src.contents))
 				return 1
+			if(locate(/obj/Skills/Buffs/SpecialBuffs/MilitaryFrames/Hilbert_Effect,src.contents))
+				return 1
 			if(src.InfinityModule)
 				return 1
 			if(src.BioAndroid)

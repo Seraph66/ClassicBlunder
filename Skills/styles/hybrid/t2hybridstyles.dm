@@ -85,7 +85,7 @@
 /obj/Skills/Buffs/NuStyle/SwordStyle/Art_of_Order// mystic+armed
 	SignatureTechnique=2
 	passives = list("HybridStyle" = "MysticStyle", "Wuju" = 1, "CriticalChance" = 10, "CriticalDamage"= 0.05, "SpiritSword" = 0.25, "ThunderHerald" = 1, \
-					"Instinct" = 1, "Flicker" = 1, "Fury" = 2.5, "Iaijutsu" = 2, "BlurringStrikes" = 0.25, "Rain" = 3)
+					"Instinct" = 1, "Flicker" = 1, "Fury" = 2.5, "Iaijutsu" = 2, "BlurringStrikes" = 2, "Rain" = 3)
 	// crits deal an extra amount based on the enemy's max health
 	StyleSpd = 1.3
 	StyleOff = 1.15
@@ -93,7 +93,7 @@
 	Finisher="/obj/Skills/Queue/Finisher/Alpha_Strike"
 	adjust(mob/p)
 		passives = list("HybridStyle" = "MysticStyle", "Wuju" = 1, "CriticalChance" = 10, "CriticalDamage"= 0.05, "SpiritSword" = 0.25, "ThunderHerald" = 1, \
-					"Instinct" = 1, "Flicker" = 1, "Fury" = 2.5, "Iaijutsu" = 2, "BlurringStrikes" = 0.25, "Rain" = 3)
+					"Instinct" = 1, "Flicker" = 1, "Fury" = 2.5, "Iaijutsu" = 2, "BlurringStrikes" = 2, "Rain" = 3)
 
 	verb/Art_of_Order()
 		set hidden=1

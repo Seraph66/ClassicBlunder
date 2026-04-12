@@ -911,6 +911,47 @@ obj
 					verb/Chemical_Mortar()
 						set category="Skills"
 						usr.UseProjectile(src)
+				Ultra_Laser
+				//	ManaCost=5
+					Charge = 1.5
+					Delay = 0.5
+					Distance = 40
+					Explode = 1
+					DamageMult = 15
+					StrRate = 0.25
+					ForRate = 0.75
+					EndRate = 0.65
+					AccMult = 1.5
+					Cooldown = 120
+					IconLock='BlastTracer.dmi'
+					HomingCharge = 10
+					LosesHoming = 3
+					verb/Ultra_Laser()
+						set category="Skills"
+						usr.UseProjectile(src)
+				Missile_Massacre
+				//	ManaCost=6
+					Cooldown=45
+					ZoneAttack=1
+					ZoneAttackX=8
+					ZoneAttackY=8
+					FireFromEnemy=0
+					FireFromSelf=1
+					RandomPath=1
+					Speed = 0.75
+					Distance=30
+					DamageMult=0.5
+					StrRate=0.35
+					ForRate=0.65
+					EndRate=0.75
+					AccMult = 1.15
+					Blasts=25
+					Delay=0
+					IconLock='BlastTracer.dmi'
+					IconSize=0.5
+					verb/Missile_Massacre()
+						set category="Skills"
+						usr.UseProjectile(src)
 				Integrated
 					Integrated=1
 					Integrated_Plasma_Blaster
@@ -975,7 +1016,7 @@ obj
 						Delay=1
 						Distance=40
 						Explode=1
-						DamageMult=0.35
+						DamageMult=0.5
 						StrRate=0.5
 						ForRate=0.5
 						EndRate=1
@@ -1007,6 +1048,47 @@ obj
 						ClusterAdjust=0
 						Toxic=4
 						verb/Chemical_Mortar()
+							set category="Skills"
+							usr.UseProjectile(src)
+					Integrated_Ultra_Laser
+					//	ManaCost=5
+						Charge = 1.5
+						Delay = 0.5
+						Distance = 40
+						Explode = 1
+						DamageMult = 15
+						StrRate = 0.25
+						ForRate = 0.75
+						EndRate = 0.65
+						AccMult = 1.5
+						Cooldown = 120
+						IconLock='BlastTracer.dmi'
+						HomingCharge = 10
+						LosesHoming = 3
+						verb/Ultra_Laser()
+							set category="Skills"
+							usr.UseProjectile(src)
+					Integrated_Missile_Massacre
+					//	ManaCost=6
+						Cooldown=45
+						ZoneAttack=1
+						ZoneAttackX=8
+						ZoneAttackY=8
+						FireFromEnemy=0
+						FireFromSelf=1
+						RandomPath=1
+						Speed = 0.75
+						Distance=30
+						DamageMult=0.5
+						StrRate=0.35
+						ForRate=0.65
+						EndRate=0.75
+						AccMult = 1.15
+						Blasts=25
+						Delay=0
+						IconLock='BlastTracer.dmi'
+						IconSize=0.5
+						verb/Missile_Massacre()
 							set category="Skills"
 							usr.UseProjectile(src)
 				Installed

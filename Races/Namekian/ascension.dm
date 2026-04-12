@@ -8,11 +8,11 @@ ascension
 				if(!applied)
 					switch(owner.Class)
 						if("Demon")
-							strength = 0.35
-							force = 0.35
-							endurance = 0.25
+							strength = 0.55
+							force = 0.55
+							endurance = 0.45
 							speed = 0.25
-							anger = 0.15
+							anger = 0.25
 							passives = list("AngerAdaptiveForce" = 0.25, "SpiritFlow" = 0.25, "SpiritSword" = 0.25, "TechniqueMastery" = 0.5)
 						if("Dragon")  /// after the merge, unmerged Dragon and Warrior will also receive some scaling power. Levi added it in for Gaja's in his push
 							///power = 0.75
@@ -36,12 +36,12 @@ ascension
 			onAscension(mob/owner)
 				switch(owner.Class)
 					if("Demon")
-						strength = 0.4
-						force = 0.4
-						endurance = 0.25
+						strength = 0.7
+						force = 0.7
+						endurance = 0.6
 						speed = 0.25
-						offense = 0.25
-						anger = 0.15
+						offense = 0.6
+						anger = 0.25
 						passives = list("AngerAdaptiveForce" = 0.25, "SpiritFlow" = 0.5, "SpiritSword" = 0.25)
 						skills = list(/obj/Skills/Buffs/SpecialBuffs/Daimou_Form)
 					if("Dragon")
@@ -65,10 +65,10 @@ ascension
 			onAscension(mob/owner)
 				switch(owner.Class) // super namek era
 					if("Demon")
-						strength = 0.75
-						force = 0.75
-						offense = 0.5
-						anger = 0.15
+						strength = 1.5
+						force = 1.5
+						offense = 0.75
+						anger = 0.25
 						passives = list("DemonicDurability" = 1, "MovementMastery" = 2)
 					if("Dragon")
 						//power = 1.5
@@ -90,9 +90,9 @@ ascension
 				switch(owner.Class)
 					if("Demon")
 						//power = 2
-						strength = 1.25
-						force = 1.25
-						anger = 0.15
+						strength = 1.75
+						force = 1.75
+						anger = 0.25
 						passives = list("DemonicDurability" = 1, "MovementMastery" = 4, "Extend" = 1, "Gum Gum" = 1)
 					if("Warrior")
 						//power = 3
@@ -114,8 +114,8 @@ ascension
 					owner.transUnlocked = 2
 				switch(owner.Class) ///orange namek should be unlocked here
 					if("Demon")
-						strength = 1.5
-						force = 1.5
+						strength = 1.75
+						force = 1.75
 						anger = 0.3
 						passives = list("DemonicDurability" = 1, "MovementMastery" = 4)
 					if("Warrior")
@@ -134,8 +134,8 @@ ascension
 			onAscension(mob/owner)
 				switch(owner.Class)
 					if("Demon")
-						strength = 1.5
-						force = 1.5
+						strength = 1.75
+						force = 1.75
 						anger = 0.3
 						passives = list("DemonicDurability" = 2, "MovementMastery" = 5)
 					if("Warrior")

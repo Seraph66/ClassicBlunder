@@ -7,7 +7,7 @@
 				set category="Utility"
 				if(src.Using)
 					return
-				if(usr.GetAndroidIntegrated()<usr.AscensionsAcquired*2)
+				if(usr.GetAndroidIntegrated()<3+(usr.AscensionsAcquired*2))
 					src.Using=1
 					var/obj/Items/Gear/Choice
 					var/list/obj/Items/Gear/IG=list("Cancel")
@@ -67,6 +67,10 @@
 							NewS=new/obj/Skills/Queue/Gear/Integrated/Integrated_Power_Claw
 						if(/obj/Items/Gear/Hook_Grip_Claw)
 							NewS=new/obj/Skills/Queue/Gear/Integrated/Integrated_Hook_Grip_Claw
+						if(/obj/Items/Gear/Missile_Massacre)
+							NewS=new/obj/Skills/Projectile/Gear/Integrated/Integrated_Missile_Massacre
+						if(/obj/Items/Gear/Ultra_Laser)
+							NewS=new/obj/Skills/Projectile/Gear/Integrated/Integrated_Ultra_Laser
 						else
 							usr << "Ruh roh.  Something went wrong.  Yell at Yan."
 							src.Using=0

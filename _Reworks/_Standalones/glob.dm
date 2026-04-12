@@ -128,8 +128,8 @@ progressTracker
 		WipeStart = 0
 		DaysOfWipe = 1
 
-		SAGA_T2_POT = 25
-		SAGA_T3_POT = 35
+		SAGA_T2_POT = 15
+		SAGA_T3_POT = 25
 
 		T1_STYLES = list(10, 20)
 		T2_STYLES = list(25, 35)
