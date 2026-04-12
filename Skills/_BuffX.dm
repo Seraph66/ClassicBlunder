@@ -12653,7 +12653,6 @@ mob
 				if(src.isRace(MAKYO))
 					src.ActiveBuff.IconReplace=1
 					src.ActiveBuff.icon=src.ExpandBase
-					src.ActiveBuff.passives["EnergyLeak"] = max(2-(AscensionsAcquired*0.25),0.5)
 					src.ActiveBuff.passives["GiantForm"] = round(AscensionsAcquired/2)
 					src.ActiveBuff.passives["Godspeed"] = AscensionsAcquired
 					src.ActiveBuff.AutoAnger=0
