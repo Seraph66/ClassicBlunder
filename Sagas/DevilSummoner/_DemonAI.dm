@@ -9,6 +9,7 @@
 
 	var/demon_hp = 100
 	var/next_attack_multiplier = 1
+	var/tmp/_outgoing_damage = FALSE  // flag: when TRUE, DoDamage uses parent convention (src=attacker)
 	var/demon_reflect_until = 0
 	var/image/reflect_overlay_self = null
 	var/image/reflect_overlay_owner = null
@@ -33,7 +34,7 @@
 		if(!passive_handler) passive_handler = new()
 
 		// Scaling
-		var/scale = 1 + (max(0, owner.Potential) / 100)
+		var/scale = max(1, owner.Potential) / 100
 		StrMod = max(1, round(dd.demon_str * scale, 0.01))
 		ForMod = max(1, round(dd.demon_for * scale, 0.01))
 		EndMod = max(1, round(dd.demon_end * scale, 0.01))
@@ -128,14 +129,16 @@
 		var/crit_chance = 5 + DemonPassiveCritBonus()
 		if(prob(crit_chance))
 			dmg = round(dmg * DemonPassiveCritDmgMult())
-		target.DoDamage(src, TrueDamage(dmg))
+		DemonDealDamage(target, TrueDamage(dmg))
+		DemonHitVisual(target)
 		DemonPassiveAddAilments(target)
 		Bump(target)
 		// Double Strike: hit twice
 		if(passive_double_strike)
 			spawn(2)
 				if(src && target)
-					target.DoDamage(src, TrueDamage(dmg))
+					DemonDealDamage(target, TrueDamage(dmg))
+					DemonHitVisual(target)
 					Bump(target)
 		// Attack All: also hit nearby enemies
 		if(passive_attack_all)
@@ -144,7 +147,8 @@
 				if(ai_owner && m == ai_owner) continue
 				if(ai_owner && istype(m, /mob/Player) && "[ai_owner.ckey]" in m.ai_alliances) continue
 				if(ai_owner && ai_owner.party && ai_owner.party.members && (m in ai_owner.party.members)) continue
-				m.DoDamage(src, TrueDamage(round(dmg * 0.6)))
+				DemonDealDamage(m, TrueDamage(round(dmg * 0.6)))
+				DemonHitVisual(m)
 				DemonPassiveAddAilments(m)
 
 	proc/DemonDespawn()
@@ -160,7 +164,39 @@
 			ai_owner << "<b>[name] has been defeated and returned.</b> Meditate to restore them."
 		del(src)
 
-	DoDamage(mob/attacker, damage)
+	// Visual feedback for demon attacks
+	proc/DemonHitVisual(mob/target)
+		if(!target) return
+		Hit_Effect(target, 1, rand(-8,8), rand(-8,8))
+		flick("KB", target)
+
+	// Outgoing damage wrapper
+	proc/DemonDealDamage(mob/target, val)
+		if(istype(target, /mob/Player/AI/Demon))
+			// Demon-vs-demon
+			target.DoDamage(src, val)
+		else
+			// Non-demon target: bypass override
+			_outgoing_damage = TRUE
+			src.DoDamage(target, val)
+			_outgoing_damage = FALSE  // safety reset
+		// Demon LifeSteal
+		if(passive_handler && val > 0)
+			var/ls = passive_handler.Get("LifeSteal")
+			if(ls > 0)
+				var/heal = max(1, round(val * ls / 100))
+				demon_hp = min(100, demon_hp + heal)
+				var/datum/party_demon/pd = DemonGetPartyDemon()
+				if(pd) pd.current_hp = demon_hp
+
+	DoDamage(mob/other, damage)
+		// If the outgoing flag is set, we're dealing damage outward, route to parent
+		if(_outgoing_damage)
+			_outgoing_damage = FALSE
+			..(other, damage)
+			return
+		// Otherwise this is incoming damage to the demon
+		var/mob/attacker = other
 		if(ai_owner && ai_owner.PureRPMode) return
 		if(ai_owner && istype(attacker, /mob))
 			if(attacker == ai_owner) return
@@ -180,7 +216,8 @@
 		if(DemonHasRepel("Phys"))
 			var/repel_back = max(1, round(raw_dmg * 0.25))
 			raw_dmg = max(1, round(raw_dmg * 0.25))
-			if(istype(attacker, /mob)) attacker.DoDamage(src, TrueDamage(repel_back))
+			if(istype(attacker, /mob))
+				DemonDealDamage(attacker, TrueDamage(repel_back))
 			if(ai_owner) ai_owner << "<font color='#aaccff'>[name] repels part of the attack!</font>"
 		// Drain: heal 25% of incoming damage, take 25%
 		else if(DemonHasDrain("Phys"))
@@ -190,6 +227,12 @@
 			if(ai_owner) ai_owner << "<font color='#88ffaa'>[name] drains [heal_amt] HP from the attack!</font>"
 		// Apply standard resist multiplier to the (possibly already-reduced) value
 		raw_dmg = max(1, round(raw_dmg * resist))
+		// LifeGeneration for demons
+		if(passive_handler)
+			var/lg = passive_handler.Get("LifeGeneration")
+			if(lg > 0)
+				var/lg_heal = max(1, round(lg / glob.LIFE_GEN_DIVISOR * raw_dmg))
+				demon_hp = min(100, demon_hp + lg_heal)
 		demon_hp = max(0, demon_hp - raw_dmg)
 		if(!ai_owner) return
 		for(var/datum/party_demon/pd in ai_owner.demon_party)

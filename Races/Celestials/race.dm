@@ -33,12 +33,14 @@ race
 				if("Angel")
 					transformations += new/transformation/celestial/Master_of_Arms
 					p << "You have embarked upon the path of the Master of Arms."
+					p.passive_handler.Set("BladeFisting", 1)
 				if("Demon")
 					transformations += new/transformation/celestial/Celestial_Devil_Trigger
 					transformations += new/transformation/celestial/Celestial_Sin_Devil_Trigger
 					p.TrueName=input(p, "What is the name of the Demon within?", "Get True Name") as text
 					p.passive_handler.Set("Innovation", 1)
 					p.passive_handler.Set("MartialMagic", 1)
+					p.passive_handler.Set("BladeFisting", 1)
 					p.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic)
 					p.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/HellFire)
 					p.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption)
