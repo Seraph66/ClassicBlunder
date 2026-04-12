@@ -20,7 +20,6 @@ race
 		offense = 2
 		defense = 2
 		regeneration = 3
-		recovery = 2;
 		intellect = 2
 		imagination = 1
 		anger = 1
@@ -32,7 +31,7 @@ race
 			regen.RegenerateLimbs=1;
 			var/eldType = alert(user, "Is your true eldritch nature Reflected from the Greater Depths, or are you Shrouded in the haze of the Sea of Darkness?", "Eldritch Type", "Reflected", "Shrouded");
 			user.Secret="Eldritch ([eldType])"
-			user.giveSecret("Eldritch[eldType]")
+			user.giveSecret("Eldritch ([eldType])")
 			user.secretDatum.nextTierUp = 999
-			if(eldType == "Shrouded") user.AngerMax=1.5;
-			if(eldType == "Reflected") user.passive_handler.Increase("MovingCharge", 1);
+			if(eldType == "Reflected")
+				user.AddSkill(new /obj/Skills/Utility/Offer_Pact)

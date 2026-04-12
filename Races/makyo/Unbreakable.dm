@@ -1,5 +1,4 @@
 /obj/Skills/AutoHit/Unbreakable_Release
-	DamageMult = 1
 	Area     = "Circle"
 	Distance = 3
 	ActiveMessage = "remains unbroken by your efforts."
@@ -26,7 +25,7 @@
 		user.unbreakable_tracking = 1
 		user.unbroken_absorbed    = 0
 
-		var/obj/Effects/BloodShieldAura/shield = new()
+		var/obj/Effects/BloodShieldAura/shield = new(user.loc)
 		shield.transform = user.transform
 		user.vis_contents += shield
 
@@ -41,6 +40,7 @@
 
 	proc/_unbreakable_release(mob/user, obj/Effects/BloodShieldAura/shield)
 		if(!user) return
+		if(!SlotlessOn) return
 
 		if(shield && shield.loc)
 			user.vis_contents -= shield
@@ -50,16 +50,17 @@
 		user.unbreakable_tracking = 0
 		user.unbroken_absorbed    = 0
 
-		if(src.SlotlessOn)
-			src.Trigger(user, 1)
-
-		var/ampBonus = min(stored / 2, 20)
+		var/ampBonus = max(min(stored / 2, 20), 1)
 
 		var/obj/Skills/AutoHit/Unbreakable_Release/atk = new()
-		atk.DamageMult = max(ampBonus, 1)
+		atk.DamageMult = ampBonus
 		user.Activate(atk)
 
 		KenShockwave(user, icon='KenShockwaveBloodlust.dmi', Size=1, Time=8)
+
+		// Deactivate the buff after the release fires
+		if(SlotlessOn)
+			Trigger(user)
 
 	verb/Unbreakable()
 		set category="Skills"
