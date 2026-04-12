@@ -144,17 +144,17 @@
 			StyleFor = 1.9
 			StyleStr = 1.75
 			StyleOff = 1.6
-			passives = list("KillerInstinct" = 1, "CriticalChance" = 2, "LifeSteal" = 1, "Pressure" = 2, "Momentum" = 2, "Sadist" = 2)
+			passives = list("KillerInstinct" = 1, "CriticalChance" = 20, "CriticalDamage" = 0.2, "LifeSteal" = 1, "Pressure" = 2, "Momentum" = 2, "Sadist" = 2)
 		else if(tier >= 2)
 			StyleFor = 1.4
 			StyleStr = 1.35
 			StyleOff = 1.3
-			passives = list("KillerInstinct" = 1, "CriticalChance" = 2, "LifeSteal" = 1, "Pressure" = 2)
+			passives = list("KillerInstinct" = 1, "CriticalChance" = 20, "CriticalDamage" = 0.2, "LifeSteal" = 1, "Pressure" = 2)
 		else
 			StyleFor = 1.2
 			StyleStr = 1.15
 			StyleOff = 1.1
-			passives = list("KillerInstinct" = 1, "CriticalChance" = 2)
+			passives = list("KillerInstinct" = 1, "CriticalChance" = 20, "CriticalDamage" = 0.2)
 	verb/Dark_Gestalt()
 		set hidden = 1
 		src.Trigger(usr)

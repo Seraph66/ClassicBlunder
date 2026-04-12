@@ -17,7 +17,7 @@
 			ForMult = 1.4
 			StrMult = 1.35
 			OffMult = 1.3
-			passives = list("Scorching" = 1, "Momentum" = 1, "FireHerald" = 1, "Brutalize" = 1, "CriticalDamage" = 2, "DemonicDurability" = 4)
+			passives = list("Scorching" = 1, "Momentum" = 1, "FireHerald" = 1, "Brutalize" = 1, "CriticalChance" = 20, "CriticalDamage" = 0.2, "DemonicDurability" = 4)
 		else if(tier >= 2)
 			ForMult = 1.25
 			StrMult = 1.15
@@ -75,7 +75,7 @@
 			ForMult = 1.4
 			EndMult = 1.35
 			DefMult = 1.3
-			passives = list("Shattering" = 1, "Harden" = 1, "EarthHerald" = 1, "Grit" = 1, "Juggernaut" = 1, "CriticalBlock" = 2)
+			passives = list("Shattering" = 1, "Harden" = 1, "EarthHerald" = 1, "Grit" = 1, "Juggernaut" = 1, "BlockChance" = 20, "CriticalBlock" = 0.2)
 		else if(tier >= 2)
 			ForMult = 1.25
 			EndMult = 1.15
@@ -162,12 +162,12 @@
 			StrMult = 1.4
 			ForMult = 1.35
 			OffMult = 1.3
-			passives = list("KillerInstinct" = 1, "Pressure" = 1, "CriticalChance" = 2, "LifeSteal" = 2, "DemonicInfusion" = 1)
+			passives = list("KillerInstinct" = 1, "Pressure" = 1, "CriticalChance" = 20, "CriticalDamage" = 0.2, "LifeSteal" = 2, "DemonicInfusion" = 1)
 		else if(tier >= 2)
 			StrMult = 1.25
 			ForMult = 1.15
 			OffMult = 1
-			passives = list("KillerInstinct" = 1, "Pressure" = 1, "CriticalChance" = 2, "LifeSteal" = 1)
+			passives = list("KillerInstinct" = 1, "Pressure" = 1, "CriticalChance" = 20, "CriticalDamage" = 0.2, "LifeSteal" = 1)
 		else
 			StrMult = 1.1
 			ForMult = 1
