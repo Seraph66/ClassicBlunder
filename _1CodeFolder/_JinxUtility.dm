@@ -135,7 +135,7 @@ mob
 					defender.passive_handler.Set("Determination(Purple)", 0)
 					defender<<"Your SOUL color shifts to green!"
 			if(src.HasSoftStyle())
-				defender.GainFatigue(val*clamp(glob.SOFT_STYLE_RATIO*src.GetSoftStyle(), 0.0001, 0.75))
+				defender.GainFatigue(val*clamp(glob.SOFT_STYLE_RATIO*src.GetSoftStyle(), 0.0001, 0.5))
 			if(src.HasHardStyle())
 				if(!src.CursedWounds())
 					src.DealWounds(defender, val*clamp(glob.HARD_STYLE_RATIO*src.GetHardStyle(), 0.0001, 0.75))
