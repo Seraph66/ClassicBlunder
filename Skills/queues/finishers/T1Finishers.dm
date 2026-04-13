@@ -13,7 +13,7 @@
         BuffAffected = "/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Debuff/Death_Mark"
         BuffSelf="/obj/Skills/Buffs/SlotlessBuffs/Autonomous/QueueBuff/Finisher/Contempt_for_the_Weak"
         //TODO: finisher this
-        DamageMult = T1_DMG_MULT; 
+        DamageMult = T1_DMG_MULT;
     Leg_Grab
         Instinct=2
         Grapple=1
@@ -108,8 +108,12 @@
         HitMessage=""
         FollowUp="/obj/Skills/AutoHit/Great_Cleave"
         BuffSelf="/obj/Skills/Buffs/SlotlessBuffs/Autonomous/QueueBuff/Finisher/Zwercopter"
-
-
+    Session
+        Combo=20
+        DamageMult = 0.25
+        HitMessage=", emboldened, sinks into shadows only to leap back out and slashing at their opponent over and over again!"
+        BuffSelf=0
+        HitSparkIcon = 'Slash_Multi.dmi'
 
 
     Major_Eruption

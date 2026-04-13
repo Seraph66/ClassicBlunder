@@ -699,6 +699,7 @@
 #include "Races\nobody\race.dm"
 #include "Races\nobody\racials.dm"
 #include "Races\nobody\transformations.dm"
+#include "Races\nobody\uniqueBuffs.dm"
 #include "Races\Popo\ascensions.dm"
 #include "Races\Popo\race.dm"
 #include "Races\saiyan\ascensions.dm"
