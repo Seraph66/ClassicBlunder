@@ -6281,7 +6281,7 @@ NEW VARIABLES
 					set category="Skills"
 					src.Trigger(usr)
 			Jet_Boots
-				passives = list("SuperDash" = 1, "Skimmming " = 1, "Pursuer" = 1)
+				passives = list("SuperDash" = 1, "Skimming " = 1, "Pursuer" = 1)
 				SuperDash=1
 				Skimming=1
 				Pursuer=1
