@@ -37,20 +37,20 @@ GlobalStorage
 
 		for(var/x in objs)
 			if(ispath(x,/obj/Skills))
-				skillHTML += "<td><a href=byond://?src=INSERTHERE;action=magic;var=[x]>[x]<td></td></tr>"
+				skillHTML += "<td><a href=byond://?src=INSERTHERE;action=giveobj;var=[x]>[x]<td></td></tr>"
 				continue
 			else if(ispath(x,/obj/Items))
-				itemHTML += "<td><a href=byond://?src=INSERTHERE;action=magic;var=[x]>[x]<td></td></tr>"
+				itemHTML += "<td><a href=byond://?src=INSERTHERE;action=giveobj;var=[x]>[x]<td></td></tr>"
 				continue
-			objHTML += "<td><a href=byond://?src=INSERTHERE;action=magic;var=[x]>[x]<td></td></tr>"
+			objHTML += "<td><a href=byond://?src=INSERTHERE;action=giveobj;var=[x]>[x]<td></td></tr>"
 
 		var/list/mobs = typesof(/mob)
 		for(var/x in mobs)
-			mobHTML += "<td><a href=byond://?src=INSERTHERE;action=magic;var=[x]>[x]<td></td></tr>"
+			mobHTML += "<td><a href=byond://?src=INSERTHERE;action=giveobj;var=[x]>[x]<td></td></tr>"
 
 		var/list/turfs = typesof(/turf)
 		for(var/x in turfs)
-			turfHTML += "<td><a href=byond://?src=INSERTHERE;action=magic;var=[x]>[x]<td></td></tr>"
+			turfHTML += "<td><a href=byond://?src=INSERTHERE;action=giveobj;var=[x]>[x]<td></td></tr>"
 
 
 /mob/Admin4/verb/ChangeWorldSettings()

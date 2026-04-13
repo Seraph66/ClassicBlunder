@@ -2620,7 +2620,7 @@ atom/Topic(A,B[])/*
 					var/obj/Skills/Companion/c = src
 					c.companion_techniques += "[variable]"
 					Log("Admin","[ExtractInfo(usr)] created a [variable], and gave to/placed under/near [ExtractInfo(src)].")
-	if(B["action"]=="magic")
+	if(B["action"]=="giveobj")
 		if(usr.Admin<1 && !glob.TESTER_MODE) return
 
 		var/MagicX

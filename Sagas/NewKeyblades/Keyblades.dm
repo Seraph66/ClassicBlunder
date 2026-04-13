@@ -45,7 +45,7 @@ mob/proc/
 				if("Ripple Drive")
 					confirm=alert(src, "Release a powerful wave of energy with a strong knockback.", "Choice","Yes", "No")
 				if("Stun Impact")
-					confirm=alert(src, "Queues up a stunning attack.", "Yes", "No")
+					confirm=alert(src, "Queues up a stunning attack.", "Choice", "Yes", "No")
 				if("Explosion")
 					confirm=alert(src, "Queue up a weak hit that follows up with a powerful explosive one.", "Choice","Yes", "No")
 			switch(choice)

@@ -533,6 +533,8 @@ mob
 			if(passive_handler.Get("LunarAnger")&&ManaAmount>50)
 				src.LunarWrathAnger()
 				src.Anger()
+			if(passive_handler.Get("Unrelenting Wrath"))
+				src.Anger=src.AngerMax
 			if(passive_handler["TensionPowered"] && !src.isMazokuHuman())
 				if(src.canHTM())
 					src.race.transformations[2].transform(src, TRUE)

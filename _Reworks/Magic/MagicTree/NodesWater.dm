@@ -17,6 +17,7 @@
         xLoc = WATER_NODE_ENTRY_X;
         yLoc = WATER_NODE_ENTRY_Y;
         nodeType = "Autohit"
+        grantsSkills = list(/obj/Skills/AutoHit/Magic/Water/Riptide)
         unlocksNodes = list(WATER_NODE_21, WATER_NODE_22);
 
     water_node_21
@@ -56,6 +57,7 @@
         xLoc = WATER_NODE_41_X;
         yLoc = WATER_NODE_41_Y;
         nodeType = "Debuff"
+        grantsSkills = list(/obj/Skills/Buffs/SlotlessBuffs/Magic/Water/Wetten_Socks)
         unlocksNodes = list(WATER_NODE_CENTER, WATER_NODE_61, WATER_NODE_31);
 
     water_node_42
@@ -63,6 +65,7 @@
         xLoc = WATER_NODE_42_X;
         yLoc = WATER_NODE_42_Y;
         nodeType = "Projectile"
+        grantsSkills = list(/obj/Skills/Projectile/Magic/Water/Frost_Shamshir)
         unlocksNodes = list(WATER_NODE_CENTER, WATER_NODE_62, WATER_NODE_32);
 
     water_node_center

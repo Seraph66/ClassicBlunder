@@ -1,6 +1,8 @@
 mob/var/usingUBW = FALSE
 
 /mob/Admin3/verb/GiveDomainExpansion()
+	set category = "Admin"
+	set name = "Give Domain Expansion"
 	CreateSwapMap()
 	var/obj/Skills/Buffs/SlotlessBuffs/Domain_Expansion/d = new()
 	d.range = input(src, "What is the range of the domain activation when used wide?") as num

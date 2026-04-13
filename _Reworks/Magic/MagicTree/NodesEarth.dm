@@ -17,6 +17,7 @@ magic_node/earth_tree
         xLoc = EARTH_NODE_ENTRY_X
         yLoc = EARTH_NODE_ENTRY_Y
         nodeType = "AOE"
+        grantsSkills = list(/obj/Skills/AutoHit/Magic/Earth/Seismic_Entry)
         unlocksNodes = list(EARTH_NODE_12, EARTH_NODE_13, EARTH_NODE_21);
     earth_node_12
         name=EARTH_NODE_12
@@ -38,6 +39,7 @@ magic_node/earth_tree
         xLoc = EARTH_NODE_21_X
         yLoc = EARTH_NODE_21_Y
         nodeType = "Buff"
+        grantsSkills = list(/obj/Skills/Buffs/SlotlessBuffs/Magic/Earth/Ward_of_Stone)
         unlocksNodes = list(EARTH_NODE_22, EARTH_NODE_23, EARTH_NODE_31);
     earth_node_22
         name=EARTH_NODE_22
@@ -59,6 +61,7 @@ magic_node/earth_tree
         xLoc = EARTH_NODE_31_X
         yLoc = EARTH_NODE_31_Y
         nodeType = "Debuff"
+        grantsSkills = list(/obj/Skills/Buffs/SlotlessBuffs/Magic/Earth/Prickly_Ballet)
         unlocksNodes = list(EARTH_NODE_CROWN, EARTH_NODE_32, EARTH_NODE_33);
     earth_node_32
         name=EARTH_NODE_32
