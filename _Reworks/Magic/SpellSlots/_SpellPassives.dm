@@ -128,14 +128,26 @@
 
     water
         spellElement="Water"
-        barotrauma//drowning
+        barotrauma//drowning pressure
             name="Barotrauma"
-        overflow//flooding
+            passives = list("Crushing" = 3, "Chilling" = 2)
+            autohitOnlyPassives = list("DamageMult" = 1.2)
+            projectileOnlyPassives = list("DamageMult" = 1.2)
+        overflow//flooding spread
             name="Overflow"
+            passives = list("Freezing" = 2)
+            autohitOnlyPassives = list("Distance" = 3)
+            projectileOnlyPassives = list("Distance" = 8)
         flashfreeze
             name="Flashfreeze"
-        sublimate
+            passives = list("Freezing" = 6, "ApplySlow" = 1)
+            autohitOnlyPassives = list("Chilling" = 3)
+            projectileOnlyPassives = list("Chilling" = 3)
+        sublimate//phase transition
             name="Sublimate"
+            passives = list("Chilling" = 4)
+            autohitOnlyPassives = list("ForOffense" = 0.5, "StrOffense" = 0.5, "DamageMult" = 1.15)
+            projectileOnlyPassives = list("ForRate" = 0.5, "StrRate" = 0.5, "DamageMult" = 1.15)
         
     fire
         spellElement="Fire";
@@ -206,9 +218,11 @@
 
     time
         spellElement="Time"
-        paradox
+        paradox//temporal echo
             name="Paradox"
-            // lol idk what this one does yet ! ! !
+            passives = list("DamageMult" = 1.25, "PureDamage" = 2)
+            autohitOnlyPassives = list("StrOffense" = 0.5, "ForOffense" = 0.5)
+            projectileOnlyPassives = list("Explode" = 1)
         chargeflux
             name="Charge Flux"
             passives = list("ChargeDelay" = 3);

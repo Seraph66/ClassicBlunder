@@ -1,13 +1,59 @@
 //air
 /obj/Skills/AutoHit/Magic/Air
-    SpellElement="Air"
-    SpellSlot=1;
-    Breaking_Twister
+	SpellElement="Air"
+	SpellSlot=1
+	Breaking_Twister
+		Area="Circle"
+		Distance=5
+		DamageMult=3
+		Paralyzing=3
+		Knockback=2
+		SpecialAttack=1
+		ForOffense=1
+		CanBeDodged=1
+		CanBeBlocked=0
+		FlickAttack=1
+		ManaCost=5
+		Cooldown=45
+		HitSparkIcon='Hit Effect Wind.dmi'
+		HitSparkSize=1
+		HitSparkDispersion=8
+		HitSparkTurns=0
+		ActiveMessage="invokes: <font size=+1>BREAKING TWISTER!</font size>"
+		verb/Breaking_Twister()
+			set category="Skills"
+			adjust(usr)
+			usr.Activate(src)
+
 /obj/Skills/Buffs/SlotlessBuffs/Magic/Air
-    SpellElement="Air"
-    SpellSlot=1;
-    Evading_Zephyr
+	SpellElement="Air"
+	SpellSlot=1
+	Evading_Zephyr
+		TimerLimit=15
+		Cooldown=90
+		ManaCost=8
+		ManaDrain=0.01
+		SpdMult=1.15
+		Godspeed=1
+		passives=list("FluidForm" = 1, "Afterimages" = 1)
+		ActiveMessage="wraps themselves in a veil of wind!"
+		OffMessage="lets the wind dissipate..."
+		verb/Evading_Zephyr()
+			set category="Skills"
+			adjust(usr)
+			src.Trigger(usr)
+
 /obj/Skills/Projectile/Magic/Air
-    SpellElement="Air"
-    SpellSlot=1;
-    Mentis_Imperium//line; but really emulate mach stunner
+	SpellElement="Air"
+	SpellSlot=1
+	Mentis_Imperium
+		DamageMult=4
+		Paralyzing=4
+		Speed=3
+		Distance=12
+		ManaCost=5
+		Cooldown=40
+		ActiveMessage="invokes: <font size=+1>MENTIS IMPERIUM!</font size>"
+		verb/Mentis_Imperium()
+			set category="Skills"
+			usr.UseProjectile(src)

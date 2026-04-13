@@ -21,6 +21,7 @@
 /mob/proc/unlockMagePassive(magic_node/mn)
     if(!mn) return;
     if(!mn.grantsMagePassives || !mn.grantsMagePassives.len) return;
+    findOrAddSkill(/obj/Skills/Utility/Enchant_Spell)
     var/list/elements_touched = list()
     for(var/type in mn.grantsMagePassives)
         var/mage_passive/mp = new type;

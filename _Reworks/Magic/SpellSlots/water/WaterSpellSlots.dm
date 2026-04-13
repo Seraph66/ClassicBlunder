@@ -1,14 +1,61 @@
 //water
 /obj/Skills/Buffs/SlotlessBuffs/Magic/Water
-    SpellElement="Water"
-    SpellSlot=1;
-    Wetten_Socks
-        
+	SpellElement="Water"
+	SpellSlot=1
+	Wetten_Socks
+		AffectTarget=1
+		Range=12
+		TimerLimit=12
+		Cooldown=60
+		ManaCost=8
+		SlowAffected=3
+		CrippleAffected=2
+		ActiveMessage="curses their target with sodden footing!"
+		OffMessage="releases the hex!"
+		verb/Wetten_Socks()
+			set category="Skills"
+			adjust(usr)
+			src.Trigger(usr)
+
 /obj/Skills/AutoHit/Magic/Water
-    SpellElement="Water"
-    SpellSlot=1;
-    Riptide
+	SpellElement="Water"
+	SpellSlot=1
+	Riptide
+		Area="Target"
+		Distance=5
+		DamageMult=5
+		Freezing=2
+		Slow=1
+		SpecialAttack=1
+		ForOffense=1
+		CanBeDodged=1
+		CanBeBlocked=0
+		FlickAttack=1
+		ManaCost=5
+		Cooldown=40
+		HitSparkIcon='SnowBurst2.dmi'
+		HitSparkSize=1
+		HitSparkDispersion=6
+		HitSparkTurns=0
+		ActiveMessage="invokes: <font size=+1>RIPTIDE!</font size>"
+		verb/Riptide()
+			set category="Skills"
+			adjust(usr)
+			usr.Activate(src)
+
 /obj/Skills/Projectile/Magic/Water
-    SpellElement="Water"
-    SpellSlot=1;
-    Frost_Shamshir
+	SpellElement="Water"
+	SpellSlot=1
+	Frost_Shamshir
+		DamageMult=4
+		Freezing=2
+		Homing=1
+		Knockback=1
+		Speed=2
+		Distance=15
+		ManaCost=5
+		Cooldown=45
+		ActiveMessage="invokes: <font size=+1>FROST SHAMSHIR!</font size>"
+		verb/Frost_Shamshir()
+			set category="Skills"
+			usr.UseProjectile(src)
