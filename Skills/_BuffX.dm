@@ -2866,7 +2866,7 @@ NEW VARIABLES
 				OffMessage="suffers a circuitry breakdown!"
 				adjust(mob/p)
 					if(altered) return
-					var/totalPot = round(src.Potential,10)
+					var/totalPot = round(p.Potential,10)
 					SpdMult = 1.3 + totalPot/100
 					StrMult = 1.3 + totalPot/100
 					EndMult = 0.6 + clamp(totalPot/150, 0.1, 0.4)
@@ -2903,7 +2903,7 @@ NEW VARIABLES
 				var/sandevistanUsages = 0
 				adjust(mob/p)
 					if(altered) return
-					var/totalPot = round(src.Potential,10)
+					var/totalPot = round(p.Potential,10)
 					SpdMult = 1 + totalPot/100
 					OffMult = 1.1 + totalPot/100
 					DefMult = 0.4 + clamp(totalPot/150, 0.1, 0.4)
@@ -2937,7 +2937,7 @@ NEW VARIABLES
 				OffMessage="stumbles as their arrogant bulwark fades away..."
 				adjust(mob/p)
 					if(altered) return
-					var/totalPot = round(src.Potential,10)
+					var/totalPot = round(p.Potential,10)
 					EndMult = 1.2 + totalPot/100
 					StrMult = 1.1 + totalPot/100
 					DefMult = 0.1 + clamp(totalPot/150, 0.1, 0.4)
@@ -2964,7 +2964,7 @@ NEW VARIABLES
 				OffMessage="ditches the excess weaponry..."
 				adjust(mob/p)
 					if(altered) return
-					var/totalPot = round(src.Potential,10)
+					var/totalPot = round(p.Potential,10)
 					ForMult = 1.3 + totalPot/150
 					OffMult = 1.2 + totalPot/150
 					SpdMult = 0.7 + clamp(totalPot/150, 0.1, 0.4)
@@ -2996,7 +2996,7 @@ NEW VARIABLES
 				OffMessage="returns to the standard domain."
 				adjust(mob/p)
 					if(altered) return
-					var/totalPot = round(src.Potential,10)
+					var/totalPot = round(p.Potential,10)
 					ForMult = 1.2 + totalPot/100
 					StrMult = 1.2 + totalPot/100
 					DefMult = 0.6 + clamp(totalPot/150, 0.1, 0.4)

@@ -359,6 +359,8 @@ mob/Players/Stat()
 					else
 						usr.Target.setUpScent()
 						stat("Scent: ", Scent)
+					if(usr.Target.CheckSlotless("Disguise"))
+						stat("Instinct: ", "Something about them feels off...")
 
 				Restricted
 

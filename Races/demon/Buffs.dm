@@ -44,6 +44,10 @@
 					OMsg(usr, "<b>[usr] has revealed their true nature as a <i>[glob.racials.DEMON_NAME]</i></b>")
 				current_charges--
 				usr << "You have [current_charges] charges of true form left."
+				var/obj/Skills/Buffs/SlotlessBuffs/Racial/Demon/Disguise/D = locate() in usr
+				if(D && usr.BuffOn(D))
+					D.Trigger(usr, TRUE)
+					usr << "<i>Your True Form shatters your disguise.</i>"
 			else
 				return 0
 		src.Trigger(usr)

@@ -626,6 +626,7 @@
 #include "Races\demon\DemonMagic.dm"
 #include "Races\demon\DemonRacials.dm"
 #include "Races\demon\DevilArms.dm"
+#include "Races\demon\Disguise.dm"
 #include "Races\demon\Influence.dm"
 #include "Races\demon\Pacts.dm"
 #include "Races\demon\passives.dm"

@@ -25,7 +25,10 @@
             src.Cooldown()
             usr.Imitating = 0
         else
-            var/mob/Target = usr.Target 
+            if(usr.CheckSlotless("Disguise"))
+                usr << "You cannot imitate while disguised. Drop your disguise first."
+                return
+            var/mob/Target = usr.Target
             if(Target && get_dist(usr, Target) < 20)
                 if(!Target.client) return
                 Target <<"<i>[pick(RANDOM_ALERT)]</i>"

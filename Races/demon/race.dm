@@ -16,7 +16,8 @@ race
 
 		passives = list("AbyssMod" = 0.5, "Corruption" = 1, "StaticWalk" = 1, "SpaceWalk" = 1, "CursedWounds" = 1, "FakePeace" = 1, "MartialMagic" = 1)
 		skills = list(/obj/Skills/Buffs/SlotlessBuffs/Devil_Arm2,/obj/Skills/Utility/Imitate, /obj/Skills/Utility/Telepathy,  /obj/Skills/Buffs/SlotlessBuffs/Regeneration,  \
-						/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic, /obj/Skills/Buffs/SlotlessBuffs/DemonMagic/HellFire, /obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption, /obj/Skills/Teleport/Traverse_Depths)
+						/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic, /obj/Skills/Buffs/SlotlessBuffs/DemonMagic/HellFire, /obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption, /obj/Skills/Teleport/Traverse_Depths, \
+						/obj/Skills/Buffs/SlotlessBuffs/Racial/Demon/Disguise)
 		var/devil_arm_upgrades = 1
 		var/sub_devil_arm_upgrades = 0
 

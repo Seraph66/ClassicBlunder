@@ -19,6 +19,15 @@ transformation
 					form_hair_icon = x
 					form_icon_2_icon = x
 				..()
+			transform(mob/user, forceTrans)
+				var/was_active = is_active
+				..()
+				if(!was_active && is_active)
+					var/obj/Skills/Buffs/SlotlessBuffs/Racial/Demon/Disguise/D = locate() in user
+					if(D && user.BuffOn(D))
+						D.Trigger(user, TRUE)
+						user << "<i>Your Devil Trigger shatters your disguise.</i>"
+
 			mastery_boons(mob/user)
 				if(mastery >= 25)
 					passives = list("GodKi" = 0.25, "HellRisen" = 0.5, "DemonicDurability" = 4, "Brutalize" = 4, "PureDamage" = 3, "PureReduction" = 3)
