@@ -11,11 +11,34 @@ mob/Player/AI/var/tmp/mob/targetted = null
 mob/Player/AI/var/tmp/inloop = FALSE
 mob/Player/AI/var/tmp/companion_def_mode = 0 // Defense: positions between owner and threat when idle.
 mob/Player/AI/var/tmp/prev_owner_health = 100 // Tracks owner HP to detect when they are hit.
+mob/Player/AI/var/tmp/cc_frozen_at = 0 // Tracks when the NPC first became frozen for safety-net recovery.
 mob/Player/AI/proc/findZanzo()
 	for(var/obj/Skills/Zanzoken/z in src)
 		return z
 	AddSkill(new/obj/Skills/Zanzoken)
 	zanzo = locate(/obj/Skills/Zanzoken) in src
+mob/Player/AI/proc/CCRecovery()
+	// Stun recovery — same checks players get in GainLoop
+	StunCheck(src)
+	StunImmuneCheck(src)
+	// Frozen recovery safety net — if stuck frozen for over 20 seconds, force clear
+	if(Frozen)
+		if(!cc_frozen_at)
+			cc_frozen_at = world.time
+		else if(world.time >= cc_frozen_at + 200)
+			Frozen = 0
+			TimeFrozen = 0
+			cc_frozen_at = 0
+	else
+		cc_frozen_at = 0
+	// TimeFrozen without Frozen (shouldn't happen, but clean it up)
+	if(TimeFrozen && !Frozen)
+		TimeFrozen = 0
+	// ReflectedFrozen recovery
+	if(ReflectedFrozen)
+		if(ReflectedFrozenTimer <= world.time)
+			ReflectedFrozen = 0
+
 mob/Player/AI/proc/AiBehavior()
 	var/ignoreActivity = FALSE
 	if(ai_hostility>=2)
@@ -28,6 +51,10 @@ mob/Player/AI/proc/AiBehavior()
 		inloop = FALSE
 		return
 	inloop = TRUE
+	// CC check — don't act while crowd controlled, but stay in the loop
+	if(isCrowdControlled())
+		last_activity = world.time
+		return
 	if(!zanzo)
 		zanzo = findZanzo()
 	if(!dd)
@@ -389,7 +416,7 @@ mob/Player/AI/proc/Flee()
 		Chase()
 
 mob/Player/proc/isCrowdControlled()
-	if(Launched || Stunned || icon_state == "KB")
+	if(Launched || Stunned || Frozen || icon_state == "KB")
 		return TRUE
 	return FALSE
 

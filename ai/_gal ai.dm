@@ -851,6 +851,7 @@ mob/Player/AI
 		if(ai_stall)
 			ai_stall--
 			return
+		CCRecovery()
 		if(ai_owner)
 			if(ai_owner.PureRPMode)
 				ai_state = "Idle"

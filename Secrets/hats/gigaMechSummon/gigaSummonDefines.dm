@@ -20,7 +20,7 @@
 /mob/Player/AI/GIGASpiritSummon/proc/initSkills()
 
 /mob/Player/AI/GIGASpiritSummon/proc/canAct()
-    if(Launched || Stunned || icon_state=="KB")
+    if(isCrowdControlled())
         return 0
     if(icon_state == "Meditate")
         icon_state = ""

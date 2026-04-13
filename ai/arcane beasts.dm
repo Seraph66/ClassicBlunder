@@ -1237,6 +1237,7 @@ mob/Player/AI/Nympharum
 		if(ai_stall)
 			ai_stall--
 			return
+		CCRecovery()
 		var/ai_state_switch
 
 		if(ai_owner.is_arcane_beast.enable_walk_effect && src.loc != src.prev_location)
@@ -1333,7 +1334,7 @@ mob/Player/AI/Nympharum
 
 			if("combat")
 				if(world.time < ai_delayed) return
-				if(Launched || Stunned || icon_state=="KB")
+				if(isCrowdControlled())
 					return
 				if(icon_state == "Meditate")
 					icon_state = ""

@@ -5,8 +5,6 @@ proc
 	Stun(mob/m,amount=5, ignoreImmune = FALSE)
 		if(!m)
 			return
-		if(!m.client)
-			return
 		if(m.InUBW&&m.MadeOfSwords)
 			return
 		if(m.StunImmune && !ignoreImmune)

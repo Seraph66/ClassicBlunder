@@ -58,6 +58,9 @@
     set waitfor=0
     if(isDead())
         return
+    CCRecovery()
+    if(isCrowdControlled())
+        return
     if(last_decision == "idle")
         handleDecisionMaking()
     
