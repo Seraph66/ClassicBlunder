@@ -31,11 +31,15 @@ ascension
 			..()
 		one
 			unlock_potential = ASCENSION_ONE_POTENTIAL
+			postAscension(mob/owner)
+				if(owner.SagaLevel < 2)
+					owner.SagaLevel = 2
+				..()
 			choices = list("Reason of Musubi" = /ascension/sub_ascension/demi_fiend/musubi, "Reason of Shijima" = /ascension/sub_ascension/demi_fiend/shijima, "Reason of Yosuga" = /ascension/sub_ascension/demi_fiend/yosuga)
 			choiceTitle = "Choose Your Reason"
 			choiceMessage = "Your conviction takes shape. Which Reason will guide your path?\n\nMusubi: Freedom from constraint—swap Magatama at will and craft without escalating cost. You gain only passives from Magatama, never their skills.\nShijima: Unity through diversity—equip multiple Magatama, gaining an extra slot each ascension (scaling halved).\nYosuga: Strength unchained—amplify Magatama passive scaling (1.25x at ascension 1, +0.25x per ascension)."
 			on_ascension_message = "Your demonic power awakens further. What Reason drives you?"
-			passives = list("HellPower" = 0.25, "KiControlMastery" = 1, "PureDamage" = 1, "PureReduction" = 1, "MartialMagic" = 1, "BladeFisting" = 1, "StaticWalk" = 1, "SpaceWalk" = 1)
+			passives = list("HellPower" = 0.25, "KiControlMastery" = 2, "PureDamage" = 1, "PureReduction" = 1, "BladeFisting" = 1, "StaticWalk" = 1, "SpaceWalk" = 1)
 			strength = 0.5
 			endurance = 0.5
 			speed = 0.5
@@ -44,6 +48,10 @@ ascension
 			defense = 0.5
 		two
 			unlock_potential = ASCENSION_TWO_POTENTIAL
+			postAscension(mob/owner)
+				if(owner.SagaLevel < 4)
+					owner.SagaLevel = 4
+				..()
 			passives = list("HellPower" = 0.25, "KiControlMastery" = 1, "PureDamage" = 1, "PureReduction" = 1)
 			strength = 1
 			endurance = 1
@@ -53,6 +61,10 @@ ascension
 			defense = 1
 		three
 			unlock_potential = ASCENSION_THREE_POTENTIAL
+			postAscension(mob/owner)
+				if(owner.SagaLevel < 6)
+					owner.SagaLevel = 6
+				..()
 			passives = list("HellPower" = 0.25, "KiControlMastery" = 1, "PureDamage" = 1, "PureReduction" = 1)
 			strength = 1.5
 			endurance = 1.5

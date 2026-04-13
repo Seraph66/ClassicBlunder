@@ -60,6 +60,12 @@ mob
 						src.HealthCut+=(val/100)
 					if(isRace(/race/demi_fiend))
 						src.refreshMagatama()
+						if(src.SagaLevel < 3 && src.Potential >= 20)  // ASCENSION_ONE_POTENTIAL + 10
+							src.SagaLevel = 3
+						if(src.SagaLevel < 5 && src.Potential >= 35)  // ASCENSION_TWO_POTENTIAL + 5
+							src.SagaLevel = 5
+						if(src.SagaLevel < 7 && src.Potential >= 50)  // ASCENSION_THREE_POTENTIAL + 10
+							src.SagaLevel = 7
 
 				if(src.Potential>src.PotentialCap && src.PotentialRate>0)
 					src.Potential=src.PotentialCap
