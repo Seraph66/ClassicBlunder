@@ -684,6 +684,7 @@
 	var/datum/party_demon/pd = new /datum/party_demon()
 	pd.demon_name  = demon_name
 	pd.party_level = chosen_level
+	pd.demon_potential = (level_choice == "recorded") ? cd.demon_potential : 0
 	pd.current_hp  = 100
 	// Set skills based on withdrawal type
 	if(level_choice == "recorded" && cd.recorded_skills && cd.recorded_skills.len)
@@ -733,8 +734,8 @@
 		cd.demon_name = demon_name
 		cd.base_level = dd.demon_lvl
 
-	// Recorded level = scaled level based on player Potential
-	cd.recorded_level = max(dd.demon_lvl, round(dd.demon_lvl * (max(1, Potential) / 100)))
+	cd.recorded_level = max(dd.demon_lvl, pd.demon_potential)
+	cd.demon_potential = pd.demon_potential
 	// Snapshot current skills
 	if(pd.demon_skills && pd.demon_skills.len)
 		cd.recorded_skills = pd.demon_skills.Copy()
@@ -790,8 +791,7 @@
 	for(var/datum/party_demon/pd in demon_party)
 		var/datum/demon_data/dd = DEMON_DB[pd.demon_name]
 		if(!dd) continue
-		// scaled lvl = base * (Potential / 100), capped at 99 (DS2 max)
-		var/scaled = max(pd.party_level, round(pd.party_level * (max(1, Potential) / 100)))
+		var/scaled = max(pd.party_level, Potential)
 		if(scaled < 1) scaled = 1
 		if(scaled > 99) scaled = 99
 		if(scaled > pd.highest_scaled_lvl) pd.highest_scaled_lvl = scaled

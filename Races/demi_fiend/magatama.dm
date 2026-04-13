@@ -291,16 +291,16 @@ mob/proc/CraftMagatama()
 
 obj/Items/Magatama/Marogareh
 	name = "Marogareh"
-	desc = "The first Magatama. A writhing, parasitic organism that awakens the demonic potential within its host."
+	desc = "The first Magatama, born when the Conception reshaped the world. A writhing, parasitic organism that awakens the demonic potential within its host."
 	base_passives = list("UnarmedDamage" = 1, "PhysPleroma" = 0.25, "Momentum" = 1)
-	passive_scaling = list("UnarmedDamage" = 0.1, "PhysPleroma" = 0.075, "Momentum" = 0.075, "Fa Jin" = 0.05)
-	ascension_passives = list("1" = list("Fa Jin" = 1))
+	passive_scaling = list("UnarmedDamage" = 0.1, "PhysPleroma" = 0.075, "Momentum" = 0.075, "Fa Jin" = 0.05, "CounterMaster" = 0.1)
+	ascension_passives = list("1" = list("Fa Jin" = 1, "CounterMaster" = 1))
 	magatama_skills = list(/obj/Skills/AutoHit/DemiFiend/Lunge)
-	ascension_skills = list("1" = list(/obj/Skills/Queue/Curbstomp))
+	ascension_skills = list("1" = list(/obj/Skills/AutoHit/DemiFiend/Berserk))
 
 obj/Items/Magatama/Wadatsumi
 	name = "Wadatsumi"
-	desc = "A Magatama of frozen seas. Those who ingest it command the bitter cold and the rhythmic power of ocean waves."
+	desc = "A Magatama borne of the sea god Wadatsumi. Those who ingest it command the bitter cold and the rhythmic power of ocean waves."
 	base_passives = list("IceAge" = 50, "Chilling" = 2, "Familiar" = 1, "WaveDancer" = 1)
 	passive_scaling = list("IceAge" = 0.5, "Chilling" = 0.2, "Familiar" = 0.05)
 	ascension_passives = list("1" = list("BlizzardBringer" = 1))
@@ -310,38 +310,61 @@ obj/Items/Magatama/Wadatsumi
 
 obj/Items/Magatama/Ankh
 	name = "Ankh"
-	desc = "A Magatama awaiting its power."
+	desc = "A Magatama shaped like the ancient symbol of life. Its restorative power soothes wounds and wards off the touch of darkness."
+	base_passives = list("AngelicInfusion" = 1, "Harden" = 1, "EvilResist" = 1)
+	passive_scaling = list("Harden" = 0.1, "EvilResist" = 0.02, "ControlResist" = 0.01)
+	ascension_passives = list("1" = list("ControlResist" = 1))
 	magatama_skills = list(/obj/Skills/Buffs/SlotlessBuffs/DemiFiend/Dia)
 	ascension_skills = list("2" = list(/obj/Skills/Buffs/SlotlessBuffs/DemiFiend/Media))
 	craft_cost = 5000
 
 obj/Items/Magatama/Iyomante
 	name = "Iyomante"
-	desc = "A Magatama awaiting its power."
+	desc = "A Magatama born from the Ainu bear-sending ritual. Its power enfeebles those who stand against its host, sapping the strength of body and spirit."
+	base_passives = list("ControlResist" = 1, "CrippleResist" = 1, "ChillResist" = 1)
+	passive_scaling = list("ControlResist" = 0.02, "CrippleResist" = 0.02, "ChillResist" = 0.02)
 	magatama_skills = list(/obj/Skills/Buffs/SlotlessBuffs/DemiFiend/Tarunda)
 	ascension_skills = list("1" = list(/obj/Skills/Buffs/SlotlessBuffs/DemiFiend/Sukunda), "2" = list(/obj/Skills/Buffs/SlotlessBuffs/DemiFiend/Rakunda))
 	craft_cost = 5000
 
 obj/Items/Magatama/Shiranui
 	name = "Shiranui"
-	desc = "A Magatama awaiting its power."
+	desc = "A Magatama that blazes with foxfire. Named for the mysterious lights that dance above the seas of Kyushu, its sacred flame consumes all in its path."
+	base_passives = list("BurnResist" = 1, "Scorching" = 2, "Combustion" = 50)
+	passive_scaling = list("BurnResist" = 0.1, "Scorching" = 0.15, "Combustion" = 0.5)
+	ascension_passives = list("1" = list("FireHerald" = 1))
 	magatama_skills = list(/obj/Skills/AutoHit/DemiFiend/Flame_Breath)
+	ascension_skills = list("1" = list(/obj/Skills/Buffs/SlotlessBuffs/DemiFiend/Taunt))
 	craft_cost = 5000
 
 obj/Items/Magatama/Hifumi
 	name = "Hifumi"
-	desc = "A Magatama awaiting its power."
+	desc = "A Magatama of howling gales and cutting force. Named for the opening moves of a master strategist, it bends the wind to its host's will."
+	base_passives = list("AttackSpeed" = 1, "BlurringStrikes" = 1, "ShearResist" = 1)
+	passive_scaling = list("AttackSpeed" = 0.05, "BlurringStrikes" = 0.05, "ShearResist" = 0.02)
+	ascension_passives = list("1" = list("ControlResist" = 1))
 	magatama_skills = list(/obj/Skills/Projectile/DemiFiend/Tornado)
+	ascension_skills = list("1" = list(/obj/Skills/Buffs/SlotlessBuffs/DemiFiend/War_Cry))
 	craft_cost = 5000
 
 obj/Items/Magatama/Kamudo
 	name = "Kamudo"
-	desc = "A Magatama awaiting its power."
+	desc = "A Magatama of the war god's fury. Those who endure its trial become instruments of destruction, wielding power that transcends mortal limits."
+	base_passives = list("Brutalize" = 1, "KillerInstinct" = 0.05, "Fury" = 1, "AttackSpeed" = 1)
+	passive_scaling = list("Brutalize" = 0.05, "KillerInstinct" = 0.01, "Fury" = 0.1, "AttackSpeed" = 0.05, "Steady" = 0.1)
+	ascension_passives = list("1" = list("MeleeResist" = 1, "Steady" = 1))
+	magatama_skills = list(/obj/Skills/AutoHit/DemiFiend/Heat_Wave, /obj/Skills/Buffs/SlotlessBuffs/DemiFiend/Focus)
+	ascension_skills = list("1" = list(/obj/Skills/AutoHit/DemiFiend/Freikugel))
 	craft_cost = 5000
 	mastery_required_type = /obj/Items/Magatama/Marogareh
 	mastery_required_amount = 100
 
 obj/Items/Magatama/Narukami
 	name = "Narukami"
-	desc = "A Magatama awaiting its power."
+	desc = "A Magatama crackling with divine lightning. It carries the wrath of the thunder god, striking with the fury of the storm."
+	base_passives = list("ShockResist" = 1, "Shocking" = 2, "CriticalChance" = 15)
+	passive_scaling = list("ShockResist" = 0.02, "Shocking" = 0.5, "CriticalChance" = 0.2)
+	ascension_passives = list("1" = list("ThunderHerald" = 1))
+	magatama_skills = list(/obj/Skills/AutoHit/DemiFiend/Thunder_Breath)
+	ascension_skills = list("1" = list(/obj/Skills/AutoHit/DemiFiend/Shock))
 	craft_cost = 5000

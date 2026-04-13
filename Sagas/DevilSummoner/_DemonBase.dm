@@ -33,6 +33,7 @@ var/global/DevilSummonerDemonDamageMod = 1
 /datum/party_demon
 	var/demon_name        = ""
 	var/party_level       = 0
+	var/demon_potential   = 0
 	var/current_hp        = 100
 	var/list/demon_skills = list()        // Currently learned active skills (max 4)
 	var/list/passives     = list()        // Currently learned passives (max 4)
@@ -44,7 +45,8 @@ var/global/DevilSummonerDemonDamageMod = 1
 /datum/compendium_demon
 	var/demon_name       = ""
 	var/base_level       = 0   // DS2 base level (static)
-	var/recorded_level   = 0   // Potential-scaled level at time of recording
+	var/recorded_level   = 0   
+	var/demon_potential  = 0   
 	var/list/recorded_skills = list()
 	var/list/recorded_passives = list()
 	var/highest_scaled_lvl = 0

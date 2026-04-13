@@ -41,7 +41,7 @@
 		SpdMod = max(1, round(dd.demon_spd * scale, 0.01))
 		OffMod = max(1, round(dd.demon_off * scale, 0.01))
 		DefMod = max(1, round(dd.demon_def * scale, 0.01))
-		Potential = owner.Potential
+		Potential = max(pd.party_level, pd.demon_potential)
 		potential_power_mult = owner.potential_power_mult
 
 		demon_melee_rate = max(8, 30 - round(dd.demon_spd * 0.7))
@@ -172,6 +172,18 @@
 
 	// Outgoing damage wrapper
 	proc/DemonDealDamage(mob/target, val)
+		// Killing blow: finish off a KO'd NPC
+		if(target && target.KO && istype(target, /mob/Player/AI) && !istype(target, /mob/Player/AI/Demon) && !target.client)
+			var/mob/Player/AI/ai_target = target
+			if(ai_target.ai_owner) return
+			target.Death(null, null)
+			if(ai_owner && Potential < ai_owner.Potential)
+				Potential += 1
+				var/datum/party_demon/kpd = DemonGetPartyDemon()
+				if(kpd) kpd.demon_potential = Potential
+				if(ai_owner.client)
+					ai_owner << "<font color='#c8a8ff'>[name]'s potential grows from the kill! ([Potential]/[ai_owner.Potential])</font>"
+			return
 		if(istype(target, /mob/Player/AI/Demon))
 			// Demon-vs-demon
 			target.DoDamage(src, val)

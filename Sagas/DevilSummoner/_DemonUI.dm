@@ -342,7 +342,8 @@
 	var/list/pending_skills = pd.pending_skills ? pd.pending_skills.Copy() : list()
 	var/list/pending_passives = pd.pending_passives ? pd.pending_passives.Copy() : list()
 
-	var/scaled = max(pd.party_level, round(pd.party_level * (max(1, Potential) / 100)))
+	var/scaled = max(pd.party_level, Potential)
+	if(scaled > 99) scaled = 99
 
 	var/html = "<html><head><style>"
 	html += "body {[DS_STYLE] margin:8px;}"
