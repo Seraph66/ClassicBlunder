@@ -2866,7 +2866,7 @@ NEW VARIABLES
 				OffMessage="suffers a circuitry breakdown!"
 				adjust(mob/p)
 					if(altered) return
-					var/totalPot = round(glob.progress.totalPotentialToDate,10)
+					var/totalPot = round(src.Potential,10)
 					SpdMult = 1.3 + totalPot/100
 					StrMult = 1.3 + totalPot/100
 					EndMult = 0.6 + clamp(totalPot/150, 0.1, 0.4)
@@ -2903,7 +2903,7 @@ NEW VARIABLES
 				var/sandevistanUsages = 0
 				adjust(mob/p)
 					if(altered) return
-					var/totalPot = round(glob.progress.totalPotentialToDate,10)
+					var/totalPot = round(src.Potential,10)
 					SpdMult = 1 + totalPot/100
 					OffMult = 1.1 + totalPot/100
 					DefMult = 0.4 + clamp(totalPot/150, 0.1, 0.4)
@@ -2937,7 +2937,7 @@ NEW VARIABLES
 				OffMessage="stumbles as their arrogant bulwark fades away..."
 				adjust(mob/p)
 					if(altered) return
-					var/totalPot = round(glob.progress.totalPotentialToDate,10)
+					var/totalPot = round(src.Potential,10)
 					EndMult = 1.2 + totalPot/100
 					StrMult = 1.1 + totalPot/100
 					DefMult = 0.1 + clamp(totalPot/150, 0.1, 0.4)
@@ -2964,7 +2964,7 @@ NEW VARIABLES
 				OffMessage="ditches the excess weaponry..."
 				adjust(mob/p)
 					if(altered) return
-					var/totalPot = round(glob.progress.totalPotentialToDate,10)
+					var/totalPot = round(src.Potential,10)
 					ForMult = 1.3 + totalPot/150
 					OffMult = 1.2 + totalPot/150
 					SpdMult = 0.7 + clamp(totalPot/150, 0.1, 0.4)
@@ -2996,13 +2996,13 @@ NEW VARIABLES
 				OffMessage="returns to the standard domain."
 				adjust(mob/p)
 					if(altered) return
-					var/totalPot = round(glob.progress.totalPotentialToDate,10)
+					var/totalPot = round(src.Potential,10)
 					ForMult = 1.2 + totalPot/100
 					StrMult = 1.2 + totalPot/100
 					DefMult = 0.6 + clamp(totalPot/150, 0.1, 0.4)
 					var/reducedPot = totalPot/10
-					passives = list("ManaLeak" = 1 - totalPot/200, "MovementMastery" = round(totalPot/10,1), \
-					"Deicide" = 5+ round(reducedPot/10,1), "SpiritSword" = 0.5+round(totalPot/4,1), "SpiritHand" = 0.5+round(totalPot/4,1))
+					passives = list("ManaLeak" = 1 - totalPot/200, "MovementMastery" = 3+round(totalPot/20,1), \
+					"Deicide" = 5* round(totalPot/25,1), "SpiritSword" = 0.5*round(totalPot/4,1), "SpiritHand" = 0.5*round(totalPot/4,1))
 
 				verb/Hilbert_Effect()
 					set category="Skills"
@@ -12660,15 +12660,12 @@ mob
 					if(src.passive_handler.Get("StarPower"))
 						src.ActiveBuff.AutoAnger=1
 						src.ActiveBuff.AngerMult=2
-						src.ActiveBuff.passives["PUSpike"] = 50
 						src.ActiveBuff.passives["Pursuer"] = 2 * AscensionsAcquired
 					else
 						if(AscensionsAcquired)
 							src.ActiveBuff.AngerPoint = 5 * AscensionsAcquired
 						src.ActiveBuff.passives["Pursuer"] = 0.5 * AscensionsAcquired
 						src.ActiveBuff.AngerMult = round(2/(8-AscensionsAcquired), 0.01)
-						src.ActiveBuff.passives["PUSpike"] = round(25/(5-AscensionsAcquired))
-						src.ActiveBuff.PUSpike=round(25/(5-AscensionsAcquired))
 				if(src.Saga=="Cosmo")
 					src.ActiveBuff.ActiveMessage="burns their Cosmo with full strength!!!"
 					src.ActiveBuff.OffMessage="calms their Cosmo..."
