@@ -2074,7 +2074,7 @@ mob/proc/Grab_Mob(var/mob/P, var/Forced=0)
 		var/mob/Player/AI/aa = P
 		if(!istype(src, /mob/Player/AI))
 			if(aa.ai_hostility >= 1)
-				if(aa.inloop == FALSE && !(aa in ticking_ai))
+				if(aa.inloop == FALSE && !(aa in ticking_ai) && !(aa in companion_ais))
 					ticking_ai.Add(aa)
 				aa.SetTarget(src)
 				aa.ai_state = "Chase"

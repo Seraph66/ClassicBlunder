@@ -216,7 +216,7 @@ mob
 				var/mob/Player/AI/aa = defender
 				if(!istype(src, /mob/Player/AI))
 					if(aa.ai_hostility >= 1)
-						if(aa.inloop == FALSE && !(aa in ticking_ai)) // not even needed but i have a creeping suspicion that ai are getting added multiple times
+						if(aa.inloop == FALSE && !(aa in ticking_ai) && !(aa in companion_ais))
 							ticking_ai.Add(aa)
 						aa.SetTarget(src)
 						aa.ai_state = "Chase"

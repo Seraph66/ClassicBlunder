@@ -49,6 +49,7 @@ obj/Skills/Companion
 
 		//Toggles
 		companion_focus_target //Companion will remain targeting whoever the players has targeted.
+		companion_mode = "Auto" // "Auto" = reacts to attacks on self and owner. "Manual" = player commands via verbs.
 	verb
 		Companion_Summon()
 			set src in usr
@@ -80,7 +81,11 @@ obj/Skills/Companion
 				animate(a, alpha=255, time=10)
 				a.ai_owner = usr
 				a.ai_follow=1
-				a.ai_hostility=0
+				if(companion_mode == "Auto")
+					a.ai_hostility = 1
+				else
+					a.ai_hostility = 0
+				a.companion_def_mode = 0
 				a.name = companion_name
 
 				if(!companion_mimic)
@@ -106,7 +111,13 @@ obj/Skills/Companion
 					if(!isnum(companion_mimic))
 						a.color = companion_mimic
 						a.MobColor = companion_mimic
-				a.ai_focus_owner_target = companion_focus_target
+				if(companion_mode == "Auto")
+					a.ai_focus_owner_target = 1
+					a.ai_protection = 20
+				else
+					a.ai_focus_owner_target = 0
+					a.ai_protection = 0
+				a.prev_owner_health = usr.Health
 				a.StrMod = (companion_strmod == -1) ? usr.StrMod : companion_strmod
 				a.ForMod = (companion_formod == -1) ? usr.ForMod : companion_formod
 				a.EndMod = (companion_endmod == -1) ? usr.EndMod : companion_endmod
@@ -121,18 +132,30 @@ obj/Skills/Companion
 				a.ko_death = companion_ko_death
 				a.Timeless = 1
 				a.ai_team_fire=companion_team_fire
-				a.ai_focus_owner_target = companion_focus_target
 				a.potential_power_mult = companion_bpm == -1 ? ((usr.potential_power_mult*usr.RPPower*usr.PowerBoost) * 0.5*(1+(src.Mastery/4))) : companion_bpm
 				a.Potential = (companion_potential == -1) ? (usr.Potential * 0.5*(1+(src.Mastery/4))) : companion_potential
 				usr.ai_followers +=a
 				a.ai_alliances = list()
 				a.ai_alliances += "[usr.ckey]"
 				active_ai+=a
+				companion_ais += a
 				for(var/index in companion_techniques)
 					var/path=text2path("[index]")
 					var/obj/Skills/o =new path
 					if(!locate(o, a))
 						a.contents+=o
+				// Default strong technique set when owner has not configured custom techniques.
+				if(!companion_techniques.len)
+					if(!locate(/obj/Skills/AutoHit/Nova_Strike, a))
+						a.contents += new/obj/Skills/AutoHit/Nova_Strike
+					if(!locate(/obj/Skills/AutoHit/Lariat, a))
+						a.contents += new/obj/Skills/AutoHit/Lariat
+					if(!locate(/obj/Skills/AutoHit/Massacre, a))
+						a.contents += new/obj/Skills/AutoHit/Massacre
+					if(!locate(/obj/Skills/Projectile/Big_Bang_Attack, a))
+						a.contents += new/obj/Skills/Projectile/Big_Bang_Attack
+					if(!locate(/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Swell_Up, a))
+						a.contents += new/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Swell_Up
 				a.aiGain()
 			last_use = world.time
 			Using=0
@@ -176,6 +199,69 @@ obj/Skills/Companion
 			for(var/mob/Player/AI/a in usr.ai_followers)
 				a.ai_focus_owner_target = companion_focus_target
 			usr << "You order [companion_focus_target ? "focus same target!" : "attack whoever!"]"
+
+		Companion_Mode()
+			set src in usr
+			set category = "Companion"
+			if(companion_mode == "Auto")
+				companion_mode = "Manual"
+				for(var/mob/Player/AI/a in usr.ai_followers)
+					a.ai_hostility = 0
+					a.ai_focus_owner_target = 0
+					a.ai_protection = 0
+				usr << "Companion mode: Manual. Use Attack, Def, Follow, Stay Here to command directly."
+			else
+				companion_mode = "Auto"
+				for(var/mob/Player/AI/a in usr.ai_followers)
+					a.ai_hostility = 1
+					a.ai_focus_owner_target = 1
+					a.ai_protection = 20
+					a.companion_def_mode = 0
+				usr << "Companion mode: Auto. Companion will protect you and mirror your target automatically."
+
+		Companion_Def()
+			set src in usr
+			set category = "Companion"
+			if(companion_mode != "Manual")
+				usr << "Switch to Manual mode first (Companion Mode verb)."
+				return
+			for(var/mob/Player/AI/a in usr.ai_followers)
+				a.companion_def_mode = !a.companion_def_mode
+				if(!a.companion_def_mode)
+					a.RemoveTarget()
+					a.Idle()
+			var/def_on = 0
+			for(var/mob/Player/AI/a in usr.ai_followers)
+				if(a.companion_def_mode)
+					def_on = 1
+			if(def_on)
+				usr << "Companion defense mode: ON. Companion will shield your front."
+			else
+				usr << "Companion defense mode: OFF."
+
+		Companion_Stay()
+			set src in usr
+			set category = "Companion"
+			for(var/mob/Player/AI/a in usr.ai_followers)
+				if(a.hold_position)
+					a.hold_position = null
+					a.ai_follow = 1
+					a.ai_wander = 1
+					a.RemoveTarget()
+					a.Idle()
+				else
+					a.ai_follow = 0
+					a.ai_wander = 0
+					a.hold_position = locate(a.x, a.y, a.z)
+			var/holding = 0
+			for(var/mob/Player/AI/a in usr.ai_followers)
+				if(a.hold_position)
+					holding = 1
+			if(holding)
+				usr << "Companion holding position."
+			else
+				usr << "Companion following again."
+
 		CustomizeCompanion()
 			set category="Companion"
 			set name = "Customize: Companion"
