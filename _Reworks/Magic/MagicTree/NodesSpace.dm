@@ -17,6 +17,7 @@ magic_node/space_tree
         xLoc = SPACE_NODE_ENTRY_X
         yLoc = SPACE_NODE_ENTRY_Y
         nodeType = "AOE"
+        grantsSkills = list(/obj/Skills/AutoHit/Magic/Space/Flux)
         unlocksNodes = list(SPACE_NODE_21, SPACE_NODE_22);
     
     space_node_21
@@ -48,6 +49,7 @@ magic_node/space_tree
         xLoc = SPACE_NODE_32_X;
         yLoc = SPACE_NODE_32_Y;
         nodeType = "Autohit"
+        grantsSkills = list(/obj/Skills/AutoHit/Magic/Space/Flow)
         unlocksNodes = list(SPACE_NODE_42, SPACE_NODE_43, SPACE_NODE_5, SPACE_NODE_21, SPACE_NODE_22);
     
     space_node_33
@@ -95,6 +97,7 @@ magic_node/space_tree
         xLoc = SPACE_NODE_5_X
         yLoc = SPACE_NODE_5_Y
         nodeType = "Debuff"
+        grantsSkills = list(/obj/Skills/Buffs/SlotlessBuffs/Magic/Space/Friction)
         unlocksNodes = list(SPACE_NODE_42, SPACE_NODE_43, SPACE_NODE_32, SPACE_NODE_CROWN);
     
     space_node_crown

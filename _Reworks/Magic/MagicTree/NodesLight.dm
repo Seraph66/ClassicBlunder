@@ -17,6 +17,7 @@ magic_node/light_tree
         xLoc = LIGHT_NODE_ENTRY_X
         yLoc = LIGHT_NODE_ENTRY_Y
         nodeType = "Line"
+        grantsSkills = list(/obj/Skills/Projectile/Magic/Light/Lightspeed)
         unlocksNodes = list(LIGHT_NODE_12);
     
     light_node_12
@@ -40,6 +41,7 @@ magic_node/light_tree
         xLoc = LIGHT_NODE_21_X;
         yLoc = LIGHT_NODE_21_Y;
         nodeType = "Buff"
+        grantsSkills = list(/obj/Skills/Buffs/SlotlessBuffs/Magic/Light/Bless)
         unlocksNodes = list(LIGHT_NODE_22);
     
     light_node_22
@@ -63,6 +65,7 @@ magic_node/light_tree
         xLoc = LIGHT_NODE_31_X
         yLoc = LIGHT_NODE_31_Y
         nodeType = "Projectile"
+        grantsSkills = list(/obj/Skills/Projectile/Magic/Light/Solar_Burst)
         unlocksNodes = list(LIGHT_NODE_32);
     
     light_node_32

@@ -17,6 +17,7 @@ magic_node/dark_tree
         xLoc = DARK_NODE_ENTRY_X;
         yLoc = DARK_NODE_ENTRY_Y;
         nodeType = "Autohit"
+        grantsSkills = list(/obj/Skills/AutoHit/Magic/Dark/Shadow_Cleave)
         unlocksNodes = list(DARK_NODE_11, DARK_NODE_12);
     dark_node_11
         name=DARK_NODE_11
@@ -44,6 +45,7 @@ magic_node/dark_tree
         xLoc = DARK_NODE_22_X
         yLoc = DARK_NODE_22_Y
         nodeType = "Projectile"
+        grantsSkills = list(/obj/Skills/Projectile/Magic/Dark/Void_Blast)
         unlocksNodes = list(DARK_NODE_23, DARK_NODE_3);
     dark_node_23
         name=DARK_NODE_23
@@ -64,6 +66,7 @@ magic_node/dark_tree
         xLoc = DARK_NODE_3_X
         yLoc = DARK_NODE_3_Y
         nodeType = "Line"
+        grantsSkills = list(/obj/Skills/Projectile/Magic/Dark/Arachnae_Touch)
         unlocksNodes = list(DARK_NODE_42, DARK_NODE_22);
     dark_node_41
         name=DARK_NODE_41

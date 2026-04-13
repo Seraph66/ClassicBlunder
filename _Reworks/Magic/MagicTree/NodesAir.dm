@@ -17,6 +17,7 @@ magic_node/air_tree
         xLoc = AIR_NODE_ENTRY_X;
         yLoc = AIR_NODE_ENTRY_Y;
         nodeType = "Autohit"
+        grantsSkills = list(/obj/Skills/AutoHit/Magic/Air/Breaking_Twister)
         unlocksNodes = list(AIR_NODE_EAST, AIR_NODE_WEST, AIR_NODE_SOUTH2);
     air_node_south2
         name=AIR_NODE_SOUTH2
@@ -44,6 +45,7 @@ magic_node/air_tree
         xLoc = AIR_NODE_EAST2_X
         yLoc = AIR_NODE_EAST2_Y
         nodeType = "Buff"
+        grantsSkills = list(/obj/Skills/Buffs/SlotlessBuffs/Magic/Air/Evading_Zephyr)
         unlocksNodes = list(AIR_NODE_EAST, AIR_NODE_EAST3, AIR_NODE_NORTH2, AIR_NODE_SOUTH2);
     air_node_east3
         name=AIR_NODE_EAST3
@@ -71,6 +73,7 @@ magic_node/air_tree
         xLoc = AIR_NODE_WEST3_X
         yLoc = AIR_NODE_WEST3_Y
         nodeType = "Line"
+        grantsSkills = list(/obj/Skills/Projectile/Magic/Air/Mentis_Imperium)
         unlocksNodes = list(AIR_NODE_NORTH3, AIR_NODE_SOUTH3, AIR_NODE_WEST2);
     air_node_north
         name=AIR_NODE_CROWN

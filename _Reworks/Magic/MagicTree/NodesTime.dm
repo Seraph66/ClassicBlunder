@@ -17,6 +17,7 @@ magic_node/time_tree
         xLoc = TIME_NODE_ENTRY_X
         yLoc = TIME_NODE_ENTRY_Y
         nodeType = "AOE"
+        grantsSkills = list(/obj/Skills/AutoHit/Magic/Time/Tempus_Cessat)
         unlocksNodes = list(TIME_NODE_12, TIME_NODE_13);
     
     time_node_11
@@ -56,6 +57,7 @@ magic_node/time_tree
         xLoc = TIME_NODE_21_X
         yLoc = TIME_NODE_21_Y
         nodeType = "Buff"
+        grantsSkills = list(/obj/Skills/Buffs/SlotlessBuffs/Magic/Time/Haste)
         unlocksNodes = list(TIME_NODE_31, TIME_NODE_11);
     
     time_node_22
@@ -63,6 +65,7 @@ magic_node/time_tree
         xLoc = TIME_NODE_22_X
         yLoc = TIME_NODE_22_Y
         nodeType = "Debuff"
+        grantsSkills = list(/obj/Skills/Buffs/SlotlessBuffs/Magic/Time/Wither)
         unlocksNodes = list(TIME_NODE_34, TIME_NODE_14);
     
     time_node_31
