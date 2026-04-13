@@ -13,6 +13,16 @@
 		SpdMult = 1
 		EndMult = 1
 		DefMult = 1
+		var/EffectivePotential=p.Potential
+		switch(EffectivePotential)
+			if(1 to 24)
+				tier = 1
+			if(25 to 39)
+				tier = 2
+			if(40 to 100)
+				tier = 3
+		if(p.Saga||p.CyberCancel)
+			tier = 1
 		if(tier >= 3)
 			ForMult = 1.4
 			StrMult = 1.35

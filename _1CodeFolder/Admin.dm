@@ -1076,8 +1076,51 @@ mob/Admin2/verb
 							world.Export("[glob.discordOOCAnnounceWebhookURL]", list("content" = discord_output), 0, null, "POST")
 						else
 							usr << "The OOCAnnounce webhook wasn't set up!"
-
-	Teleport()
+	Teleport(mob/M as mob|obj in world)
+		set category="Admin"
+		usr.PrevX=usr.x
+		usr.PrevY=usr.y
+		usr.PrevZ=usr.z
+		loc=M.loc
+		Log("Admin","[ExtractInfo(usr)] teleported to [M].")
+	Summon(mob/M as mob|obj in world)
+		set category="Admin"
+		if(istype(M, /mob))
+			M.PrevX=M.x
+			M.PrevY=M.y
+			M.PrevZ=M.z
+		M.loc=loc
+		Log("Admin","[ExtractInfo(usr)] summoned [ExtractInfo(M)].")
+	Unteleport(mob/M as mob|obj in world)
+		set category="Admin"
+		if(!M.PrevX)
+			usr<<"This mob/obj has not been teleported or summoned, and thus has no previous XYZ data."
+			return
+		else
+			M.x=M.PrevX
+			M.y=M.PrevY
+			M.z=M.PrevZ
+			M.PrevX=null
+			M.PrevY=null
+			M.PrevZ=null
+			usr<<"Returned [M] to previous coordinates."
+			M<<"You have been returned to your previous coordinates by admins."
+	XYZTeleport(var/mob/M in world)
+		var/x=input("x","[M]") as num
+		var/y=input("y","[M]") as num
+		var/z=input("z","[M]") as num
+		set category="Admin"
+		M.PrevX=M.x
+		M.PrevY=M.y
+		M.PrevZ=M.z
+		M.loc=locate(x,y,z)
+		Log("Admin","[ExtractInfo(usr)] teleported [ExtractInfo(M)] to [x],[y],[z].")
+	SendToSpawnz(mob/A in players)
+		set name="Send To Spawn"
+		set category="Admin"
+		MoveToSpawn(A)
+		Log("Admin","[ExtractInfo(usr)] sent [ExtractInfo(A)] to spawn.")
+/*	Teleport()
 		set category="Admin"
 		set name="Teleport"
 		var/list/actions = list(
@@ -1160,7 +1203,7 @@ mob/Admin2/verb
 								P.loc = locate(usr.x + rand(-10,10), usr.y + rand(-10,10), usr.z)
 					if("Both")
 						for(var/mob/P in world)
-							P.loc = locate(usr.x, usr.y, usr.z)
+							P.loc = locate(usr.x, usr.y, usr.z)*/
 
 	globallyIndestructable()
 		set category = "Admin"

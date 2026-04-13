@@ -10,6 +10,15 @@
 		StyleEnd = 1
 		StyleDef = 1
 		StyleSpd = 1
+		switch(EffectivePotential)
+			if(1 to 24)
+				tier = 1
+			if(25 to 39)
+				tier = 2
+			if(40 to 100)
+				tier = 3
+		if(p.Saga||p.CyberCancel)
+			tier = 1
 		if(tier >= 3)
 			StyleStr = 1.9
 			StyleFor = 1.75
@@ -36,6 +45,15 @@
 		StyleStr = 1
 		StyleSpd = 1
 		StyleOff = 1
+		switch(EffectivePotential)
+			if(1 to 24)
+				tier = 1
+			if(25 to 39)
+				tier = 2
+			if(40 to 100)
+				tier = 3
+		if(p.Saga||p.CyberCancel)
+			tier = 1
 		if(tier >= 3)
 			StyleFor = 1.9
 			StyleEnd = 1.75
@@ -62,6 +80,15 @@
 		StyleStr = 1
 		StyleSpd = 1
 		StyleOff = 1
+		switch(EffectivePotential)
+			if(1 to 24)
+				tier = 1
+			if(25 to 39)
+				tier = 2
+			if(40 to 100)
+				tier = 3
+		if(p.Saga||p.CyberCancel)
+			tier = 1
 		if(tier >= 3)
 			StyleEnd = 1.9
 			StyleFor = 1.75
@@ -88,6 +115,15 @@
 		StyleStr = 1
 		StyleEnd = 1
 		StyleDef = 1
+		switch(EffectivePotential)
+			if(1 to 24)
+				tier = 1
+			if(25 to 39)
+				tier = 2
+			if(40 to 100)
+				tier = 3
+		if(p.Saga||p.CyberCancel)
+			tier = 1
 		if(tier >= 3)
 			StyleSpd = 1.9
 			StyleFor = 1.75
@@ -114,6 +150,15 @@
 		StyleStr = 1
 		StyleFor = 1
 		StyleOff = 1
+		switch(EffectivePotential)
+			if(1 to 24)
+				tier = 1
+			if(25 to 39)
+				tier = 2
+			if(40 to 100)
+				tier = 3
+		if(p.Saga||p.CyberCancel)
+			tier = 1
 		if(tier >= 3)
 			StyleEnd = 1.9
 			StyleSpd = 1.75
@@ -140,6 +185,15 @@
 		StyleEnd = 1
 		StyleSpd = 1
 		StyleDef = 1
+		switch(EffectivePotential)
+			if(1 to 24)
+				tier = 1
+			if(25 to 39)
+				tier = 2
+			if(40 to 100)
+				tier = 3
+		if(p.Saga||p.CyberCancel)
+			tier = 1
 		if(tier >= 3)
 			StyleFor = 1.9
 			StyleStr = 1.75
@@ -166,6 +220,15 @@
 		StyleStr = 1
 		StyleEnd = 1
 		StyleOff = 1
+		switch(EffectivePotential)
+			if(1 to 24)
+				tier = 1
+			if(25 to 39)
+				tier = 2
+			if(40 to 100)
+				tier = 3
+		if(p.Saga||p.CyberCancel)
+			tier = 1
 		if(tier >= 3)
 			StyleSpd = 1.9
 			StyleFor = 1.75
@@ -192,6 +255,15 @@
 		StyleStr = 1
 		StyleEnd = 1
 		StyleDef = 1
+		switch(EffectivePotential)
+			if(1 to 24)
+				tier = 1
+			if(25 to 39)
+				tier = 2
+			if(40 to 100)
+				tier = 3
+		if(p.Saga||p.CyberCancel)
+			tier = 1
 		if(tier >= 3)
 			StyleFor = 1.9
 			StyleSpd = 1.75

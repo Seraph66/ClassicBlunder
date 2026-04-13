@@ -947,6 +947,8 @@ obj
 					AccMult = 1.15
 					Blasts=25
 					Delay=0
+					LosesHoming=3
+					HomingCharge=10
 					IconLock='BlastTracer.dmi'
 					IconSize=0.5
 					verb/Missile_Massacre()
@@ -1086,6 +1088,8 @@ obj
 						AccMult = 1.15
 						Blasts=25
 						Delay=0
+						LosesHoming=3
+						HomingCharge=10
 						IconLock='BlastTracer.dmi'
 						IconSize=0.5
 						verb/Missile_Massacre()

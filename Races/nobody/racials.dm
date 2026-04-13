@@ -1,7 +1,7 @@
 /obj/Skills/Buffs/SlotlessBuffs/Autonomous/Racial/Nobody/Lunar_Wrath
 	passives = list("Unrelenting Wrath" = 1, "Godspeed" = 2, "Skimming" = 2,"ManaLeak"=1)
 	TextColor=rgb(255, 0, 0)
-	Cooldown=-1
+	Cooldown=60
 	LunarWrath=1
 	ManaDrain=1
 	CustomActive="<b>The light of Kingdom Hearts fills the air, as the wrath of the moon coalesces into a single point!</b>"

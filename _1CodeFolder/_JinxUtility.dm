@@ -2486,10 +2486,10 @@ mob
 		AngerDiv(var/num)
 			src.AngerMax=1+((src.AngerMax-1)/num)
 		LunarWrathAnger()
+			if(src.ManaAmount>=50 && src.passive_handler.Get("LunarWrath"))
+				src.AngerMax=1+(src.ManaAmount/100)
 			if(src.passive_handler.Get("Unrelenting Wrath"))
 				src.AngerMax=5
-			else if(src.ManaAmount>=50 && src.passive_handler.Get("LunarWrath"))
-				src.AngerMax=1+(src.ManaAmount/100)
 			else
 				src.AngerMax=1
 		WeirdAngerStuff() //additive anger that won't be affected by mult
