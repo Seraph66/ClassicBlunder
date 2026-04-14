@@ -25,10 +25,10 @@
         var/addPerStack = (maxFuryAdd / glob.MAX_FURY_STACKS / glob.FURY_ANGER_EFFECT);
         if(src.Anger) addPerStack *= glob.FURY_ANGER_EFFECT;
         . = 1;
-        . += (getFuryValue() * addPerStack);
+        . += (FuryAccumulated * addPerStack);
     getMaxFuryMult()
         . = (glob.FURY_MAX_ADD/glob.FURY_MAX_BOON)
-    
+
     //This is used in handlePostDamage()
     FuryAccumulate(acu)//acu is the enemy's accupuncture passive
         if(acu && prob(acu * glob.ACUPUNCTURE_BASE_CHANCE))
