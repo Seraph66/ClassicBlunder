@@ -389,6 +389,8 @@ globalTracker
 		LIFE_GEN_DIVISOR = 10
 		MANA_GEN_DIVISOR = 10
 		DevilSummonerDemonDamageMod = 1
+		DevilSummonerDemonSkillMod = 1
+		DevilSummonerDemonDamageTakenMod = 1
 		WOUND_RECOVERY_REDUCTION = 0.5
 
 		OXYGEN_DRAIN = 3

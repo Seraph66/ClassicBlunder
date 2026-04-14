@@ -216,7 +216,7 @@
 		// Demons use their own HP system - apply damage directly to demon_hp
 		var/raw_dmg = 0
 		if(isnum(damage))
-			raw_dmg = max(1, round(damage))
+			raw_dmg = max(1, round(damage * glob.DevilSummonerDemonDamageTakenMod))
 		if(raw_dmg <= 0) return
 		// Phys is the default element for demon-on-demon / mob hits; element-typed damage paths
 		// can call DemonGetResistMult/DemonHasRepel/DemonHasDrain themselves

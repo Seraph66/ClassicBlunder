@@ -34,6 +34,7 @@
 	_dd1.demon_def = 4
 	_dd1.demon_skills = list("Fire Dance")
 	_dd1.demon_passives = list("Anti-Elec", "Moneybags")
+	_dd1.demon_skill_learn = list("Fire Dance" = 22)
 	_dd1.demon_unique = TRUE
 	_dd1.demon_icon = 'Icons/DevilSummoner/Demons/Apis.dmi'
 	_dd1.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Apis128.dmi'
@@ -71,6 +72,7 @@
 	_dd3.demon_off = 7
 	_dd3.demon_def = 6
 	_dd3.demon_skills = list("Diarahan")
+	_dd3.demon_skill_learn = list("Diarahan" = 34)
 	_dd3.demon_passive_learn = list("Ares Aid" = 33)
 	_dd3.demon_unique = TRUE
 	_dd3.demon_icon = 'Icons/DevilSummoner/Demons/Kamapuaa.dmi'
@@ -130,8 +132,8 @@
 	_dd6.demon_def = 8
 	_dd6.demon_skills = list("Piercing Hit")
 	_dd6.demon_passives = list("Double Strike")
-	_dd6.demon_skill_learn = list("Multi-Strike" = 62, "Shield All" = 63)
-	_dd6.demon_passive_learn = list("Phys Amp" = 55, "Force Drain" = 61)
+	_dd6.demon_skill_learn = list("Piercing Hit" = 54)
+	_dd6.demon_passive_learn = list("Phys Amp" = 55)
 	_dd6.demon_unique = FALSE
 	_dd6.demon_icon = 'Icons/DevilSummoner/Demons/Baihu.dmi'
 	_dd6.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Baihu128.dmi'
@@ -150,8 +152,7 @@
 	_dd7.demon_off = 10
 	_dd7.demon_def = 15
 	_dd7.demon_skills = list("Zandyne")
-	_dd7.demon_skill_learn = list("Diarahan" = 70)
-	_dd7.demon_passive_learn = list("Null Force" = 61, "Force Amp" = 62, "Life Bonus" = 68, "Life Surge" = 69)
+	_dd7.demon_passive_learn = list("Force Amp" = 62, "Null Force" = 61)
 	_dd7.demon_unique = FALSE
 	_dd7.demon_icon = 'Icons/DevilSummoner/Demons/Airavata.dmi'
 	_dd7.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Airavata128.dmi'
@@ -228,8 +229,8 @@
 	_dd11.demon_off = 3
 	_dd11.demon_def = 2
 	_dd11.demon_skills = list("Zan")
-	_dd11.demon_skill_learn = list("Extra Cancel" = 9, "Force Dance" = 27)
-	_dd11.demon_passive_learn = list("+Poison" = 10, "Hero Aid" = 26)
+	_dd11.demon_skill_learn = list("Extra Cancel" = 9)
+	_dd11.demon_passive_learn = list("+Poison" = 10)
 	_dd11.demon_unique = FALSE
 	_dd11.demon_icon = 'Icons/DevilSummoner/Demons/Itsumade.dmi'
 	_dd11.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Itsumade128.dmi'
@@ -248,8 +249,8 @@
 	_dd12.demon_off = 5
 	_dd12.demon_def = 4
 	_dd12.demon_skills = list("Bufu")
-	_dd12.demon_skill_learn = list("Ice Dance" = 18, "Diarama" = 30, "Mabufu" = 31)
-	_dd12.demon_passive_learn = list("Watchful" = 17, "Anti-Ailment" = 28, "Vigilant" = 29)
+	_dd12.demon_skill_learn = list("Ice Dance" = 18)
+	_dd12.demon_passive_learn = list("Watchful" = 17)
 	_dd12.demon_unique = FALSE
 	_dd12.demon_icon = 'Icons/DevilSummoner/Demons/Moh Shuvuu.dmi'
 	_dd12.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Moh Shuvuu128.dmi'
@@ -268,8 +269,7 @@
 	_dd13.demon_off = 5
 	_dd13.demon_def = 5
 	_dd13.demon_skills = list("Mazan")
-	_dd13.demon_skill_learn = list("Diarama" = 25, "Media" = 34)
-	_dd13.demon_passive_learn = list("Dodge" = 30, "Force Boost" = 31, "Mana Surge" = 32, "Vigilant" = 33)
+	_dd13.demon_skill_learn = list("Diarama" = 25)
 	_dd13.demon_unique = FALSE
 	_dd13.demon_icon = 'Icons/DevilSummoner/Demons/Hamsa.dmi'
 	_dd13.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Hamsa128.dmi'
@@ -288,8 +288,8 @@
 	_dd14.demon_off = 5
 	_dd14.demon_def = 5
 	_dd14.demon_skills = list("Mow Down")
-	_dd14.demon_skill_learn = list("Force Dance" = 34, "Mazan" = 35)
-	_dd14.demon_passive_learn = list("Force Boost" = 32, "Quick Move" = 33, "+Paralyze" = 36)
+	_dd14.demon_skill_learn = list("Mazan" = 32)
+	_dd14.demon_passive_learn = list("+Paralyze" = 33)
 	_dd14.demon_unique = FALSE
 	_dd14.demon_icon = 'Icons/DevilSummoner/Demons/Suparna.dmi'
 	_dd14.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Suparna128.dmi'
@@ -308,8 +308,8 @@
 	_dd15.demon_off = 8
 	_dd15.demon_def = 5
 	_dd15.demon_skills = list("Mazio")
-	_dd15.demon_skill_learn = list("Drain" = 41, "Multi-Strike" = 48, "Ziodyne" = 49)
-	_dd15.demon_passive_learn = list("Swift Step" = 40, "Extra Bonus" = 47)
+	_dd15.demon_skill_learn = list("Drain" = 41)
+	_dd15.demon_passive_learn = list("Swift Step" = 40)
 	_dd15.demon_unique = FALSE
 	_dd15.demon_icon = 'Icons/DevilSummoner/Demons/Vidofnir.dmi'
 	_dd15.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Vidofnir128.dmi'
@@ -329,8 +329,7 @@
 	_dd16.demon_def = 9
 	_dd16.demon_skills = list("Might Call")
 	_dd16.demon_passives = list("Extra One")
-	_dd16.demon_skill_learn = list("Zandyne" = 47, "Mazandyne" = 56)
-	_dd16.demon_passive_learn = list("Anti-Most" = 54, "Preserve Extra" = 55)
+	_dd16.demon_skill_learn = list("Zandyne" = 47)
 	_dd16.demon_unique = FALSE
 	_dd16.demon_icon = 'Icons/DevilSummoner/Demons/Badb Catha.dmi'
 	_dd16.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Badb Catha128.dmi'
@@ -349,8 +348,7 @@
 	_dd17.demon_off = 10
 	_dd17.demon_def = 8
 	_dd17.demon_skills = list("Mazandyne")
-	_dd17.demon_skill_learn = list("Makarakarn" = 63, "Might Call" = 64, "Tetrakarn" = 65)
-	_dd17.demon_passive_learn = list("Force Amp" = 62)
+	_dd17.demon_skill_learn = list("Mazandyne" = 55)
 	_dd17.demon_unique = FALSE
 	_dd17.demon_icon = 'Icons/DevilSummoner/Demons/Anzu.dmi'
 	_dd17.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Anzu128.dmi'
@@ -369,8 +367,7 @@
 	_dd18.demon_off = 8
 	_dd18.demon_def = 8
 	_dd18.demon_skills = list("Inferno")
-	_dd18.demon_skill_learn = list("Agidyne" = 70, "Recarm" = 71)
-	_dd18.demon_passive_learn = list("Fire Drain" = 63, "Fire Amp" = 64)
+	_dd18.demon_passive_learn = list("Fire Amp" = 64, "Fire Drain" = 63)
 	_dd18.demon_unique = FALSE
 	_dd18.demon_icon = 'Icons/DevilSummoner/Demons/Feng Huang.dmi'
 	_dd18.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Feng Huang128.dmi'
@@ -427,7 +424,6 @@
 	_dd21.demon_def = 2
 	_dd21.demon_skills = list("Agi")
 	_dd21.demon_skill_learn = list("Zan" = 4)
-	_dd21.demon_passive_learn = list("+Poison" = 25, "Mana Bonus" = 26, "Watchful" = 27)
 	_dd21.demon_unique = FALSE
 	_dd21.demon_icon = 'Icons/DevilSummoner/Demons/Kabuso.dmi'
 	_dd21.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Kabuso128.dmi'
@@ -466,8 +462,8 @@
 	_dd23.demon_def = 5
 	_dd23.demon_skills = list("Paral Eyes")
 	_dd23.demon_passives = list("+Paralyze")
-	_dd23.demon_skill_learn = list("Multi-Hit" = 21, "Media" = 31)
-	_dd23.demon_passive_learn = list("Anti-Force" = 20, "Anti-Elec" = 29, "Double Strike" = 30)
+	_dd23.demon_skill_learn = list("Multi-Hit" = 21)
+	_dd23.demon_passive_learn = list("Anti-Force" = 20)
 	_dd23.demon_unique = FALSE
 	_dd23.demon_icon = 'Icons/DevilSummoner/Demons/Nekomata.dmi'
 	_dd23.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Nekomata128.dmi'
@@ -487,8 +483,7 @@
 	_dd24.demon_def = 6
 	_dd24.demon_skills = list("Desperation")
 	_dd24.demon_passives = list("Retaliate")
-	_dd24.demon_skill_learn = list("Berserk" = 33, "Power Charge" = 34)
-	_dd24.demon_passive_learn = list("Preserve Extra" = 28, "Crit Up" = 32)
+	_dd24.demon_passive_learn = list("Preserve Extra" = 28)
 	_dd24.demon_unique = FALSE
 	_dd24.demon_icon = 'Icons/DevilSummoner/Demons/Orthrus.dmi'
 	_dd24.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Orthrus128.dmi'
@@ -507,8 +502,8 @@
 	_dd25.demon_off = 5
 	_dd25.demon_def = 6
 	_dd25.demon_skills = list("Mazan")
-	_dd25.demon_skill_learn = list("Mabufu" = 38, "Maragi" = 39)
-	_dd25.demon_passive_learn = list("Fire Boost" = 36, "Life Surge" = 37, "Force Boost" = 40)
+	_dd25.demon_skill_learn = list("Maragi" = 36)
+	_dd25.demon_passive_learn = list("Force Boost" = 37)
 	_dd25.demon_unique = FALSE
 	_dd25.demon_icon = 'Icons/DevilSummoner/Demons/Cait Sith.dmi'
 	_dd25.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Cait Sith128.dmi'
@@ -527,8 +522,7 @@
 	_dd26.demon_off = 10
 	_dd26.demon_def = 8
 	_dd26.demon_skills = list("Ziodyne")
-	_dd26.demon_skill_learn = list("Berserk" = 51, "Power Charge" = 52)
-	_dd26.demon_passive_learn = list("Pierce" = 44, "Elec Boost" = 50)
+	_dd26.demon_passive_learn = list("Pierce" = 44)
 	_dd26.demon_unique = FALSE
 	_dd26.demon_icon = 'Icons/DevilSummoner/Demons/Nue.dmi'
 	_dd26.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Nue128.dmi'
@@ -548,8 +542,7 @@
 	_dd27.demon_def = 5
 	_dd27.demon_skills = list("Piercing Hit")
 	_dd27.demon_passives = list("Drain Hit")
-	_dd27.demon_skill_learn = list("Agidyne" = 60)
-	_dd27.demon_passive_learn = list("Life Stream" = 58, "Pierce" = 59)
+	_dd27.demon_skill_learn = list("Piercing Hit" = 52)
 	_dd27.demon_unique = FALSE
 	_dd27.demon_icon = 'Icons/DevilSummoner/Demons/Myrmecolion.dmi'
 	_dd27.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Myrmecolion128.dmi'
@@ -569,8 +562,6 @@
 	_dd28.demon_def = 9
 	_dd28.demon_skills = list("Agidyne")
 	_dd28.demon_passives = list("Hero Soul")
-	_dd28.demon_skill_learn = list("Deathbound" = 68, "Multi-Strike" = 69)
-	_dd28.demon_passive_learn = list("Life Stream" = 66, "Pierce" = 67)
 	_dd28.demon_unique = FALSE
 	_dd28.demon_icon = 'Icons/DevilSummoner/Demons/Cerberus.dmi'
 	_dd28.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Cerberus128.dmi'
@@ -590,6 +581,7 @@
 	_dd29.demon_def = 6
 	_dd29.demon_skills = list("Piercing Hit")
 	_dd29.demon_passives = list("Double Strike")
+	_dd29.demon_skill_learn = list("Piercing Hit" = 67)
 	_dd29.demon_unique = FALSE
 	_dd29.demon_icon = 'Icons/DevilSummoner/Demons/Fenrir.dmi'
 	_dd29.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Fenrir128.dmi'
@@ -647,6 +639,7 @@
 	_dd32.demon_off = 9
 	_dd32.demon_def = 6
 	_dd32.demon_skills = list("Bufudyne")
+	_dd32.demon_skill_learn = list("Bufudyne" = 34)
 	_dd32.demon_passive_learn = list("Life Aid" = 35)
 	_dd32.demon_unique = TRUE
 	_dd32.demon_icon = 'Icons/DevilSummoner/Demons/Arahabaki.dmi'
@@ -667,6 +660,7 @@
 	_dd33.demon_def = 6
 	_dd33.demon_skills = list("Ziodyne")
 	_dd33.demon_passives = list("Null Elec")
+	_dd33.demon_skill_learn = list("Ziodyne" = 38)
 	_dd33.demon_unique = TRUE
 	_dd33.demon_icon = 'Icons/DevilSummoner/Demons/Odin.dmi'
 	_dd33.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Odin128.dmi'
@@ -686,6 +680,7 @@
 	_dd34.demon_def = 6
 	_dd34.demon_skills = list("Agidyne")
 	_dd34.demon_passives = list("Null Fire")
+	_dd34.demon_skill_learn = list("Agidyne" = 42)
 	_dd34.demon_unique = TRUE
 	_dd34.demon_icon = 'Icons/DevilSummoner/Demons/Yama.dmi'
 	_dd34.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Yama128.dmi'
@@ -724,6 +719,7 @@
 	_dd36.demon_off = 8
 	_dd36.demon_def = 8
 	_dd36.demon_skills = list("Megido")
+	_dd36.demon_skill_learn = list("Megido" = 51)
 	_dd36.demon_passive_learn = list("Mana Stream" = 50)
 	_dd36.demon_unique = TRUE
 	_dd36.demon_icon = 'Icons/DevilSummoner/Demons/Mithra.dmi'
@@ -743,7 +739,7 @@
 	_dd37.demon_off = 11
 	_dd37.demon_def = 9
 	_dd37.demon_skills = list("Makarakarn")
-	_dd37.demon_skill_learn = list("Megido" = 55)
+	_dd37.demon_skill_learn = list("Makarakarn" = 54, "Megido" = 55)
 	_dd37.demon_unique = TRUE
 	_dd37.demon_icon = 'Icons/DevilSummoner/Demons/Osiris.dmi'
 	_dd37.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Osiris128.dmi'
@@ -782,6 +778,7 @@
 	_dd39.demon_off = 12
 	_dd39.demon_def = 7
 	_dd39.demon_skills = list("Megidolaon")
+	_dd39.demon_skill_learn = list("Megidolaon" = 62)
 	_dd39.demon_unique = TRUE
 	_dd39.demon_icon = 'Icons/DevilSummoner/Demons/Alilat.dmi'
 	_dd39.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Alilat128.dmi'
@@ -820,6 +817,7 @@
 	_dd41.demon_off = 10
 	_dd41.demon_def = 12
 	_dd41.demon_skills = list("Samarecarm")
+	_dd41.demon_skill_learn = list("Samarecarm" = 71)
 	_dd41.demon_unique = TRUE
 	_dd41.demon_icon = 'Icons/DevilSummoner/Demons/Lord Nan Dou.dmi'
 	_dd41.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Lord Nan Dou128.dmi'
@@ -934,6 +932,7 @@
 	_dd47.demon_off = 11
 	_dd47.demon_def = 9
 	_dd47.demon_skills = list("Judgement")
+	_dd47.demon_skill_learn = list("Judgement" = 51)
 	_dd47.demon_passive_learn = list("Ice Repel" = 52)
 	_dd47.demon_unique = FALSE
 	_dd47.demon_icon = 'Icons/DevilSummoner/Demons/Kazfiel.dmi'
@@ -953,6 +952,7 @@
 	_dd48.demon_off = 11
 	_dd48.demon_def = 8
 	_dd48.demon_skills = list("Samarecarm")
+	_dd48.demon_skill_learn = list("Samarecarm" = 60)
 	_dd48.demon_passive_learn = list("Phys Drain" = 61)
 	_dd48.demon_unique = TRUE
 	_dd48.demon_icon = 'Icons/DevilSummoner/Demons/Remiel.dmi'
@@ -992,8 +992,7 @@
 	_dd50.demon_def = 3
 	_dd50.demon_skills = list("Zio")
 	_dd50.demon_passives = list("Life Bonus")
-	_dd50.demon_skill_learn = list("Elec Dance" = 13, "Nigayomogi" = 38)
-	_dd50.demon_passive_learn = list("Anti-Elec" = 36, "Mana Bonus" = 37)
+	_dd50.demon_skill_learn = list("Elec Dance" = 13)
 	_dd50.demon_unique = FALSE
 	_dd50.demon_icon = 'Icons/DevilSummoner/Demons/Toubyou.dmi'
 	_dd50.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Toubyou128.dmi'
@@ -1012,6 +1011,7 @@
 	_dd51.demon_off = 5
 	_dd51.demon_def = 4
 	_dd51.demon_skills = list("Diarama")
+	_dd51.demon_skill_learn = list("Diarama" = 21)
 	_dd51.demon_passive_learn = list("Grimoire" = 22)
 	_dd51.demon_unique = FALSE
 	_dd51.demon_icon = 'Icons/DevilSummoner/Demons/Bai Suzhen.dmi'
@@ -1032,8 +1032,8 @@
 	_dd52.demon_def = 5
 	_dd52.demon_skills = list("Petra Eyes")
 	_dd52.demon_passives = list("Anti-Force")
-	_dd52.demon_skill_learn = list("Fire Dance" = 42, "Power Hit" = 43)
-	_dd52.demon_passive_learn = list("+Stone" = 30, "Anti-Phys" = 40, "Grimoire" = 41)
+	_dd52.demon_skill_learn = list("Petra Eyes" = 29)
+	_dd52.demon_passive_learn = list("+Stone" = 30)
 	_dd52.demon_unique = FALSE
 	_dd52.demon_icon = 'Icons/DevilSummoner/Demons/Basilisk.dmi'
 	_dd52.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Basilisk128.dmi'
@@ -1072,8 +1072,7 @@
 	_dd54.demon_off = 7
 	_dd54.demon_def = 6
 	_dd54.demon_skills = list("Petra Eyes")
-	_dd54.demon_skill_learn = list("Holy Dance" = 47)
-	_dd54.demon_passive_learn = list("Dual Shadow" = 45, "Mana Surge" = 46)
+	_dd54.demon_skill_learn = list("Holy Dance" = 45)
 	_dd54.demon_unique = FALSE
 	_dd54.demon_icon = 'Icons/DevilSummoner/Demons/Ym.dmi'
 	_dd54.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Ym128.dmi'
@@ -1092,8 +1091,6 @@
 	_dd55.demon_off = 7
 	_dd55.demon_def = 6
 	_dd55.demon_skills = list("Agidyne")
-	_dd55.demon_skill_learn = list("Bufudyne" = 63, "Megido" = 64)
-	_dd55.demon_passive_learn = list("Dual Shadow" = 59, "Fire Amp" = 60, "Ice Amp" = 61, "Mana Stream" = 62)
 	_dd55.demon_unique = FALSE
 	_dd55.demon_icon = 'Icons/DevilSummoner/Demons/Python.dmi'
 	_dd55.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Python128.dmi'
@@ -1113,7 +1110,7 @@
 	_dd56.demon_def = 8
 	_dd56.demon_skills = list("Bufudyne")
 	_dd56.demon_skill_learn = list("Mabufudyne" = 59)
-	_dd56.demon_passive_learn = list("Ice Repel" = 60, "Anti-Most" = 66, "Ice Amp" = 67, "Ice Boost" = 68)
+	_dd56.demon_passive_learn = list("Ice Repel" = 60)
 	_dd56.demon_unique = FALSE
 	_dd56.demon_icon = 'Icons/DevilSummoner/Demons/Culebre.dmi'
 	_dd56.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Culebre128.dmi'
@@ -1132,6 +1129,7 @@
 	_dd57.demon_off = 15
 	_dd57.demon_def = 11
 	_dd57.demon_skills = list("Maziodyne")
+	_dd57.demon_skill_learn = list("Maziodyne" = 66)
 	_dd57.demon_unique = FALSE
 	_dd57.demon_icon = 'Icons/DevilSummoner/Demons/Vritra.dmi'
 	_dd57.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Vritra128.dmi'
@@ -1241,8 +1239,7 @@
 	_dd63.demon_off = 2
 	_dd63.demon_def = 2
 	_dd63.demon_skills = list("Dia")
-	_dd63.demon_skill_learn = list("Zio" = 4, "Bufu" = 22)
-	_dd63.demon_passive_learn = list("Mana Bonus" = 20, "Moneybags" = 21)
+	_dd63.demon_skill_learn = list("Zio" = 4)
 	_dd63.demon_unique = FALSE
 	_dd63.demon_icon = 'Icons/DevilSummoner/Demons/Pixie.dmi'
 	_dd63.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Pixie128.dmi'
@@ -1262,8 +1259,7 @@
 	_dd64.demon_def = 4
 	_dd64.demon_skills = list("Zan")
 	_dd64.demon_passives = list("Extra Bonus")
-	_dd64.demon_skill_learn = list("Dia" = 8, "Extra Cancel" = 24)
-	_dd64.demon_passive_learn = list("Anti-Force" = 22, "Race-D" = 23)
+	_dd64.demon_skill_learn = list("Dia" = 8)
 	_dd64.demon_unique = FALSE
 	_dd64.demon_icon = 'Icons/DevilSummoner/Demons/Knocker.dmi'
 	_dd64.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Knocker128.dmi'
@@ -1283,6 +1279,7 @@
 	_dd65.demon_def = 3
 	_dd65.demon_skills = list("Force Dance")
 	_dd65.demon_passives = list("Mana Bonus")
+	_dd65.demon_skill_learn = list("Force Dance" = 15)
 	_dd65.demon_unique = FALSE
 	_dd65.demon_icon = 'Icons/DevilSummoner/Demons/Kijimuna.dmi'
 	_dd65.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Kijimuna128.dmi'
@@ -1301,8 +1298,8 @@
 	_dd66.demon_off = 5
 	_dd66.demon_def = 5
 	_dd66.demon_skills = list("Ice Dance")
-	_dd66.demon_skill_learn = list("Mabufu" = 22, "Diarama" = 28)
-	_dd66.demon_passive_learn = list("Anti-Ice" = 23, "Ice Boost" = 26, "Mana Surge" = 27)
+	_dd66.demon_skill_learn = list("Mabufu" = 22)
+	_dd66.demon_passive_learn = list("Anti-Ice" = 23)
 	_dd66.demon_unique = FALSE
 	_dd66.demon_icon = 'Icons/DevilSummoner/Demons/Jack Frost.dmi'
 	_dd66.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Jack Frost128.dmi'
@@ -1321,8 +1318,8 @@
 	_dd67.demon_off = 5
 	_dd67.demon_def = 6
 	_dd67.demon_skills = list("Fire Dance")
-	_dd67.demon_skill_learn = list("Maragi" = 30, "Agidyne" = 34, "Media" = 35)
-	_dd67.demon_passive_learn = list("Double Strike" = 31, "Fire Boost" = 32, "Mana Surge" = 33)
+	_dd67.demon_skill_learn = list("Maragi" = 30)
+	_dd67.demon_passive_learn = list("Fire Boost" = 31)
 	_dd67.demon_unique = FALSE
 	_dd67.demon_icon = 'Icons/DevilSummoner/Demons/Pyro Jack.dmi'
 	_dd67.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Pyro Jack128.dmi'
@@ -1342,8 +1339,7 @@
 	_dd68.demon_def = 5
 	_dd68.demon_skills = list("Marin Karin")
 	_dd68.demon_passives = list("Vigilant")
-	_dd68.demon_skill_learn = list("Diarahan" = 38, "Drain" = 47)
-	_dd68.demon_passive_learn = list("Drain Hit" = 45, "Grimoire" = 46)
+	_dd68.demon_skill_learn = list("Diarahan" = 38)
 	_dd68.demon_unique = FALSE
 	_dd68.demon_icon = 'Icons/DevilSummoner/Demons/Lorelei.dmi'
 	_dd68.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Lorelei128.dmi'
@@ -1362,8 +1358,6 @@
 	_dd69.demon_off = 6
 	_dd69.demon_def = 7
 	_dd69.demon_skills = list("Diarahan", "Media")
-	_dd69.demon_skill_learn = list("Bufudyne" = 54)
-	_dd69.demon_passive_learn = list("Mana Surge" = 52, "Null Ice" = 53)
 	_dd69.demon_unique = FALSE
 	_dd69.demon_icon = 'Icons/DevilSummoner/Demons/Silky.dmi'
 	_dd69.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Silky128.dmi'
@@ -1382,8 +1376,7 @@
 	_dd70.demon_off = 6
 	_dd70.demon_def = 8
 	_dd70.demon_skills = list("Drain", "Ziodyne")
-	_dd70.demon_skill_learn = list("Recarm" = 61)
-	_dd70.demon_passive_learn = list("Elec Repel" = 53, "Anti-Phys" = 60)
+	_dd70.demon_passive_learn = list("Elec Repel" = 53)
 	_dd70.demon_unique = FALSE
 	_dd70.demon_icon = 'Icons/DevilSummoner/Demons/Vivian.dmi'
 	_dd70.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Vivian128.dmi'
@@ -1402,6 +1395,7 @@
 	_dd71.demon_off = 8
 	_dd71.demon_def = 9
 	_dd71.demon_skills = list("Recarmloss")
+	_dd71.demon_skill_learn = list("Recarmloss" = 61)
 	_dd71.demon_unique = TRUE
 	_dd71.demon_icon = 'Icons/DevilSummoner/Demons/Titania.dmi'
 	_dd71.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Titania128.dmi'
@@ -1421,6 +1415,7 @@
 	_dd72.demon_def = 9
 	_dd72.demon_skills = list("Samarecarm")
 	_dd72.demon_passives = list("Life Lift")
+	_dd72.demon_skill_learn = list("Samarecarm" = 63)
 	_dd72.demon_unique = TRUE
 	_dd72.demon_icon = 'Icons/DevilSummoner/Demons/Oberon.dmi'
 	_dd72.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Oberon128.dmi'
@@ -1439,8 +1434,8 @@
 	_dd73.demon_off = 3
 	_dd73.demon_def = 3
 	_dd73.demon_skills = list("Zio")
-	_dd73.demon_skill_learn = list("Elec Dance" = 14, "Anger Hit" = 38)
-	_dd73.demon_passive_learn = list("Counter" = 12, "Anti-Elec" = 36, "Dodge" = 37)
+	_dd73.demon_skill_learn = list("Elec Dance" = 14)
+	_dd73.demon_passive_learn = list("Counter" = 12)
 	_dd73.demon_unique = FALSE
 	_dd73.demon_icon = 'Icons/DevilSummoner/Demons/Gagyson.dmi'
 	_dd73.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Gagyson128.dmi'
@@ -1459,8 +1454,7 @@
 	_dd74.demon_off = 6
 	_dd74.demon_def = 3
 	_dd74.demon_skills = list("Force Dance")
-	_dd74.demon_skill_learn = list("Mazio" = 41)
-	_dd74.demon_passive_learn = list("Race-D" = 20, "Anti-Elec" = 38, "Anti-Force" = 39, "Mana Bonus" = 40)
+	_dd74.demon_passive_learn = list("Race-D" = 20)
 	_dd74.demon_unique = FALSE
 	_dd74.demon_icon = 'Icons/DevilSummoner/Demons/Abraxas.dmi'
 	_dd74.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Abraxas128.dmi'
@@ -1479,8 +1473,7 @@
 	_dd75.demon_off = 7
 	_dd75.demon_def = 6
 	_dd75.demon_skills = list("Maragi")
-	_dd75.demon_skill_learn = list("Nigayomogi" = 40, "Power Charge" = 41, "Power Hit" = 42)
-	_dd75.demon_passive_learn = list("Mana Surge" = 27, "+Forget" = 28)
+	_dd75.demon_passive_learn = list("+Forget" = 28, "Mana Surge" = 27)
 	_dd75.demon_unique = FALSE
 	_dd75.demon_icon = 'Icons/DevilSummoner/Demons/Flauros.dmi'
 	_dd75.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Flauros128.dmi'
@@ -1500,6 +1493,7 @@
 	_dd76.demon_def = 5
 	_dd76.demon_skills = list("Mighty Hit")
 	_dd76.demon_passives = list("Force Boost")
+	_dd76.demon_skill_learn = list("Mighty Hit" = 35)
 	_dd76.demon_passive_learn = list("Crit Up" = 34)
 	_dd76.demon_unique = FALSE
 	_dd76.demon_icon = 'Icons/DevilSummoner/Demons/Barbatos.dmi'
@@ -1538,8 +1532,8 @@
 	_dd78.demon_off = 7
 	_dd78.demon_def = 5
 	_dd78.demon_skills = list("Maragi")
-	_dd78.demon_skill_learn = list("Weak Kill" = 42, "Agidyne" = 46)
-	_dd78.demon_passive_learn = list("+Forget" = 43, "Mana Stream" = 44, "Null Fire" = 45)
+	_dd78.demon_skill_learn = list("Weak Kill" = 42)
+	_dd78.demon_passive_learn = list("Mana Stream" = 43)
 	_dd78.demon_unique = FALSE
 	_dd78.demon_icon = 'Icons/DevilSummoner/Demons/Nisroc.dmi'
 	_dd78.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Nisroc128.dmi'
@@ -1578,8 +1572,7 @@
 	_dd80.demon_def = 7
 	_dd80.demon_skills = list("Mazio")
 	_dd80.demon_passives = list("Null Curse")
-	_dd80.demon_skill_learn = list("Makarakarn" = 58, "Ziodyne" = 59)
-	_dd80.demon_passive_learn = list("Elec Amp" = 50, "+Forget" = 57)
+	_dd80.demon_passive_learn = list("Elec Amp" = 50)
 	_dd80.demon_unique = FALSE
 	_dd80.demon_icon = 'Icons/DevilSummoner/Demons/Orobas.dmi'
 	_dd80.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Orobas128.dmi'
@@ -1599,7 +1592,6 @@
 	_dd81.demon_def = 6
 	_dd81.demon_skills = list("Shield All")
 	_dd81.demon_skill_learn = list("Maragidyne" = 57)
-	_dd81.demon_passive_learn = list("Fire Amp" = 64, "Null Curse" = 65, "Swift Step" = 66)
 	_dd81.demon_unique = FALSE
 	_dd81.demon_icon = 'Icons/DevilSummoner/Demons/Decarabia.dmi'
 	_dd81.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Decarabia128.dmi'
@@ -1618,8 +1610,7 @@
 	_dd82.demon_off = 12
 	_dd82.demon_def = 8
 	_dd82.demon_skills = list("Death Call")
-	_dd82.demon_skill_learn = list("Tetrakarn" = 65, "Hassohappa" = 74, "Makarakarn" = 75, "Maziodyne" = 76)
-	_dd82.demon_passive_learn = list("Null Curse" = 72, "Swift Step" = 73)
+	_dd82.demon_skill_learn = list("Tetrakarn" = 65)
 	_dd82.demon_unique = FALSE
 	_dd82.demon_icon = 'Icons/DevilSummoner/Demons/Murmur.dmi'
 	_dd82.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Murmur128.dmi'
@@ -1694,8 +1685,8 @@
 	_dd86.demon_off = 3
 	_dd86.demon_def = 3
 	_dd86.demon_skills = list("Dia")
-	_dd86.demon_skill_learn = list("Zan" = 10, "Nigayomogi" = 35)
-	_dd86.demon_passive_learn = list("Mana Bonus" = 11, "Anti-Fire" = 33, "Watchful" = 34)
+	_dd86.demon_skill_learn = list("Zan" = 10)
+	_dd86.demon_passive_learn = list("Mana Bonus" = 11)
 	_dd86.demon_unique = FALSE
 	_dd86.demon_icon = 'Icons/DevilSummoner/Demons/Kikimora.dmi'
 	_dd86.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Kikimora128.dmi'
@@ -1714,8 +1705,7 @@
 	_dd87.demon_off = 4
 	_dd87.demon_def = 4
 	_dd87.demon_skills = list("Sexy Gaze")
-	_dd87.demon_skill_learn = list("Elec Dance" = 37, "Fatal Strike" = 38, "Mazio" = 39)
-	_dd87.demon_passive_learn = list("Anti-Elec" = 20, "Dodge" = 35, "Grimoire" = 36)
+	_dd87.demon_passive_learn = list("Anti-Elec" = 20)
 	_dd87.demon_unique = FALSE
 	_dd87.demon_icon = 'Icons/DevilSummoner/Demons/Lilim.dmi'
 	_dd87.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Lilim128.dmi'
@@ -1734,8 +1724,7 @@
 	_dd88.demon_off = 4
 	_dd88.demon_def = 4
 	_dd88.demon_skills = list("Media")
-	_dd88.demon_skill_learn = list("Bufudyne" = 40, "Diarama" = 41, "Mabufu" = 42)
-	_dd88.demon_passive_learn = list("Anti-Ailment" = 27, "Ice Boost" = 38, "Life Surge" = 39)
+	_dd88.demon_passive_learn = list("Anti-Ailment" = 27)
 	_dd88.demon_unique = FALSE
 	_dd88.demon_icon = 'Icons/DevilSummoner/Demons/Leanan Sidhe.dmi'
 	_dd88.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Leanan Sidhe128.dmi'
@@ -1754,8 +1743,8 @@
 	_dd89.demon_off = 5
 	_dd89.demon_def = 5
 	_dd89.demon_skills = list("Mabufu")
-	_dd89.demon_skill_learn = list("Marin Karin" = 36, "Drain" = 39)
-	_dd89.demon_passive_learn = list("Drain Hit" = 35, "Ice Boost" = 37, "Mana Surge" = 38)
+	_dd89.demon_skill_learn = list("Marin Karin" = 36)
+	_dd89.demon_passive_learn = list("Drain Hit" = 35)
 	_dd89.demon_unique = FALSE
 	_dd89.demon_icon = 'Icons/DevilSummoner/Demons/Yuki Jyorou.dmi'
 	_dd89.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Yuki Jyorou128.dmi'
@@ -1815,6 +1804,7 @@
 	_dd92.demon_def = 7
 	_dd92.demon_skills = list("Maziodyne")
 	_dd92.demon_passives = list("Elec Amp")
+	_dd92.demon_skill_learn = list("Maziodyne" = 47)
 	_dd92.demon_unique = TRUE
 	_dd92.demon_icon = 'Icons/DevilSummoner/Demons/Hariti.dmi'
 	_dd92.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Hariti128.dmi'
@@ -1853,7 +1843,6 @@
 	_dd94.demon_off = 12
 	_dd94.demon_def = 9
 	_dd94.demon_skills = list("Assassinate")
-	_dd94.demon_skill_learn = list("Diarahan" = 66, "Drain" = 67, "Power Hit" = 68, "Zandyne" = 69)
 	_dd94.demon_passive_learn = list("Phys Repel" = 59)
 	_dd94.demon_unique = FALSE
 	_dd94.demon_icon = 'Icons/DevilSummoner/Demons/Rangda.dmi'
@@ -1891,6 +1880,7 @@
 	_dd96.demon_off = 15
 	_dd96.demon_def = 12
 	_dd96.demon_skills = list("Prayer")
+	_dd96.demon_skill_learn = list("Prayer" = 75)
 	_dd96.demon_unique = TRUE
 	_dd96.demon_icon = 'Icons/DevilSummoner/Demons/Kali.dmi'
 	_dd96.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Kali128.dmi'
@@ -1984,6 +1974,7 @@
 	_dd101.demon_def = 8
 	_dd101.demon_skills = list("Judgement")
 	_dd101.demon_passives = list("Attack All")
+	_dd101.demon_skill_learn = list("Judgement" = 64)
 	_dd101.demon_passive_learn = list("Anti-Most" = 65)
 	_dd101.demon_unique = TRUE
 	_dd98.demon_icon = 'Icons/DevilSummoner/Demons/Trumpeter.dmi'
@@ -2023,6 +2014,7 @@
 	_dd103.demon_def = 3
 	_dd103.demon_skills = list("Anger Hit")
 	_dd103.demon_passives = list("Knight Soul", "Phys Up")
+	_dd103.demon_skill_learn = list("Anger Hit" = 8)
 	_dd103.demon_unique = TRUE
 	_dd103.demon_icon = 'Icons/DevilSummoner/Demons/Tam Lin.dmi'
 	_dd103.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Tam Lin128.dmi'
@@ -2042,8 +2034,7 @@
 	_dd104.demon_def = 5
 	_dd104.demon_skills = list("Agi")
 	_dd104.demon_passives = list("Knight Soul")
-	_dd104.demon_skill_learn = list("Extra Cancel" = 29, "Fire Dance" = 30, "Mow Down" = 31)
-	_dd104.demon_passive_learn = list("Race-O" = 14, "Race-D" = 28)
+	_dd104.demon_passive_learn = list("Race-O" = 14)
 	_dd104.demon_unique = FALSE
 	_dd104.demon_icon = 'Icons/DevilSummoner/Demons/Jambavan.dmi'
 	_dd104.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Jambavan128.dmi'
@@ -2063,8 +2054,7 @@
 	_dd105.demon_def = 3
 	_dd105.demon_skills = list("Elec Dance")
 	_dd105.demon_passives = list("Quick Move")
-	_dd105.demon_skill_learn = list("Mow Down" = 23, "Fatal Strike" = 34)
-	_dd105.demon_passive_learn = list("Counter" = 32, "Paladin Soul" = 33)
+	_dd105.demon_skill_learn = list("Elec Dance" = 22, "Mow Down" = 23)
 	_dd105.demon_unique = FALSE
 	_dd105.demon_icon = 'Icons/DevilSummoner/Demons/Ictinike.dmi'
 	_dd105.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Ictinike128.dmi'
@@ -2183,6 +2173,7 @@
 	_dd111.demon_def = 7
 	_dd111.demon_skills = list("Mediarahan")
 	_dd111.demon_passives = list("Dual Shadow")
+	_dd111.demon_skill_learn = list("Mediarahan" = 55)
 	_dd111.demon_unique = TRUE
 	_dd111.demon_icon = 'Icons/DevilSummoner/Demons/Kangiten.dmi'
 	_dd111.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Kangiten128.dmi'
@@ -2202,8 +2193,8 @@
 	_dd112.demon_def = 13
 	_dd112.demon_skills = list("Judgement")
 	_dd112.demon_passives = list("Ice Drain")
-	_dd112.demon_skill_learn = list("Deathbound" = 70)
-	_dd112.demon_passive_learn = list("Force Drain" = 63, "Hero Soul" = 69)
+	_dd112.demon_skill_learn = list("Judgement" = 62)
+	_dd112.demon_passive_learn = list("Force Drain" = 63)
 	_dd112.demon_unique = FALSE
 	_dd112.demon_icon = 'Icons/DevilSummoner/Demons/Ganesha.dmi'
 	_dd112.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Ganesha128.dmi'
@@ -2222,6 +2213,7 @@
 	_dd113.demon_off = 10
 	_dd113.demon_def = 8
 	_dd113.demon_skills = list("Holy Strike")
+	_dd113.demon_skill_learn = list("Holy Strike" = 70)
 	_dd113.demon_unique = TRUE
 	_dd113.demon_icon = 'Icons/DevilSummoner/Demons/Jarilo.dmi'
 	_dd113.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Jarilo128.dmi'
@@ -2259,8 +2251,6 @@
 	_dd115.demon_off = 2
 	_dd115.demon_def = 2
 	_dd115.demon_skills = list("Bufu")
-	_dd115.demon_skill_learn = list("Agi" = 26)
-	_dd115.demon_passive_learn = list("Anti-Fire" = 25)
 	_dd115.demon_unique = FALSE
 	_dd115.demon_icon = 'Icons/DevilSummoner/Demons/Poltergeist.dmi'
 	_dd115.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Poltergeist128.dmi'
@@ -2279,8 +2269,7 @@
 	_dd116.demon_off = 3
 	_dd116.demon_def = 3
 	_dd116.demon_skills = list("Zio")
-	_dd116.demon_skill_learn = list("Agi" = 8, "Bufu" = 30)
-	_dd116.demon_passive_learn = list("Anti-Curse" = 27, "Mana Bonus" = 28, "Moneybags" = 29)
+	_dd116.demon_skill_learn = list("Agi" = 8)
 	_dd116.demon_unique = FALSE
 	_dd116.demon_icon = 'Icons/DevilSummoner/Demons/Agathion.dmi'
 	_dd116.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Agathion128.dmi'
@@ -2300,8 +2289,7 @@
 	_dd117.demon_def = 5
 	_dd117.demon_skills = list("Paral Eyes")
 	_dd117.demon_passives = list("+Paralyze")
-	_dd117.demon_skill_learn = list("Berserk" = 30, "Nigayomogi" = 31)
-	_dd117.demon_passive_learn = list("Dodge" = 17, "Anti-Phys" = 29)
+	_dd117.demon_passive_learn = list("Dodge" = 17)
 	_dd117.demon_unique = FALSE
 	_dd117.demon_icon = 'Icons/DevilSummoner/Demons/Tenong Cut.dmi'
 	_dd117.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Tenong Cut128.dmi'
@@ -2320,8 +2308,8 @@
 	_dd118.demon_off = 6
 	_dd118.demon_def = 4
 	_dd118.demon_skills = list("Assassinate")
-	_dd118.demon_skill_learn = list("Desperation" = 26, "Life Drain" = 33, "Multi-Hit" = 34)
-	_dd118.demon_passive_learn = list("Anti-Curse" = 27, "Anti-Phys" = 31, "Extra Bonus" = 32)
+	_dd118.demon_skill_learn = list("Desperation" = 26)
+	_dd118.demon_passive_learn = list("Anti-Curse" = 27)
 	_dd118.demon_unique = FALSE
 	_dd118.demon_icon = 'Icons/DevilSummoner/Demons/Kumbhanda.dmi'
 	_dd118.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Kumbhanda128.dmi'
@@ -2341,8 +2329,7 @@
 	_dd119.demon_def = 7
 	_dd119.demon_skills = list("Power Charge")
 	_dd119.demon_passives = list("Life Surge")
-	_dd119.demon_skill_learn = list("Extra Cancel" = 38, "Life Drain" = 39, "Nigayomogi" = 40, "Petra Eyes" = 41)
-	_dd119.demon_passive_learn = list("+Forget" = 35, "+Poison" = 36, "Drain Hit" = 37)
+	_dd119.demon_skill_learn = list("Power Charge" = 35)
 	_dd119.demon_unique = FALSE
 	_dd119.demon_icon = 'Icons/DevilSummoner/Demons/Loa.dmi'
 	_dd119.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Loa128.dmi'
@@ -2361,8 +2348,7 @@
 	_dd120.demon_off = 6
 	_dd120.demon_def = 11
 	_dd120.demon_skills = list("Life Drain")
-	_dd120.demon_skill_learn = list("Desperation" = 52)
-	_dd120.demon_passive_learn = list("Null Curse" = 42, "Anti-Ailment" = 49, "Drain Hit" = 50, "Null Ice" = 51)
+	_dd120.demon_passive_learn = list("Null Curse" = 42)
 	_dd120.demon_unique = FALSE
 	_dd120.demon_icon = 'Icons/DevilSummoner/Demons/Pisaca.dmi'
 	_dd120.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Pisaca128.dmi'
@@ -2460,6 +2446,7 @@
 	_dd125.demon_def = 9
 	_dd125.demon_skills = list("Hassohappa")
 	_dd125.demon_passives = list("Dual Shadow", "Hero Soul")
+	_dd125.demon_skill_learn = list("Hassohappa" = 51)
 	_dd125.demon_unique = TRUE
 	_dd125.demon_icon = 'Icons/DevilSummoner/Demons/Jeanne DArc.dmi'
 	_dd125.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Jeanne DArc128.dmi'
@@ -2478,7 +2465,7 @@
 	_dd126.demon_off = 11
 	_dd126.demon_def = 6
 	_dd126.demon_skills = list("Hassohappa")
-	_dd126.demon_skill_learn = list("Piercing Hit" = 59)
+	_dd126.demon_skill_learn = list("Hassohappa" = 58, "Piercing Hit" = 59)
 	_dd126.demon_unique = TRUE
 	_dd126.demon_icon = 'Icons/DevilSummoner/Demons/Yoshitsune.dmi'
 	_dd126.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Yoshitsune128.dmi'
@@ -2497,6 +2484,7 @@
 	_dd127.demon_off = 13
 	_dd127.demon_def = 11
 	_dd127.demon_skills = list("Holy Strike")
+	_dd127.demon_skill_learn = list("Holy Strike" = 72)
 	_dd127.demon_unique = TRUE
 	_dd127.demon_icon = 'Icons/DevilSummoner/Demons/Guan Yu.dmi'
 	_dd127.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Guan Yu128.dmi'
@@ -2534,8 +2522,6 @@
 	_dd129.demon_off = 3
 	_dd129.demon_def = 3
 	_dd129.demon_skills = list("Extra Cancel")
-	_dd129.demon_skill_learn = list("Dia" = 27)
-	_dd129.demon_passive_learn = list("Life Bonus" = 25, "Race-O" = 26)
 	_dd129.demon_unique = FALSE
 	_dd129.demon_icon = 'Icons/DevilSummoner/Demons/Obariyon.dmi'
 	_dd129.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Obariyon128.dmi'
@@ -2555,8 +2541,8 @@
 	_dd130.demon_def = 3
 	_dd130.demon_skills = list("Anger Hit")
 	_dd130.demon_passives = list("Knight Soul")
-	_dd130.demon_skill_learn = list("Berserk" = 29)
-	_dd130.demon_passive_learn = list("Watchful" = 10, "Counter" = 27, "Phys Up" = 28)
+	_dd130.demon_skill_learn = list("Anger Hit" = 9)
+	_dd130.demon_passive_learn = list("Watchful" = 10)
 	_dd130.demon_unique = FALSE
 	_dd130.demon_icon = 'Icons/DevilSummoner/Demons/Ogre.dmi'
 	_dd130.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Ogre128.dmi'
@@ -2575,8 +2561,7 @@
 	_dd131.demon_off = 5
 	_dd131.demon_def = 5
 	_dd131.demon_skills = list("Fatal Strike")
-	_dd131.demon_skill_learn = list("Berserk" = 31, "Extra Cancel" = 32, "Ice Dance" = 33)
-	_dd131.demon_passive_learn = list("Watchful" = 16, "Moneybags" = 17, "Counter" = 29, "Race-D" = 30)
+	_dd131.demon_passive_learn = list("Moneybags" = 17, "Watchful" = 16)
 	_dd131.demon_unique = FALSE
 	_dd131.demon_icon = 'Icons/DevilSummoner/Demons/Mokoi.dmi'
 	_dd131.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Mokoi128.dmi'
@@ -2596,8 +2581,8 @@
 	_dd132.demon_def = 5
 	_dd132.demon_skills = list("Fire Dance")
 	_dd132.demon_passives = list("Counter")
-	_dd132.demon_skill_learn = list("Multi-Hit" = 24, "Brutal Hit" = 33)
-	_dd132.demon_passive_learn = list("Anti-Fire" = 25, "Ares Aid" = 31, "Retaliate" = 32)
+	_dd132.demon_skill_learn = list("Multi-Hit" = 24)
+	_dd132.demon_passive_learn = list("Anti-Fire" = 25)
 	_dd132.demon_unique = FALSE
 	_dd132.demon_icon = 'Icons/DevilSummoner/Demons/Ogun.dmi'
 	_dd132.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Ogun128.dmi'
@@ -2617,8 +2602,7 @@
 	_dd133.demon_def = 6
 	_dd133.demon_skills = list("Ice Dance")
 	_dd133.demon_passives = list("Anti-Ice")
-	_dd133.demon_skill_learn = list("Brutal Hit" = 32, "Mighty Hit" = 35)
-	_dd133.demon_passive_learn = list("Ice Boost" = 33, "Life Surge" = 34)
+	_dd133.demon_skill_learn = list("Brutal Hit" = 32)
 	_dd133.demon_unique = FALSE
 	_dd133.demon_icon = 'Icons/DevilSummoner/Demons/Wendigo.dmi'
 	_dd133.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Wendigo128.dmi'
@@ -2638,8 +2622,7 @@
 	_dd134.demon_def = 10
 	_dd134.demon_skills = list("Petra Eyes")
 	_dd134.demon_passives = list("Anti-Phys")
-	_dd134.demon_skill_learn = list("Bufudyne" = 40, "Power Hit" = 49)
-	_dd134.demon_passive_learn = list("Endure" = 47, "Swift Step" = 48)
+	_dd134.demon_skill_learn = list("Bufudyne" = 40)
 	_dd134.demon_unique = FALSE
 	_dd134.demon_icon = 'Icons/DevilSummoner/Demons/Legion.dmi'
 	_dd134.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Legion128.dmi'
@@ -2658,8 +2641,8 @@
 	_dd135.demon_off = 10
 	_dd135.demon_def = 10
 	_dd135.demon_skills = list("Bufudyne")
-	_dd135.demon_skill_learn = list("Hassohappa" = 48, "Shield All" = 57)
-	_dd135.demon_passive_learn = list("Ice Amp" = 49, "Grimoire" = 55, "Null Phys" = 56)
+	_dd135.demon_skill_learn = list("Hassohappa" = 48)
+	_dd135.demon_passive_learn = list("Ice Amp" = 49)
 	_dd135.demon_unique = FALSE
 	_dd135.demon_icon = 'Icons/DevilSummoner/Demons/Girimehkala.dmi'
 	_dd135.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Girimehkala128.dmi'
@@ -2679,8 +2662,7 @@
 	_dd136.demon_def = 8
 	_dd136.demon_skills = list("Deathbound")
 	_dd136.demon_passives = list("Null Phys")
-	_dd136.demon_skill_learn = list("Piercing Hit" = 66)
-	_dd136.demon_passive_learn = list("Ice Drain" = 63, "Phys Amp" = 64, "Phys Boost" = 65)
+	_dd136.demon_skill_learn = list("Deathbound" = 56)
 	_dd136.demon_unique = FALSE
 	_dd136.demon_icon = 'Icons/DevilSummoner/Demons/Rakshasa.dmi'
 	_dd136.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Rakshasa128.dmi'
@@ -2756,6 +2738,7 @@
 	_dd140.demon_off = 7
 	_dd140.demon_def = 7
 	_dd140.demon_skills = list("Power Hit")
+	_dd140.demon_skill_learn = list("Power Hit" = 29)
 	_dd140.demon_passive_learn = list("Anti-Phys" = 30)
 	_dd140.demon_unique = FALSE
 	_dd140.demon_icon = 'Icons/DevilSummoner/Demons/Nalagiri.dmi'
@@ -2775,7 +2758,7 @@
 	_dd141.demon_off = 9
 	_dd141.demon_def = 8
 	_dd141.demon_skills = list("Might Call")
-	_dd141.demon_skill_learn = list("Mighty Hit" = 38)
+	_dd141.demon_skill_learn = list("Might Call" = 37, "Mighty Hit" = 38)
 	_dd141.demon_unique = TRUE
 	_dd141.demon_icon = 'Icons/DevilSummoner/Demons/Hitokotonusi.dmi'
 	_dd141.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Hitokotonusi128.dmi'
@@ -2852,6 +2835,7 @@
 	_dd145.demon_off = 13
 	_dd145.demon_def = 12
 	_dd145.demon_skills = list("Mazandyne")
+	_dd145.demon_skill_learn = list("Mazandyne" = 65)
 	_dd145.demon_passive_learn = list("Avenge" = 66)
 	_dd145.demon_unique = TRUE
 	_dd145.demon_icon = 'Icons/DevilSummoner/Demons/Koumoukuten.dmi'
@@ -2927,6 +2911,7 @@
 	_dd149.demon_off = 3
 	_dd149.demon_def = 4
 	_dd149.demon_skills = list("Diarama")
+	_dd149.demon_skill_learn = list("Diarama" = 20)
 	_dd149.demon_passive_learn = list("Anti-Force" = 21)
 	_dd149.demon_unique = FALSE
 	_dd149.demon_icon = 'Icons/DevilSummoner/Demons/Sarasvati.dmi'
@@ -3004,6 +2989,7 @@
 	_dd153.demon_def = 6
 	_dd153.demon_skills = list("Recarm")
 	_dd153.demon_passives = list("Anti-Ailment", "Null Force")
+	_dd153.demon_skill_learn = list("Recarm" = 44)
 	_dd153.demon_unique = TRUE
 	_dd153.demon_icon = 'Icons/DevilSummoner/Demons/Scathach.dmi'
 	_dd153.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Scathach128.dmi'
@@ -3078,6 +3064,7 @@
 	_dd157.demon_off = 10
 	_dd157.demon_def = 8
 	_dd157.demon_skills = list("Prayer")
+	_dd157.demon_skill_learn = list("Prayer" = 66)
 	_dd157.demon_passive_learn = list("Mana Aid" = 65)
 	_dd157.demon_unique = TRUE
 	_dd157.demon_icon = 'Icons/DevilSummoner/Demons/Norn.dmi'
@@ -3097,6 +3084,7 @@
 	_dd158.demon_off = 13
 	_dd158.demon_def = 12
 	_dd158.demon_skills = list("Prayer")
+	_dd158.demon_skill_learn = list("Prayer" = 70)
 	_dd158.demon_passive_learn = list("Phys Repel" = 71)
 	_dd158.demon_unique = TRUE
 	_dd158.demon_icon = 'Icons/DevilSummoner/Demons/Pallas Athena.dmi'
@@ -3285,6 +3273,7 @@
 	_dd168.demon_def = 10
 	_dd168.demon_skills = list("Mazandyne")
 	_dd168.demon_passives = list("Force Amp")
+	_dd168.demon_skill_learn = list("Mazandyne" = 61)
 	_dd168.demon_unique = TRUE
 	_dd168.demon_icon = 'Icons/DevilSummoner/Demons/Susano-o.dmi'
 	_dd168.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Susano-o128.dmi'
@@ -3303,6 +3292,7 @@
 	_dd169.demon_off = 14
 	_dd169.demon_def = 8
 	_dd169.demon_skills = list("Megidolaon")
+	_dd169.demon_skill_learn = list("Megidolaon" = 71)
 	_dd169.demon_unique = TRUE
 	_dd169.demon_icon = 'Icons/DevilSummoner/Demons/Beiji-Weng.dmi'
 	_dd169.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Beiji-Weng128.dmi'
@@ -3340,8 +3330,8 @@
 	_dd171.demon_off = 4
 	_dd171.demon_def = 3
 	_dd171.demon_skills = list("Taunt")
-	_dd171.demon_skill_learn = list("Dia" = 16, "Diarama" = 35, "Fire Dance" = 36)
-	_dd171.demon_passive_learn = list("Anti-Curse" = 15, "Dodge" = 33, "Vigilant" = 34)
+	_dd171.demon_skill_learn = list("Dia" = 16)
+	_dd171.demon_passive_learn = list("Anti-Curse" = 15)
 	_dd171.demon_unique = FALSE
 	_dd171.demon_icon = 'Icons/DevilSummoner/Demons/Makara.dmi'
 	_dd171.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Makara128.dmi'
@@ -3360,8 +3350,7 @@
 	_dd172.demon_off = 7
 	_dd172.demon_def = 7
 	_dd172.demon_skills = list("Nigayomogi")
-	_dd172.demon_skill_learn = list("Assassinate" = 37, "Desperation" = 38, "Mow Down" = 39)
-	_dd172.demon_passive_learn = list("Grimoire" = 24, "Double Strike" = 35, "Paladin Soul" = 36)
+	_dd172.demon_passive_learn = list("Grimoire" = 24)
 	_dd172.demon_unique = FALSE
 	_dd172.demon_icon = 'Icons/DevilSummoner/Demons/Nozuchi.dmi'
 	_dd172.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Nozuchi128.dmi'
@@ -3381,8 +3370,7 @@
 	_dd173.demon_def = 6
 	_dd173.demon_skills = list("Fatal Strike")
 	_dd173.demon_passives = list("Anti-Curse")
-	_dd173.demon_skill_learn = list("Power Hit" = 39, "Taunt" = 40)
-	_dd173.demon_passive_learn = list("Paladin Soul" = 31, "Counter" = 37, "Life Aid" = 38)
+	_dd173.demon_passive_learn = list("Paladin Soul" = 31)
 	_dd173.demon_unique = FALSE
 	_dd173.demon_icon = 'Icons/DevilSummoner/Demons/Pendragon.dmi'
 	_dd173.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Pendragon128.dmi'
@@ -3401,8 +3389,7 @@
 	_dd174.demon_off = 6
 	_dd174.demon_def = 11
 	_dd174.demon_skills = list("Power Charge")
-	_dd174.demon_skill_learn = list("Mighty Hit" = 46)
-	_dd174.demon_passive_learn = list("Preserve Extra" = 39, "Anti-Phys" = 43, "Life Surge" = 44, "Null Elec" = 45)
+	_dd174.demon_passive_learn = list("Preserve Extra" = 39)
 	_dd174.demon_unique = FALSE
 	_dd174.demon_icon = 'Icons/DevilSummoner/Demons/Gui Xian.dmi'
 	_dd174.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Gui Xian128.dmi'
@@ -3441,8 +3428,8 @@
 	_dd176.demon_off = 11
 	_dd176.demon_def = 8
 	_dd176.demon_skills = list("Maziodyne")
-	_dd176.demon_skill_learn = list("Deathbound" = 62, "Hassohappa" = 63)
-	_dd176.demon_passive_learn = list("Elec Repel" = 53, "Double Strike" = 59, "Elec Amp" = 60, "Life Aid" = 61)
+	_dd176.demon_skill_learn = list("Maziodyne" = 52)
+	_dd176.demon_passive_learn = list("Elec Repel" = 53)
 	_dd176.demon_unique = FALSE
 	_dd176.demon_icon = 'Icons/DevilSummoner/Demons/Seiryuu.dmi'
 	_dd176.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Seiryuu128.dmi'
@@ -3481,8 +3468,7 @@
 	_dd178.demon_def = 13
 	_dd178.demon_skills = list("Hassohappa")
 	_dd178.demon_passives = list("Fire Drain")
-	_dd178.demon_skill_learn = list("Multi-Strike" = 76)
-	_dd178.demon_passive_learn = list("Avenge" = 67, "Crit Up" = 74, "Ice Drain" = 75)
+	_dd178.demon_passive_learn = list("Avenge" = 67)
 	_dd178.demon_unique = FALSE
 	_dd178.demon_icon = 'Icons/DevilSummoner/Demons/Orochi.dmi'
 	_dd178.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Orochi128.dmi'
@@ -3539,8 +3525,8 @@
 	_dd181.demon_off = 2
 	_dd181.demon_def = 3
 	_dd181.demon_skills = list("Snipe")
-	_dd181.demon_skill_learn = list("Anger Hit" = 27, "Fatal Strike" = 28)
-	_dd181.demon_passive_learn = list("Hero Aid" = 4, "Life Bonus" = 25, "Phys Up" = 26)
+	_dd181.demon_skill_learn = list("Snipe" = 5)
+	_dd181.demon_passive_learn = list("Hero Aid" = 4)
 	_dd181.demon_unique = FALSE
 	_dd181.demon_icon = 'Icons/DevilSummoner/Demons/Kobold.dmi'
 	_dd181.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Kobold128.dmi'
@@ -3560,8 +3546,8 @@
 	_dd182.demon_def = 4
 	_dd182.demon_skills = list("Fatal Strike")
 	_dd182.demon_passives = list("Hero Aid")
-	_dd182.demon_skill_learn = list("Multi-Hit" = 28)
-	_dd182.demon_passive_learn = list("Race-D" = 12, "Double Strike" = 27)
+	_dd182.demon_skill_learn = list("Fatal Strike" = 11)
+	_dd182.demon_passive_learn = list("Race-D" = 12)
 	_dd182.demon_unique = FALSE
 	_dd182.demon_icon = 'Icons/DevilSummoner/Demons/Bilwis.dmi'
 	_dd182.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Bilwis128.dmi'
@@ -3581,8 +3567,7 @@
 	_dd183.demon_def = 6
 	_dd183.demon_skills = list("Berserk")
 	_dd183.demon_passives = list("Race-O")
-	_dd183.demon_skill_learn = list("Power Hit" = 32)
-	_dd183.demon_passive_learn = list("Phys Up" = 29, "Race-D" = 30, "Retaliate" = 31)
+	_dd183.demon_skill_learn = list("Berserk" = 20)
 	_dd183.demon_unique = FALSE
 	_dd183.demon_icon = 'Icons/DevilSummoner/Demons/Gozuki.dmi'
 	_dd183.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Gozuki128.dmi'
@@ -3602,7 +3587,7 @@
 	_dd184.demon_def = 5
 	_dd184.demon_skills = list("Mazio")
 	_dd184.demon_passives = list("Race-O")
-	_dd184.demon_skill_learn = list("Multi-Hit" = 31, "Weak Kill" = 32)
+	_dd184.demon_skill_learn = list("Mazio" = 26)
 	_dd184.demon_passive_learn = list("Elec Boost" = 27)
 	_dd184.demon_unique = FALSE
 	_dd184.demon_icon = 'Icons/DevilSummoner/Demons/Mezuki.dmi'
@@ -3623,8 +3608,7 @@
 	_dd185.demon_def = 6
 	_dd185.demon_skills = list("Assassinate")
 	_dd185.demon_passives = list("+Stone")
-	_dd185.demon_skill_learn = list("Ice Dance" = 36, "Power Charge" = 37)
-	_dd185.demon_passive_learn = list("Ares Aid" = 34, "Retaliate" = 35)
+	_dd185.demon_passive_learn = list("Retaliate" = 34)
 	_dd185.demon_unique = FALSE
 	_dd185.demon_icon = 'Icons/DevilSummoner/Demons/Ikusa.dmi'
 	_dd185.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Ikusa128.dmi'
@@ -3663,7 +3647,7 @@
 	_dd187.demon_off = 11
 	_dd187.demon_def = 9
 	_dd187.demon_skills = list("Mighty Hit")
-	_dd187.demon_passive_learn = list("Endure" = 45, "Life Stream" = 44, "Pierce" = 51)
+	_dd187.demon_passive_learn = list("Endure" = 45, "Life Stream" = 44)
 	_dd187.demon_unique = FALSE
 	_dd187.demon_icon = 'Icons/DevilSummoner/Demons/Lham Dearg.dmi'
 	_dd187.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Lham Dearg128.dmi'
@@ -3683,7 +3667,7 @@
 	_dd188.demon_def = 7
 	_dd188.demon_skills = list("Diarahan")
 	_dd188.demon_skill_learn = list("Deathbound" = 52)
-	_dd188.demon_passive_learn = list("Fire Repel" = 53, "Ares Aid" = 59, "Phys Amp" = 60)
+	_dd188.demon_passive_learn = list("Fire Repel" = 53)
 	_dd188.demon_unique = FALSE
 	_dd188.demon_icon = 'Icons/DevilSummoner/Demons/Yaksa.dmi'
 	_dd188.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Yaksa128.dmi'
@@ -3703,6 +3687,7 @@
 	_dd189.demon_def = 9
 	_dd189.demon_skills = list("Deathbound")
 	_dd189.demon_passives = list("Fire Repel")
+	_dd189.demon_skill_learn = list("Deathbound" = 60)
 	_dd189.demon_unique = TRUE
 	_dd189.demon_icon = 'Icons/DevilSummoner/Demons/Nata Taishi.dmi'
 	_dd189.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Nata Taishi128.dmi'
@@ -3780,6 +3765,7 @@
 	_dd193.demon_def = 6
 	_dd193.demon_skills = list("Death Call")
 	_dd193.demon_passives = list("Crit Up")
+	_dd193.demon_skill_learn = list("Death Call" = 42)
 	_dd193.demon_passive_learn = list("Life Stream" = 41)
 	_dd193.demon_unique = TRUE
 	_dd193.demon_icon = 'Icons/DevilSummoner/Demons/Balor.dmi'
@@ -3819,6 +3805,7 @@
 	_dd195.demon_off = 10
 	_dd195.demon_def = 8
 	_dd195.demon_skills = list("Maziodyne")
+	_dd195.demon_skill_learn = list("Maziodyne" = 55)
 	_dd195.demon_unique = TRUE
 	_dd195.demon_icon = 'Icons/DevilSummoner/Demons/Tzitzimitl.dmi'
 	_dd195.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Tzitzimitl128.dmi'
@@ -3838,6 +3825,7 @@
 	_dd196.demon_def = 11
 	_dd196.demon_skills = list("Megidolaon")
 	_dd196.demon_passives = list("Anti-Most")
+	_dd196.demon_skill_learn = list("Megidolaon" = 62)
 	_dd196.demon_unique = TRUE
 	_dd196.demon_icon = 'Icons/DevilSummoner/Demons/Loki.dmi'
 	_dd196.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Loki128.dmi'
@@ -4007,6 +3995,7 @@
 	_dd205.demon_def = 9
 	_dd205.demon_skills = list("Holy Dance")
 	_dd205.demon_passives = list("Null Force")
+	_dd205.demon_skill_learn = list("Holy Dance" = 41)
 	_dd205.demon_unique = TRUE
 	_dd205.demon_icon = 'Icons/DevilSummoner/Demons/Pazuzu.dmi'
 	_dd205.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Pazuzu128.dmi'
@@ -4063,6 +4052,7 @@
 	_dd208.demon_off = 10
 	_dd208.demon_def = 8
 	_dd208.demon_skills = list("Megidolaon")
+	_dd208.demon_skill_learn = list("Megidolaon" = 63)
 	_dd208.demon_unique = TRUE
 	_dd208.demon_icon = 'Icons/DevilSummoner/Demons/Tao Tie.dmi'
 	_dd208.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Tao Tie128.dmi'
@@ -4082,6 +4072,7 @@
 	_dd209.demon_def = 10
 	_dd209.demon_skills = list("Gigajama")
 	_dd209.demon_passives = list("Attack All")
+	_dd209.demon_skill_learn = list("Gigajama" = 69)
 	_dd209.demon_unique = TRUE
 	_dd209.demon_icon = 'Icons/DevilSummoner/Demons/Tezcatlipoca.dmi'
 	_dd209.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Tezcatlipoca128.dmi'
@@ -4121,7 +4112,6 @@
 	_dd211.demon_skills = list("Dia")
 	_dd211.demon_passives = list("Extra Bonus")
 	_dd211.demon_skill_learn = list("Amrita" = 10)
-	_dd211.demon_passive_learn = list("+Poison" = 35, "Life Bonus" = 36, "Mana Bonus" = 37)
 	_dd211.demon_unique = FALSE
 	_dd211.demon_icon = 'Icons/DevilSummoner/Demons/Hare of Inaba.dmi'
 	_dd211.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Hare of Inaba128.dmi'
@@ -4141,8 +4131,8 @@
 	_dd212.demon_def = 3
 	_dd212.demon_skills = list("Force Dance")
 	_dd212.demon_passives = list("Phys Up")
-	_dd212.demon_skill_learn = list("Berserk" = 38, "Mow Down" = 39)
-	_dd212.demon_passive_learn = list("Life Bonus" = 18, "Quick Move" = 37)
+	_dd212.demon_skill_learn = list("Force Dance" = 19)
+	_dd212.demon_passive_learn = list("Life Bonus" = 18)
 	_dd212.demon_unique = FALSE
 	_dd212.demon_icon = 'Icons/DevilSummoner/Demons/Waira.dmi'
 	_dd212.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Waira128.dmi'
@@ -4162,8 +4152,7 @@
 	_dd213.demon_def = 5
 	_dd213.demon_skills = list("Berserk")
 	_dd213.demon_passives = list("Life Surge")
-	_dd213.demon_skill_learn = list("Fatal Strike" = 41, "Fire Dance" = 42, "Mow Down" = 43)
-	_dd213.demon_passive_learn = list("Counter" = 27, "+Forget" = 39, "Retaliate" = 40)
+	_dd213.demon_passive_learn = list("Counter" = 27)
 	_dd213.demon_unique = FALSE
 	_dd213.demon_icon = 'Icons/DevilSummoner/Demons/Garm.dmi'
 	_dd213.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Garm128.dmi'
@@ -4182,8 +4171,7 @@
 	_dd214.demon_off = 7
 	_dd214.demon_def = 7
 	_dd214.demon_skills = list("Mow Down")
-	_dd214.demon_skill_learn = list("Mighty Hit" = 41, "Power Hit" = 42)
-	_dd214.demon_passive_learn = list("Retaliate" = 34, "Phys Boost" = 35)
+	_dd214.demon_passive_learn = list("Phys Boost" = 35, "Retaliate" = 34)
 	_dd214.demon_unique = FALSE
 	_dd214.demon_icon = 'Icons/DevilSummoner/Demons/Afanc.dmi'
 	_dd214.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Afanc128.dmi'
@@ -4222,8 +4210,8 @@
 	_dd216.demon_off = 7
 	_dd216.demon_def = 9
 	_dd216.demon_skills = list("Media")
-	_dd216.demon_skill_learn = list("Mazan" = 46)
-	_dd216.demon_passive_learn = list("Anti-Fire" = 44, "Swift Step" = 45, "Endure" = 47)
+	_dd216.demon_skill_learn = list("Mazan" = 44)
+	_dd216.demon_passive_learn = list("Endure" = 45)
 	_dd216.demon_unique = FALSE
 	_dd216.demon_icon = 'Icons/DevilSummoner/Demons/Mothman.dmi'
 	_dd216.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Mothman128.dmi'
@@ -4242,8 +4230,8 @@
 	_dd217.demon_off = 11
 	_dd217.demon_def = 6
 	_dd217.demon_skills = list("Diarahan")
-	_dd217.demon_skill_learn = list("Gigajama" = 51, "Death Call" = 61)
-	_dd217.demon_passive_learn = list("Force Repel" = 52, "Double Strike" = 58, "Grimoire" = 59, "Phys Amp" = 60)
+	_dd217.demon_skill_learn = list("Gigajama" = 51)
+	_dd217.demon_passive_learn = list("Force Repel" = 52)
 	_dd217.demon_unique = FALSE
 	_dd217.demon_icon = 'Icons/DevilSummoner/Demons/Taown.dmi'
 	_dd217.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Taown128.dmi'
@@ -4282,8 +4270,7 @@
 	_dd219.demon_off = 17
 	_dd219.demon_def = 15
 	_dd219.demon_skills = list("Deathbound")
-	_dd219.demon_skill_learn = list("Mighty Hit" = 74, "Piercing Hit" = 75)
-	_dd219.demon_passive_learn = list("Attack All" = 66, "Dual Shadow" = 73)
+	_dd219.demon_passive_learn = list("Attack All" = 66)
 	_dd219.demon_unique = FALSE
 	_dd219.demon_icon = 'Icons/DevilSummoner/Demons/Behemoth.dmi'
 	_dd219.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Behemoth128.dmi'
