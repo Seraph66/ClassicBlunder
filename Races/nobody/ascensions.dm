@@ -14,7 +14,7 @@ ascension
 							owner.race.transformations.Add(new/transformation/nobody/spectral_tension())
 							on_ascension_message = "Your sanctuary, where fears and lies melt away."
 						if("Simple")
-							SMod = 2.5
+							SMod = 2
 							on_ascension_message = "Inside, you feel simple and clean."
 					switch(owner.Class)
 						if("Samurai")
@@ -59,7 +59,7 @@ ascension
 						if("Spirit")
 							on_ascension_message = "What's left of you now, your sanctuary."
 						if("Simple")
-							SMod = 2.5
+							SMod = 2
 							on_ascension_message = "Whatever lies beyond this morning is a little later on..."
 					switch(owner.Class)
 						if("Samurai")
@@ -104,7 +104,7 @@ ascension
 						if("Spirit")
 							on_ascension_message = "Your heart is a battleground... Your sanctuary"
 						if("Simple")
-							SMod = 2.5
+							SMod = 2
 							on_ascension_message = "Regardless of warnings, the future doesn't scare you at all..."
 					switch(owner.Class)
 						if("Samurai")
@@ -147,7 +147,7 @@ ascension
 						if("Spirit")
 							on_ascension_message = "You need true emotions... Your sanctuary..."
 						if("Simple")
-							SMod = 2.5
+							SMod = 2
 							on_ascension_message = "Nothing is like before... Simple and clean..."
 					switch(owner.Class)
 						if("Samurai")
@@ -190,7 +190,7 @@ ascension
 						if("Spirit")
 							on_ascension_message = "Your fears, your lies, all melt away... Into your sanctuary!"
 						if("Simple")
-							SMod = 2.5
+							SMod = 2
 							on_ascension_message = "Maybe some things are that simple..."
 					switch(owner.Class)
 						if("Samurai")
@@ -233,7 +233,7 @@ ascension
 						if("Spirit")
 							on_ascension_message = "Faith, should I take a leap... Let me face my fears."
 						if("Simple")
-							SMod = 2.5
+							SMod = 2
 							on_ascension_message = "Space, this is what I choose... Let me face my fears."
 					switch(owner.Class)
 						if("Samurai")

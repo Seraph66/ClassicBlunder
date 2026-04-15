@@ -3000,9 +3000,8 @@ NEW VARIABLES
 					ForMult = 1.2 + totalPot/100
 					StrMult = 1.2 + totalPot/100
 					DefMult = 0.6 + clamp(totalPot/150, 0.1, 0.4)
-					var/reducedPot = totalPot/10
 					passives = list("ManaLeak" = 1 - totalPot/200, "MovementMastery" = 3+round(totalPot/20,1), \
-					"Deicide" = 5* round(totalPot/25,1), "SpiritSword" = 0.5*round(totalPot/4,1), "SpiritHand" = 0.5*round(totalPot/4,1))
+					"Deicide" = 5* round(totalPot/25,1), "SpiritSword" = 0.5+round(totalPot/200,1), "SpiritHand" = 0.5+round(totalPot/200,1))
 
 				verb/Hilbert_Effect()
 					set category="Skills"

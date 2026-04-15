@@ -426,6 +426,7 @@ mob/Admin3/verb
 							P.KeybladeType="Shield"
 					var/Color=alert(P, "Light or Darkness?", "Keyblade", "Light", "Darkness")
 					P.AddSkill(new/obj/Skills/Buffs/ActiveBuffs/Keyblade)
+					P.AddSkill(new/obj/Skills/Teleport/Dive_To_Heart)
 					P<<"You awaken the [P.KeybladeType] of your heart!"
 					P.Saga="Keyblade"
 					P.SagaLevel=1

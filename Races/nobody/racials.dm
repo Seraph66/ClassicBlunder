@@ -15,7 +15,7 @@
 
 /obj/Skills/Buffs/SlotlessBuffs/Racial
 	Void_Blade
-		MakesSword=1
+		MakesSword=3
 		SpecialSlot=0
 		Slotless=1
 		SwordName="Void Blade"

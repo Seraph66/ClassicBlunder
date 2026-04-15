@@ -29,6 +29,7 @@ obj/Skills
 			UnderworldWarp=0//if 1, traverse underworld is option
 			DepthsWarp=0 //Travel to the Depths
 			DaatWarp=0//Travel to Da'at
+			DiveWarp=0//Dive to the Heart
 			FallThrough=0//go to this z plane around your coordinates if you arent on it
 
 			UseableDead=0//if 1, allows use in dead/neardead zones
@@ -249,6 +250,18 @@ obj/Skills
 			verb/Traverse_Depths()
 				set category="Utility"
 				src.Activate(usr)
+		Dive_To_Heart
+			desc="Dive into the station of the heart."
+			DiveWarp=1
+			NoCoordinates=1
+			NoPassengers=1
+			NoReturn=0
+			WindUp=2
+			TeleportMessage="dives into their heart!"
+			ArriveMessage="emerges from their heart!"
+			verb/Dive_To_Heart()
+				set category="Utility"
+				src.Activate(usr)
 
 		New()//this proc is called when the object is created
 			..()
@@ -360,6 +373,8 @@ obj/Skills
 							Focals["[m.name]"]=m
 					if(Focals.len>0)
 						Modes.Add("Focal")
+				if(src.DiveWarp)
+					Modes.Add("Dive to the Heart")
 				if(src.UnderworldWarp)
 					Modes.Add("Traverse Underworld")
 				if(src.DepthsWarp)
@@ -497,6 +512,12 @@ obj/Skills
 						src.ReturnY=User.y
 						src.ReturnZ=User.z
 						Destination=locate(285, 29, 17)
+					if("Dive to the Heart")
+						src.ReturnX=User.x
+						src.ReturnY=User.y
+						src.ReturnZ=User.z
+						Destination=locate(26, 473, 160) //4-14-2026 wipe coords for Dive to the Heart
+
 
 				if(src.WindUpIcon)
 					spawn()
