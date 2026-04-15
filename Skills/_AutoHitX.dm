@@ -6034,6 +6034,15 @@ obj
 
 			Slow//Autohit doesn't hit instantly
 			ApplySlow
+			NerveOverload
+			CriticalParalyze
+			CriticalSpark
+			Whirlwind
+			TrueToxic
+			Rust
+			TurfMud
+			Reinforcement
+			TurfBurn
 			CanBeBlocked
 			CanBeDodged
 

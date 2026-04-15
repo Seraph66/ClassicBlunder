@@ -37,6 +37,7 @@ ascension
 						force = 0.35
 						speed = 0.35
 						offense = 0.35
+				..()
 
 
 		three
