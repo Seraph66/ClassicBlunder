@@ -14,10 +14,11 @@
 		FlickAttack=1
 		ManaCost=5
 		Cooldown=45
+		TurfStrike=1
 		HitSparkIcon='Slash - Hellfire.dmi'
 		HitSparkSize=1
 		HitSparkDispersion=8
-		HitSparkTurns=0
+		HitSparkTurns=1
 		ActiveMessage="invokes: <font size=+1>BLAZING WHIP!</font size>"
 		verb/Blazing_Whip()
 			set category="Skills"
