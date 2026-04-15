@@ -7206,6 +7206,37 @@ NEW VARIABLES
 				adjust(usr)
 				src.Trigger(usr)
 
+		Mark_of_the_Crone
+			SignatureTechnique=3
+			SpecialSlot=1
+			AutoAnger=1
+			AngerThreshold=2
+			IconLock='CroneMajinSparks.gif'
+			LockX=0
+			LockY=0
+			EndTaxDrain=0.0075
+			SpdTaxDrain=0.0075
+			StrTaxDrain=0.0075
+			RecovTaxDrain=0.0075
+			SagaSignature=1
+			AngerMult=1.5
+			ManaDrain=0.1
+			ManaThreshold = 10
+			FlashChange=1
+			KenWave=2
+			KenWaveIcon='KenShockwaveBloodlust.dmi'
+			KenWaveSize=0.2
+			KenWaveTime=5
+			KenWaveBlend=2
+			Cooldown=-1
+			ActiveMessage="drops all pretense, and let the power of the Crone break their limits!!!"
+			OffMessage = "cannot use any more of the Crone's gifts..."
+			verb/Mark_of_the_Crone()
+				set category="Skills"
+				if(!usr.BuffOn(src))
+					passives = list("Brutalize" = 5, "PureDamage" = 5, "PureReduction" = 5, "Pursuer" = 2, "HellPower" = 1, "Gum Gum" = 2, "Extend" = 2, "PowerReplacement" = glob.progress.totalPotentialToDate+5)
+				src.Trigger(usr)
+
 		God_Ki
 			SignatureTechnique=4
 			Cooldown=10
@@ -7575,8 +7606,8 @@ NEW VARIABLES
 			AutoAnger=1
 			AngerThreshold=2
 			IconLock='DarknessGlow.dmi'
-			LockX=-32
-			LockY=-32
+			LockX=0
+			LockY=0
 			FlashChange=1
 			KenWave=2
 			KenWaveIcon='KenShockwaveBloodlust.dmi'
