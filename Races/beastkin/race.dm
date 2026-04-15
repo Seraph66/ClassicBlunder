@@ -91,6 +91,8 @@ Inspiration taken from Sett (League of Legends)}",\
 				if("Trickster")
 					imagination = 2
 					intellect = 1.5;
+					p.SetStat("Intellect", intellect)
+					p.SetStat("Imagination", imagination)
 					p.passive_handler.Increase("Spiritual Tactician", 1)
 					p.passive_handler.Increase("ManaGeneration", 2);
 					p.passive_handler.Increase("Touch of Death", 1);

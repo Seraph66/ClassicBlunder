@@ -18,6 +18,9 @@
 		HitSparkSize=1
 		HitSparkDispersion=8
 		HitSparkTurns=0
+		TurfStrike=1
+		TurfShift='Dirt1.dmi'
+		TurfShiftDuration=3
 		ActiveMessage="invokes: <font size=+1>SEISMIC ENTRY!</font size>"
 		verb/Seismic_Entry()
 			set category="Skills"

@@ -5579,6 +5579,15 @@ obj
 					src.MultiTrail=Z.MultiTrail
 					src.Shearing = Z.Shearing
 					src.Crippling = Z.Crippling
+					src.NerveOverload = Z.NerveOverload
+					src.CriticalParalyze = Z.CriticalParalyze
+					src.CriticalSpark = Z.CriticalSpark
+					src.Whirlwind = Z.Whirlwind
+					src.TrueToxic = Z.TrueToxic
+					src.Rust = Z.Rust
+					src.TurfMud = Z.TurfMud
+					src.Reinforcement = Z.Reinforcement
+					src.TurfBurn = Z.TurfBurn
 					src.TrailX=Z.TrailX
 					src.TrailY=Z.TrailY
 					src.TrailSize=Z.TrailSize
@@ -6134,6 +6143,28 @@ obj
 							a:AddCrippling(Crippling, src.Owner)
 						if(Shearing)
 							a:AddShearing(Shearing, src.Owner)
+						if(istype(a, /mob))
+							var/mob/spellTarget = a
+							if(NerveOverload)
+								spellTarget.AddShock(NerveOverload, src.Owner)
+							if(CriticalParalyze && prob(CriticalParalyze))
+								Stun(spellTarget, 2)
+							if(CriticalSpark && prob(CriticalSpark))
+								EffectiveDamage *= 1.5
+								animate(spellTarget, color = "#fff757")
+								animate(spellTarget, color = spellTarget.MobColor, time = 5)
+							if(Whirlwind && prob(Whirlwind))
+								spellTarget.Knockback(2, src.Owner, Direction=pick(NORTH, SOUTH, EAST, WEST))
+							if(TrueToxic)
+								spellTarget.AddPoison(TrueToxic, src.Owner)
+							if(Rust)
+								spellTarget.AddShearing(Rust, src.Owner)
+							if(TurfMud)
+								spellTarget.AddSlow(TurfMud, src.Owner)
+							if(Reinforcement && src.Owner)
+								src.Owner.HealHealth(Reinforcement)
+							if(TurfBurn)
+								spellTarget.AddBurn(TurfBurn, src.Owner)
 						if(Owner.Attunement == "Fox Fire")
 							var/heal = EffectiveDamage * ( (1 + Owner.AscensionsAcquired + (FoxFire))/10)
 							a:LoseEnergy(heal/2)

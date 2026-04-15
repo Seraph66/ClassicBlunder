@@ -6263,6 +6263,15 @@ obj
 			src.CanBeDodged=Z.CanBeDodged
 			src.Slow=Z.Slow
 			src.ApplySlow = Z.ApplySlow
+			src.NerveOverload = Z.NerveOverload
+			src.CriticalParalyze = Z.CriticalParalyze
+			src.CriticalSpark = Z.CriticalSpark
+			src.Whirlwind = Z.Whirlwind
+			src.TrueToxic = Z.TrueToxic
+			src.Rust = Z.Rust
+			src.TurfMud = Z.TurfMud
+			src.Reinforcement = Z.Reinforcement
+			src.TurfBurn = Z.TurfBurn
 			src.PassThrough=Z.PassThrough//This does not get assigned to other types because it will always follow the primary autohit, not the offshoots.
 			src.PassTo=Z.PassTo
 			src.StopAtTarget=Z.StopAtTarget
@@ -6730,6 +6739,26 @@ obj
 					FinalDmg *= 1 + ((additonal * missingHealth)/100)
 				if(ApplySlow)
 					m.AddSlow(ApplySlow, Owner)
+				if(NerveOverload)
+					m.AddShock(NerveOverload, Owner)
+				if(CriticalParalyze && prob(CriticalParalyze))
+					Stun(m, 2)
+				if(CriticalSpark && prob(CriticalSpark))
+					FinalDmg *= 1.5
+					animate(m, color = "#fff757")
+					animate(m, color = m.MobColor, time = 5)
+				if(Whirlwind && prob(Whirlwind))
+					m.Knockback(2, Owner, Direction=pick(NORTH, SOUTH, EAST, WEST))
+				if(TrueToxic)
+					m.AddPoison(TrueToxic, Owner)
+				if(Rust)
+					m.AddShearing(Rust, Owner)
+				if(TurfMud)
+					m.AddSlow(TurfMud, Owner)
+				if(Reinforcement && Owner)
+					Owner.HealHealth(Reinforcement)
+				if(TurfBurn)
+					m.AddBurn(TurfBurn, Owner)
 				if(grabNerf)
 					FinalDmg *= glob.AUTOHIT_GRAB_NERF
 					DEBUGMSG("after grabNerf: [FinalDmg]")

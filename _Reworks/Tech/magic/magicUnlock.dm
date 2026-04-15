@@ -36,14 +36,6 @@ var/knowledgePaths/magic/list/MagicTree = list()
 				theCost = 1
 			if(length(MagicTree) < 1)
 				fillMagicTree()
-		if("Technology")
-			theCost = glob.TECH_BASE_COST / int
-			if(glob.MAGIC_INTELL_MATTERS && passive_handler["Spiritual Tactician"])
-				theCost /= imag
-			if(theCost < 1)
-				theCost = 1
-			if(length(TechnologyTree) < 1)
-				fillOutTechTree()
 	for(var/n in global.vars["[pathType]Tree"])
 		var/knowledgePaths/knowledge = global.vars["[pathType]Tree"][n]
 		if(n in knowledgeList)

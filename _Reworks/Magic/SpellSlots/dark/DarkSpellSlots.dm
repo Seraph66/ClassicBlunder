@@ -17,6 +17,9 @@
 		HitSparkSize=1
 		HitSparkDispersion=6
 		HitSparkTurns=0
+		TurfStrike=1
+		TurfShift='Dark.dmi'
+		TurfShiftDuration=3
 		ActiveMessage="invokes: <font size=+1>SHADOW CLEAVE!</font size>"
 		verb/Shadow_Cleave()
 			set category="Skills"

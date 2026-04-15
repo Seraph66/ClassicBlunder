@@ -18,6 +18,9 @@
 		HitSparkSize=1
 		HitSparkDispersion=8
 		HitSparkTurns=0
+		TurfStrike=1
+		TurfShift='Gravity.dmi'
+		TurfShiftDuration=3
 		ActiveMessage="invokes: <font size=+1>FLUX!</font size>"
 		verb/Flux()
 			set category="Skills"

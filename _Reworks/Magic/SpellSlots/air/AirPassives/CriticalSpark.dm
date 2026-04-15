@@ -1,4 +1,1 @@
-/obj/Skills/var
-    CriticalSpark=0;
-
-//do mechanics later
+// CriticalSpark var declared in _1CodeFolder/Skills.dm. Effect applied in _AutoHitX.dm / _ProjectileX.dm hit hooks.

@@ -90,6 +90,8 @@ var/knowledgePaths/tech/list/TechnologyTree = list()
 	if(passive_handler["Spiritual Tactician"])
 		if(Imagination > Intelligence)
 			int = Imagination
+	if(int < 0.5)
+		int = 0.5
 	var/theCost = glob.TECH_BASE_COST / int
 	var/list/thingCanBuy = list()
 	if(length(TechnologyTree) < 1)

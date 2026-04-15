@@ -257,7 +257,7 @@ obj/ChrysalisShell
 		var/Confirm = alert(usr, "Breaking this chrysalis will cost [Commas(Cost)] mana fragments and will bind you in a pact. Proceed?", "Break Chrysalis", "Yes", "No")
 		if(Confirm == "No")
 			return
-		if(!usr.HasMoney(Cost))
+		if(usr.GetMineral() < Cost)
 			usr << "You don't have enough fragments. It requires [Commas(Cost)]."
 			return
 		if(get_dist(usr, src) > 1)
@@ -266,7 +266,7 @@ obj/ChrysalisShell
 		if(!occupant || !occupant.ChrysalisActive)
 			usr << "The chrysalis has already dissolved."
 			return
-		usr.TakeMoney(Cost)
+		usr.TakeMineral(Cost)
 		occupant.exitChrysalis(usr)
 
 obj/Skills/Utility
@@ -299,7 +299,7 @@ obj/Skills/Utility
 			if(Confirm=="No")
 				src.Using=0
 				return
-			if(!usr.HasMoney(Cost))
+			if(usr.GetMineral() < Cost)
 				usr << "You don't have enough fragments. It requires [Commas(Cost)]."
 				src.Using=0
 				return
@@ -339,7 +339,7 @@ obj/Skills/Utility
 				src.Using=0
 				return
 			//Take payment only after everything is confirmed
-			usr.TakeMoney(Cost)
+			usr.TakeMineral(Cost)
 			switch(choice2)
 				if("Devotion (Balanced)")
 					Choice.ReflectedPactType="Devotion"

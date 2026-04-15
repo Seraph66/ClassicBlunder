@@ -1,5 +1,1 @@
-/obj/Skills/var
-    TurfBurn=0;//ticks down
-
-//detail what it does later
-//it should do something for autohit, projectile, and buff
+// TurfBurn var declared in _1CodeFolder/Skills.dm. Effect applied in _AutoHitX.dm / _ProjectileX.dm hit hooks.

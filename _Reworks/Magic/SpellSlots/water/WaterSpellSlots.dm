@@ -55,6 +55,7 @@
 		Distance=15
 		ManaCost=5
 		Cooldown=45
+		IconLock='Ice.dmi'
 		ActiveMessage="invokes: <font size=+1>FROST SHAMSHIR!</font size>"
 		verb/Frost_Shamshir()
 			set category="Skills"

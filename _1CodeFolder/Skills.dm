@@ -117,6 +117,16 @@ obj/Skills
 	var/Stunner=0 //Stuns for this amount of time
 	var/Shearing //Debuffs regen
 	var/Crippling //Cripples movement
+	//Spell passive vars (populated by SpellSlotModification on enchanted spells)
+	var/NerveOverload=0 //Air Paralyzer: adds Shock per hit
+	var/CriticalParalyze=0 //Air Synapse: % chance to stun on hit
+	var/CriticalSpark=0 //Air Pinpoint: % chance for 1.5x spark damage
+	var/Whirlwind=0 //Air Whirlwind: % chance for random knockback
+	var/TrueToxic=0 //Earth Toxify: adds Poison per hit
+	var/Rust=0 //Earth Rust: adds Shearing per hit
+	var/TurfMud=0 //Earth Muddy: adds Slow per hit
+	var/Reinforcement=0 //Earth Steelize: heals caster per hit
+	var/TurfBurn=0 //Fire Ashfield: adds Burn per hit
 	var/Excruciating //fucks up senses
 	var/Attracting //Makes you follow someone, probably.
 	var/Terrifying //Makes them chicken out instead!

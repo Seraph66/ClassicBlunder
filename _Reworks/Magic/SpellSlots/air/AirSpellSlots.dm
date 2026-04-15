@@ -19,6 +19,9 @@
 		HitSparkSize=1
 		HitSparkDispersion=8
 		HitSparkTurns=0
+		TurfStrike=1
+		TurfShift='Dirt1.dmi'
+		TurfShiftDuration=3
 		ActiveMessage="invokes: <font size=+1>BREAKING TWISTER!</font size>"
 		verb/Breaking_Twister()
 			set category="Skills"
@@ -53,6 +56,7 @@
 		Distance=12
 		ManaCost=5
 		Cooldown=40
+		IconLock='Air Render.dmi'
 		ActiveMessage="invokes: <font size=+1>MENTIS IMPERIUM!</font size>"
 		verb/Mentis_Imperium()
 			set category="Skills"

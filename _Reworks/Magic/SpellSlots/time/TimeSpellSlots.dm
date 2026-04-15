@@ -18,6 +18,9 @@
 		HitSparkSize=1
 		HitSparkDispersion=8
 		HitSparkTurns=0
+		TurfStrike=1
+		TurfShift='Gravity.dmi'
+		TurfShiftDuration=3
 		ActiveMessage="invokes: <font size=+1>TEMPUS CESSAT!</font size>"
 		verb/Tempus_Cessat()
 			set category="Skills"

@@ -18,6 +18,9 @@
 		HitSparkSize=1
 		HitSparkDispersion=8
 		HitSparkTurns=0
+		TurfStrike=1
+		TurfShift='blackflameaura.dmi'
+		TurfShiftDuration=3
 		ActiveMessage="invokes: <font size=+1>BLAZING WHIP!</font size>"
 		verb/Blazing_Whip()
 			set category="Skills"
