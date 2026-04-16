@@ -18,6 +18,11 @@ mob
 		AscAvailable()
 			src.potential_ascend(Silent=1)
 			if(race.ascensions.len==0) return
+			//If a prompt is already open from a prior call (e.g. spammed Meditate),
+			//bail — otherwise race subclass onAscension overrides re-apply their passive Increase() calls
+			//each time we re-enter before the parent's pickingChoice guard is reached.
+			for(var/ascension/pending in race.ascensions)
+				if(pending.pickingChoice) return
 			for(var/a in race.ascensions)
 				var/ascension/asc = a//applied is checked in checkAscensionUnlock; it does not need to be checked for here
 				if(!asc.checkAscensionUnlock(src,Potential)) continue
@@ -3441,7 +3446,7 @@ mob
 			for(var/obj/Skills/s in src.Skills)
 				if(s.SignatureTechnique)
 					if(!s.SagaSignature)
-						if(!s.CyberSignature&&src.CyberneticMainframe)
+						if(!(s.CyberSignature && src.CyberneticMainframe))
 							if(!src.BuffOn(s))
 								src << "[s] has been removed as it is not one of your saga signatures."
 								del s
