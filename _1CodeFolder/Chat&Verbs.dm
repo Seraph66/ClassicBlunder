@@ -900,6 +900,7 @@ mob/proc/RPModeSwitch()
 			if(istype(s, /obj/Skills/Grab)) continue
 			if(s.cooldown_remaining)
 				s.Cooldown(modify=1,Time=s.cooldown_remaining)
+		src.resumeStyleRatingExpiryAfterRP()
 		return
 	if(!src.PureRPMode)
 		RPMode(src,"On")
@@ -914,6 +915,7 @@ mob/proc/RPModeSwitch()
 			if(s.cooldown_remaining)
 				s.cooldown_remaining = s.cooldown_remaining - (world.realtime - s.cooldown_start)
 				s.cooldown_start = 0
+		src.pauseStyleRatingExpiryForRP()
 		return
 
 mob/proc/CutsceneMode()
@@ -926,6 +928,7 @@ mob/proc/CutsceneMode()
 			if(istype(s, /obj/Skills/Grab)) continue
 			if(s.cooldown_remaining)
 				s.Cooldown(modify=1,Time=s.cooldown_remaining)
+		src.resumeStyleRatingExpiryAfterRP()
 		return
 	if(!src.PureRPMode)
 		src.PureRPMode=1
@@ -939,6 +942,7 @@ mob/proc/CutsceneMode()
 			if(s.cooldown_remaining)
 				s.cooldown_remaining = s.cooldown_remaining - (world.realtime - s.cooldown_start)
 				s.cooldown_start = 0
+		src.pauseStyleRatingExpiryForRP()
 		return
 
 mob/Players/verb

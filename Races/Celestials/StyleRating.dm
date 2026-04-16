@@ -2,6 +2,7 @@
 /mob/var/tmp/StyleRatingExpiry = 0
 /mob/var/tmp/StyleRatingDecaying = FALSE
 /mob/var/tmp/StyleRatingLastWasPose = FALSE
+/mob/var/tmp/StyleRatingRPPauseRemainder = 0
 
 /mob/proc/getStyleRank()
     switch(StyleRating)
@@ -29,6 +30,28 @@
     StyleRatingExpiry = world.time + Second(30)
     client?.updateStyleRating()
     startStyleRatingDecay()
+    pauseStyleRatingExpiryForRP()
+
+/mob/proc/demonCelestialStyleRatingFreezesInRP()
+    return isRace(CELESTIAL) && CelestialAscension == "Demon"
+
+/mob/proc/pauseStyleRatingExpiryForRP()
+    if(!demonCelestialStyleRatingFreezesInRP()) return
+    if(!PureRPMode) return
+    if(StyleRating <= 0) return
+    StyleRatingRPPauseRemainder = max(0, StyleRatingExpiry - world.time)
+    StyleRatingExpiry = world.time + 999999999
+
+/mob/proc/resumeStyleRatingExpiryAfterRP()
+    if(!demonCelestialStyleRatingFreezesInRP()) return
+    if(StyleRating <= 0)
+        StyleRatingRPPauseRemainder = 0
+        return
+    if(StyleRatingRPPauseRemainder > 0)
+        StyleRatingExpiry = world.time + StyleRatingRPPauseRemainder
+    else
+        StyleRatingExpiry = world.time
+    StyleRatingRPPauseRemainder = 0
 
 /mob/proc/startStyleRatingDecay()
     if(StyleRatingDecaying) return
@@ -36,6 +59,8 @@
     spawn()
         while(StyleRating > 0)
             sleep(10)
+            if(demonCelestialStyleRatingFreezesInRP() && PureRPMode)
+                continue
             if(StyleRating > 0 && world.time >= StyleRatingExpiry)
                 resetStyleRating()
                 break
@@ -44,6 +69,7 @@
 /mob/proc/resetStyleRating()
     StyleRating = 0
     StyleRatingLastWasPose = FALSE
+    StyleRatingRPPauseRemainder = 0
     client?.updateStyleRating()
 
 /client/var/tmp/obj/styleRatingHolder = new()
