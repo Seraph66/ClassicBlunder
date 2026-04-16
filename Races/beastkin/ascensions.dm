@@ -17,14 +17,14 @@ Or was it Infi, with the brand of the ring, endlessly energetic?"};
 					var/choice = owner.race?:Racial
 					switch(choice)
 						if("Heart of The Beastkin")
-							owner.passive_handler.Increase("Adrenaline", 1)
-							owner.passive_handler.Increase("Harden", 1)
-							owner.passive_handler.Increase("CallousedHands", 0.1)
+							passives["Adrenaline"] = 1
+							passives["Harden"] = 1
+							passives["CallousedHands"] = 0.1
 							endurance = 0.25
 							strength = 0.5
 						if("Monkey King")
-							owner.passive_handler.Increase("Nimbus", 1)
-							owner.passive_handler.Increase("HybridStrike", 1)
+							passives["Nimbus"] = 1
+							passives["HybridStrike"] = 1
 							owner.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Racial/Beastkin/Monkey_Gourd)
 							endurance = 0.15
 							strength = 0.15
@@ -33,15 +33,15 @@ Or was it Infi, with the brand of the ring, endlessly energetic?"};
 							speed = 0.15
 							force = 0.15
 						if("Unseen Predator")
-							owner.passive_handler.Increase("Steady", 1)
-							owner.passive_handler.Increase("Brutalize", 0.5)
+							passives["Steady"] = 1
+							passives["Brutalize"] = 0.5
 							strength = 0.25
 							offense = 0.25
 							speed = 0.25
 						if("Undying Rage")
-							owner.passive_handler.Increase("Momentum", 1)
-							owner.passive_handler.Increase("KillerInstinct", 0.05)
-							owner.passive_handler.Increase("Wrathful Tenacity", 0.15)
+							passives["Momentum"] = 1
+							passives["KillerInstinct"] = 0.05
+							passives["Wrathful Tenacity"] = 0.15
 							strength = 0.5
 							speed = 0.5
 							offense = 0.25
@@ -49,19 +49,19 @@ Or was it Infi, with the brand of the ring, endlessly energetic?"};
 							endurance = -0.25
 							anger = 0.25
 						if("Feather Cowl")
-							owner.passive_handler.Increase("BlockChance", 25)
-							owner.passive_handler.Increase("CriticalBlock", 0.15)
+							passives["BlockChance"] = 25
+							passives["CriticalBlock"] = 0.15
 							endurance = 0.5
 							defense = 0.5
 							strength = -0.25
 						if("Feather Knife")
-							owner.passive_handler.Increase("CriticalChance", 25)
-							owner.passive_handler.Increase("CriticalDamage", 0.15)
+							passives["CriticalChance"] = 25
+							passives["CriticalDamage"] = 0.15
 							offense = 0.5
 							speed = 0.25
 						if("Spirit Walker")
-							owner.passive_handler.Increase("Flow", 1)
-							owner.passive_handler.Increase("Instinct", 1)
+							passives["Flow"] = 1
+							passives["Instinct"] = 1
 							endurance = 0.25
 							strength = 0.1
 							offense = 0.2
@@ -72,15 +72,15 @@ Or was it Infi, with the brand of the ring, endlessly energetic?"};
 							strength = 0.25
 							force = 0.5
 							offense = 0.75
-							owner.passive_handler.Increase("TechniqueMastery", 1);
-							owner.passive_handler.Increase("Touch of Death", 1);
-							owner.passive_handler.Increase("QuickCast", 1);
-							owner.passive_handler.Increase("ManaGeneration", 2);
-							owner.passive_handler.Increase("ManaStats", 0.25);
+							passives["TechniqueMastery"] = 1
+							passives["Touch of Death"] = 1
+							passives["QuickCast"] = 1
+							passives["ManaGeneration"] = 2
+							passives["ManaStats"] = 0.25
 
 						if("Fox Fire")
-							owner.passive_handler.Increase("SoftStyle", 1)
-							owner.passive_handler.Increase("SoulFire", 1)
+							passives["SoftStyle"] = 1
+							passives["SoulFire"] = 1
 							offense = 0.25
 							force = 0.5
 				..()
