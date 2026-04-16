@@ -2654,7 +2654,7 @@ obj
 				IconX=-16
 				IconY=-16
 				Size=1.5
-				Rounds=8
+				Rounds=1
 				DelayTime=2
 				HitSparkIcon='Slash.dmi'
 				HitSparkX=-32
