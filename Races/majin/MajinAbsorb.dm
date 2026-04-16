@@ -202,6 +202,10 @@ proc/removeDuplicates(list/list1)
                 . += "Pursuer"
                 . += "Tenacity"
                 . += "TechniqueMastery"
+             if(Class=="Demon")
+             	. += "SpiritFlow"
+             	. += "SpiritSword"
+             	. += "TechniqueMastery"
         if(BEASTKIN)
             if(Class=="Heart of The Beastkin")
                 . += "Grit"
@@ -266,6 +270,9 @@ proc/removeDuplicates(list/list1)
             if(Class=="Gold")
                 . += "Blubber"
                 . += "CashCow"
+            if(Class=="Dark")
+            	. += "Fury"
+            	. += "Momentum"
         if(ANGEL)
             . += "SpiritPower"
             . += "HolyMod"

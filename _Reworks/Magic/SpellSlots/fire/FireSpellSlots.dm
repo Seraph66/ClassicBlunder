@@ -14,6 +14,7 @@
 		FlickAttack=1
 		ManaCost=5
 		Cooldown=45
+		TurfStrike=1
 		HitSparkIcon='Slash - Hellfire.dmi'
 		HitSparkSize=1
 		HitSparkDispersion=8
