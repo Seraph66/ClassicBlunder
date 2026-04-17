@@ -195,10 +195,10 @@
 				while(src && src.SlotlessOn && charmer && charmer.loc && target && target.loc)
 					var/rp_pause = target.PureRPMode || (charmer && charmer.PureRPMode)
 					if(rp_pause)
-						target.move_disabled = 0
+						target:move_disabled = 0
 						sleep(world.tick_lag * 4)
 						continue
-					target.move_disabled = 1
+					target:move_disabled = 1
 					if(get_dist(target, charmer) >= 2)
 						step_towards(target, charmer)
 					sleep(world.tick_lag * 4)
