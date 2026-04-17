@@ -490,6 +490,7 @@
 #include "_Reworks\Passives\BlurringStrikes.dm"
 #include "_Reworks\Passives\Brutalize.dm"
 #include "_Reworks\Passives\BurnResist.dm"
+#include "_Reworks\Passives\CallousedHands.dm"
 #include "_Reworks\Passives\ChillResist.dm"
 #include "_Reworks\Passives\ControlResist.dm"
 #include "_Reworks\Passives\CrippleResist.dm"

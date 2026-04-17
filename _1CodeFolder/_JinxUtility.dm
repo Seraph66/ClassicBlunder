@@ -359,11 +359,12 @@ mob
 					demon.applyDebuffs(defender, src)
 
 
-			if(passive_handler.Get("SoulFire")&&FightingSeriously(src, 0))
+			var/soulfire = GetSoulFire();
+			if(soulfire)
 				if(!(defender.CyberCancel || defender.Mechanized))
-					defender.LoseCapacity(val*passive_handler.Get("SoulFire")*glob.SOUL_FIRE_FATIGUE_RATIO)
-				defender.LoseMana(val*(passive_handler.Get("SoulFire")*glob.SOUL_FIRE_MANA_RATIO))
-				defender.TotalFatigue+=(val*passive_handler.Get("SoulFire")*glob.SOUL_FIRE_FATIGUE_RATIO)
+					defender.LoseCapacity(val*soulfire*glob.SOUL_FIRE_FATIGUE_RATIO)
+				defender.LoseMana(val*(soulfire*glob.SOUL_FIRE_MANA_RATIO))
+				defender.TotalFatigue+=(val*soulfire*glob.SOUL_FIRE_FATIGUE_RATIO)
 
 			if(defender.CheckSlotless("Protega"))
 				src.LoseHealth(val/10)
@@ -1615,6 +1616,7 @@ mob
 					Mod+=(0.1 * AscensionsAcquired)
 			if(src.StrStolen)
 				Mod+=src.StrStolen*0.5
+			Mod += (scalingEldritchPower() / 10);
 			var/BM=src.HasBuffMastery()
 			if(BM)
 				if(Mod<=glob.BUFF_MASTERY_LOWTHRESHOLD)
@@ -1803,6 +1805,7 @@ mob
 					Mod+=(0.1 * AscensionsAcquired)
 			if(src.ForStolen)
 				Mod+=src.ForStolen*0.5
+			Mod += (scalingEldritchPower() / 10);
 			var/BM=src.HasBuffMastery()
 			if(BM)
 				if(Mod<=glob.BUFF_MASTERY_LOWTHRESHOLD)
@@ -1981,6 +1984,7 @@ mob
 			if(Secret == "Heavenly Restriction")
 				if(secretDatum?:hasImprovement("Endurance"))
 					Mod += round(clamp(1 + secretDatum?:getBoon(src, "Endurance") / 8, 1, 8), 0.1)
+			Mod += (scalingEldritchPower() / 10);
 			var/BM=src.HasBuffMastery()
 			if(BM)
 				if(Mod<=glob.BUFF_MASTERY_LOWTHRESHOLD)
@@ -2011,8 +2015,7 @@ mob
 			if(passive_handler["Rebel Heart"])
 				var/h = (((missingHealth())/glob.REBELHEARTMOD) * passive_handler["Rebel Heart"])/10
 				Mod+=h
-			if(src.Harden)
-				Mod *= src.getHardenMult();
+			if(HardenAccumulated) Mod *= getHardenMult();
 			if(src.Shatter)
 				if(!src.HasDebuffResistance()>=1)
 					var/debuffRev = src.GetDebuffReversal();
@@ -2124,8 +2127,8 @@ mob
 
 			if(src.SpdStolen)
 				Mod+=src.SpdStolen*0.5
-			if(FuryAccumulated)
-				Mod *= src.getFuryMult();
+			if(FuryAccumulated) Mod *= src.getFuryMult();
+			Mod += (scalingEldritchPower() / 10);
 			var/BM=src.HasBuffMastery()
 			if(passive_handler["Rebel Heart"])
 				var/h = (((missingHealth())/glob.REBELHEARTMOD) * passive_handler["Rebel Heart"])/10
@@ -2688,9 +2691,11 @@ mob
 		XenoBiology()//might be useful for some anti-monster/anti-inhuman style later
 			if(passive_handler.Get("Xenobiology"))
 				return 1
+			if(hasEldritchRacial()) return 1;
 			return 0
 
 		IsGood()
+			if(hasEldritchPower()) return 0;
 			var/list/EvilRaces=list(DEMON, DRAGON)
 			var/list/EvilSecrets=list("Vampire", "Werewolf", "Zombie")
 			//these are all bad.
@@ -2740,6 +2745,7 @@ mob
 				return FALSE
 			return 0
 		IsEvil()
+			if(hasEldritchPower()) return 0;
 			var/list/EvilRaces=list(DEMON, DRAGON)
 			var/list/EvilSecrets=list("Vampire", "Werewolf", "Zombie")
 			var/good = 0
