@@ -6348,7 +6348,21 @@ obj
 				src.pixel_x=Z.IconX
 				src.pixel_y=Z.IconY
 				src.transform*=Z.Size
-
+			var/ShiftOdds=(owner.passive_handler.Get("Unreality")*100)
+			if(owner.passive_handler.Get("Half Manifestation"))
+				if(prob(ShiftOdds))
+					Z.HitSparkIcon='Slash - Vampire.dmi'
+					Z.HitSparkX=-32
+					Z.HitSparkY=-32
+					Z.HitSparkTurns=1
+					Z.HitSparkSize=1
+					Z.HitSparkDispersion=1
+					Z.TurfStrike=1
+					Z.TurfShift=owner.EldritchTrail
+					Z.TurfShiftDuration=3
+					if(prob(50))
+						DarknessFlash(owner)
+					Z.ActiveMessage="<font color='red'><font size=+1><b>You cannot grasp the true form of [owner]'s attack...</font color></font size></b>"
 
 			src.dir=src.Owner.dir
 			src.loc=src.Owner.loc

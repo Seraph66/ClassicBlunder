@@ -297,7 +297,7 @@ obj/Skills/Utility
 
 			var/Cost = glob.progress.EconomyCost * 1000
 			if(!usr.HasMoney(Cost))
-				usr << "You need [Cost] Mana Bits to install a Tier 2 [race_choice] sample."
+				usr << "You need [Cost] resources to install a Tier 2 [race_choice] sample."
 				usr.Using = 0
 				return
 
@@ -308,7 +308,7 @@ obj/Skills/Utility
 
 			// Re-validate after the confirm dialog
 			if(!usr.HasMoney(Cost))
-				usr << "You no longer have enough Mana Bits."
+				usr << "You no longer have enough resources."
 				usr.Using = 0
 				return
 			if(usr.HasBioSample(race_choice, 2))

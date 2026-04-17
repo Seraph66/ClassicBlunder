@@ -1550,8 +1550,10 @@ mob
 					if("Survival")
 						EldritchMod=0.25
 			Str+=EldritchMod
-			//mecha suits replace base stats with their level up to max value of 3, which is a cutoff line for many races
-			Str+=src.StrAscension
+			var/EffectiveAsc=src.StrAscension
+			if(passive_handler.Get("Half Manifestation"))
+				EffectiveAsc=src.HandleManifestation("Str")
+			Str+=EffectiveAsc
 			//stat ascensions gained through racial or saga improvements
 			var/enhanced = getEnhanced("Strength")
 			Str+=src.EnhancedStrength ? enhanced : 0
@@ -1742,7 +1744,10 @@ mob
 					if("Survival")
 						EldritchMod=0
 			For+=EldritchMod
-			For+=src.ForAscension
+			var/EffectiveAsc=src.ForAscension
+			if(passive_handler.Get("Half Manifestation"))
+				EffectiveAsc=src.HandleManifestation("For")
+			For+=EffectiveAsc
 			var/enhanced = getEnhanced("Force")
 			For+=src.EnhancedForce ? enhanced : 0
 			For*=src.ForChaos
@@ -1929,7 +1934,10 @@ mob
 					if("Survival")
 						EldritchMod=1
 			End+=EldritchMod
-			End+=src.EndAscension
+			var/EffectiveAsc=src.EndAscension
+			if(passive_handler.Get("Half Manifestation"))
+				EffectiveAsc=src.HandleManifestation("End")
+			End+=EffectiveAsc
 			var/enhanced = getEnhanced("Endurance")
 			End+=EnhancedEndurance ? enhanced : 0
 			End*=src.EndChaos
@@ -2081,7 +2089,10 @@ mob
 					if("Survival")
 						EldritchMod=0
 			Spd+=EldritchMod
-			Spd+=src.SpdAscension
+			var/EffectiveAsc=src.SpdAscension
+			if(passive_handler.Get("Half Manifestation"))
+				EffectiveAsc=src.HandleManifestation("Spd")
+			Spd+=EffectiveAsc
 			var/enhanced = getEnhanced("Speed")
 			Spd+=EnhancedSpeed ? enhanced : 0
 			Spd*=src.SpdChaos
@@ -2230,7 +2241,10 @@ mob
 					if("Survival")
 						EldritchMod=0
 			Off+=EldritchMod
-			Off+=src.OffAscension
+			var/EffectiveAsc=src.OffAscension
+			if(passive_handler.Get("Half Manifestation"))
+				EffectiveAsc=src.HandleManifestation("Off")
+			Off+=EffectiveAsc
 			var/enhanced = getEnhanced("Aggression")
 			Off+=EnhancedAggression ? enhanced : 0
 			Off*=src.OffChaos
@@ -2343,7 +2357,10 @@ mob
 					if("Survival")
 						EldritchMod=0.5
 			Def+=EldritchMod
-			Def+=src.DefAscension
+			var/EffectiveAsc=src.DefAscension
+			if(passive_handler.Get("Half Manifestation"))
+				EffectiveAsc=src.HandleManifestation("Def")
+			Def+=EffectiveAsc
 			var/enhanced = getEnhanced("Reflexes")
 			Def+=EnhancedReflexes ? enhanced : 0
 			Def*=src.DefChaos

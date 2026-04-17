@@ -2943,7 +2943,7 @@ obj/Skills/Utility
 			if(M.isRace(ANDROID)||M.CyberneticMainframe)
 				if(M.Maimed||M.HealthCut)
 					ModChoices.Add("Repair")
-				if("Bio-Mechanical Augmentations" in usr.knowledgeTracker.learnedKnowledge || (usr.isRace(ANDROID)))
+				if("Singularity" in usr.knowledgeTracker.learnedKnowledge || (usr.isRace(ANDROID)))
 					ModChoices.Add("Biological Cybernetics")
 			if(M.BioAndroid)
 				ModChoices.Remove("Biological Cybernetics")

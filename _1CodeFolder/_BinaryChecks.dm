@@ -881,6 +881,8 @@ mob
 			if(Target) if(Target.HasNull() && !HasMaouKi()) return 1;
 			return 0;
 		HasBleedHit()
+			if(passive_handler.Get("Full Manifestation"))
+				return 1
 			if(passive_handler.Get("BleedHit"))
 				return 1
 			if(passive_handler.Get("Shameful Display"))
@@ -899,6 +901,8 @@ mob
 			var/Return=0
 			var/kkmast=0
 			Return+=passive_handler.Get("BleedHit")
+			if(passive_handler.Get("Full Manifestation")&&AscensionsAcquired<4)
+				Return += (5-AscensionsAcquired)*0.2
 			if(src.Kaioken)
 				for(var/obj/Skills/Buffs/SpecialBuffs/Kaioken/kk in src.Buffs)
 					kkmast=kk.Mastery
@@ -945,6 +949,8 @@ mob
 					return 1
 			if(src.DoubleHelix>=1)
 				return 1
+			if(passive_handler.Get("Full Manifestation")&&AscensionsAcquired<5)
+				return 1
 			return 0
 		GetEnergyLeak()
 			var/Total=0
@@ -971,6 +977,8 @@ mob
 				Total = 0
 			if(src.DoubleHelix<1&&passive_handler.Get("DoubleHelix"))
 				Total = 0
+			if(passive_handler.Get("Full Manifestation")&&AscensionsAcquired<5)
+				Total += (5-AscensionsAcquired)*0.5
 			return Total
 		HasFatigueLeak()
 			if(passive_handler.Get("Pride")&&Health>=90)
@@ -980,6 +988,8 @@ mob
 			if(src.GatesActive && src.GatesActive < 8)
 				return 1
 			if(src.DoubleHelix>=1)
+				return 1
+			if(passive_handler.Get("Full Manifestation")&&AscensionsAcquired<5)
 				return 1
 			return 0
 		GetFatigueLeak()
@@ -1002,6 +1012,8 @@ mob
 				Total*=PrideDrain
 			if(src.DoubleHelix<1&&passive_handler.Get("DoubleHelix"))
 				Total = 0
+			if(passive_handler.Get("Full Manifestation")&&AscensionsAcquired<5)
+				Total += (5-AscensionsAcquired)*0.2
 			return Total
 		HasSoftStyle()
 			if(passive_handler.Get("SoftStyle"))
@@ -1606,7 +1618,7 @@ mob
 			if(Target&&Target.passive_handler.Get("Flow") >= Return)
 				Return+=passive_handler.Get("LikeWater") / 2
 			Return += scalingEldritchPower();
-			if(Return < 0) 
+			if(Return < 0)
 				Return = 0
 			return Return
 		HasSoulSteal()
@@ -2419,7 +2431,7 @@ mob
 		HasPridefulRage()
 			. = 0;
 			. += passive_handler.Get("PridefulRage");
-			if(AttackQueue) . += AttackQueue.PridefulRage 
+			if(AttackQueue) . += AttackQueue.PridefulRage
 			. = clamp(., 0, 2);
 		HasSpiritHand()//Str*(For**1/2)
 			if(passive_handler.Get("SpiritHand"))
