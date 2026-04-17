@@ -6,11 +6,11 @@
 #define log_reftracker(msg) world.log << ("## REF SEARCH [msg]")
 
 
-mob
-	verb
-		test_ref()
-			var/datum/x = input("pick") in world
-			x.find_references()
+mob/Admin4/verb/test_ref()
+	set hidden = 1
+	set category = "Admin"
+	var/datum/x = input("pick") in world
+	x.find_references()
 
 /datum
 	var/running_find_references

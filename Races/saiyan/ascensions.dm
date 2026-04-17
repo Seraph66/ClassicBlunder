@@ -19,13 +19,20 @@ ascension
 			defense = 0.25
 			offense = 0.25
 			endurance = 0.25
-			onAscension(mob/owner)
-				if(owner.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/zeal)
+			simulateChoiceMutation(mob/owner)
+				var/list/ascs = owner.race?.ascensions
+				if(!islist(ascs) || ascs.len < 1) return
+				var/ascension/first = ascs[1]
+				if(!first) return
+				var/choice = first.choiceSelected
+				if(choice == /ascension/sub_ascension/saiyan/zeal)
 					passives += list("Adaptation" = 0.5)
-				if(owner.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/honor)
+				if(choice == /ascension/sub_ascension/saiyan/honor)
 					passives += list("AngerAdaptiveForce" = 0.2, "Adrenaline" = 1, "PureReduction" = 0.5)
-				if(owner.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/pride)
+				if(choice == /ascension/sub_ascension/saiyan/pride)
 					passives += list("Steady" = 1, "PureDamage" = 1)
+			onAscension(mob/owner)
+				simulateChoiceMutation(owner)
 				..()
 		three
 			unlock_potential = ASCENSION_THREE_POTENTIAL
@@ -34,51 +41,79 @@ ascension
 			strength = 0.25
 			force = 0.25
 			endurance = 0.25
-			onAscension(mob/owner)
-				if(owner.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/zeal)
+			simulateChoiceMutation(mob/owner)
+				var/list/ascs = owner.race?.ascensions
+				if(!islist(ascs) || ascs.len < 1) return
+				var/ascension/first = ascs[1]
+				if(!first) return
+				var/choice = first.choiceSelected
+				if(choice == /ascension/sub_ascension/saiyan/zeal)
 					passives += list("Adaptation" = 0.5, "LikeWater" = 0.5)
-				if(owner.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/honor)
+				if(choice == /ascension/sub_ascension/saiyan/honor)
 					passives += list("AngerAdaptiveForce" = 0.2, "Juggernaut" = 1, "PureReduction" = 0.5)
-				if(owner.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/pride)
+				if(choice == /ascension/sub_ascension/saiyan/pride)
 					passives += list("Steady" = 1, "PureDamage" = 1)
+			onAscension(mob/owner)
+				simulateChoiceMutation(owner)
 				..()
 		four
 			unlock_potential = ASCENSION_FOUR_POTENTIAL
 			intimidation = 1.5
 			anger = 0.25
 			passives = list("Brutalize" = 1)
-			onAscension(mob/owner)
-				if(owner.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/zeal)
+			simulateChoiceMutation(mob/owner)
+				var/list/ascs = owner.race?.ascensions
+				if(!islist(ascs) || ascs.len < 1) return
+				var/ascension/first = ascs[1]
+				if(!first) return
+				var/choice = first.choiceSelected
+				if(choice == /ascension/sub_ascension/saiyan/zeal)
 					passives += list("Adaptation" = 0.5, "LikeWater" = 0.5)
-				if(owner.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/honor)
+				if(choice == /ascension/sub_ascension/saiyan/honor)
 					passives += list("AngerAdaptiveForce" = 0.2, "Adrenaline" = 1, "PureReduction" = 0.5)
-				if(owner.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/pride)
+				if(choice == /ascension/sub_ascension/saiyan/pride)
 					passives += list("Steady" = 1, "PureDamage" = 0.5)
+			onAscension(mob/owner)
+				simulateChoiceMutation(owner)
 				..()
 		five
 			unlock_potential = ASCENSION_FIVE_POTENTIAL
 			intimidation = 1.5
 			anger = 0.25
-			onAscension(mob/owner)
-				if(owner.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/zeal)
+			simulateChoiceMutation(mob/owner)
+				var/list/ascs = owner.race?.ascensions
+				if(!islist(ascs) || ascs.len < 1) return
+				var/ascension/first = ascs[1]
+				if(!first) return
+				var/choice = first.choiceSelected
+				if(choice == /ascension/sub_ascension/saiyan/zeal)
 					passives += list("Adaptation" = 0.5, "LikeWater" = 1)
-				if(owner.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/honor)
+				if(choice == /ascension/sub_ascension/saiyan/honor)
 					passives += list("AngerAdaptiveForce" = 0.2, "Adrenaline" = 1, "PureReduction" = 1)
-				if(owner.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/pride)
+				if(choice == /ascension/sub_ascension/saiyan/pride)
 					passives += list("Steady" = 1, "PureDamage" = 1)
+			onAscension(mob/owner)
+				simulateChoiceMutation(owner)
 				..()
 		six
 			unlock_potential = ASCENSION_SIX_POTENTIAL
 			intimidation = 1.5
 			anger = 0.25
 			passives = list("Brutalize" = 1)
-			onAscension(mob/owner)
-				if(owner.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/zeal)
+			simulateChoiceMutation(mob/owner)
+				var/list/ascs = owner.race?.ascensions
+				if(!islist(ascs) || ascs.len < 1) return
+				var/ascension/first = ascs[1]
+				if(!first) return
+				var/choice = first.choiceSelected
+				if(choice == /ascension/sub_ascension/saiyan/zeal)
 					passives += list("Adaptation" = 0.5, "LikeWater" = 0.5)
-				if(owner.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/honor)
+				if(choice == /ascension/sub_ascension/saiyan/honor)
 					passives += list("AngerAdaptiveForce" = 0.2, "Adrenaline" = 1, "PureReduction" = 1)
-				if(owner.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/pride)
+				if(choice == /ascension/sub_ascension/saiyan/pride)
 					passives += list("Steady" = 1, "PureDamage" = 1)
+			onAscension(mob/owner)
+				simulateChoiceMutation(owner)
 				..()
 
 ascension

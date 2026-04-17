@@ -208,3 +208,163 @@ ascension
 			if(potential >= unlock_potential)
 				return 1
 			return 0
+
+		// Applies any conditional mutations to this ascension's stat/passive vars
+		// based on owner state (Class, prior sub-ascension choices, etc).
+		// Base impl is a no-op. Overridden in races whose per-ascension stats
+		// depend on owner state instead of being purely static field values.
+		// Called from onAscension BEFORE ..() so the parent can apply the
+		// mutated vars, and also callable in isolation for stat previews.
+		simulateChoiceMutation(mob/owner)
+			return
+
+// Ascension preview helpers: read-only inspection of what the player WOULD
+// gain if they ascended from CA (current acquired) up to TA (target, max 6).
+// Works by instantiating fresh copies of each ascension and asking them to
+// simulate their conditional mutations, so no game state is touched.
+
+/proc/_ascension_stat_field(Stat)
+	switch("[Stat]")
+		if("Power", "power", "powerAdd", "PowerAdd") return "powerAdd"
+		if("Strength", "strength", "Str", "StrAscension") return "strength"
+		if("Endurance", "endurance", "End", "EndAscension") return "endurance"
+		if("Force", "force", "For", "ForAscension") return "force"
+		if("Offense", "offense", "Off", "OffAscension") return "offense"
+		if("Defense", "defense", "Def", "DefAscension") return "defense"
+		if("Speed", "speed", "Spd", "SpdAscension") return "speed"
+		if("Recovery", "recovery", "Recov", "RecovAscension") return "recovery"
+		if("Intellect", "intelligenceAdd", "Intelligence") return "intelligenceAdd"
+		if("Imagination", "imaginationAdd") return "imaginationAdd"
+		if("Anger", "anger") return "anger"
+		if("Intimidation", "intimidation") return "intimidation"
+		if("RPP", "rppAdd") return "rppAdd"
+		if("Economy", "ecoAdd") return "ecoAdd"
+		if("Piloting", "pilotingProwess") return "pilotingProwess"
+		if("Cyberize", "cyberizeModAdd") return "cyberizeModAdd"
+		if("EnhanceChips", "enhanceChips") return "enhanceChips"
+	return null
+
+/mob/proc/PullAscensionStats(CA, TA, Stat)
+	var/AscStat = 0
+	if(!race)
+		return AscStat
+	var/list/ascs = race.ascensions
+	if(!islist(ascs) || !ascs.len)
+		return AscStat
+	var/statField = _ascension_stat_field(Stat)
+	if(!statField)
+		return AscStat
+	if(isnull(CA)) CA = AscensionsAcquired
+	if(isnull(TA)) TA = 6
+	CA = max(CA, 0)
+	TA = min(TA, ascs.len)
+	TA = min(TA, 6)
+	if(TA <= CA)
+		return AscStat
+	for(var/i = CA + 1, i <= TA, i++)
+		var/ascension/template = ascs[i]
+		if(!template) continue
+		var/path = template.type
+		var/ascension/a = new path
+		a.simulateChoiceMutation(src)
+		var/v = a.vars[statField]
+		if(isnum(v))
+			AscStat += v
+		if(template.choiceSelected)
+			var/subpath = template.choiceSelected
+			var/ascension/sub = new subpath
+			sub.simulateChoiceMutation(src)
+			var/sv = sub.vars[statField]
+			if(isnum(sv))
+				AscStat += sv
+	return AscStat
+
+/mob/proc/PullAscensionPassives(CA, TA)
+	var/list/AscPassives = list()
+	if(!race)
+		return AscPassives
+	var/list/ascs = race.ascensions
+	if(!islist(ascs) || !ascs.len)
+		return AscPassives
+	if(isnull(CA)) CA = AscensionsAcquired
+	if(isnull(TA)) TA = 6
+	CA = max(CA, 0)
+	TA = min(TA, ascs.len)
+	TA = min(TA, 6)
+	if(TA <= CA)
+		return AscPassives
+	for(var/i = CA + 1, i <= TA, i++)
+		var/ascension/template = ascs[i]
+		if(!template) continue
+		var/path = template.type
+		var/ascension/a = new path
+		a.simulateChoiceMutation(src)
+		if(islist(a.passives))
+			for(var/p in a.passives)
+				var/add = a.passives[p]
+				if(!isnum(add)) continue
+				AscPassives[p] = (isnum(AscPassives[p]) ? AscPassives[p] : 0) + add
+		if(template.choiceSelected)
+			var/subpath = template.choiceSelected
+			var/ascension/sub = new subpath
+			sub.simulateChoiceMutation(src)
+			if(islist(sub.passives))
+				for(var/p in sub.passives)
+					var/add = sub.passives[p]
+					if(!isnum(add)) continue
+					AscPassives[p] = (isnum(AscPassives[p]) ? AscPassives[p] : 0) + add
+	return AscPassives
+
+/mob/Admin2/verb/Preview_Ascensions(mob/Players/p in players)
+	set category = "Admin"
+	set name = "Preview Ascensions"
+	if(!p || !p.race)
+		src << "That player has no race set."
+		return
+	var/list/ascs = p.race.ascensions
+	if(!islist(ascs) || !ascs.len)
+		src << "[p] has no ascensions defined on their race."
+		return
+	var/ca = p.AscensionsAcquired
+	var/maxTarget = min(6, ascs.len)
+	if(ca >= maxTarget)
+		src << "[p] is already at max ascension ([ca]/[maxTarget])."
+		return
+	var/ta = input(src, "Preview ascensions for [p.key] up to which level? (current: [ca], max: [maxTarget])", "Preview Ascensions", maxTarget) as num|null
+	if(isnull(ta)) return
+	ta = round(ta)
+	ta = max(ta, ca + 1)
+	ta = min(ta, maxTarget)
+
+	var/list/statNames = list("Power","Strength","Endurance","Force","Offense","Defense","Speed","Recovery","Intellect","Imagination","Anger","Intimidation","RPP","Economy","Piloting","Cyberize","EnhanceChips")
+	var/html = "<html><head><title>Ascension Preview - [p.key]</title></head><body bgcolor=#111122 text=#e0e0e0 style='font-family:Calibri,sans-serif;font-size:10pt;padding:8px'>"
+	html += "<h2 style='color:#fff;border-bottom:1px solid #444;padding-bottom:4px'>[p.key] &mdash; [p.race.name]</h2>"
+	html += "<p>Class: <b>[p.Class ? p.Class : "None"]</b><br>"
+	html += "Current Ascension: <b>[ca]</b> &nbsp;|&nbsp; Preview Target: <b>[ta]</b></p>"
+
+	html += "<h3 style='color:#ffd54f;margin-top:12px'>Stat gains (from asc [ca+1] through asc [ta])</h3>"
+	html += "<table border=0 cellpadding=4 cellspacing=0 style='background:#1a1a2e;width:100%'>"
+	var/anyStat = 0
+	for(var/statName in statNames)
+		var/gain = p.PullAscensionStats(ca, ta, statName)
+		if(gain == 0) continue
+		anyStat = 1
+		html += "<tr><td style='border-bottom:1px solid #222;color:#aaa'>[statName]</td><td style='border-bottom:1px solid #222;color:#8fd'><b>+[gain]</b></td></tr>"
+	if(!anyStat)
+		html += "<tr><td colspan=2 style='color:#888;font-style:italic'>No static stat gains detected in this range.</td></tr>"
+	html += "</table>"
+
+	html += "<h3 style='color:#ffd54f;margin-top:12px'>Passives (aggregated)</h3>"
+	var/list/passiveGains = p.PullAscensionPassives(ca, ta)
+	if(!islist(passiveGains) || !passiveGains.len)
+		html += "<p style='color:#888;font-style:italic'>No passives in this range.</p>"
+	else
+		html += "<table border=0 cellpadding=4 cellspacing=0 style='background:#1a1a2e;width:100%'>"
+		for(var/passiveName in passiveGains)
+			var/val = passiveGains[passiveName]
+			html += "<tr><td style='border-bottom:1px solid #222;color:#aaa'>[passiveName]</td><td style='border-bottom:1px solid #222;color:#8fd'><b>+[val]</b></td></tr>"
+		html += "</table>"
+
+	html += "<p style='color:#666;font-size:8pt;margin-top:14px'>Read-only preview. Nothing has been applied to [p.key].</p>"
+	html += "</body></html>"
+	src << browse(html, "window=ascpreview_[p.key];size=520x560;can_resize=1")
