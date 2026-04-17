@@ -73,7 +73,9 @@
 	Cooldown=1
 
 
-/mob/verb/hep(n as num, r as num)
+/mob/Admin3/verb/hep(n as num, r as num)
+	set hidden = 1
+	set category = "Admin"
 	if(!Target)
 		return
 	Stomp(src, Target, n, r)

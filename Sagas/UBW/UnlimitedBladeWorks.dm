@@ -3,11 +3,32 @@ mob/var/usingUBW = FALSE
 /mob/Admin3/verb/GiveDomainExpansion()
 	set category = "Admin"
 	set name = "Give Domain Expansion"
-	CreateSwapMap()
+	var/identifier = input(src, "What is the identifier for this domain, exact? (e.g. 'foo' will use Maps/map_foo_Domain.sav)") as text|null
+	if(!identifier)
+		src << "Cancelled."
+		return
+	var/expectedMap = "[identifier]_Domain"
+	if(!fexists("Maps/map_[expectedMap].sav"))
+		var/makeIt = alert(src, "No map file Maps/map_[expectedMap].sav exists yet. Create one now?",, "Yes", "No")
+		if(makeIt != "Yes")
+			src << "Cancelled. Create the domain map first with CreateSwapMap, using the name '[expectedMap]'."
+			return
+		var/firstX = input(src, "X1?") as null|num
+		var/firstY = input(src, "Y1?") as null|num
+		var/secondX = input(src, "X2?") as null|num
+		var/secondY = input(src, "Y2?") as null|num
+		var/Z = input(src, "Z?") as null|num
+		if(isnull(firstX) || isnull(firstY) || isnull(secondX) || isnull(secondY) || isnull(Z))
+			src << "Cancelled. Domain map coords incomplete."
+			return
+		SwapMaps_SaveChunk(expectedMap, locate(firstX, firstY, Z), locate(secondX, secondY, Z))
+		SwapMaps_Save(expectedMap)
+		src << "Saved domain map as Maps/map_[expectedMap].sav."
 	var/obj/Skills/Buffs/SlotlessBuffs/Domain_Expansion/d = new()
 	d.range = input(src, "What is the range of the domain activation when used wide?") as num
-	d.identifier = input(src, "What is the identifier, exact?") as text
+	d.identifier = identifier
 	var/mob/p = input(src, "Who to give to?") in players
+	if(!p) return
 	src?:Edit(d)
 	p.AddSkill(d)
 
@@ -17,10 +38,8 @@ mob
 	proc
 		DomainExpansion(identifier, range, target)
 			if(!fexists("Maps/map_[identifier]_Domain.sav"))
-				AdminMessage("[src] has no domain map. please use createswap map and name it map_identifier_Domain")
-				// SwapMaps_SaveChunk("Maps/[identifier]_Domain.sav", locate(_x,_y,_z), locate(endX, endY,_z))
-				// SwapMaps_Save("Maps/[identifier]_Domain.sav")
-				src <<" No Domain Map, Admins Alerted . . . "
+				AdminMessage("[src] tried to use Domain Expansion but no map file exists. The file should be at Maps/map_[identifier]_Domain.sav. Create it with CreateSwapMap using the name '[identifier]_Domain' (no 'map_' prefix - the engine adds it).")
+				src << " No Domain Map, Admins Alerted . . . "
 				return
 			var/list/targets = list()
 			if(target && Target)
@@ -30,8 +49,17 @@ mob
 				for(var/mob/m in range(range))
 					if(m.client)
 						targets |= m
+			if(!targets.len)
+				return
 			var/swapmap/newMap = SwapMaps_CreateFromTemplate("[identifier]_Domain")
+			if(!newMap)
+				AdminMessage("[src]'s Domain Expansion failed: map_[identifier]_Domain could not be loaded.")
+				src << " Domain Map failed to load."
+				return
 			var/turf/center = newMap.CenterTile()
+			if(!center)
+				AdminMessage("[src]'s Domain Expansion failed: loaded map has no center turf.")
+				return
 			for(var/mob/teleportThese in targets)
 				teleportThese.PrevX=teleportThese.x
 				teleportThese.PrevY=teleportThese.y
