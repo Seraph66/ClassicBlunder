@@ -4746,6 +4746,11 @@ obj
 					IconLock='LightningWave.dmi'
 					verb/Static_Stream()
 						set category="Skills"
+						if(!altered)
+							DamageMult = 5 + (usr.AscensionsAcquired * 3)
+							Radius = clamp(usr.AscensionsAcquired, 1, 5)
+							Paralyzing = 2 + clamp(usr.AscensionsAcquired*2, 0.5, 2.5)
+							Cooldown = 60 - ( 5 * usr.AscensionsAcquired)
 						usr.UseProjectile(src)
 				Ice_Dragon
 					Dodgeable=0
