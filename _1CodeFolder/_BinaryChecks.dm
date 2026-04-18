@@ -1130,6 +1130,14 @@ mob
 			return FALSE
 		missingHealth()
 			return 100-Health
+		proportionalHealth(var/Type)
+			var/Amount
+			switch(Type)
+				if("Higher")
+					Amount=src.Health-src.Target.Health
+				if("Lower")
+					Amount=src.Target.Health-src.Health
+			return Amount
 		HasPureDamage(changelingIgnore = 0)
 			var/Return=0
 			if(!changelingIgnore&&isRace(CHANGELING)&&Anger)
@@ -1162,6 +1170,9 @@ mob
 			if(src.isLunaticMode())
 				Return += (5 / 100 * src.get_potential())
 			Return += GetMangLevel()
+			if(passive_handler.Get("Compassion")&&Health<=50)
+				if(Target.Health>Health)
+					Return += 3*clamp((proportionalHealth("Lower")/10),1,10)
 			return Return
 		HasPureReduction()
 			var/Return=0
@@ -1189,6 +1200,9 @@ mob
 			if(passive_handler["Rebel Heart"])
 				var/h = (missingHealth()/glob.REBELHEARTMOD) * passive_handler["Rebel Heart"]
 				Return += h
+			if(passive_handler.Get("Compassion")&&Health>51)
+				if(Target.Health>Health)
+					Return += 3*clamp((proportionalHealth("Lower")/10),1,10)
 			return Return
 		Hustling()
 			if(passive_handler.Get("Hustle") || HasMythical() > 0.25 || (passive_handler["Rage"] && Health <= 25))

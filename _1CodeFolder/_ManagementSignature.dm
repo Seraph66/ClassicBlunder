@@ -35,6 +35,8 @@ var/list/Tier1 = list(
 	"Nirvana Slash" = "/obj/Skills/Queue/Nirvana_Slash",
 	"Soul Tear Storm" = "/obj/Skills/Queue/Soul_Tear_Storm",
 	"Massacre" = "/obj/Skills/AutoHit/Massacre",
+	"Spirit Bow" = "/obj/Skills/Buffs/SlotlessBuffs/Spirit_Bow",
+	"Spirit Sword" = "/obj/Skills/Buffs/SlotlessBuffs/Spirit_Sword",
 	"Advanced Fire Magic" = list("/obj/Skills/Projectile/Magic/Uber_Shots/Hellfire_Nova"),
 	"Advanced Space Magic" = list("/obj/Skills/AutoHit/Magic/Magnetga", "/obj/Skills/AutoHit/Magic/Graviga", "/obj/Skills/AutoHit/Magic/Stopga"),
 	"White Magic" = list("/obj/Skills/Buffs/SlotlessBuffs/Magic/Cure", "/obj/Skills/Buffs/SlotlessBuffs/Magic/Esuna")
@@ -66,8 +68,6 @@ var/list/Tier2 = list(
 	"Zantetsuken" = "/obj/Skills/AutoHit/Zantetsuken",
 	"Thousand Man Slayer" = "/obj/Skills/AutoHit/Thousand_Man_Slayer",
 	"Omnislash" = "/obj/Skills/Queue/Omnislash",
-	"Spirit Sword" = "/obj/Skills/Buffs/SlotlessBuffs/Spirit_Sword",
-	"Spirit Bow" = "/obj/Skills/Buffs/SlotlessBuffs/Spirit_Bow",
 	"Advanced Defense Magic" = "/obj/Skills/Buffs/SlotlessBuffs/Magic/Protega",
 	"Advanced Shell Magic" = "/obj/Skills/Buffs/SlotlessBuffs/Magic/Resilient_Sphere",
 	"Advanced White Magic" = list("/obj/Skills/Buffs/SlotlessBuffs/Magic/Curaga", "/obj/Skills/Buffs/SlotlessBuffs/Magic/Esunaga"),
@@ -144,7 +144,7 @@ proc/DevelopSignature(mob/m, Tier, Type)
 		if (usr.SignatureStyles.len > 0)
 			for (var/x in usr.SignatureStyles)
 				if (x in usr.SignatureSelected) continue
-				var/obj/Skills/test 
+				var/obj/Skills/test
 				if(istext(usr.SignatureStyles[x]))
 					var/b = usr.SignatureStyles[x]
 					test = new b

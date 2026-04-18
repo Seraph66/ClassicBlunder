@@ -7667,7 +7667,7 @@ NEW VARIABLES
 				src.Trigger(usr)
 
 		Spirit_Bow
-			SignatureTechnique=2
+			SignatureTechnique=1
 			MakesStaff=1
 			FlashDraw=1
 			StaffName="Spirit Bow"
@@ -7704,6 +7704,7 @@ NEW VARIABLES
 		Spirit_Sword//t2
 			MakesSword=3
 			FlashDraw=1
+			SignatureTechnique=1
 			SwordName="Spirit Sword"
 			SwordIcon='Aether Blade.dmi'
 			SwordX=-32

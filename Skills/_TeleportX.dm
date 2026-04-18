@@ -516,7 +516,7 @@ obj/Skills
 						src.ReturnX=User.x
 						src.ReturnY=User.y
 						src.ReturnZ=User.z
-						Destination=locate(26, 473, 160) //4-14-2026 wipe coords for Dive to the Heart
+						Destination=locate(25, 477, 16)
 
 
 				if(src.WindUpIcon)
