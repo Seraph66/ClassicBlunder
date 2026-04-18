@@ -164,6 +164,7 @@ NEW VARIABLES
 	var/DefTax
 	var/RegenTax
 	var/RecovTax
+	var/PostBuffEff//Add a post-buff effect like a temp debuff
 	//These variables will accumulate at [this value] per second
 	var/StrTaxDrain
 	var/StrCutDrain
@@ -14545,7 +14546,8 @@ mob
 				B.InstantAffected=0
 			if(B.BuffName=="Kyoukaken")
 				src.Kyoukaken("Off")
-
+			if(B.PostBuffEff)
+				buffSelf(B.PostBuffEff)
 			if(B.KillSword&&src.EquippedSword())
 				var/obj/Items/Sword/s=src.EquippedSword()
 				src.SwordShatter(s)
