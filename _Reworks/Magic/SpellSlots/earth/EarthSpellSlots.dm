@@ -25,7 +25,7 @@
 		adjust(mob/p)
 			if(!altered)
 				if(p.isInnovative(FAE, "Any") && !isInnovationDisable(p))
-					Damage=7.5
+					DamageMult=7.5
 					Distance=6
 		verb/Seismic_Entry()
 			set category="Skills"
@@ -68,9 +68,9 @@
 		adjust(mob/p)
 			if(!altered)
 				if(p.isInnovative(FAE, "Any") && !isInnovationDisable(p))
-					TimerLimit=15
-					ShatterEffected=4
-					CrippleAffected=3
+					src.TimerLimit=15
+					src.ShatterAffected=4
+					src.CrippleAffected=3
 		verb/Prickly_Ballet()
 			set category="Skills"
 			adjust(usr)

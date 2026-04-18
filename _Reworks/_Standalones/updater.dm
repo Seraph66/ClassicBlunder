@@ -17,7 +17,7 @@ proc/generateVersionDatum()
 		glob.currentUpdate = updateversion
 
 globalTracker
-	var/UPDATE_VERSION = 1
+	var/UPDATE_VERSION = 2
 	var/tmp/update/currentUpdate
 
 	proc/updatePlayer(mob/p)
@@ -42,7 +42,7 @@ globalTracker
 mob/var/update/updateVersion
 
 update
-	var/version = 2
+	var/version = 1
 
 	proc/updateMob(mob/p)
 		if(version>1) p << "You have been updated to version [version]"
@@ -59,6 +59,29 @@ update
 			if(p.isRace(ELDRITCH))
 				p.race.transformations += new /transformation/eldritch/partial_manifestation()
 				p.race.transformations += new /transformation/eldritch/full_manifestation()
+			if(p.isRace(HUMAN))
+				if(p.Class=="Resourceful")
+					for(var/x in p.knowledgeTracker.learnedKnowledge)
+						p<<"You have had [x] refunded. (Tech)"
+						var/theCost=glob.TECH_BASE_COST / p.Intelligence
+						p.removeTechKnowledge(p, x, theCost, FALSE)
+						del x
+					for(var/x in p.knowledgeTracker.learnedKnowledge)
+						if(x in EnchantmentKnowledge)
+							del x
+							p<<"You have had [x] refunded. (ench)"
+					for(var/obj/Skills/S in p.Skills)
+						if(S.Copyable>0&&S.SkillCost>1&&!S.Copied)
+							p.refund_skill(S)
+					p.RPPSpent=0
+					p.RPPSpendable=p.RPPCurrent
+					p.Intelligence=3
+					p.AngerMax=1.25
+					p.RPPMult=1.25
+					p.Imagination=3
+					p.ChooseSpawn()
+					if(p.AscensionsAcquired==1)
+						p.SpdAscension=0.4
 
 /globalTracker/var/COOL_GAJA_PLAYERS = list("Thorgigamax", "Gemenilove" )
 /globalTracker/var/GAJA_PER_ASC_CONVERSION = 0.25

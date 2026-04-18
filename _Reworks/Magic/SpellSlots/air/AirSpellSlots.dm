@@ -23,7 +23,7 @@
 		TurfShift='Dirt1.dmi'
 		TurfShiftDuration=3
 		ActiveMessage="invokes: <font size=+1>BREAKING TWISTER!</font size>"
-		adjust(mob/p) Coded out for Balance checking reasons.
+		adjust(mob/p) //Coded out for Balance checking reasons.
 			if(!altered)
 				if(p.isInnovative(FAE, "Any") && !isInnovationDisable(p))
 					DamageMult=4.5

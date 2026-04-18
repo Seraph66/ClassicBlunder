@@ -3,6 +3,7 @@ race
 		name = "Fae"
 		desc = "Typically small creatures with an innate gift for magic. Mana runs in their veins like blood."
 		visual = 'Fae.png'
+		locked = TRUE
 		power = 1
 		strength = 1
 		endurance = 1.25
