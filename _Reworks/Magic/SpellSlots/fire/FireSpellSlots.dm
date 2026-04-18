@@ -23,6 +23,11 @@
 		TurfShift='blackflameaura.dmi'
 		TurfShiftDuration=3
 		ActiveMessage="invokes: <font size=+1>BLAZING WHIP!</font size>"
+		adjust(mob/p)
+			if(!altered)
+				if(p.isInnovative(FAE, "Any") && !isInnovationDisable(p))
+					DamageMult=6
+					Distance=7
 		verb/Blazing_Whip()
 			set category="Skills"
 			adjust(usr)
@@ -41,6 +46,12 @@
 		Cooldown=40
 		IconLock='Fireball.dmi'
 		ActiveMessage="invokes: <font size=+1>DRAGON ARC!</font size>"
+		adjust(mob/p)
+			if(!altered)
+				if(p.isInnovative(FAE, "Any") && !isInnovationDisable(p))
+					Speed=5
+					Distance=15
+					Scorching=2
 		verb/Dragon_Arc()
 			set category="Skills"
 			usr.UseProjectile(src)
@@ -56,6 +67,11 @@
 		IconLock='Fireball.dmi'
 		IconSize=1.5
 		ActiveMessage="invokes: <font size=+1>FIREBALL!</font size>"
+		adjust(mob/p)
+			if(!altered)
+				if(p.isInnovative(FAE, "Any") && !isInnovationDisable(p))
+					Scorching=3
+					Knockback=5
 		verb/Fireball()
 			set category="Skills"
 			usr.UseProjectile(src)
