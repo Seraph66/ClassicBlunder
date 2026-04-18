@@ -530,11 +530,17 @@ mob
 			if(passive_handler.Get("LunarWrath")&&PowerControl>100&&!passive_handler.Get("Unrelenting Wrath"))
 				var/ManaRando=rand(6,15)
 				src.ManaAmount+=0.5*(ManaRando/10)
-			if(passive_handler.Get("LunarAnger")&&ManaAmount>50)
-				src.LunarWrathAnger()
-				src.Anger()
+			if(passive_handler.Get("LunarAnger")&&!passive_handler.Get("Unrelenting Wrath"))
+				if(ManaAmount>50)
+					src.AngerMax=1+(src.ManaAmount/100)
+					src.Anger=src.AngerMax
+					src.Anger()
+				else if(ManaAmount<=50)
+					src.Anger=0
+					src.AngerMax=1
 			if(passive_handler.Get("Unrelenting Wrath"))
 				src.Anger=src.AngerMax
+				src.AngerMax=500
 			if(passive_handler["TensionPowered"] && !src.isMazokuHuman())
 				if(src.canHTM())
 					src.race.transformations[2].transform(src, TRUE)
