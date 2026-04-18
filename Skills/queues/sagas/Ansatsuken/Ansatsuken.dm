@@ -47,7 +47,7 @@ obj
 				Shattering = 25
 				Cooldown=150
 				ShoryukenEffect=1.5
-				ManaCost = 35
+				ManaCost = 25
 				HitMessage = "unleashes the power of the Dragon with an overpowering uppercut!"
 				proc/activate(mob/p)
 					var/sagaLevel = p.SagaLevel

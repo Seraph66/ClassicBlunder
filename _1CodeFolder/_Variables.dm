@@ -295,6 +295,8 @@ mob/var
 	SEAOffense='Soxx-Sacred_Armor_Offense.dmi'
 	SEADefense='Soxx-Sacred_Armor_Defense.dmi'
 
+	EldritchTrail='StarPixel.dmi'
+
 	tmp/MirrorIcon
 
 	//Knowledge Variables

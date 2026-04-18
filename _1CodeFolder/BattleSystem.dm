@@ -765,7 +765,7 @@ mob/proc/Death(mob/P,var/text,var/SuperDead=0, var/NoRemains=0, var/Zombie, extr
 		src.Burn=0
 		src.Slow=0
 		src.Shatter=0
-		src.Harden=0
+		src.HardenAccumulated=0
 		src.Shock=0
 		src.Sheared=0
 		src.Crippled=0

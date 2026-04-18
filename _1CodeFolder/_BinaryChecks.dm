@@ -728,7 +728,7 @@ mob
 			if(stp)
 				Return+=stp
 			if(src.isLunaticMode())
-				Return += (10 / 100 * src.get_potential())
+				Return += (10 / 100 * get_potential())
 			Return += GetMangLevel()
 			return Return
 		HasPursuer()
@@ -741,6 +741,7 @@ mob
 				Return+=2
 			if(src.KamuiBuffLock)
 				Return+=3
+			Return += scalingEldritchPower();
 			var/stp=src.SaiyanTransPower()
 			if(stp)
 				Return+=stp
@@ -773,6 +774,7 @@ mob
 				Return += 2
 			if(src.passive_handler.Get("Determination(Yellow)")||src.passive_handler.Get("Determination(White)"))
 				Return += round(ManaAmount/25, 1)
+			Return += scalingEldritchPower();
 			Return += GetMangLevel()
 			Return=round(Return)
 			Return=min(8,Return)
@@ -798,6 +800,7 @@ mob
 					Return += clamp((passive_handler.Get("HellRisen")*2), 1, 2)
 			if(src.isRace(BEASTKIN) && race?:Racial == "Heart of The Beastkin" && src.VaizardHealth>0)
 				Return += 5
+			Return += scalingEldritchPower();
 			return Return
 		HasDeathField()
 			if(passive_handler.Get("DeathField"))
@@ -878,6 +881,8 @@ mob
 			if(Target) if(Target.HasNull() && !HasMaouKi()) return 1;
 			return 0;
 		HasBleedHit()
+			if(passive_handler.Get("Full Manifestation"))
+				return 1
 			if(passive_handler.Get("BleedHit"))
 				return 1
 			if(passive_handler.Get("Shameful Display"))
@@ -896,6 +901,8 @@ mob
 			var/Return=0
 			var/kkmast=0
 			Return+=passive_handler.Get("BleedHit")
+			if(passive_handler.Get("Full Manifestation")&&AscensionsAcquired<4)
+				Return += (5-AscensionsAcquired)*0.2
 			if(src.Kaioken)
 				for(var/obj/Skills/Buffs/SpecialBuffs/Kaioken/kk in src.Buffs)
 					kkmast=kk.Mastery
@@ -942,6 +949,8 @@ mob
 					return 1
 			if(src.DoubleHelix>=1)
 				return 1
+			if(passive_handler.Get("Full Manifestation")&&AscensionsAcquired<5)
+				return 1
 			return 0
 		GetEnergyLeak()
 			var/Total=0
@@ -968,6 +977,8 @@ mob
 				Total = 0
 			if(src.DoubleHelix<1&&passive_handler.Get("DoubleHelix"))
 				Total = 0
+			if(passive_handler.Get("Full Manifestation")&&AscensionsAcquired<5)
+				Total += (5-AscensionsAcquired)*0.5
 			return Total
 		HasFatigueLeak()
 			if(passive_handler.Get("Pride")&&Health>=90)
@@ -977,6 +988,8 @@ mob
 			if(src.GatesActive && src.GatesActive < 8)
 				return 1
 			if(src.DoubleHelix>=1)
+				return 1
+			if(passive_handler.Get("Full Manifestation")&&AscensionsAcquired<5)
 				return 1
 			return 0
 		GetFatigueLeak()
@@ -999,6 +1012,8 @@ mob
 				Total*=PrideDrain
 			if(src.DoubleHelix<1&&passive_handler.Get("DoubleHelix"))
 				Total = 0
+			if(passive_handler.Get("Full Manifestation")&&AscensionsAcquired<5)
+				Total += (5-AscensionsAcquired)*0.2
 			return Total
 		HasSoftStyle()
 			if(passive_handler.Get("SoftStyle"))
@@ -1552,6 +1567,7 @@ mob
 			if(passive_handler.Get("LikeWater") || passive_handler.Get("Gravity"))
 				if(Target.HasInstinct() >= GetFlow())
 					return 1
+			if(scalingEldritchPower()) return 1;
 			return 0
 		GetFlow()
 			var/Extra=0
@@ -1572,6 +1588,7 @@ mob
 				Extra++
 			if(src.CombatCPU)
 				Extra+=1
+			Extra += scalingEldritchPower();
 			if(InfinityModule)
 				Extra += round(glob.progress.totalPotentialToDate,5) / 25
 			if(Target&&Target.passive_handler.Get("Instinct") >= Base+Extra)
@@ -1600,6 +1617,7 @@ mob
 				Return += round(glob.progress.totalPotentialToDate,5) / 25
 			if(Target&&Target.passive_handler.Get("Flow") >= Return)
 				Return+=passive_handler.Get("LikeWater") / 2
+			Return += scalingEldritchPower();
 			if(Return < 0)
 				Return = 0
 			return Return
@@ -1649,6 +1667,12 @@ mob
 			if(passive_handler.Get("Determination(Black)"))
 				DetBlack=25
 			return passive_handler.Get("ManaSteal")+DetBlack
+
+
+		GetSoulFire()
+			if(!FightingSeriously(src, 0)) return 0;
+			. = passive_handler.Get("SoulFire");
+			. += scalingEldritchPower();
 
 		HasLifeStealTrue()
 			if(passive_handler.Get("LifeStealTrue"))
@@ -2406,7 +2430,7 @@ mob
 		HasPridefulRage()
 			. = 0;
 			. += passive_handler.Get("PridefulRage");
-			if(AttackQueue) . += AttackQueue.PridefulRage 
+			if(AttackQueue) . += AttackQueue.PridefulRage
 			. = clamp(., 0, 2);
 		HasSpiritHand()//Str*(For**1/2)
 			if(passive_handler.Get("SpiritHand"))
@@ -2649,6 +2673,7 @@ mob
 				return 1
 			if(TheCalamity)
 				return 1
+			if(scalingEldritchPower() >= 0.5) return 1;
 			return 0
 		SwordWounds()
 			for(var/obj/Items/Sword/s in src)
@@ -2887,6 +2912,7 @@ mob
 				Pass=1
 			if(src.is_arcane_beast)
 				Pass=1
+			if(hasEldritchRacial()) Pass = 1;
 			if(istype(Z, /obj/Skills/Buffs))
 				if(Z:MagicFocus)
 					Pass=1
@@ -3049,6 +3075,7 @@ mob
 				return 0
 			if(src.CheckSlotless("Libra Armory"))
 				return 0
+			if(hasEldritchRacial()) return 1;
 			return 0
 
 
@@ -3445,7 +3472,7 @@ atom
 			return 0
 
 proc
-	FightingSeriously(var/mob/Offender=0, var/mob/Defender=0)
+	FightingSeriously(mob/Offender=0, mob/Defender=0)
 		if(Offender)
 			if(Offender.Lethal)
 				return 1

@@ -30,8 +30,6 @@
     if(hasSecret("Eldritch"))
         if(src.secretDatum.secretVariable["Lunatic Mode"] > 0)
             return 1;
-    if(hasSecret("Eldritch (Shrouded)")) return 1;
-    if(isEnlightenedReflected()) return 1;
     return 0;
 /mob/proc/canLunaticMode()
     if(hasSecret("Eldritch"))

@@ -987,6 +987,7 @@ mob/proc/
 			if(Tension>=getMaxTensionValue())
 				if(transActive==transUnlocked||passive_handler["MovementMastery"]||passive_handler["GodKi"]||passive_handler["MaouKi"])
 					Ratio*=1.5
+		Ratio += (scalingEldritchPower() * 2 / 10);
 		Power=Ratio*GetPowerUpRatio()
 
 		if(Power < 1)

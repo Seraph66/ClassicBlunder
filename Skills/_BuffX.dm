@@ -7235,9 +7235,9 @@ NEW VARIABLES
 			IconLock='CroneMajinSparks.gif'
 			LockX=0
 			LockY=0
-			EndTaxDrain=0.0030
-			SpdTaxDrain=0.0030
-			StrTaxDrain=0.0030
+			StrTax=0.1
+			SpdTax=0.1
+			EndTax=0.1
 			RecovTaxDrain=0.0030
 			SagaSignature=1
 			AngerMult=1.5
