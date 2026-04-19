@@ -98,7 +98,7 @@
 	var/matrix/expandBaseTransform = null
 
 	adjust(mob/p)
-		var/maxLevel = min(2 + p.AscensionsAcquired, 5)
+		var/maxLevel = clamp(p.AscensionsAcquired, 1, 5)
 		var/list/levelList = list()
 		for(var/i = 1 to maxLevel)
 			levelList += i
@@ -149,6 +149,9 @@
 				animate(user, transform=expandBaseTransform * targetScale, time=20, easing=SINE_EASING)
 
 	proc/deactivate(mob/user)
+		if(src.current_passives && src.current_passives.len)
+			user.passive_handler.decreaseList(src.current_passives)
+			src.current_passives = null
 		if(expandBaseTransform)
 			animate(user, transform=expandBaseTransform, time=20, easing=SINE_EASING)
 			expandBaseTransform = null
