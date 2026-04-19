@@ -204,7 +204,7 @@ obj
 				GoldScatter
 				Snaring
 				AngelMagicCompatible
-				CriticalChance=0
+				CriticalChance
 				LingeringTornado//spawn obj/leftOver/LingeringTornado on hit
 			skillDescription()
 				..()
@@ -4747,11 +4747,6 @@ obj
 					IconLock='LightningWave.dmi'
 					verb/Static_Stream()
 						set category="Skills"
-						if(!altered)
-							DamageMult = 5 + (usr.AscensionsAcquired * 3)
-							Radius = clamp(usr.AscensionsAcquired, 1, 5)
-							Paralyzing = 2 + clamp(usr.AscensionsAcquired*2, 0.5, 2.5)
-							Cooldown = 60 - ( 5 * usr.AscensionsAcquired)
 						usr.UseProjectile(src)
 				Ice_Dragon
 					Dodgeable=0
@@ -5615,6 +5610,8 @@ obj
 					src.Stream=Z.Stream
 					src.Burning=Z.Burning
 					src.Scorching=Z.Scorching
+					src.CriticalChance=Z.CriticalChance
+					src.Combustion=Z.Combustion
 					src.Chilling=Z.Chilling
 					src.Freezing=Z.Freezing
 					src.Crushing=Z.Crushing
@@ -5627,8 +5624,6 @@ obj
 					src.AbyssMod=Z.AbyssMod
 					src.SlayerMod=Z.SlayerMod
 					src.AngelMagicCompatible=Z.AngelMagicCompatible
-					src.CriticalChance=Z.CriticalChance
-					src.Combustion=Z.Combustion
 					src.Devour=Z.Devour
 					src.SoulFire=Z.SoulFire
 					src.Stasis=Z.Stasis
@@ -6295,16 +6290,14 @@ obj
 							if(src.Area=="Beam")
 								if((istype(m, /mob/Players) || istype(m, /mob/Player/AI)) && m != src.Owner)
 									src.Owner.BeamVolleyHitPlayer = 1
-								var/_skillCritDmgB = src.CriticalChance * 0.01
+								// Skill-level CriticalChance/Combustion: temporary attacker bump.
 								if(src.CriticalChance)
 									src.Owner.passive_handler.Increase("CriticalChance", src.CriticalChance)
-									src.Owner.passive_handler.Increase("CriticalDamage", _skillCritDmgB)
 								if(src.Combustion)
 									src.Owner.passive_handler.Increase("Combustion", src.Combustion)
 								src.Owner.DoDamage(a, (EffectiveDamage/glob.GLOBAL_BEAM_DAMAGE_DIVISOR), SpiritAttack=1, Destructive=src.Destructive)
 								if(src.CriticalChance)
 									src.Owner.passive_handler.Decrease("CriticalChance", src.CriticalChance)
-									src.Owner.passive_handler.Decrease("CriticalDamage", _skillCritDmgB)
 								if(src.Combustion)
 									src.Owner.passive_handler.Decrease("Combustion", src.Combustion)
 								if(src.InstantDamageChance && m && !m.KO)
@@ -6330,16 +6323,14 @@ obj
 									if(!AlreadyHit["[m.ckey]"]) AlreadyHit["[m.ckey]"] = 0
 									//EffectiveDamage *= clamp((1 - (0.1 *AlreadyHit["[m.ckey]"])), 0.1, 1)
 
-									var/_skillCritDmgS = src.CriticalChance * 0.01
+									// Skill-level CriticalChance/Combustion: temporary attacker bump.
 									if(src.CriticalChance)
 										src.Owner.passive_handler.Increase("CriticalChance", src.CriticalChance)
-										src.Owner.passive_handler.Increase("CriticalDamage", _skillCritDmgS)
 									if(src.Combustion)
 										src.Owner.passive_handler.Increase("Combustion", src.Combustion)
 									src.Owner.DoDamage(a, EffectiveDamage, SpiritAttack=1, Destructive=src.Destructive)
 									if(src.CriticalChance)
 										src.Owner.passive_handler.Decrease("CriticalChance", src.CriticalChance)
-										src.Owner.passive_handler.Decrease("CriticalDamage", _skillCritDmgS)
 									if(src.Combustion)
 										src.Owner.passive_handler.Decrease("Combustion", src.Combustion)
 									if(CorruptionGain)
