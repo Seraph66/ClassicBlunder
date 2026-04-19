@@ -1115,6 +1115,8 @@ mob
 				return 1
 			if(passive_handler.Get("Unstoppable")>=1||passive_handler.Get("The Immovable Object"))
 				return 1
+			if(passive_handler.Get("You Thought"))
+				return 1
 			return 0
 		SaiyanTransPower()/*
 			if(isRace(SAIYAN) || isRace(HALFSAIYAN))
@@ -1309,6 +1311,7 @@ mob
 				return 1
 			if(Saga=="Cosmo")
 				return 1
+			if(passive_handler.Get("Hopes and Dreams")) return 1;
 			return 0
 		GetMovementMastery()
 			var/Total=0
@@ -1321,6 +1324,7 @@ mob
 				Total += round(glob.progress.totalPotentialToDate,5) / 10
 			if(Secret=="Shin")
 				Total += secretDatum.currentTier
+			if(passive_handler.Get("Hopes and Dreams")) Total += (5 * AscensionsAcquired)
 			return Total
 		HasPhysicalHitsLimit()
 			if(passive_handler.Get("PhysicalHitsLimit"))
@@ -2248,6 +2252,8 @@ mob
 
 		HasDebuffReversal()
 			if(passive_handler.Get("DebuffReversal"))
+				return 1
+			if(passive_handler.Get("You Thought"))
 				return 1
 			return 0
 		GetDebuffReversal()

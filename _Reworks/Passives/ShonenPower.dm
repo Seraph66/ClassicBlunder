@@ -42,6 +42,7 @@ Hell Power does what this does but instead of health it's fatigue
 	var/mult = sp // this is a max of 2 normally
 	var/drain = (TotalInjury/4) + (TotalFatigue/2)
 	. += ((0.15 * (1+drain * 0.05)) * mult)
+	if(passive_handler.Get("Hopes and Dreams")) . *= clamp((1.5 + (AscensionsAcquired/10)), 1.5, 2);
 	if(. <= 0)
 		. = 1
 
