@@ -6291,13 +6291,16 @@ obj
 								if((istype(m, /mob/Players) || istype(m, /mob/Player/AI)) && m != src.Owner)
 									src.Owner.BeamVolleyHitPlayer = 1
 								// Skill-level CriticalChance/Combustion: temporary attacker bump.
+								var/_skillCritDmgB = src.CriticalChance * 0.01
 								if(src.CriticalChance)
 									src.Owner.passive_handler.Increase("CriticalChance", src.CriticalChance)
+									src.Owner.passive_handler.Increase("CriticalDamage", _skillCritDmgB)
 								if(src.Combustion)
 									src.Owner.passive_handler.Increase("Combustion", src.Combustion)
 								src.Owner.DoDamage(a, (EffectiveDamage/glob.GLOBAL_BEAM_DAMAGE_DIVISOR), SpiritAttack=1, Destructive=src.Destructive)
 								if(src.CriticalChance)
 									src.Owner.passive_handler.Decrease("CriticalChance", src.CriticalChance)
+									src.Owner.passive_handler.Decrease("CriticalDamage", _skillCritDmgB)
 								if(src.Combustion)
 									src.Owner.passive_handler.Decrease("Combustion", src.Combustion)
 								if(src.InstantDamageChance && m && !m.KO)
@@ -6324,13 +6327,16 @@ obj
 									//EffectiveDamage *= clamp((1 - (0.1 *AlreadyHit["[m.ckey]"])), 0.1, 1)
 
 									// Skill-level CriticalChance/Combustion: temporary attacker bump.
+									var/_skillCritDmgS = src.CriticalChance * 0.01
 									if(src.CriticalChance)
 										src.Owner.passive_handler.Increase("CriticalChance", src.CriticalChance)
+										src.Owner.passive_handler.Increase("CriticalDamage", _skillCritDmgS)
 									if(src.Combustion)
 										src.Owner.passive_handler.Increase("Combustion", src.Combustion)
 									src.Owner.DoDamage(a, EffectiveDamage, SpiritAttack=1, Destructive=src.Destructive)
 									if(src.CriticalChance)
 										src.Owner.passive_handler.Decrease("CriticalChance", src.CriticalChance)
+										src.Owner.passive_handler.Decrease("CriticalDamage", _skillCritDmgS)
 									if(src.Combustion)
 										src.Owner.passive_handler.Decrease("Combustion", src.Combustion)
 									if(CorruptionGain)

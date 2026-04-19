@@ -6897,13 +6897,16 @@ obj
 					if(m.Health <= 0 && !m.KO)
 						m.Unconscious(src.Owner)
 				else
+					var/_skillCritDmg = src.CriticalChance * 0.01
 					if(src.CriticalChance)
 						src.Owner.passive_handler.Increase("CriticalChance", src.CriticalChance)
+						src.Owner.passive_handler.Increase("CriticalDamage", _skillCritDmg)
 					if(src.Combustion)
 						src.Owner.passive_handler.Increase("Combustion", src.Combustion)
 					damageDealt = src.Owner.DoDamage(m, FinalDmg, src.UnarmedTech, src.SwordTech, Destructive=src.Destructive, innateLifeSteal = LifeSteal, Autohit = TRUE)
 					if(src.CriticalChance)
 						src.Owner.passive_handler.Decrease("CriticalChance", src.CriticalChance)
+						src.Owner.passive_handler.Decrease("CriticalDamage", _skillCritDmg)
 					if(src.Combustion)
 						src.Owner.passive_handler.Decrease("Combustion", src.Combustion)
 				DEBUGMSG("FINAL TOTAL DAMAGE DEALT! [damageDealt]")
