@@ -164,6 +164,7 @@ NEW VARIABLES
 	var/DefTax
 	var/RegenTax
 	var/RecovTax
+	var/PostBuffEff//Add a post-buff effect like a temp debuff
 	//These variables will accumulate at [this value] per second
 	var/StrTaxDrain
 	var/StrCutDrain
@@ -1730,7 +1731,7 @@ NEW VARIABLES
 				src.Trigger(usr)
 		FadeIntoShadows
 			IconTint=list(0,0,0, 0,0,0, 0,0,0, 0,0,0)
-			passives = list("Nightmare" = 1, "PULock" = 1)
+			passives = list("Nightmare" = 1, "PULock" = 1, "Skimming"=2)
 			AllowedPower=0.5
 		//	DarkChange=1
 			Invisible=20
@@ -14545,7 +14546,8 @@ mob
 				B.InstantAffected=0
 			if(B.BuffName=="Kyoukaken")
 				src.Kyoukaken("Off")
-
+			if(B.PostBuffEff)
+				buffSelf(B.PostBuffEff)
 			if(B.KillSword&&src.EquippedSword())
 				var/obj/Items/Sword/s=src.EquippedSword()
 				src.SwordShatter(s)

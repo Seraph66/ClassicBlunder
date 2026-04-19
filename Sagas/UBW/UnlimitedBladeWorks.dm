@@ -70,11 +70,13 @@ mob
 
 		stopDomainExapansion()
 			var/swapmap/map = swapmaps_byname[in_tmp_map]
-			for(var/turf/t in block(map.x1, map.y1, map.z1, map.x2, map.y2))
+			if(!map)
+				return
+			for(var/turf/t in block(locate(map.x1, map.y1, map.z1), locate(map.x2, map.y2, map.z2)))
 				for(var/mob/m in t)
-					m.x = m.PrevX
-					m.y = m.PrevY
-					m.z = m.PrevZ
+					if(isnull(m.PrevX) || isnull(m.PrevY) || isnull(m.PrevZ))
+						continue
+					m.loc = locate(m.PrevX, m.PrevY, m.PrevZ)
 					m.PrevX = null
 					m.PrevY = null
 					m.PrevZ = null
@@ -105,11 +107,13 @@ mob
 			if(!usingUBW) return
 			var/swapmap/map = swapmaps_byname[in_tmp_map]
 			usingUBW = FALSE
-			for(var/turf/t in block(map.x1, map.y1, map.z1, map.x2, map.y2))
+			if(!map)
+				return
+			for(var/turf/t in block(locate(map.x1, map.y1, map.z1), locate(map.x2, map.y2, map.z2)))
 				for(var/mob/m in t)
-					m.x = m.PrevX
-					m.y = m.PrevY
-					m.z = m.PrevZ
+					if(isnull(m.PrevX) || isnull(m.PrevY) || isnull(m.PrevZ))
+						continue
+					m.loc = locate(m.PrevX, m.PrevY, m.PrevZ)
 					m.PrevX = null
 					m.PrevY = null
 					m.PrevZ = null

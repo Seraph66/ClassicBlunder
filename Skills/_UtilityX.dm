@@ -3060,7 +3060,7 @@ obj/Skills/Utility
 					Cost=glob.progress.EconomyCost*300
 					ModDesc="Overdrive allows the augmented to overclock every cybernetically enhanced aspect in exchange for battery life."
 				if("Cybernetic Mainframe")
-					Cost=glob.progress.EconomyCost*500
+					Cost=glob.progress.EconomyCost*300
 					ModDesc="A cybernetic mainframe allows someone to become a complete cyborg, forsaking most of their natural abilities in exchange for opening up more avenues of cybernetic customization."
 				if("Biological Cybernetics")
 					Cost=glob.progress.EconomyCost*1000
@@ -3071,6 +3071,8 @@ obj/Skills/Utility
 
 			if(M.isRace(ANDROID))
 				Cost*=2
+			if(M.Class=="Resourceful")
+				Cost/=2
 
 			if(M!=usr)
 				if(("War Crimes" in usr.knowledgeTracker.learnedKnowledge)&&M.KO) Consent="Yes"//i hate this btw

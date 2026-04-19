@@ -75,7 +75,7 @@ ascension
 							force = 0.1
 							defense = 0.1
 							endurance = 0.1
-							speed = 0.1
+							speed = 0.4
 				applyDormantDemonPassives(owner)
 				..()
 		two
@@ -108,6 +108,7 @@ ascension
 							force = 0.1
 							defense = 0.1
 							endurance = 0.1
+							speed = 0.4
 				applyDormantDemonPassives(owner)
 				..()
 		three
@@ -149,6 +150,7 @@ ascension
 							force = 0.1
 							defense = 0.1
 							endurance = 0.1
+							speed = 0.4
 				applyDormantDemonPassives(owner)
 				..()
 			postAscension(mob/owner)
@@ -203,6 +205,7 @@ ascension
 							force = 0.1
 							defense = 0.1
 							endurance = 0.1
+							speed = 0.4
 				applyDormantDemonPassives(owner)
 				..()
 
@@ -237,6 +240,7 @@ ascension
 							force = 0.1
 							defense = 0.1
 							endurance = 0.1
+							speed = 0.4
 				applyDormantDemonPassives(owner)
 				..()
 		six
@@ -268,6 +272,7 @@ ascension
 							force = 0.1
 							defense = 0.1
 							endurance = 0.1
+							speed = 0.4
 				applyDormantDemonPassives(owner)
 				..()
 				if(owner.isMazokuHuman())

@@ -12,6 +12,12 @@
 		CrippleAffected=2
 		ActiveMessage="curses their target with sodden footing!"
 		OffMessage="releases the hex!"
+		adjust(mob/p)
+			if(!altered)
+				if(p.isInnovative(FAE, "Any") && !isInnovationDisable(p))
+					TimerLimit=18
+					SlowAffected=4
+					CrippleAffected=3
 		verb/Wetten_Socks()
 			set category="Skills"
 			adjust(usr)
@@ -38,6 +44,11 @@
 		HitSparkDispersion=6
 		HitSparkTurns=0
 		ActiveMessage="invokes: <font size=+1>RIPTIDE!</font size>"
+		adjust(mob/p)
+			if(!altered)
+				if(p.isInnovative(FAE, "Any") && !isInnovationDisable(p))
+					DamageMult=7.5
+					Freezing=3
 		verb/Riptide()
 			set category="Skills"
 			adjust(usr)
@@ -57,6 +68,11 @@
 		Cooldown=45
 		IconLock='Ice.dmi'
 		ActiveMessage="invokes: <font size=+1>FROST SHAMSHIR!</font size>"
+		adjust(mob/p)
+			if(!altered)
+				if(p.isInnovative(FAE, "Any") && !isInnovationDisable(p))
+					DamageMult=6
+					Freezing=3
 		verb/Frost_Shamshir()
 			set category="Skills"
 			usr.UseProjectile(src)

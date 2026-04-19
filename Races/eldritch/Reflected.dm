@@ -253,7 +253,7 @@ obj/ChrysalisShell
 		if(!occupant || !occupant.ChrysalisActive)
 			usr << "This chrysalis has already dissolved."
 			return
-		var/Cost = 10 * glob.progress.EconomyCost
+		var/Cost = 10 * glob.progress.EconomyMana
 		var/Confirm = alert(usr, "Breaking this chrysalis will cost [Commas(Cost)] mana fragments and will bind you in a pact. Proceed?", "Break Chrysalis", "Yes", "No")
 		if(Confirm == "No")
 			return
@@ -281,7 +281,7 @@ obj/Skills/Utility
 				usr << "Only a Reflected Eldritch can offer pacts."
 				src.Using=0
 				return
-			var/Cost=1*glob.progress.EconomyCost
+			var/Cost=1*glob.progress.EconomyMana
 			var/list/mob/Players/Options=list()
 			for(var/mob/Players/P in oview(1, usr))
 				if(P.EldritchPacted)

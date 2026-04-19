@@ -52,7 +52,7 @@ ascension
 				if(owner.SagaLevel < 4)
 					owner.SagaLevel = 4
 				..()
-			passives = list("HellPower" = 0.1, "KiControlMastery" = 1, "PureDamage" = 1, "PureReduction" = 1)
+			passives = list("HellPower" = 0.25, "KiControlMastery" = 1, "PureDamage" = 1, "PureReduction" = 1)
 			strength = 1
 			endurance = 1
 			speed = 1
@@ -61,7 +61,11 @@ ascension
 			defense = 1
 		three
 			unlock_potential = ASCENSION_THREE_POTENTIAL
-			passives = list("HellPower" = 0.1, "KiControlMastery" = 1, "PureDamage" = 1, "PureReduction" = 1)
+			postAscension(mob/owner)
+				if(owner.SagaLevel < 6)
+					owner.SagaLevel = 6
+				..()
+			passives = list("HellPower" = 0.25, "KiControlMastery" = 1, "PureDamage" = 1, "PureReduction" = 1)
 			strength = 1.5
 			endurance = 1.5
 			speed = 1.5
@@ -70,11 +74,7 @@ ascension
 			defense = 1.5
 		four
 			unlock_potential = ASCENSION_FOUR_POTENTIAL
-			postAscension(mob/owner)
-				if(owner.SagaLevel < 6)
-					owner.SagaLevel = 6
-				..()
-			passives = list("HellPower" = 0.15, "KiControlMastery" = 1, "PureDamage" = 1, "PureReduction" = 1)
+			passives = list("HellPower" = 0.25, "KiControlMastery" = 1, "PureDamage" = 1, "PureReduction" = 1)
 			strength = 2
 			endurance = 2
 			speed = 2
@@ -83,7 +83,7 @@ ascension
 			defense = 2
 		five
 			unlock_potential = ASCENSION_FIVE_POTENTIAL
-			passives = list("HellPower" = 0.1, "KiControlMastery" = 1, "PureDamage" = 3, "PureReduction" = 3)
+			passives = list("KiControlMastery" = 1, "PureDamage" = 3, "PureReduction" = 3)
 			strength = 2.5
 			endurance = 2.5
 			speed = 2.5
@@ -92,7 +92,7 @@ ascension
 			defense = 2.5
 		six
 			unlock_potential = ASCENSION_SIX_POTENTIAL
-			passives = list("HellPower" = 0.2, "KiControlMastery" = 1, "PureDamage" = 3, "PureReduction" = 3)
+			passives = list("KiControlMastery" = 1, "PureDamage" = 3, "PureReduction" = 3)
 			strength = 3
 			endurance = 3
 			speed = 3
