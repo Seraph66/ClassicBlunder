@@ -17,7 +17,7 @@ proc/generateVersionDatum()
 		glob.currentUpdate = updateversion
 
 globalTracker
-	var/UPDATE_VERSION = 2
+	var/UPDATE_VERSION = 3
 	var/tmp/update/currentUpdate
 
 	proc/updatePlayer(mob/p)
@@ -82,6 +82,23 @@ update
 					p.ChooseSpawn()
 					if(p.AscensionsAcquired==1)
 						p.SpdAscension=0.4
+	version3
+		version = 3;
+		updateMob(mob/p)
+			. = ..()//left alone for easy copy pasting
+			var/list/BasicElementPinnacles = list("Alight", "Awash", "Aerde", "Aloft")
+			var/list/AdvancedElementPinnacles = list("Mender", "Survivor", "Future", "Kinematics")
+			for(var/mage_passive/mp in p.acquiredMagePassives)
+				if(mp.name in BasicElementPinnacles)
+					mp.passives["ManaGeneration"] = 1;
+					p.passive_handler.Decrease("ManaGeneration", 2);
+					p << "Your Basic Element Pinnacles have had their Mana Generation reduced. This should only trigger once per element."
+				if(mp.name in AdvancedElementPinnacles)
+					mp.passives["ManaGeneration"] = 2;
+					p.passive_handler.Decrease("ManaGeneration", 3);
+					p << "Your Advanced Element Pinnacles have had their Mana Generation reduced. This should only trigger once per element."
+				
+					
 
 /globalTracker/var/COOL_GAJA_PLAYERS = list("Thorgigamax", "Gemenilove" )
 /globalTracker/var/GAJA_PER_ASC_CONVERSION = 0.25
