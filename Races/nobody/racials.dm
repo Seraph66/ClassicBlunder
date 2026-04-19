@@ -23,10 +23,12 @@
 		Slotless=1
 		SwordName="Void Blade"
 		SwordIcon='KATANA SILVER.dmi'
+		StealsStats=1
 		SwordX=-8
 		SwordY=-4
 		SwordElement="Void"
 		SwordUnbreakable=1
+		passives = list("StealsStats" = 1)
 		verb/Transfigure_Void_Blade()
 			set category="Utility"
 			var/Choice

@@ -68,6 +68,7 @@ obj
 				usr.Activate(src)
 		Slashing_Hand_Chop
 			SkillCost=TIER_2_COST
+			Copyable=3
 			UnarmedOnly=1
 			Distance=15
 			WindUp=1
