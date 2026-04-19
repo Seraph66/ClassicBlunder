@@ -23,7 +23,7 @@
 		TurfShift='Dirt1.dmi'
 		TurfShiftDuration=3
 		ActiveMessage="invokes: <font size=+1>BREAKING TWISTER!</font size>"
-		adjust(mob/p) Coded out for Balance checking reasons.
+		adjust(mob/p)
 			if(!altered)
 				if(p.isInnovative(FAE, "Any") && !isInnovationDisable(p))
 					DamageMult=4.5
@@ -62,7 +62,7 @@
 	Mentis_Imperium
 		DamageMult=4
 		Paralyzing=4
-		Speed=3
+		Speed=6
 		Distance=12
 		ManaCost=5
 		Cooldown=40
@@ -71,7 +71,7 @@
 		adjust(mob/p)
 			if(!altered)
 				if(p.isInnovative(FAE, "Any") && !isInnovationDisable(p))
-					Speed=5
+					Speed=9
 					Distance=15
 		verb/Mentis_Imperium()
 			set category="Skills"

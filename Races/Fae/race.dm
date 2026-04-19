@@ -24,7 +24,7 @@ race
 					passives["QuickCast"] = 1
 				if("Goblin") //Playable Raccoons with a need for speed.
 					skills = list(/obj/Skills/Buffs/SlotlessBuffs/Autonomous/FaeBuffs/Fury_of_the_Small)
-					passives["ManaSteal"] = 1
+					passives["ManaGeneration"] = 1
 					passives["Fury"] = 1
 
 			..()

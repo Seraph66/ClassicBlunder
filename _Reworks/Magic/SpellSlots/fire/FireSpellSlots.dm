@@ -40,7 +40,7 @@
 		DamageMult=3
 		Scorching=1
 		Knockback=2
-		Speed=2
+		Speed=5
 		Distance=12
 		ManaCost=4
 		Cooldown=40
@@ -49,7 +49,7 @@
 		adjust(mob/p)
 			if(!altered)
 				if(p.isInnovative(FAE, "Any") && !isInnovationDisable(p))
-					Speed=5
+					Speed=9
 					Distance=15
 					Scorching=2
 		verb/Dragon_Arc()

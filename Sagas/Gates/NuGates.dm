@@ -10,7 +10,7 @@
 	spdAdd=0.1
 	endAdd=0.05
 	adjust(mob/p)
-		passives = list("TechniqueMastery"=0.5, "Pursuer"=0.5, "Flicker"=0.5, "PUSpike" = 50, "KiControl"=1,"KiControlMastery"=1, "PULock"=1)
+		passives = list("TechniqueMastery"=0.5, "Pursuer"=0.5, "Flicker"=0.5, "PUSpike" = 50, "KiControl"=1,"KiControlMastery"=1)
 		PUSpike=50
 		KiControl=1
 		for(var/obj/Skills/Buffs/ActiveBuffs/Ki_Control/KC in p)

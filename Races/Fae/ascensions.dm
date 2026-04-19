@@ -39,7 +39,7 @@ ascension
 						offense = 0.15
 						endurance = 0.15
 					if("Goblin")
-						var/newpassives = list("Fury" = 1, "ManaSteal" = 1, "Godspeed" = 1)
+						var/newpassives = list("Fury" = 1, "ManaGeneration" = 1, "Godspeed" = 1)
 						passives+= newpassives
 						force = 0.35
 						speed = 0.35
@@ -87,7 +87,7 @@ ascension
 						offense = 0.15
 						endurance = 0.15
 					if("Goblin")
-						var/newpassives = list("Fury" = 1, "ManaSteal" = 1, "Godspeed" = 1)
+						var/newpassives = list("Fury" = 1, "ManaGeneration" = 1, "Godspeed" = 1)
 						passives+= newpassives
 						force = 0.35
 						speed = 0.35
@@ -133,7 +133,7 @@ ascension
 						offense = 0.25
 						endurance = 0.25
 					if("Goblin")
-						var/newpassives = list("Fury" = 1, "ManaSteal" = 1, "Godspeed" = 1)
+						var/newpassives = list("Fury" = 1, "ManaGeneration" = 1, "Godspeed" = 1)
 						passives+= newpassives
 						force = 0.5
 						speed = 0.5
