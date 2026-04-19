@@ -81,7 +81,7 @@
 	log2text("Damage", val,"damageDebugs.txt", "[src.ckey]/[src.name]")
 	#endif
 	var/preCrit = val
-	if((unarmed || sword) || (spiritAtk && !autohit && passive_handler["IceHerald"]) || (autohit && passive_handler["DemonicInfusion"]))
+	if((unarmed || sword) || (spiritAtk && !autohit && passive_handler["IceHerald"]) || (autohit && passive_handler["DemonicInfusion"]) || (autohit && passive_handler["CriticalChance"]) || (spiritAtk && passive_handler["CriticalChance"]))
 		val = getCritAndBlock(defender, val)
 		if(val > preCrit)
 			if(passive_handler["Wuju"] == 1)

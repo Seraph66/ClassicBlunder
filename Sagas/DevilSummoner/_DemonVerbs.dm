@@ -129,6 +129,8 @@
 				if(pd.demon_name == d.name)
 					pd.current_hp = d.demon_hp
 					break
+			// Revert owner-targeted passive grants
+			d.RemoveDemonPassives()
 			ai_followers -= d
 			d.ai_owner = null
 			del(d)
@@ -367,6 +369,8 @@
 				if(old_pd.demon_name == old.name)
 					old_pd.current_hp = old.demon_hp
 					break
+			// Revert owner-targeted passive
+			old.RemoveDemonPassives()
 			old.ai_owner = null // Stop AI loop immediately
 			animate(old, alpha=0, time=8)
 			spawn(8) del(old)
@@ -413,6 +417,8 @@
 			if(pd.demon_name == demon_active_name)
 				pd.current_hp = d.demon_hp
 				break
+		// Undo all owner-targeted passive grants
+		d.RemoveDemonPassives()
 		d.ai_owner = null // Stop AI loop immediately
 		animate(d, alpha=0, time=8)
 		spawn(8)

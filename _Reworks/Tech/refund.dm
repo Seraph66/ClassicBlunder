@@ -30,9 +30,9 @@
 		if(p in EnchantmentKnowledge)
 			var/theCost
 			if(p in list("Alchemy", "Tool Enchantment", "Tome Creation", "General Magic Knowledge", "Space Magic"))
-				theCost = 20 / Imagination
+				theCost = glob.TECH_BASE_COST / Imagination
 			else if(p in list("Improved Alchemy", "Armament Enchantment", "Crest Creation", "Sealing Magic", "Time Magic"))
-				theCost = 40 / Imagination
+				theCost = glob.TECH_BASE_COST / Imagination
 			RPPSpendable += theCost
 			RPPSpent -= theCost
 			knowledgeTracker.learnedKnowledge -= p

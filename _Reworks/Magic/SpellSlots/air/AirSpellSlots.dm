@@ -23,6 +23,11 @@
 		TurfShift='Dirt1.dmi'
 		TurfShiftDuration=3
 		ActiveMessage="invokes: <font size=+1>BREAKING TWISTER!</font size>"
+		adjust(mob/p) //Coded out for Balance checking reasons.
+			if(!altered)
+				if(p.isInnovative(FAE, "Any") && !isInnovationDisable(p))
+					DamageMult=4.5
+					Distance=7
 		verb/Breaking_Twister()
 			set category="Skills"
 			adjust(usr)
@@ -41,6 +46,11 @@
 		passives=list("FluidForm" = 1, "Afterimages" = 1)
 		ActiveMessage="wraps themselves in a veil of wind!"
 		OffMessage="lets the wind dissipate..."
+		adjust(mob/p)
+			if(!altered)
+				if(p.isInnovative(FAE, "Any") && !isInnovationDisable(p))
+					TimerLimit=30
+					Godspeed=1.5
 		verb/Evading_Zephyr()
 			set category="Skills"
 			adjust(usr)
@@ -58,6 +68,11 @@
 		Cooldown=40
 		IconLock='Air Render.dmi'
 		ActiveMessage="invokes: <font size=+1>MENTIS IMPERIUM!</font size>"
+		adjust(mob/p)
+			if(!altered)
+				if(p.isInnovative(FAE, "Any") && !isInnovationDisable(p))
+					Speed=5
+					Distance=15
 		verb/Mentis_Imperium()
 			set category="Skills"
 			usr.UseProjectile(src)

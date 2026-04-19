@@ -48,9 +48,9 @@ var/global/list/BIO_SAMPLE_DEFS = list(
 	"Eldritch"     = list("t1_passives"=list("DebuffResistance"=0.1,"BuffMastery"=1), "t1_skills"=list(/obj/Skills/Utility/Telepathy), "t2_passives"=list("DebuffResistance"=0.3,"BuffMastery"=3), "t2_skills"=list()),
 	"Changeling"   = list("t1_passives"=list(), "t1_skills"=list(), "t2_passives"=list(), "t2_skills"=list()),
 	"Makyo"        = list("t1_passives"=list("Juggernaut" = 0.5), "t1_skills"=list(), "t2_passives"=list("Juggernaut" = 0.5), "t2_skills"=list(/obj/Skills/Buffs/SlotlessBuffs/Makyo/Expand)),
-	"Makaioshin"   = list("t1_passives"=list("SpiritPower" = 0.1), "t1_skills"=list(), "t2_passives"=list("SpiritPower" = 0.15), "t2_skills"=list()),
+	"Makaioshin"   = list("t1_passives"=list("SpiritPower" = 0.1, "HybridStrike"=0.5), "t1_skills"=list(), "t2_passives"=list("SpiritPower" = 0.15, "HybridStrike"=0.5), "t2_skills"=list()),
 	"Shinjin"      = list("t1_passives"=list(), "t1_skills"=list(), "t2_passives"=list(), "t2_skills"=list()),
-	"Demi-fiend"   = list("t1_passives"=list("ManaGeneration" = 1), "t1_skills"=list(), "t2_passives"=list("ManaGeneration" = 2), "t2_skills"=list()),
+	"Demi-fiend"   = list("t1_passives"=list("ManaGeneration" = 1, "ManaCapMult" = 0.5), "t1_skills"=list(), "t2_passives"=list("ManaGeneration" = 2), "t2_skills"=list()),
 	"High Faoroan" = list("t1_passives"=list(), "t1_skills"=list(), "t2_passives"=list(), "t2_skills"=list()),
 	"Chakardi"     = list("t1_passives"=list(), "t1_skills"=list(), "t2_passives"=list(), "t2_skills"=list()),
 	"Popo"         = list("t1_passives"=list("CashCow" = 3), "t1_skills"=list(), "t2_passives"=list("MovementMastery" = 4, "CashCow" = 5), "t2_skills"=list()),
@@ -297,7 +297,7 @@ obj/Skills/Utility
 
 			var/Cost = glob.progress.EconomyCost * 1000
 			if(!usr.HasMoney(Cost))
-				usr << "You need [Cost] Mana Bits to install a Tier 2 [race_choice] sample."
+				usr << "You need [Cost] resources to install a Tier 2 [race_choice] sample."
 				usr.Using = 0
 				return
 
@@ -308,7 +308,7 @@ obj/Skills/Utility
 
 			// Re-validate after the confirm dialog
 			if(!usr.HasMoney(Cost))
-				usr << "You no longer have enough Mana Bits."
+				usr << "You no longer have enough resources."
 				usr.Using = 0
 				return
 			if(usr.HasBioSample(race_choice, 2))

@@ -39,6 +39,8 @@ ascension
 							speed=0.5 * SMod
 							endurance=0.25 * SMod
 							passives = list("Tenacity" = 1, "Persistence" = 1)
+							if(owner.SagaLevel < 2)
+								owner.SagaLevel = 2
 						if("Reaper")
 							strength=0.75 * SMod
 							force=0.25 * SMod
@@ -84,6 +86,8 @@ ascension
 							speed=0.5 * SMod
 							endurance=0.25 * SMod
 							passives = list("Tenacity" = 1, "Persistence" = 1)
+							if(owner.SagaLevel < 3)
+								owner.SagaLevel = 3
 						if("Reaper")
 							strength=0.75 * SMod
 							force=0.25 * SMod
@@ -128,6 +132,8 @@ ascension
 							offense=0.5 * SMod
 							speed=0.5 * SMod
 							passives = list("Tenacity" = 1, "Persistence" = 1)
+							if(owner.SagaLevel < 4)
+								owner.SagaLevel = 4
 						if("Reaper")
 							strength=0.75 * SMod
 							force=0.25 * SMod
@@ -171,6 +177,8 @@ ascension
 							offense=0.5 * SMod
 							speed=0.5 * SMod
 							passives = list("Tenacity" = 1, "Persistence" = 1)
+							if(owner.SagaLevel < 5)
+								owner.SagaLevel = 5
 						if("Reaper")
 							strength=0.75 * SMod
 							force=0.25 * SMod
@@ -214,6 +222,8 @@ ascension
 							offense=0.5 * SMod
 							speed=0.5 * SMod
 							passives = list("Tenacity" = 1, "Persistence" = 1)
+							if(owner.SagaLevel < 6)
+								owner.SagaLevel = 6
 						if("Reaper")
 							strength=0.75 * SMod
 							force=0.25 * SMod

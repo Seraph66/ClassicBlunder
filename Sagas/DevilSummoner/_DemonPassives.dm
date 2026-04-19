@@ -359,11 +359,10 @@ var/global/list/DEMON_PASSIVE_DB = list()
 
 
 /mob/Player/AI/Demon/proc/ApplyOwnerManaCap(pct)
-	if(!ai_owner) return
-	var/add = round(ai_owner.EnergyMax * pct)
-	ai_owner.EnergyMax += add
+	if(!ai_owner || !ai_owner.passive_handler) return
+	ai_owner.passive_handler.Increase("ManaCapMult", pct)
 	if(!passive_owner_grants) passive_owner_grants = list()
-	passive_owner_grants["EnergyMax"] += add
+	passive_owner_grants["ManaCapMult"] = (passive_owner_grants["ManaCapMult"] || 0) + pct
 
 /mob/Player/AI/Demon/proc/RemoveDemonPassives()
 	passive_loop_gen++   // halts any loops

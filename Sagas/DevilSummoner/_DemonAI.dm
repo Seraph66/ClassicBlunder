@@ -122,15 +122,15 @@
 		if(target == src) return
 		if(istype(target, /mob/Player) && "[ai_owner.ckey]" in target.ai_alliances) return
 		if(ai_owner.party && ai_owner.party.members && (target in ai_owner.party.members)) return
-		var/dmg = round(StrMod * 0.1 * next_attack_multiplier * glob.DevilSummonerDemonDamageMod)
+		var/dmg = DemonComputeKernelDamage(target, StrMod) * next_attack_multiplier * glob.DevilSummonerDemonDamageMod
 		if(next_attack_multiplier > 1)
 			if(ai_owner) ai_owner << "<font color='#ffaa00'>[name]'s charged attack connects!</font>"
 			next_attack_multiplier = 1
-		if(dmg <= 0) return 
+		if(dmg <= 0) return
 		// Crit chance / damage from passive_handler (CriticalChance / CriticalDamage)
 		var/crit_chance = 5 + DemonPassiveCritBonus()
 		if(prob(crit_chance))
-			dmg = round(dmg * DemonPassiveCritDmgMult())
+			dmg = dmg * DemonPassiveCritDmgMult()
 		DemonDealDamage(target, TrueDamage(dmg))
 		DemonHitVisual(target)
 		DemonPassiveAddAilments(target)
@@ -144,7 +144,7 @@
 					Bump(target)
 		// Attack All: also hit nearby enemies
 		if(passive_attack_all)
-			var/aoe_dmg = round(dmg * 0.6)
+			var/aoe_dmg = dmg * 0.6
 			if(aoe_dmg > 0)
 				for(var/mob/m in oview(1, src))
 					if(m == src || m == target) continue
@@ -167,6 +167,21 @@
 			ai_owner.demon_active_name = ""
 			ai_owner << "<b>[name] has been defeated and returned.</b> Meditate to restore them."
 		del(src)
+
+	proc/DemonComputeKernelDamage(mob/target, atk_val)
+		if(!target || !isnum(atk_val) || atk_val <= 0) return 0
+		var/my_power = max(1, Potential)
+		var/target_power = 1
+		if(isnum(target.Power) && target.Power > 0)
+			target_power = target.Power
+		else if(isnum(target.Potential) && target.Potential > 0)
+			target_power = target.Potential
+		var/powerDif = my_power / target_power
+		if(glob.CLAMP_POWER)
+			powerDif = clamp(powerDif, glob.MIN_POWER_DIFF, glob.MAX_POWER_DIFF)
+		var/atk = max(0.01, atk_val)
+		var/def = max(0.01, target.getEndStat(1))
+		return (powerDif ** glob.DMG_POWER_EXPONENT) * (glob.CONSTANT_DAMAGE_EXPONENT + glob.MELEE_EFFECTIVENESS) ** -(def ** glob.DMG_END_EXPONENT / atk ** glob.DMG_STR_EXPONENT)
 
 	// Visual feedback for demon attacks
 	proc/DemonHitVisual(mob/target)

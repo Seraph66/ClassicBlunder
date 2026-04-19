@@ -59,7 +59,7 @@
         Alight
             name="Alight"
             desc="The mage has become a vessel for fire itself. The path beyond mastery — mana flows freely, the world bends to the heat."
-            passives = list("ManaGeneration" = 3, "PowerfulCasting" = 1, "FireSpellDamage" = 0.10, "FireSpellCooldown" = 0.10)
+            passives = list("ManaGeneration" = 1, "PowerfulCasting" = 1, "FireSpellDamage" = 0.10, "FireSpellCooldown" = 0.10)
 
     water
         element="Water"
@@ -77,7 +77,7 @@
         Awash
             name="Awash"
             desc="The mage has become a vessel for water itself. The path beyond mastery — mana flows freely, the world yields to the current."
-            passives = list("ManaGeneration" = 3, "ForcefulCasting" = 1, "WaterSpellDamage" = 0.10, "WaterSpellCooldown" = 0.10)
+            passives = list("ManaGeneration" = 1, "ForcefulCasting" = 1, "WaterSpellDamage" = 0.10, "WaterSpellCooldown" = 0.10)
 
     earth
         element="Earth"
@@ -95,7 +95,7 @@
         Aerde
             name="Aerde"
             desc="The mage has become a vessel for earth itself. The path beyond mastery — mana flows freely, the world holds beneath them."
-            passives = list("ManaGeneration" = 3, "StalwartCasting" = 1, "EarthSpellDamage" = 0.10, "EarthSpellCooldown" = 0.10)
+            passives = list("ManaGeneration" = 1, "StalwartCasting" = 1, "EarthSpellDamage" = 0.10, "EarthSpellCooldown" = 0.10)
 
     air
         element="Air"
@@ -113,7 +113,7 @@
         Aloft
             name="Aloft"
             desc="The mage has become a vessel for wind itself. The path beyond mastery — mana flows freely, the world parts at their passing."
-            passives = list("ManaGeneration" = 3, "AgileCasting" = 1, "AirSpellDamage" = 0.10, "AirSpellCooldown" = 0.10)
+            passives = list("ManaGeneration" = 1, "AgileCasting" = 1, "AirSpellDamage" = 0.10, "AirSpellCooldown" = 0.10)
 
     light
         element="Light"
@@ -131,7 +131,7 @@
         Mender
             name="Mender"
             desc="The mage has become a vessel for light itself. Mana flows in abundance, and the wounds of the world are theirs to close."
-            passives = list("ManaGeneration" = 5, "LightSpellDamage" = 0.15, "LightSpellManaCost" = 0.15, "LightSpellCooldown" = 0.15)
+            passives = list("ManaGeneration" = 2, "LightSpellDamage" = 0.15, "LightSpellManaCost" = 0.15, "LightSpellCooldown" = 0.15)
 
     dark
         element="Dark"
@@ -149,7 +149,7 @@
         Survivor
             name="Survivor"
             desc="The mage has become a vessel for darkness itself. Mana flows in abundance, and the wounds they take only feed the next casting."
-            passives = list("ManaGeneration" = 5, "DarkSpellDamage" = 0.20, "DarkSpellManaCost" = 0.10, "DarkSpellCooldown" = 0.15)
+            passives = list("ManaGeneration" = 2, "DarkSpellDamage" = 0.20, "DarkSpellManaCost" = 0.10, "DarkSpellCooldown" = 0.15)
 
     time
         element="Time"
@@ -167,7 +167,7 @@
         Future
             name="Future"
             desc="The mage has become a vessel for time itself. Mana flows in abundance, and the cost of every casting is felt only in moments yet to come."
-            passives = list("ManaGeneration" = 5, "TimeSpellDamage" = 0.10, "TimeSpellManaCost" = 0.15, "TimeSpellCooldown" = 0.20)
+            passives = list("ManaGeneration" = 2, "TimeSpellDamage" = 0.10, "TimeSpellManaCost" = 0.15, "TimeSpellCooldown" = 0.20)
 
     space
         element="Space"
@@ -185,7 +185,7 @@
         Kinematics
             name="Kinematics"
             desc="The mage has become a vessel for space itself. Their reservoir of mana grows vast, and the world bends to allow their workings."
-            passives = list("ManaCapMult" = 0.5, "ManaGeneration" = 5, "SpaceSpellDamage" = 0.15, "SpaceSpellManaCost" = 0.20, "SpaceSpellCooldown" = 0.10)
+            passives = list("ManaCapMult" = 0.5, "ManaGeneration" = 2, "SpaceSpellDamage" = 0.15, "SpaceSpellManaCost" = 0.20, "SpaceSpellCooldown" = 0.10)
 
 // --- Gestalt Unlock System ---
 // Gestalt Style and Buff are granted automatically when a player acquires

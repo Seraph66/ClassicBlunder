@@ -67,7 +67,8 @@ var/list/SkillTree=list(
 			"/obj/Skills/Grapple/Suplex"=120,
 			"/obj/Skills/Grapple/Burning_Finger"=120,
 			"/obj/Skills/AutoHit/Sweeping_Kick"=80,
-			"/obj/Skills/AutoHit/Helicopter_Kick"=80
+			"/obj/Skills/AutoHit/Helicopter_Kick"=80,
+			"/obj/Skills/AutoHit/Slashing_Hand_Chop"=80
 ),
 
 "UnarmedT3"=list(

@@ -119,6 +119,7 @@ obj/Skills
 	var/Stunner=0 //Stuns for this amount of time
 	var/Shearing //Debuffs regen
 	var/Crippling //Cripples movement
+	var/Combustion=0 //Flat Combustion threshold bonus the attacker gains while this skill resolves damage. Implementation subject to change
 	//Spell passive vars (populated by SpellSlotModification on enchanted spells)
 	var/NerveOverload=0 //Air Paralyzer: adds Shock per hit
 	var/CriticalParalyze=0 //Air Synapse: % chance to stun on hit

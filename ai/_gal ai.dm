@@ -1413,10 +1413,10 @@ mob/Player/AI
 
 		src.Debuffs()
 
-		if(src.Harden)
-			src.Harden--
-			if(src.Harden<=0)
-				src.Harden=0
+		if(src.HardenAccumulated)
+			src.HardenAccumulated--
+			if(src.HardenAccumulated<=0)
+				src.HardenAccumulated=0
 
 		if(src.CounterMasterTimer)
 			src.CounterMasterTimer = max(0, CounterMasterTimer-1) // bruh

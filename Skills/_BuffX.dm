@@ -164,6 +164,7 @@ NEW VARIABLES
 	var/DefTax
 	var/RegenTax
 	var/RecovTax
+	var/PostBuffEff//Add a post-buff effect like a temp debuff
 	//These variables will accumulate at [this value] per second
 	var/StrTaxDrain
 	var/StrCutDrain
@@ -1730,7 +1731,7 @@ NEW VARIABLES
 				src.Trigger(usr)
 		FadeIntoShadows
 			IconTint=list(0,0,0, 0,0,0, 0,0,0, 0,0,0)
-			passives = list("Nightmare" = 1, "PULock" = 1)
+			passives = list("Nightmare" = 1, "PULock" = 1, "Skimming"=2)
 			AllowedPower=0.5
 		//	DarkChange=1
 			Invisible=20
@@ -7235,9 +7236,9 @@ NEW VARIABLES
 			IconLock='CroneMajinSparks.gif'
 			LockX=0
 			LockY=0
-			EndTaxDrain=0.0030
-			SpdTaxDrain=0.0030
-			StrTaxDrain=0.0030
+			StrTax=0.1
+			SpdTax=0.1
+			EndTax=0.1
 			RecovTaxDrain=0.0030
 			SagaSignature=1
 			AngerMult=1.5
@@ -7667,7 +7668,7 @@ NEW VARIABLES
 				src.Trigger(usr)
 
 		Spirit_Bow
-			SignatureTechnique=2
+			SignatureTechnique=1
 			MakesStaff=1
 			FlashDraw=1
 			StaffName="Spirit Bow"
@@ -7704,6 +7705,7 @@ NEW VARIABLES
 		Spirit_Sword//t2
 			MakesSword=3
 			FlashDraw=1
+			SignatureTechnique=1
 			SwordName="Spirit Sword"
 			SwordIcon='Aether Blade.dmi'
 			SwordX=-32
@@ -14544,7 +14546,8 @@ mob
 				B.InstantAffected=0
 			if(B.BuffName=="Kyoukaken")
 				src.Kyoukaken("Off")
-
+			if(B.PostBuffEff)
+				buffSelf(B.PostBuffEff)
 			if(B.KillSword&&src.EquippedSword())
 				var/obj/Items/Sword/s=src.EquippedSword()
 				src.SwordShatter(s)

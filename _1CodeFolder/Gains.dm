@@ -530,11 +530,17 @@ mob
 			if(passive_handler.Get("LunarWrath")&&PowerControl>100&&!passive_handler.Get("Unrelenting Wrath"))
 				var/ManaRando=rand(6,15)
 				src.ManaAmount+=0.5*(ManaRando/10)
-			if(passive_handler.Get("LunarAnger")&&ManaAmount>50)
-				src.LunarWrathAnger()
-				src.Anger()
+			if(passive_handler.Get("LunarAnger")&&!passive_handler.Get("Unrelenting Wrath"))
+				if(ManaAmount>50)
+					src.AngerMax=1+(src.ManaAmount/100)
+					src.Anger=src.AngerMax
+					src.Anger()
+				else if(ManaAmount<=50)
+					src.Anger=0
+					src.AngerMax=1
 			if(passive_handler.Get("Unrelenting Wrath"))
 				src.Anger=src.AngerMax
+				src.AngerMax=5
 			if(passive_handler["TensionPowered"] && !src.isMazokuHuman())
 				if(src.canHTM())
 					src.race.transformations[2].transform(src, TRUE)
@@ -881,8 +887,8 @@ mob
 			if(passive_handler["Grit"])
 				if(client&&hudIsLive("Grit", /obj/bar))
 					client.hud_ids["Grit"]?:Update()
-			if(src.Harden)
-				src.Harden = max(0, src.Harden - glob.BASE_STACK_REDUCTION)
+			if(HardenAccumulated)
+				HardenAccumulated = max(0, HardenAccumulated - glob.BASE_STACK_REDUCTION)
 				if(client&&hudIsLive("Harden", /obj/bar))
 					client.hud_ids["Harden"]?:Update()
 			if(Momentum)
@@ -903,6 +909,12 @@ mob
 					client.hud_ids["Fury"]?:Update()
 				if(FuryAccumulated<0)
 					FuryAccumulated=0
+			if(cursedSheathValue)
+				cursedSheathValue -= 0.5/SagaLevel
+				cursedSheathValue = clamp(0, cursedSheathValue, SagaLevel*50)
+				if(client && hudIsLive("CursedSheath", /obj/Bar))
+					client.hud_ids["CursedSheath"]?:Update()
+			
 
 			if(src.SureHitTimerLimit)
 				if(!src.SureHit)
@@ -1448,11 +1460,6 @@ mob
 								if(b.Timer>=b.TimerLimit)
 									b.Trigger(src, Override=1) // BUFF END //
 									continue
-
-
-			if(cursedSheathValue)
-				cursedSheathValue -= 0.5/SagaLevel //TODO: ADD A HUD
-				cursedSheathValue = clamp(0, cursedSheathValue, SagaLevel*50)
 
 			for(var/obj/Skills/Buffs/SlotlessBuffs/Implants/Internal_Explosive/B in src.Buffs)
 				if(B.Using)

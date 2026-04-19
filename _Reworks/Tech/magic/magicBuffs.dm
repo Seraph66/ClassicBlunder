@@ -2,7 +2,7 @@
     BuffName = "Skating"
     TimerLimit = 0
     Godspeed = 1.5
-    passives = list("Godspeed" = 2)
+    passives = list("Godspeed" = 4,"Skimming" = 3)
     Copyable = 0
     Cooldown = 0
     ActiveMessage = "starts skating on a magical skateboard, lol."

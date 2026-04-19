@@ -57,6 +57,7 @@ obj
 					adjust(usr)
 					usr.Activate(src)
 			Magnet_Burst
+				SagaSignature=1;
 				SignatureTechnique=1
 				Area="Circle"
 				Distance=5

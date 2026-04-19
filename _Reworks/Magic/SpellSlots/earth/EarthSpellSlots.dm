@@ -22,6 +22,11 @@
 		TurfShift='Dirt1.dmi'
 		TurfShiftDuration=3
 		ActiveMessage="invokes: <font size=+1>SEISMIC ENTRY!</font size>"
+		adjust(mob/p)
+			if(!altered)
+				if(p.isInnovative(FAE, "Any") && !isInnovationDisable(p))
+					DamageMult=7.5
+					Distance=6
 		verb/Seismic_Entry()
 			set category="Skills"
 			adjust(usr)
@@ -40,6 +45,11 @@
 		passives=list("Harden" = 1, "Grit" = 1, "MeleeResist" = 1)
 		ActiveMessage="wraps themselves in a ward of living stone!"
 		OffMessage="lets the stone crumble away..."
+		adjust(mob/p)
+			if(!altered)
+				if(p.isInnovative(FAE, "Any") && !isInnovationDisable(p))
+					TimerLimit=40
+					PureReduction=3
 		verb/Ward_of_Stone()
 			set category="Skills"
 			adjust(usr)
@@ -55,6 +65,12 @@
 		CrippleAffected=2
 		ActiveMessage="curses the earth beneath their target!"
 		OffMessage="releases the curse!"
+		adjust(mob/p)
+			if(!altered)
+				if(p.isInnovative(FAE, "Any") && !isInnovationDisable(p))
+					src.TimerLimit=15
+					src.ShatterAffected=4
+					src.CrippleAffected=3
 		verb/Prickly_Ballet()
 			set category="Skills"
 			adjust(usr)

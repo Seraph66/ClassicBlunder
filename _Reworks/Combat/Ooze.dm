@@ -22,6 +22,7 @@
 			on_tick()
 		on_tick()
 			for(var/mob/m in tick_on)
+				if(m == owner) continue;
 				m.AddPoison(2*power, owner)
 				// call(m,proc_to_call)(list2params(proc_params))
 

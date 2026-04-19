@@ -12,6 +12,7 @@ mob/proc/
     getHarden()
         . = 0;
         . += passive_handler.Get("Harden");
+        . += scalingEldritchPower();
         . = clamp(., glob.HARDEN_MIN, glob.HARDEN_MAX);
     //This is used in GetEnd()
     getHardenMult()
@@ -20,7 +21,7 @@ mob/proc/
         var/peakHarden = getPeakHarden(hard);//gets the max value that could be added with this level of harden if stacks were maxed
         var/addPerStack = (peakHarden / glob.MAX_HARDEN_STACKS);
         . = 1;
-        . += (src.Harden * addPerStack);
+        . += (HardenAccumulated * addPerStack);
     getPeakHarden(currentHardenQuality)
         . = currentHardenQuality * (glob.HARDEN_MAX_ADD / glob.HARDEN_MAX);
     
