@@ -45,10 +45,12 @@ ArmamentEnchantment -> tome creation (articact manufactioning + ArmamentEnchantm
         var/SecretInformation/Eldritch/s = src.secretDatum
         total += s.secretVariable["Power From Blood"];
     TotalMagicLevel = 10
-    return total
+    return 10 // Actually setting the magic level to 10 lol this is a stupid solution but fuck this code and fuck you jordan
 
 
 /knowledgePaths/magic
+    var/SubType
+/* /knowledgePaths/magic
 
 /knowledgePaths/magic/Alchemy
     name = "Alchemy"
@@ -88,7 +90,7 @@ ArmamentEnchantment -> tome creation (articact manufactioning + ArmamentEnchantm
     requires = list("Stimulant Herbs", "Relaxant Herbs")
 /knowledgePaths/magic/Mutagenic_Herbs
     name = "Mutagenic Herbs"
-    requires = list("Numbing Herbs")
+    requires = list("Numbing Herbs") 
 
 // END ALCHEMY TREE //
 
@@ -251,3 +253,4 @@ ArmamentEnchantment -> tome creation (articact manufactioning + ArmamentEnchantm
 /knowledgePaths/magic/Temporal_Rewinding // A HEAL
     name = "Temporal Rewinding"
     requires = list("Temporal Acceleration")
+*/

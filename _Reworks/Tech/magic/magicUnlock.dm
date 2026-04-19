@@ -1,13 +1,33 @@
-var/knowledgePaths/magic/list/MagicTree = list()
+var/knowledgePaths/magic/list/MagicTree = list() // Not touching this for my own sanity - Hadoje
+var/list/AlchemyTree = list()
+var/list/EnchantingTree = list()
+var/list/MiscTree = list()
 
-/proc/fillMagicTree()
-	. = typesof(/knowledgePaths/magic)
-	for(var/x in .)
-		var/knowledgePaths/magic/m = new x
-		MagicTree[m.name] += m
+/proc/fillMagicTree() // Split into 3 trees, Alchemy, Enchant/Tools, and Misc. 
+	var/list/Alchemytypes = subtypesof(/knowledgePaths/magic/alchemy)
+	var/list/Enchanttypes = subtypesof(/knowledgePaths/magic/enchanting)
+	var/list/Misctypes = subtypesof(/knowledgePaths/magic/misc)
+	for(var/MagicType in Alchemytypes)
+		var/knowledgePaths/magic/m = new MagicType
+		AlchemyTree[m.name] = m
+
+	for(var/MagicType in Enchanttypes)
+		var/knowledgePaths/magic/m = new MagicType
+		EnchantingTree[m.name] = m
+
+	for(var/MagicType in Misctypes)
+		var/knowledgePaths/magic/m = new MagicType
+		MiscTree[m.name] = m
 
 
-/mob/proc/learnKnowledge(pathType, knowledgeList)
+/proc/IsMagicTreeBuilt()
+	if(length(AlchemyTree) < 1) return 0
+	if(length(EnchantingTree) < 1) return 0
+	if(length(MiscTree) < 1) return 0
+	return 1
+
+
+/mob/proc/learnKnowledge(pathType, knowledgeList, SubType=0)
 	var/theCost
 	var/list/buyList = list()
 	var/int = Intelligence
@@ -34,10 +54,11 @@ var/knowledgePaths/magic/list/MagicTree = list()
 			theCost /= imag
 			if(theCost < 1)
 				theCost = 1
-			if(length(MagicTree) < 1)
-				fillMagicTree()
-	for(var/n in global.vars["[pathType]Tree"])
-		var/knowledgePaths/knowledge = global.vars["[pathType]Tree"][n]
+	if(!IsMagicTreeBuilt())
+		fillMagicTree()
+	var/list/knows = SubType ? global.vars["[SubType]Tree"] : global.vars["[pathType]Tree"];
+	for(var/n in knows)
+		var/knowledgePaths/knowledge = knows[n]
 		if(n in knowledgeList)
 			if(n == "General Magic Knowledge")
 				if(GeneralMagicKnowledgeUnlocked<5)
@@ -59,7 +80,7 @@ var/knowledgePaths/magic/list/MagicTree = list()
 	if(input == "Cancel")
 		return
 	if(input in buyList)
-		var/knowledgePaths/knowledge = global.vars["[pathType]Tree"]["[input]"]
+		var/knowledgePaths/knowledge = knows["[input]"]
 
 		if(knowledge.meetsReqs(knowledgeList))
 			theCost *= 1 + (0.25 * length(knowledge.requires))
@@ -76,7 +97,10 @@ var/knowledgePaths/magic/list/MagicTree = list()
 /mob/verb/learnMagic()
 	set category = "Utility"
 	set name = "Magic Learning"
-	learnKnowledge("Magic", knowledgeTracker.learnedMagic)
+	var/choice = input(src, "What branch of magic do you wish to learn?", "Magic Learning") in list("Alchemy", "Enchanting", "Misc", "Nevermind")
+	if(choice == "Nevermind") return
+	
+	learnKnowledge("Magic", knowledgeTracker.learnedMagic, choice)
 
 
 
@@ -103,7 +127,7 @@ var/knowledgePaths/magic/list/MagicTree = list()
 
 mob/Admin3/verb/RefundMagic(mob/p in players)
 	set name = "Refund Magic"
-	if(length(MagicTree) < 1)
+	if(IsMagicTreeBuilt())
 		fillMagicTree()
 	if(!p.client)
 		return
@@ -115,7 +139,7 @@ mob/Admin3/verb/RefundMagic(mob/p in players)
 		p.removeMagicKnowledge(p, choice, the_cost, 0)
 
 /mob/Admin4/verb/RefundALLmagic(mob/p in world)
-	if(length(MagicTree) < 1)
+	if(IsMagicTreeBuilt())
 		fillMagicTree()
 	for(var/x in generateMagicList())
 		var/the_cost = glob.MAGIC_BASE_COST / Imagination
@@ -139,7 +163,7 @@ mob/Admin3/verb/RefundMagic(mob/p in players)
 
 //TODO: Remove
 /mob/proc/legacyRefundmagic()
-	if(length(MagicTree) < 1)
+	if(IsMagicTreeBuilt())
 		fillMagicTree()
 	for(var/x in generateMagicList())
 		var/the_cost = 50 / Imagination

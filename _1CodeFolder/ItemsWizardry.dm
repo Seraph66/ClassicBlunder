@@ -1,17 +1,17 @@
 obj/var/EnchType
 
-var/list/Enchantment_List=list()
-var/list/BasicEnchantment_List=list()
-var/list/Alchemy_List=list()
-var/list/ImprovedAlchemy_List=list()
-var/list/ToolEnchantment_List=list()
-var/list/ArmamentEnchantment_List=list()
-var/list/TomeCreation_List=list()
-var/list/CrestCreation_List=list()
-var/list/SummoningMagic_List=list()
-var/list/SealingMagic_List=list()
-var/list/SpaceMagic_List=list()
-var/list/TimeMagic_List=list()
+var/list/Enchantment_List=new
+var/list/BasicEnchantment_List=new
+var/list/Alchemy_List=new
+var/list/ImprovedAlchemy_List=new
+var/list/ToolEnchantment_List=new
+var/list/ArmamentEnchantment_List=new
+var/list/TomeCreation_List=new
+var/list/CrestCreation_List=new
+var/list/SummoningMagic_List=new
+var/list/SealingMagic_List=new
+var/list/SpaceMagic_List=new
+var/list/TimeMagic_List=new
 
 proc/Add_Enchantment()
 	for(var/A in typesof(/obj/Items/Enchantment))
@@ -177,7 +177,7 @@ obj/Items/Enchantment
 					usr << "This cauldron is already in use!"
 					return
 				src.Using=1
-				var/list/Modes=list("Cancel", "Brew Potion","Transmute Lifeforce")
+				var/list/Modes=list("Cancel", "Brew Potion","Transmute Lifeforce", "Enhance Potion")
 				if(("Distillation Process" in usr.knowledgeTracker.learnedMagic) && ("CrestCreation" in usr.knowledgeTracker.learnedMagic))
 					Modes.Add("Transmute Philosopher Stone")
 				var/Mode=input(usr, "What do you want to do with this cauldron?", "Cauldron") in Modes
@@ -262,27 +262,31 @@ obj/Items/Enchantment
 									if("Toxic Herb")
 										Confirm=alert(usr, "Toxic Herbs predictably make a potion toxic.  This stimulates the drinker's metabolism and lets them drink another potion sooner.  It does not take capacity to add to a potion.  Do you want to start your potion with Toxic Herbs?", "Create Potion", "No", "Yes")
 									if("Hallucinogen Herb")
-										Confirm=alert(usr, "DISABLED", "Create Potion", "No")
+										Confirm=alert(usr, "Hallucinogen Herbs induce a powerful drive in the drinker.  It causes their emotions to flare out, potentially making them a very dangerous force. They cost an extra 15 capacity. Do you want to add them to your potion?", "Add Effect", "No", "Yes")
 									if("Philter Herb")
 										Confirm=alert(usr, "Philter Herbs induce a strong feeling of infatuation towards the creator in the drinker. The instinctive attraction will be so strong, they'll instinctually hold back whenever they're in the position to inflict some harm upon the maker.  Do you want to start your potion with Philter Herbs?", "Create Potion", "No", "Yes")
 									if("Stimulant Herb")
-										Confirm=alert(usr, "DISABLED", "Create Potion", "No")
+										Confirm=alert(usr, "Stimulant Herbs grant the drinker a form of liquid courage, increasing their damage.  They cost an extra 10 capacity.  Do you want to add them to your potion?", "Add Effect", "No", "Yes")
 									if("Relaxant Herb")
-										Confirm=alert(usr, "DISABLED", "Create Potion", "No")
+										Confirm=alert(usr, "Relaxant Herbs grant the drinker a relaxed form which surreptitiously avoids the bulk of an attack.  They cost an extra 10 capacity.  Do you want to add them to your potion?", "Add Effect", "No", "Yes")
 									if("Numbing Herb")
-										Confirm=alert(usr, "DISABLED", "Create Potion", "No")
+										Confirm=alert(usr, "Numbing Herbs grant the drinker the ability to endure pain.  They cost an extra 10 capacity.  Do you want to add them to your potion?", "Add Effect", "No", "Yes")
 									if("Mutagenic Herb")
 										Confirm=alert(usr, "Mutagenic Herbs twist and change the physical form and capabilities of the drinker in major ways.  Do you want to start your potion with Mutagenic Herbs?", "Create Potion", "No", "Yes")
-							var/Cost
-							if(Effect in list("Stimulant Herb", "Relaxant Herb", "Numbing Herb", "Philter Herb"))
-								Cost=999
-							else if(Effect in list("Philter Herb", "Mutagenic Herb"))
-								Cost=15
-							else if(Effect in list("Wild Herb", "Toxic Herbs"))
-								Cost=0
-							else
-								Cost=5
-							if(usr.HasManaCapacity(Cost))
+							var/list/HerbDictionary = list() // We use this to determine the cost of herbs
+							HerbDictionary["Wild Herb"] = 0;
+							HerbDictionary["Healing Herb"] = 300;
+							HerbDictionary["Refreshment Herb"] = 150;
+							HerbDictionary["Magic Herb"] = 150;
+							HerbDictionary["Toxic Herb"] = 500; // Legitimately the best effect ion by virtue of reducing potion CD for some dmg
+							HerbDictionary["Hallucinogen"] = 500;
+							HerbDictionary["Philter Herb"] = 300;
+							HerbDictionary["Stimulant Herb"] = 500;
+							HerbDictionary["Relaxant Herb"] = 500;
+							HerbDictionary["Numbing Herb"] = 500;
+							HerbDictionary["Mutagenic Herb"] = 150;
+							var/Cost = HerbDictionary[Effect] // This takes the 'effect' var that was chosen earlier, and runs it through the dictionary.
+							if(usr.GetMineral() > Cost)
 								var/obj/Items/Enchantment/Potion/p=new
 								switch(Effect)
 									if("Wild Herb")
@@ -320,7 +324,7 @@ obj/Items/Enchantment
 										p.Transform=alert(usr,"Should the form entered be weak or strong?","Polymorph","Weak","Strong")
 										p.TransformIcon=input(usr, "What icon will the polymorphed being use?", "Polymorph") as icon
 										p.name="Mutagen"
-								usr.TakeManaCapacity(Cost)
+								usr.TakeMineral(Cost)
 								if(!(Effect in list("Wild Herb")))
 									p.Slots--
 								usr << "You've created \an [p]!"
@@ -407,20 +411,20 @@ obj/Items/Enchantment
 										Confirm=alert(usr, "Numbing Herbs grant the drinker the ability to endure pain.  They cost an extra 10 capacity.  Do you want to add them to your potion?", "Add Effect", "No", "Yes")
 									if("Mutagenic Herb")
 										Confirm=alert(usr, "Mutagenic Herbs twist and change the physical form and capabilities of the drinker in major ways.  They cost an extra 15 capacity.  Do you want to add them to your potion?", "Add Effect", "No", "Yes")
-							var/Cost
-							if(Effect in list("Stimulant Herb", "Relaxant Herb", "Numbing Herb", "Philter Herb"))
-								Cost=10
-							else if(Effect in list("Hallucinogen Herb", "Mutagenic Herb"))
-								Cost=15
-							else if(Effect in list("Wild Herb", "Toxic Herbs"))
-								Cost=0
-							else
-								Cost=5
-							if(Choice.Slots==1)
-								Cost*=4
-							else if(Choice.Slots==2)
-								Cost*=2
-							if(usr.HasManaCapacity(Cost))
+							var/list/HerbDictionary = list() // We use this to determine the cost of herbs
+							HerbDictionary["Wild Herb"] = 0;
+							HerbDictionary["Healing Herb"] = 300;
+							HerbDictionary["Refreshment Herb"] = 150;
+							HerbDictionary["Magic Herb"] = 150;
+							HerbDictionary["Toxic Herb"] = 500; // Legitimately the best effect ion by virtue of reducing potion CD for some dmg
+							HerbDictionary["Hallucinogen"] = 500;
+							HerbDictionary["Philter Herb"] = 300;
+							HerbDictionary["Stimulant Herb"] = 500;
+							HerbDictionary["Relaxant Herb"] = 500;
+							HerbDictionary["Numbing Herb"] = 500;
+							HerbDictionary["Mutagenic Herb"] = 150;
+							var/Cost = HerbDictionary[Effect]
+							if(usr.GetMineral() > Cost)
 								switch(Effect)
 									if("Wild Herb")
 										Choice.Gimmick=input(usr, "Write out the message that will be added to the drinker's description.", "Create Gimmick Potion") as message
@@ -457,7 +461,7 @@ obj/Items/Enchantment
 										Choice.Transform=alert(usr,"Should the form entered be weak or strong?","Polymorph","Weak","Strong")
 										Choice.TransformIcon=input(usr, "What icon will the polymorphed being use?", "Polymorph") as icon
 										Choice.name="Polymorphic [Choice.name]"
-								usr.TakeManaCapacity(Cost)
+								usr.TakeMineral(Cost)
 								usr << "You've modified your potion into \an [Choice]!"
 								if(!(Effect in list("Wild Herb")))
 									Choice.Slots--

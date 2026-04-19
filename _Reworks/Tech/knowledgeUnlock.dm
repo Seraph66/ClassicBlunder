@@ -133,7 +133,7 @@ var/knowledgePaths/tech/list/TechnologyTree = list()
 	// AddUnlockedTechnology(t.name)
 	switch(t.name)
 		// ALCHEMY //
-		if("Alchemy")
+		if("Basic Alchemy")
 			AlchemyUnlocked=1
 			PotionTypes.Add("Wild Herb")
 		if("Healing Herbs")
