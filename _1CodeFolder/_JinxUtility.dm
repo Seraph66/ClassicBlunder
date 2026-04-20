@@ -1691,6 +1691,13 @@ mob
 			Mod += getMazokuSinBonusMult()
 			if(IsDarkDragonPlayer() && Frenzy > 0)
 				Mod += 0.5 * (min(Frenzy, glob.DEBUFF_STACK_MAX) / glob.DEBUFF_STACK_MAX)
+			if(src.passive_handler.Get("Longing")&&src.Target)
+				if(Target.GetPowerUpRatio()>=Target.Power_Multiplier)
+					Str*=Target.GetPowerUpRatio()
+				else if(Target.Power_Multiplier>=Target.GetPowerUpRatio())
+					Str*=Target.Power_Multiplier
+				else
+					Str*=1
 			var/STM=GetStrTransMult()
 			Str*=STM
 			Str*=Mod
@@ -1879,6 +1886,13 @@ mob
 				Mod += GetMangStats() // you can find this proc in Secrets\Shin\buff.dm
 			if(src.StyleRating > 0)
 				Mod += 0.1 * src.StyleRating * src.getStyleBonusMult()
+			if(src.passive_handler.Get("Longing")&&src.Target)
+				if(Target.GetPowerUpRatio()>=Target.Power_Multiplier)
+					For*=Target.GetPowerUpRatio()
+				else if(Target.Power_Multiplier>=Target.GetPowerUpRatio())
+					For*=Target.Power_Multiplier
+				else
+					For*=1
 			var/FTM=GetForTransMult()
 			For*=FTM
 			For*=Mod
@@ -2050,6 +2064,11 @@ mob
 				Mod *= 1+ (src.HealthAnnounce10/5)
 			if(src.StyleRating > 0)
 				Mod += 0.1 * src.StyleRating * src.getStyleBonusMult()
+			if(src.passive_handler.Get("Longing")&&src.Target)
+				if(Target.Anger>1&&Anger<=1&&!src.passive_handler.Get("LunarWrath"))
+					End*=Target.Anger
+				else
+					End*=1
 			var/ETM=GetEndTransMult()
 			End*=ETM
 			End*=Mod
@@ -2306,6 +2325,13 @@ mob
 			if(IsDarkDragonPlayer() && Frenzy > 0)
 				Mod += 0.5 * (min(Frenzy, glob.DEBUFF_STACK_MAX) / glob.DEBUFF_STACK_MAX)
 			var/OTM=GetOffTransMult()
+			if(src.passive_handler.Get("Longing")&&src.Target)
+				if(Target.GetPowerUpRatio()>=Target.Power_Multiplier)
+					Off*=Target.GetPowerUpRatio()
+				else if(Target.Power_Multiplier>=Target.GetPowerUpRatio())
+					Off*=Target.Power_Multiplier
+				else
+					Off*=1
 			Off*=OTM
 			Off*=Mod
 			Off*=Mult
@@ -2424,6 +2450,11 @@ mob
 			Mod += getDevilTriggerSinBonusMult()
 			Mod += getMazokuSinBonusMult()
 			var/DTM=GetDefTransMult()
+			if(src.passive_handler.Get("Longing")&&src.Target)
+				if(Target.Anger>1&&Anger<=1)
+					Off*=Target.Anger
+				else
+					Off*=1
 			Def*=DTM
 			Def*=Mod
 			Def*=Mult
@@ -2726,6 +2757,8 @@ mob
 			//these are all bad.
 			var/good = 0
 			var/evil = 0
+			if(src.passive_handler.Get("Emptiness"))
+				return FALSE
 			if(src.HasMaki())
 				evil = 1
 			if(!HasHolyMod())
@@ -2775,6 +2808,8 @@ mob
 			var/list/EvilSecrets=list("Vampire", "Werewolf", "Zombie")
 			var/good = 0
 			var/evil = 0
+			if(src.passive_handler.Get("Emptiness"))
+				return FALSE
 			//these are all good.
 			if(src.ShinjinAscension=="Kai")
 				good = 1
