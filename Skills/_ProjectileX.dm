@@ -4206,7 +4206,7 @@ obj
 					SkillCost=120
 					Copyable=4
 					Distance=50
-					DamageMult=10
+					DamageMult=12
 					ChargeRate=2.5
 					Knockback=1
 					BeamTime=50
@@ -4222,7 +4222,7 @@ obj
 					SkillCost=120
 					Copyable=4
 					Distance=15
-					DamageMult=5
+					DamageMult=8
 					ChargeRate=0.5
 					Knockback=0
 					BeamTime=20
@@ -4238,7 +4238,7 @@ obj
 					NewCopyable = 3
 					SkillCost=120
 					Copyable=4
-					DamageMult=8
+					DamageMult=10
 					ChargeRate=1
 					Distance=50
 					Knockback=1
@@ -4254,7 +4254,7 @@ obj
 					NewCopyable = 3
 					SkillCost=120
 					Copyable=4
-					DamageMult=3
+					DamageMult=5
 					Distance=50
 					ChargeRate=1
 					Knockback=0
