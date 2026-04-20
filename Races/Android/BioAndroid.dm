@@ -257,8 +257,8 @@ obj/Skills/Utility
 				return
 
 			// Apply wounds to the donor
-			donor.AddHealthCut(0.25)
-			donor.Maimed += 3
+			donor.AddHealthCut(0.05)
+			donor.Maimed += 1
 
 			// Forced extraction grants both tiers, regardless of donor's prior tier-1 donation status
 			usr.GiveBioSample(race_name, 1)

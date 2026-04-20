@@ -1452,6 +1452,8 @@ obj/Items/Tech
 				if(usr.MortallyWounded)
 					usr.MortallyWounded=0
 				usr.Maimed--
+				usr.Maimed--
+				usr.Maimed--
 				usr.TotalInjury=0
 				usr.NextSerum=world.realtime+Day(0.5)
 				usr << "You're fully revitalized!"
@@ -1494,8 +1496,8 @@ obj/Items/Tech
 				usr.OffTax=0
 				usr.DefTax=0
 				usr.RecovTax=0
-				usr.HealthCut=max(usr.HealthCut-0.1,0)
-				usr.EnergyCut=max(usr.EnergyCut-0.1,0)
+				usr.HealthCut=max(usr.HealthCut-0.35,0)
+				usr.EnergyCut=max(usr.EnergyCut-0.35,0)
 				usr.ManaCut=max(usr.ManaCut-0.1,0)
 				usr.StrCut=max(usr.StrCut-0.1,0)
 				usr.ForCut=max(usr.ForCut-0.1,0)

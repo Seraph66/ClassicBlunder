@@ -1290,6 +1290,9 @@ mob
 						if(!locate(/obj/Skills/Queue/Reverse_Lotus, src))
 							src.AddSkill(new/obj/Skills/Queue/Reverse_Lotus)
 							src << "You learned how to unleash the full might of your body in a devastating sequence of strikes: <b>Reverse Lotus</b>!!!"
+						if(!locate(/obj/Skills/Buffs/NuStyle/UnarmedStyle/Stronger_Fist, src))
+							var/obj/Skills/Buffs/NuStyle/s=new/obj/Skills/Buffs/NuStyle/UnarmedStyle/Stronger_Fist
+							src.AddSkill(s)
 					if(src.SagaLevel==4)
 						if(!locate(/obj/Skills/Queue/Morning_Peacock, src))
 							src.AddSkill(new/obj/Skills/Queue/Morning_Peacock)
@@ -1298,6 +1301,9 @@ mob
 						if(!locate(/obj/Skills/Projectile/Beams/Big/Eight_Gates/Daytime_Tiger, src))
 							src.AddSkill(new/obj/Skills/Projectile/Beams/Big/Eight_Gates/Daytime_Tiger)
 							src << "You can release a wave of pure kinetic force that devours all in its path: <b>Daytime Tiger</b>!!!"
+						if(!locate(/obj/Skills/Buffs/NuStyle/UnarmedStyle/Strongest_Fist, src))
+							var/obj/Skills/Buffs/NuStyle/s=new/obj/Skills/Buffs/NuStyle/UnarmedStyle/Strongest_Fist
+							src.AddSkill(s)
 					if(src.SagaLevel==6)
 						if(!locate(/obj/Skills/Projectile/Evening_Elephant, src))
 							src.AddSkill(new/obj/Skills/Projectile/Evening_Elephant)
