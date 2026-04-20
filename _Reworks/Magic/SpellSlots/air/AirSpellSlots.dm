@@ -64,7 +64,7 @@
 	Mentis_Imperium
 		DamageMult=4
 		Paralyzing=4
-		Speed=6
+		Speed=0.5
 		Distance=12
 		ManaCost=5
 		Cooldown=40
