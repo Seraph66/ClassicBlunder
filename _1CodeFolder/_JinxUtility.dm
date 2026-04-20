@@ -3590,6 +3590,8 @@ mob
 				amount = 0
 			if(passive_handler.Get("Sekizou"))
 				amount = 5
+			if(passive_handler.Get("EmptyFlashStep"))
+				amount += GetSwordAscension()
 			return amount
 
 		transcend(var/val)
