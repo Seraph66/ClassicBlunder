@@ -28,8 +28,11 @@ race
 			if(user.Class=="Underdog")
 				user.AngerMax = 2
 				user.RPPMult = 1.35
+				user.Intelligence = 2
 			if(user.Class=="Heroic")
 				user.AngerMax = 1.5
+				user.RPPMult = 1.25
+				user.Intelligence = 2
 			if(user.Class=="Resourceful")
 				user.AngerMax= 1.25
 				user.RPPMult= 1.25
