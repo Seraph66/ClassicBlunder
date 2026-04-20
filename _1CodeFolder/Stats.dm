@@ -988,7 +988,7 @@ mob/proc/
 				if(transActive==transUnlocked||passive_handler["MovementMastery"]||passive_handler["GodKi"]||passive_handler["MaouKi"])
 					Ratio*=1.5
 		if(passive_handler.Get("Ashen One"))
-			Ratio*=1+(Burn/100)
+			Ratio*=1+(Burn/10)
 		Ratio += (scalingEldritchPower() * 2 / 10);
 		Power=Ratio*GetPowerUpRatio()
 
