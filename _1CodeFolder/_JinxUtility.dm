@@ -2457,9 +2457,9 @@ mob
 			var/DTM=GetDefTransMult()
 			if(src.passive_handler.Get("Longing")&&src.Target)
 				if(Target.Anger>1&&Anger<=1)
-					Off*=Target.Anger
+					Def*=Target.Anger
 				else
-					Off*=1
+					Def*=1
 			Def*=DTM
 			Def*=Mod
 			Def*=Mult

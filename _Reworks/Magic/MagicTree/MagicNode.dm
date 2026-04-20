@@ -267,7 +267,7 @@ globalTracker/var
 
 
 /mob/proc/canUnlockMagicTree(element)
-    if(usr.race.type in MAGICLESS_RACES)
+    if(src.race.type in MAGICLESS_RACES)
         if(passive_handler.Get("ImbuedSoul"))
             return 1;
         else
