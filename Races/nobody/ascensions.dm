@@ -3,6 +3,9 @@ ascension
 		one
 			unlock_potential = ASCENSION_ONE_POTENTIAL
 			onAscension(mob/owner)
+				simulateChoiceMutation(owner)
+				..()
+			simulateChoiceMutation(mob/owner)
 				var/type = owner.NobodyOriginType
 				var/SMod = 1
 				if(!applied)
@@ -52,6 +55,9 @@ ascension
 		two
 			unlock_potential = ASCENSION_TWO_POTENTIAL
 			onAscension(mob/owner)
+				simulateChoiceMutation(owner)
+				..()
+			simulateChoiceMutation(mob/owner)
 				var/type = owner.NobodyOriginType
 				var/SMod = 1
 				if(!applied)
@@ -99,6 +105,9 @@ ascension
 		three
 			unlock_potential = ASCENSION_THREE_POTENTIAL
 			onAscension(mob/owner)
+				simulateChoiceMutation(owner)
+				..()
+			simulateChoiceMutation(mob/owner)
 				var/type = owner.NobodyOriginType
 				var/SMod = 1
 				if(!applied)
@@ -144,6 +153,9 @@ ascension
 		four
 			unlock_potential = ASCENSION_FOUR_POTENTIAL
 			onAscension(mob/owner)
+				simulateChoiceMutation(owner)
+				..()
+			simulateChoiceMutation(mob/owner)
 				var/type = owner.NobodyOriginType
 				var/SMod = 1
 				if(!applied)
@@ -189,6 +201,9 @@ ascension
 		five
 			unlock_potential = ASCENSION_FIVE_POTENTIAL
 			onAscension(mob/owner)
+				simulateChoiceMutation(owner)
+				..()
+			simulateChoiceMutation(mob/owner)
 				var/type = owner.NobodyOriginType
 				var/SMod = 1
 				if(!applied)
@@ -234,6 +249,9 @@ ascension
 		six
 			unlock_potential = ASCENSION_SIX_POTENTIAL
 			onAscension(mob/owner)
+				simulateChoiceMutation(owner)
+				..()
+			simulateChoiceMutation(mob/owner)
 				var/type = owner.NobodyOriginType
 				var/SMod = 1
 				if(!applied)
