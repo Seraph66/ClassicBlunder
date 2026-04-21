@@ -10,6 +10,7 @@ obj/Items/Sword/Wooden/Legendary/WeaponSoul/RyuiJinguBang
 	passives = list("Steady" = 1)
 	Destructable=0
 	ShatterTier=0
+	Element = "Earth"
 	ElementallyInfused = "Earth"
 
 obj/Skills/Buffs/SpecialBuffs/Heavenly_Regalia/Ryui_Jingu_Bang
