@@ -102,8 +102,17 @@ obj
 				HitSparkY=0
 				ActiveMessage="unleashes a damaging aura around nearby enemies!"
 				EnergyCost=5
+				adjust(mob/P)
+					if(src.UpgradedKeybladeSkill)
+						src.Cooldown=30
+						src.Distance=7
+						src.DamageMult=9
+						src.Knockback=20
+						src.Shockwaves=4
+						src.Stunner=5
 				verb/Ripple_Drive()
 					set category="Skills"
+					adjust(usr)
 					usr.Activate(src)
 //t3
 			Fire_Surge
@@ -118,8 +127,15 @@ obj
 				Cooldown=60
 				EnergyCost=2
 				ActiveMessage="dashes forward, surrounded by flames!"
-				verb/Sonic_Blade()
+				adjust(mob/P)
+					if(src.UpgradedKeybladeSkill)
+						src.Cooldown=45
+						src.Distance=6
+						src.DamageMult=12
+						src.Rush=8
+				verb/Fire_Surge()
 					set category="Skills"
+					adjust(usr)
 					usr.Activate(src)
 			Thunder_Surge
 				Area="Circle"
@@ -133,8 +149,15 @@ obj
 				Cooldown=60
 				EnergyCost=2
 				ActiveMessage="dashes forward, surrounded by lightning!"
-				verb/Sonic_Blade()
+				adjust(mob/P)
+					if(src.UpgradedKeybladeSkill)
+						src.Cooldown=45
+						src.Distance=6
+						src.DamageMult=12
+						src.Rush=8
+				verb/Thunder_Surge()
 					set category="Skills"
+					adjust(usr)
 					usr.Activate(src)
 //t4
 			Raging_Storm
@@ -158,8 +181,15 @@ obj
 				HitSparkDispersion=1
 				TurfStrike=1
 				ActiveMessage="surrounds themselves in fire!"
-				verb/Judgment()
+				adjust(mob/P)
+					if(src.UpgradedKeybladeSkill)
+						src.Cooldown=60
+						src.DamageMult=2
+						src.Rounds=25
+						src.Size=3
+				verb/Raging_Storm()
 					set category="Skills"
+					adjust(usr)
 					usr.Activate(src)
 			Salvation
 				AdaptRate=1
@@ -184,8 +214,15 @@ obj
 				TurfShift='StarPixel.dmi'
 				TurfShiftDuration=3
 				Cooldown=75
+				adjust(mob/P)
+					if(src.UpgradedKeybladeSkill)
+						src.Cooldown=60
+						src.DamageMult=16
+						src.Distance=10
+						src.HealthRecoveryValue=8
 				verb/Salvation()
 					set category="Skills"
+					adjust(usr)
 					usr.Activate(src)
 			Ragnarok
 				NeedsSword=1
@@ -210,9 +247,15 @@ obj
 				Instinct=1
 				ActiveMessage="unleashes a flurry of strikes!"
 				FollowUp="/obj/Skills/AutoHit/Ragnarok_Blast"
-				adjust(mob/p)
+				adjust(mob/P)
+					if(src.UpgradedKeybladeSkill)
+						src.Cooldown=45
+						src.DamageMult=3
+						src.Rush=7
+						src.Rounds=7
 				verb/Ragnarok()
 					set category="Skills"
+					adjust(usr)
 					usr.Activate(src)
 			Ragnarok_Blast
 				NeedsSword=1
@@ -249,6 +292,7 @@ obj
 				ActiveMessage="releases the explosive energy within their Keyblade!"
 
 		Queue
+			var/UpgradedKeybladeSkill=0
 			Stun_Impact
 				DamageMult=6
 				AccuracyMult = 1.25
@@ -260,8 +304,16 @@ obj
 				PushOutWaves=2
 				HitMessage="releases the energy they gathered into their Keyblade!"
 				ActiveMessage="gathers energy into their Keyblade!"
+				adjust(mob/P)
+					if(src.UpgradedKeybladeSkill)
+						src.Cooldown=45
+						src.DamageMult=8
+						src.Stunner=5
+						src.PushOutWaves=3
+						src.Instinct=6
 				verb/Stun_Impact()
 					set category="Skills"
+					adjust(usr)
 					usr.SetQueue(src)
 			Explosion
 				DamageMult=1
@@ -270,8 +322,17 @@ obj
 				Instinct=5
 				FollowUp="/obj/Skills/AutoHit/ExplosionFollowup"
 				HitMessage="strikes with their Keyblade, as it glows brightly..."
+				adjust(mob/P)
+					if(src.UpgradedKeybladeSkill)
+						src.Cooldown=45
+						src.AccuracyMult=1.75
+						src.Instinct=7
+						for(var/obj/Skills/AutoHit/ExplosionFollowup/EF in P)
+							EF.DamageMult=12
+							EF.Shockwaves=4
 				verb/Explosion()
 					set category="Skills"
+					adjust(usr)
 					usr.SetQueue(src)
 
 		Buffs
