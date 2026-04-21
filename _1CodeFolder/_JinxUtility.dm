@@ -1571,6 +1571,10 @@ mob
 			var/EffectiveAsc=src.StrAscension
 			if(passive_handler.Get("Half Manifestation"))
 				EffectiveAsc+=src.HandleManifestation("Str")
+			if(passive_handler.Get("SpiralPowerUnlocked"))
+				var/SP=passive_handler.Get("SpiralPowerUnlocked")
+				EffectiveAsc+=src.HandleSpiralUnlock("Str", SP)
+
 			Str+=EffectiveAsc
 			//stat ascensions gained through racial or saga improvements
 			var/enhanced = getEnhanced("Strength")
@@ -1773,6 +1777,10 @@ mob
 			var/EffectiveAsc=src.ForAscension
 			if(passive_handler.Get("Half Manifestation"))
 				EffectiveAsc+=src.HandleManifestation("For")
+			if(passive_handler.Get("SpiralPowerUnlocked"))
+				var/SP=passive_handler.Get("SpiralPowerUnlocked")
+				EffectiveAsc+=src.HandleSpiralUnlock("For", SP)
+
 			For+=EffectiveAsc
 			var/enhanced = getEnhanced("Force")
 			For+=src.EnhancedForce ? enhanced : 0
@@ -1971,6 +1979,10 @@ mob
 			var/EffectiveAsc=src.EndAscension
 			if(passive_handler.Get("Half Manifestation"))
 				EffectiveAsc+=src.HandleManifestation("End")
+			if(passive_handler.Get("SpiralPowerUnlocked"))
+				var/SP=passive_handler.Get("SpiralPowerUnlocked")
+				EffectiveAsc+=src.HandleSpiralUnlock("End", SP)
+
 			End+=EffectiveAsc
 			var/enhanced = getEnhanced("Endurance")
 			End+=EnhancedEndurance ? enhanced : 0
@@ -2132,6 +2144,10 @@ mob
 			var/EffectiveAsc=src.SpdAscension
 			if(passive_handler.Get("Half Manifestation"))
 				EffectiveAsc+=src.HandleManifestation("Spd")
+			if(passive_handler.Get("SpiralPowerUnlocked"))
+				var/SP=passive_handler.Get("SpiralPowerUnlocked")
+				EffectiveAsc+=src.HandleSpiralUnlock("Spd", SP)
+
 			Spd+=EffectiveAsc
 			var/enhanced = getEnhanced("Speed")
 			Spd+=EnhancedSpeed ? enhanced : 0
@@ -2285,6 +2301,10 @@ mob
 			var/EffectiveAsc=src.OffAscension
 			if(passive_handler.Get("Half Manifestation"))
 				EffectiveAsc+=src.HandleManifestation("Off")
+			if(passive_handler.Get("SpiralPowerUnlocked"))
+				var/SP=passive_handler.Get("SpiralPowerUnlocked")
+				EffectiveAsc+=src.HandleSpiralUnlock("Off", SP)
+
 			Off+=EffectiveAsc
 			var/enhanced = getEnhanced("Aggression")
 			Off+=EnhancedAggression ? enhanced : 0
@@ -2409,6 +2429,10 @@ mob
 			var/EffectiveAsc=src.DefAscension
 			if(passive_handler.Get("Half Manifestation"))
 				EffectiveAsc+=src.HandleManifestation("Def")
+			if(passive_handler.Get("SpiralPowerUnlocked"))
+				var/SP=passive_handler.Get("SpiralPowerUnlocked")
+				EffectiveAsc+=src.HandleSpiralUnlock("Def", SP)
+
 			Def+=EffectiveAsc
 			var/enhanced = getEnhanced("Reflexes")
 			Def+=EnhancedReflexes ? enhanced : 0
