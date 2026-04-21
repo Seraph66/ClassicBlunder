@@ -3,7 +3,7 @@ globalTracker/var
     DENKO_SEKKA_CRIT_CHANCE_PER_LEVEL = 5;
     DENKO_SEKKA_CRIT_DAMAGE_PER_LEVEL = 0.1;
     DENKO_SEKKA_MIN = 0;
-    DENKO_SEKKA_MAX = 5;
+    DENKO_SEKKA_MAX = 10;
 
 passiveInfo/DenkoSekka
     setLines()
