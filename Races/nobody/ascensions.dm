@@ -4,6 +4,15 @@ ascension
 			unlock_potential = ASCENSION_ONE_POTENTIAL
 			onAscension(mob/owner)
 				simulateChoiceMutation(owner)
+				if(!applied)
+					switch(owner.NobodyOriginType)
+						if("Pride")
+							owner.race.transformations.Add(new/transformation/nobody/void_super_saiyan())
+						if("Spirit")
+							owner.race.transformations.Add(new/transformation/nobody/spectral_tension())
+					if(owner.Class == "Imaginary")
+						if(owner.SagaLevel < 2)
+							owner.SagaLevel = 2
 				..()
 			simulateChoiceMutation(mob/owner)
 				var/type = owner.NobodyOriginType
@@ -11,10 +20,8 @@ ascension
 				if(!applied)
 					switch(type)
 						if("Pride")
-							owner.race.transformations.Add(new/transformation/nobody/void_super_saiyan())
 							on_ascension_message = "You're only everything you ever dreamed of... Don't think twice."
 						if("Spirit")
-							owner.race.transformations.Add(new/transformation/nobody/spectral_tension())
 							on_ascension_message = "Your sanctuary, where fears and lies melt away."
 						if("Simple")
 							SMod = 2.5
@@ -42,8 +49,6 @@ ascension
 							speed=0.5 * SMod
 							endurance=0.25 * SMod
 							passives = list("Tenacity" = 1, "Persistence" = 1)
-							if(owner.SagaLevel < 2)
-								owner.SagaLevel = 2
 						if("Reaper")
 							strength=0.75 * SMod
 							force=0.25 * SMod
@@ -51,11 +56,14 @@ ascension
 							speed=0.5 * SMod
 							endurance=0.25 * SMod
 							passives = list("SlayerMod" = 0.5, "CriticalChance" = 10, "Instinct" = 1)
-				..()
 		two
 			unlock_potential = ASCENSION_TWO_POTENTIAL
 			onAscension(mob/owner)
 				simulateChoiceMutation(owner)
+				if(!applied)
+					if(owner.Class == "Imaginary")
+						if(owner.SagaLevel < 3)
+							owner.SagaLevel = 3
 				..()
 			simulateChoiceMutation(mob/owner)
 				var/type = owner.NobodyOriginType
@@ -92,8 +100,6 @@ ascension
 							speed=0.5 * SMod
 							endurance=0.25 * SMod
 							passives = list("Tenacity" = 1, "Persistence" = 1)
-							if(owner.SagaLevel < 3)
-								owner.SagaLevel = 3
 						if("Reaper")
 							strength=0.75 * SMod
 							force=0.25 * SMod
@@ -101,11 +107,14 @@ ascension
 							speed=0.5 * SMod
 							endurance=0.25 * SMod
 							passives = list("SlayerMod" = 0.5, "CriticalChance" = 10, "CriticalDamage" = 0.15, "Instinct" = 1)
-				..()
 		three
 			unlock_potential = ASCENSION_THREE_POTENTIAL
 			onAscension(mob/owner)
 				simulateChoiceMutation(owner)
+				if(!applied)
+					if(owner.Class == "Imaginary")
+						if(owner.SagaLevel < 4)
+							owner.SagaLevel = 4
 				..()
 			simulateChoiceMutation(mob/owner)
 				var/type = owner.NobodyOriginType
@@ -141,19 +150,20 @@ ascension
 							offense=0.5 * SMod
 							speed=0.5 * SMod
 							passives = list("Tenacity" = 1, "Persistence" = 1)
-							if(owner.SagaLevel < 4)
-								owner.SagaLevel = 4
 						if("Reaper")
 							strength=0.75 * SMod
 							force=0.25 * SMod
 							offense=0.5 * SMod
 							speed=0.5 * SMod
 							passives = list("SlayerMod" = 0.5, "CriticalChance" = 10, "CriticalDamage" = 0.15, "Instinct" = 1)
-				..()
 		four
 			unlock_potential = ASCENSION_FOUR_POTENTIAL
 			onAscension(mob/owner)
 				simulateChoiceMutation(owner)
+				if(!applied)
+					if(owner.Class == "Imaginary")
+						if(owner.SagaLevel < 5)
+							owner.SagaLevel = 5
 				..()
 			simulateChoiceMutation(mob/owner)
 				var/type = owner.NobodyOriginType
@@ -189,19 +199,20 @@ ascension
 							offense=0.5 * SMod
 							speed=0.5 * SMod
 							passives = list("Tenacity" = 1, "Persistence" = 1)
-							if(owner.SagaLevel < 5)
-								owner.SagaLevel = 5
 						if("Reaper")
 							strength=0.75 * SMod
 							force=0.25 * SMod
 							offense=0.5 * SMod
 							speed=0.5 * SMod
 							passives = list("SlayerMod" = 0.5, "CriticalChance" = 10, "CriticalDamage" = 0.15, "Instinct" = 1)
-				..()
 		five
 			unlock_potential = ASCENSION_FIVE_POTENTIAL
 			onAscension(mob/owner)
 				simulateChoiceMutation(owner)
+				if(!applied)
+					if(owner.Class == "Imaginary")
+						if(owner.SagaLevel < 6)
+							owner.SagaLevel = 6
 				..()
 			simulateChoiceMutation(mob/owner)
 				var/type = owner.NobodyOriginType
@@ -237,15 +248,12 @@ ascension
 							offense=0.5 * SMod
 							speed=0.5 * SMod
 							passives = list("Tenacity" = 1, "Persistence" = 1)
-							if(owner.SagaLevel < 6)
-								owner.SagaLevel = 6
 						if("Reaper")
 							strength=0.75 * SMod
 							force=0.25 * SMod
 							offense=0.5 * SMod
 							speed=0.5 * SMod
 							passives = list("SlayerMod" = 0.5, "CriticalChance" = 10, "CriticalDamage" = 0.15, "Instinct" = 1, "Deicide" = 5)
-				..()
 		six
 			unlock_potential = ASCENSION_SIX_POTENTIAL
 			onAscension(mob/owner)
@@ -291,4 +299,3 @@ ascension
 							offense=0.5 * SMod
 							speed=0.5 * SMod
 							passives = list("SlayerMod" = 0.5, "CriticalChance" = 10, "CriticalDamage" = 0.2, "Instinct" = 1, "Deicide" = 5)
-				..()
