@@ -1690,7 +1690,7 @@ mob
 			Mod += getDevilTriggerSinBonusMult()
 			Mod += getMazokuSinBonusMult()
 			if(IsDarkDragonPlayer() && Frenzy > 0)
-				Mod += 0.5 * (min(Frenzy, glob.DEBUFF_STACK_MAX) / glob.DEBUFF_STACK_MAX)
+				Mod += 0.25 * (min(Frenzy, glob.DEBUFF_STACK_MAX) / glob.DEBUFF_STACK_MAX)
 			var/STM=GetStrTransMult()
 			Str*=STM
 			Str*=Mod

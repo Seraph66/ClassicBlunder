@@ -36,7 +36,7 @@ globalTracker/var/FrenzyNerf = 1
 	if(src.Frenzy <= 0)
 		return
 	var/base = clamp(src.Frenzy / glob.BASE_DEBUFF_REDUCTION_DIVISOR, glob.BASE_DEBUFF_REDUCTION_DIVISOR_LOWER, glob.BASE_DEBUFF_REDUCTION_DIVISOR_UPPER)
-	var/reduction = base + ((src.GetEnd(0.15) + src.GetStr(0.15)) * (1 + (src.GetDebuffResistance() / 4)))
+	var/reduction = base + ((src.GetEnd(0.1) + src.GetStr(0.1)) * (1 + (src.GetDebuffResistance() / 4)))
 	src.Frenzy -= reduction
 	if(src.Frenzy < 0)
 		src.Frenzy = 0
