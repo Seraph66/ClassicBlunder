@@ -61,6 +61,7 @@ ascension
 							defense = 0.25
 							endurance = 0.25
 							speed = 0.25
+							passives  = list("Motivation" = 0.1)
 						if("Heroic")
 							offense = 0.5
 							strength = 0.5
@@ -96,6 +97,7 @@ ascension
 							defense = 0.25
 							endurance = 0.25
 							speed = 0.25
+							passives  = list("Motivation" = 0.15)
 						if("Heroic")
 							offense = 1
 							strength = 1
@@ -114,6 +116,8 @@ ascension
 			onAscension(mob/owner)
 				simulateChoiceMutation(owner)
 				applyDormantDemonPassives(owner)
+				if(owner.Class=="Underdog" && owner.transUnlocked<2)
+					owner.transUnlocked=2
 				..()
 		three
 			unlock_potential = ASCENSION_THREE_POTENTIAL
@@ -157,6 +161,8 @@ ascension
 							speed = 0.4
 			onAscension(mob/owner)
 				simulateChoiceMutation(owner)
+				if(owner.Class=="Underdog" && owner.transUnlocked<3)
+					owner.transUnlocked=3
 				applyDormantDemonPassives(owner)
 				..()
 			postAscension(mob/owner)
@@ -214,6 +220,8 @@ ascension
 							speed = 0.4
 			onAscension(mob/owner)
 				simulateChoiceMutation(owner)
+				if(owner.Class=="Underdog" && owner.transUnlocked<4)
+					owner.transUnlocked=4
 				applyDormantDemonPassives(owner)
 				..()
 
@@ -251,6 +259,8 @@ ascension
 							speed = 0.4
 			onAscension(mob/owner)
 				simulateChoiceMutation(owner)
+				if(owner.Class=="Underdog" && owner.transUnlocked<4)
+					owner.transUnlocked=4
 				applyDormantDemonPassives(owner)
 				..()
 		six
@@ -286,6 +296,8 @@ ascension
 			onAscension(mob/owner)
 				..()
 				simulateChoiceMutation(owner)
+				if(owner.Class=="Underdog" && owner.transUnlocked<5)
+					owner.transUnlocked=5
 				applyDormantDemonPassives(owner)
 				if(owner.isMazokuHuman())
 					var/already_has_sea = FALSE
