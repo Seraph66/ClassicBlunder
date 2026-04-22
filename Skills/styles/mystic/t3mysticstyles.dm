@@ -127,38 +127,47 @@
 		ElementalOffense = "Fire"
 		ElementalDefense = "Fire"
 		Finisher = "/obj/Skills/Queue/Finisher/Sorblow"
+		BuffTechniques = list("/obj/Skills/Gamma_Evolution/Slide_Evolution",\
+			"/obj/Skills/Gamma_Evolution/Dark_Evolution")
 		var/lastSlide = 0
 		var/gulusActive = 0
+		var/swapping = 0
+		var/slideTickerActive = 0
 		verb/Gamma_Style()
 			set hidden=1
 			src.Trigger(usr)
+		Trigger(mob/User, Override)
+			if(User && !swapping && !User.BuffOn(src))
+				swap_stance("betel")
+				gulusActive = 0
+			..()
 		proc/swap_stance(o)
 			switch(o)
 				if("betel")
 					StyleActive = "Betel"
 					StyleStr = 1.3
 					StyleSpd = 1.3
-					StyleFor = 1
+					StyleFor = 1.2
 					StyleEnd = 1
 					StyleOff = 1
 					StyleDef = 1
 					ElementalClass = "Fire"
 					ElementalOffense = "Fire"
 					ElementalDefense = "Fire"
-					passives = list("Scorching" = 2, "Combustion" = 60, "SpiritHand" = 4, "HeavyStrike" = "Inferno", "Fa Jin" = 2, "Instinct" = 4, "Momentum" = 3)
+					passives = list("Adaptation" = 5, "Scorching" = 2, "Combustion" = 60, "SpiritHand" = 4, "HeavyStrike" = "Inferno", "Fa Jin" = 2, "Instinct" = 4, "Momentum" = 4)
 					Finisher = "/obj/Skills/Queue/Finisher/Sorblow"
 				if("kaus")
 					StyleActive = "Kaus"
 					StyleStr = 1.25
 					StyleSpd = 1.6
 					StyleFor = 1.25
-					StyleEnd = 0.85
+					StyleEnd = 0.8
 					StyleOff = 1
 					StyleDef = 1
 					ElementalClass = "Wind"
 					ElementalOffense = "Wind"
 					ElementalDefense = "Wind"
-					passives = list("BlurringStrikes" = 3, "Shocking" = 2, "Flicker" = 4, "Flow" = 4, "Speed Force" = 1, "AttackSpeed" = 2, "Skimming" = 2)
+					passives = list("Adaptation" = 5, "BlurringStrikes" = 3, "Shocking" = 3, "Flicker" = 4, "Flow" = 4, "Speed Force" = 1, "AttackSpeed" = 2, "Fury" = 4, "Skimming" = 2)
 					Finisher = "/obj/Skills/Queue/Finisher/Urda_Impulse"
 				if("wezen")
 					StyleActive = "Wezen"
@@ -171,7 +180,7 @@
 					ElementalClass = "Earth"
 					ElementalOffense = "Earth"
 					ElementalDefense = "Earth"
-					passives = list("Harden" = 5, "Blubber" = 4, "Extend" = 2, "Gum Gum" = 2, "GiantForm" = 1, "Juggernaut" = 4, "Shattering" = 5)
+					passives = list("Adaptation" = 5, "Harden" = 5, "Blubber" = 4, "SweepingStrike" = 1, "Extend" = 2, "Gum Gum" = 2, "GiantForm" = 1, "Juggernaut" = 4, "Shattering" = 5)
 					Finisher = "/obj/Skills/Queue/Finisher/Albion"
 				if("gulus")
 					StyleActive = "Gulus"
@@ -184,16 +193,16 @@
 					ElementalClass = "Dark"
 					ElementalOffense = "Dark"
 					ElementalDefense = "Dark"
-					passives = list("HellPower" = 0.25, "AbyssMod" = 5, "DemonicDurability" = 5, "HellRisen" = 0.5, "SpiritHand" = 4, "SpiritFlow" = 4, "AngerAdaptiveForce" = 0.25, "Scorching" = 5, "Poisoning" = 5)
+					passives = list("HellPower" = 0.25, "AbyssMod" = 5, "DemonicDurability" = 5, "HellRisen" = 0.5, "SpiritHand" = 4, "SpiritFlow" = 4, "AngerAdaptiveForce" = 0.25, "Scorching" = 5, "Poisoning" = 5, "LikeWater" = 4)
 					Finisher = "/obj/Skills/Queue/Finisher/Desdemona"
-		verb/Slide_Evolution()
-			set category="Stances"
+		proc/doSlideEvolution(mob/owner)
+			if(!owner) return
 			if(StyleActive == "Gulus")
-				usr << "Slide Evolution is sealed while in Gulus."
+				owner << "Slide Evolution is sealed while in Gulus."
 				return
-			if(lastSlide + 300 > world.time)
-				var/remaining = round((lastSlide + 300 - world.time) / 10, 0.1)
-				usr << "Slide Evolution is on cooldown: [remaining]s remaining."
+			if(lastSlide + (30 SECONDS) > world.time)
+				var/remaining = round((lastSlide + (30 SECONDS) - world.time) / 10, 0.1)
+				owner << "Slide Evolution is on cooldown: [remaining]s remaining."
 				return
 			var/next_stance
 			switch(StyleActive)
@@ -205,21 +214,36 @@
 					next_stance = "betel"
 				else
 					next_stance = "betel"
-			if(usr.BuffOn(src))
-				turnOff(usr)
+			swapping = 1
+			if(owner.BuffOn(src))
+				turnOff(owner)
 			swap_stance(next_stance)
-			Trigger(usr, 1)
-			giveBackTension(usr)
+			Trigger(owner, 1)
+			swapping = 0
+			giveBackTension(owner)
 			lastSlide = world.time
-		verb/Dark_Evolution()
-			set category="Stances"
+			animate(owner, color = list(1,0,0, 0,1,0, 0,0,1, 1,1,1))
+			animate(color = list(1,0,0, 0,1,0, 0,0,1, 0,0,0), time=10)
+			OMsg(owner, "Slide Evolution! [owner] evolves into [StyleActive]!")
+			startSlideCooldownTicker(owner)
+		proc/startSlideCooldownTicker(mob/owner)
+			if(slideTickerActive) return
+			slideTickerActive = 1
+			spawn(0)
+				while(owner && lastSlide + (30 SECONDS) > world.time)
+					sleep(1 SECONDS)
+					if(!owner) break
+					if(owner.PureRPMode)
+						lastSlide += 1 SECONDS
+				slideTickerActive = 0
+		proc/doDarkEvolution(mob/owner)
+			if(!owner) return
 			if(StyleActive == "Gulus")
-				usr << "You are already in Gulus."
+				owner << "You are already in Gulus."
 				return
-			if(usr.Health > 25)
-				usr << "Dark Evolution can only be invoked at 25 Health or less."
+			if(owner.Health > 25)
+				owner << "Dark Evolution can only be invoked at 25 Health or less."
 				return
-			var/mob/owner = usr
 			var/obj/Skills/Gamma_Dark_Evolution_Lock/lock = owner.FindSkill(/obj/Skills/Gamma_Dark_Evolution_Lock)
 			if(!lock)
 				lock = new /obj/Skills/Gamma_Dark_Evolution_Lock
@@ -227,29 +251,64 @@
 			if(lock.Using)
 				owner << "Dark Evolution has already been invoked this fight. You must meditate to restore it."
 				return
+			swapping = 1
 			if(owner.BuffOn(src))
 				turnOff(owner)
 			swap_stance("gulus")
 			Trigger(owner, 1)
+			swapping = 0
 			giveBackTension(owner)
 			lock.Using = 1
 			gulusActive = 1
-			spawn(600)
-				if(!gulusActive)
-					return
+			animate(owner, color = list(0,0,0, 0,0,0, 0,0,0, 0,0,0))
+			animate(color = list(1,0,0, 0,1,0, 0,0,1, 0,0,0), time=10)
+			OMsg(owner, "[owner] gives into the power of Dark Evolution...")
+			spawn(0)
+				var/remaining = 60 SECONDS
+				while(remaining > 0)
+					sleep(1 SECONDS)
+					if(!gulusActive) return
+					if(!owner || owner.StyleBuff != src) return
+					if(StyleActive != "Gulus") return
+					if(!owner.BuffOn(src)) return
+					if(owner.PureRPMode) continue
+					remaining -= 1 SECONDS
+				if(!gulusActive) return
 				gulusActive = 0
-				if(!owner || owner.StyleBuff != src)
-					return
-				if(StyleActive != "Gulus")
-					return
-				if(!owner.BuffOn(src))
-					return
+				if(!owner || owner.StyleBuff != src) return
+				if(StyleActive != "Gulus") return
+				if(!owner.BuffOn(src)) return
+				swapping = 1
 				turnOff(owner)
 				swap_stance("betel")
 				Trigger(owner, 1)
+				swapping = 0
 				giveBackTension(owner)
+				animate(owner, color = list(1,0,0, 0,1,0, 0,0,1, 1,1,1))
+				animate(color = list(1,0,0, 0,1,0, 0,0,1, 0,0,0), time=10)
 				owner << "Gulus fades; you return to Betel."
 
 /obj/Skills/Gamma_Dark_Evolution_Lock
 	name = "Dark Evolution"
 	Cooldown = -1
+
+/obj/Skills/Gamma_Evolution
+	name = "Gamma Evolution"
+	Slide_Evolution
+		name = "Slide Evolution"
+		verb/Slide_Evolution()
+			set category="Skills"
+			if(!istype(usr.StyleBuff, /obj/Skills/Buffs/NuStyle/MysticStyle/Gamma_Style))
+				usr << "You must be in Gamma Style to use Slide Evolution."
+				return
+			var/obj/Skills/Buffs/NuStyle/MysticStyle/Gamma_Style/gs = usr.StyleBuff
+			gs.doSlideEvolution(usr)
+	Dark_Evolution
+		name = "Dark Evolution"
+		verb/Dark_Evolution()
+			set category="Skills"
+			if(!istype(usr.StyleBuff, /obj/Skills/Buffs/NuStyle/MysticStyle/Gamma_Style))
+				usr << "You must be in Gamma Style to use Dark Evolution."
+				return
+			var/obj/Skills/Buffs/NuStyle/MysticStyle/Gamma_Style/gs = usr.StyleBuff
+			gs.doDarkEvolution(usr)
