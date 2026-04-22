@@ -17,7 +17,7 @@ proc/generateVersionDatum()
 		glob.currentUpdate = updateversion
 
 globalTracker
-	var/UPDATE_VERSION = 4
+	var/UPDATE_VERSION = 5
 	var/tmp/update/currentUpdate
 
 	proc/updatePlayer(mob/p)
@@ -116,6 +116,12 @@ update
 				if(p.Class=="Underdog")
 					p.AngerMax=2
 					p.RPPMult = 1.35
+	version5
+		version = 5;
+		updateMob(mob/p)
+			. = ..()//left alone for difficult copy pasting
+			if(p.isRace(HALFSAIYAN))
+				p.stat_redo()
 				
 					
 
