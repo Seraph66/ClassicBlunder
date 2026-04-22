@@ -285,10 +285,11 @@ mob
 
 
 			if(UnarmedAttack || SwordAttack || SpiritAttack)
+				var/Motivation=1+passive_handler.Get("Motivation")
 				if(src.StyleBuff && canGainTension())
 					src.gainTension(val);
 				if(defender && defender.StyleBuff && defender.canGainTension())
-					defender.gainTension(val*glob.DEFENDER_TENSION_REDUCER);
+					defender.gainTension((val*Motivation)*glob.DEFENDER_TENSION_REDUCER);
 
 			var/leakVal = val/GLOBAL_LEAK_REDUCTION
 			if(passive_handler.Get("Corruption"))
