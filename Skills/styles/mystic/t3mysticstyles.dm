@@ -137,7 +137,7 @@
 			set hidden=1
 			src.Trigger(usr)
 		Trigger(mob/User, Override)
-			if(User && !swapping && !BuffOn(src))
+			if(User && !swapping && !User.BuffOn(src))
 				swap_stance("betel")
 				gulusActive = 0
 			..()
