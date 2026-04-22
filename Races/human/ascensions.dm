@@ -50,7 +50,7 @@ ascension
 			passives = list("Tenacity" = 1, "Shonen" = 1, "ShonenPower" = 0.15, "UnderDog" = 1,"Persistence" = 1)
 			new_anger_message = "grows desperate!"
 			on_ascension_message = "You learn the meaning of desperation..."
-			onAscension(mob/owner)
+			simulateChoiceMutation(mob/owner)
 				if(!applied)
 					switch(owner.Class)
 						if("Underdog")
@@ -76,6 +76,7 @@ ascension
 							defense = 0.1
 							endurance = 0.1
 							speed = 0.4
+			onAscension(mob/owner)
 				applyDormantDemonPassives(owner)
 				..()
 		two
@@ -83,7 +84,7 @@ ascension
 			passives = list("Tenacity" = 1, "Shonen" = 1, "ShonenPower" = 0.15, "UnderDog"=1, "Adrenaline"=1, "Persistence" = 1, "Adaptation" = 1)
 			new_anger_message = "grows determined!"
 			on_ascension_message = "You learn the meaning of responsibility..."
-			onAscension(mob/owner)
+			simulateChoiceMutation(mob/owner)
 				if(!applied)
 					switch(owner.Class)
 						if("Underdog")
@@ -109,6 +110,7 @@ ascension
 							defense = 0.1
 							endurance = 0.1
 							speed = 0.4
+			onAscension(mob/owner)
 				applyDormantDemonPassives(owner)
 				..()
 		three
@@ -124,7 +126,7 @@ ascension
 			strength = 0.25
 			force = 0.25
 			speed = 0.25
-			onAscension(mob/owner)
+			simulateChoiceMutation(mob/owner)
 				if(!applied)
 					switch(owner.Class)
 						if("Underdog")
@@ -142,7 +144,7 @@ ascension
 							defense = 0.75
 							endurance = 0.75
 							speed = 0.4
-							passives["KiControlMastery"] = 1
+							passives = list("KiControlMastery"= 1)
 							//TO DO - Something that makes them scale with SSj2. Passives? Inherent buff? hm.
 						if("Resourceful")
 							offense = 0.1
@@ -151,6 +153,7 @@ ascension
 							defense = 0.1
 							endurance = 0.1
 							speed = 0.4
+			onAscension(mob/owner)
 				applyDormantDemonPassives(owner)
 				..()
 			postAscension(mob/owner)
@@ -180,7 +183,7 @@ ascension
 			passives = list("Tenacity" = 1, "DemonicDurability" = 0.5, "UnderDog"=1, "Persistence" = 1)
 			new_anger_message = "gains absolute clarity!"
 			on_ascension_message = "You learn the meaning of competence..."
-			onAscension(mob/owner)
+			simulateChoiceMutation(mob/owner)
 				if(!applied)
 					switch(owner.Class)
 						if("Underdog")
@@ -206,6 +209,7 @@ ascension
 							defense = 0.1
 							endurance = 0.1
 							speed = 0.4
+			onAscension(mob/owner)
 				applyDormantDemonPassives(owner)
 				..()
 
@@ -214,7 +218,7 @@ ascension
 			passives = list( "Tenacity" = 1, "DemonicDurability" = 0.5, "UnderDog"=1, "Persistence" = 1)
 			new_anger_message = "becomes angry!"
 			on_ascension_message = "You learn the meaning of humanity..."
-			onAscension(mob/owner)
+			simulateChoiceMutation(mob/owner)
 				if(!applied)
 					switch(owner.Class)
 						if("Underdog")
@@ -232,7 +236,7 @@ ascension
 							defense = 1.5
 							endurance = 1.5
 							speed = 0.4
-							passives["KiControlMastery"] = 1
+							passives = list("KiControlMastery"= 1)
 							//TO DO - Something that makes it not obvious that I just copied and pasted this four times
 						if("Resourceful")
 							offense = 0.1
@@ -241,6 +245,8 @@ ascension
 							defense = 0.1
 							endurance = 0.1
 							speed = 0.4
+			onAscension(mob/owner)
+				simulateChoiceMutation(owner)
 				applyDormantDemonPassives(owner)
 				..()
 		six
@@ -248,7 +254,7 @@ ascension
 			passives = list( "Tenacity" = 1, "DemonicDurability" = 0.5, "UnderDog"=1, "Persistence" = 1)
 			new_anger_message = "becomes angry!"
 			on_ascension_message = "You learn the meaning of humanity..."
-			onAscension(mob/owner)
+			simulateChoiceMutation(mob/owner)
 				if(!applied)
 					switch(owner.Class)
 						if("Underdog")
@@ -273,8 +279,10 @@ ascension
 							defense = 0.1
 							endurance = 0.1
 							speed = 0.4
-				applyDormantDemonPassives(owner)
+			onAscension(mob/owner)
 				..()
+				simulateChoiceMutation(owner)
+				applyDormantDemonPassives(owner)
 				if(owner.isMazokuHuman())
 					var/already_has_sea = FALSE
 					for(var/transformation/T in owner.race.transformations)
@@ -283,6 +291,7 @@ ascension
 							break
 					if(!already_has_sea)
 						owner.race.transformations += new /transformation/human/sacred_energy_aura()
+			..()
 			revertAscension(mob/owner)
 				if(owner.passive_handler && owner.race && owner.race.transformations)
 					for(var/transformation/T in owner.race.transformations.Copy())

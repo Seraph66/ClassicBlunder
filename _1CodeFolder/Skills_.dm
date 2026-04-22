@@ -962,10 +962,13 @@ mob/proc/SkillX(var/Wut,var/obj/Skills/Z,var/bypass=0)
 									if(MovementCharges<0)
 										MovementCharges=0
 									lastZanzoUsage = world.time + 8
-									src.DenkoSekkaZanzoVisual(src.Target)
+									var/denkoSavedColor = src.color
+									var/denkoSavedPixelZ = src.pixel_z
+									src.DenkoSekkaZanzoFade(denkoSavedPixelZ)
 									sleep(5)
 									src.Comboz(src.Target, FALSE, FALSE, passive_handler["Backstabber"])
 									src.dir=get_dir(src,src.Target)
+									src.DenkoSekkaZanzoLand(denkoSavedColor, denkoSavedPixelZ)
 									src.DenkoSekkaCharged = denko
 									src.Melee1(1, 5, accmulti=1.1, SureKB=1, BreakAttackRate=1)
 									return

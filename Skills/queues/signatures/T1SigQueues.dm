@@ -190,7 +190,7 @@ obj
 				MissMessage = "is too exhausted to flip anymore...(Crescent_Cartwheel Max Hit)"
 				adjust(mob/p)
 					// find blade dance
-					var/obj/Skills/Queue/Blade_Dance/bd = p.FindSkill(/obj/Skills/Queue/Blade_Dance)
+					var/obj/Skills/Queue/Crescent_Cartwheel/bd = p.FindSkill(/obj/Skills/Queue/Crescent_Cartwheel)
 					bd.current_hits++
 					if(bd.current_hits < 15)
 						DamageMult = 1 + (0.25 * bd.current_hits)

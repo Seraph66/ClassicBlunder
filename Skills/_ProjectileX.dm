@@ -676,8 +676,8 @@ obj
 ////Magic Shit
 			Aether_Arrow
 				Radius=0
-				DamageMult=1
-				AccMult=1
+				DamageMult=0.25
+				AccMult=0.5
 				StrRate=0.5
 				ForRate=0.5
 				EndRate=1

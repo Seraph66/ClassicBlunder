@@ -105,10 +105,10 @@ update
 				p.refundNewMagicTree()
 				p.RPPMult*=1.25
 				if(p.isRace(NOBODY))
-					p.passive_handler["Longing"] = 1
-					p.passive_handler["Emptiness"] = 1
+					p.passive_handler.Set("Longing", 1)
+					p.passive_handler.Set("Emptiness", 1)
 					if(p.Class=="Samurai")
-						p.passive_handler["EmptyFlashStep"] = 1
+						p.passive_handler.Set("EmptyFlashStep", 1)
 				if(p.isRace(ANDROID))
 					if(p.AscensionsAcquired==1)
 						p.EnhanceChipsMax +=2

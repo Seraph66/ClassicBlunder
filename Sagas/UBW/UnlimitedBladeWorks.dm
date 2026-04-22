@@ -12,9 +12,21 @@ obj/DomainExpansionBarrier
 	color = "#000000"
 	density = 1
 	opacity = 1
+	mouse_opacity = 0
 	Savable = 0
 	Enter(atom/A)
 		return 0
+
+obj/DomainExpansionRoof
+	name = "Domain Shroud"
+	icon = 'Roofs.dmi'
+	icon_state = "Roof1"
+	color = "#000000"
+	alpha = 170
+	density = 0
+	opacity = 0
+	mouse_opacity = 0
+	Savable = 0
 
 /mob/Admin3/verb/GiveDomainExpansion()
 	set category = "Admin"
@@ -83,6 +95,8 @@ mob
 					var/list/backup = list(t.icon, t.icon_state)
 					t.icon = floorIcon
 					t.icon_state = ""
+					var/obj/DomainExpansionRoof/r = new(t)
+					barriers += r
 					t.domain_expansion_owner = src
 					floors[t] = backup
 			src.domainExpansionFloors = floors
@@ -94,7 +108,7 @@ mob
 			if(!src.domainExpansionActive)
 				return
 			if(src.domainExpansionBarriers)
-				for(var/obj/DomainExpansionBarrier/b in src.domainExpansionBarriers)
+				for(var/obj/b in src.domainExpansionBarriers)
 					if(b)
 						del(b)
 			if(src.domainExpansionFloors)
