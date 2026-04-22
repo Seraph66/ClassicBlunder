@@ -267,7 +267,7 @@ mob/proc/SkillX(var/Wut,var/obj/Skills/Z,var/bypass=0)
 					return
 				if(Secret == "Heavenly Restriction" && secretDatum?:hasImprovement("Reverse Dash"))
 					//GetAndUseSkill(/obj/Skills/Buffs/SlotlessBuffs/Heavenly_Reversal, Buffs, TRUE)
-					if(!locate(/obj/Skills/Buffs/SlotlessBuffs/Heavenly_Reversal), src)
+					if(!locate(/obj/Skills/Buffs/SlotlessBuffs/Heavenly_Reversal) in src)
 						src.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Heavenly_Reversal)
 					else
 						for(var/obj/Skills/Buffs/SlotlessBuffs/Heavenly_Reversal/W in src)
