@@ -24,7 +24,7 @@
 
 #define JJK_NARRATOR_COLOUR "#f7da1b"
 /mob/proc/JJKNarrate(txt)
-	OMessage(Msg = "<font color=[JJK_NARRATOR_COLOUR]>[txt]</font color>");
+	OMessage(50, Msg = "<font color=[JJK_NARRATOR_COLOUR]>[txt]</font color>");
 
 /mob/proc/BlackFlashGlazing(obj/Skills/Buffs/bfSkill)
 	setBlackFlashFirstUse();
