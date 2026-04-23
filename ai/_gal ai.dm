@@ -1818,7 +1818,7 @@ mob/Player/AI
 					if(src.SpecialBuff.BuffName!=A.SBuffNeeded)
 						A.Trigger(src,Override=1)
 				if(A.TimerLimit&&A.SlotlessOn)
-					if(!(istype(A, /obj/Skills/Buffs/SlotlessBuffs/Autonomous/Debuff/Charmed) && src.PureRPMode) && A.Timer>=A.TimerLimit)
+					if(!(A.PauseInRP && src.PureRPMode) && A.Timer>=A.TimerLimit)
 						A.Trigger(src,Override=1)
 				if(A.NeedsAnger&&A.SlotlessOn)
 					if(!src.Anger)

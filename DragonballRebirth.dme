@@ -910,6 +910,7 @@
 #include "Skills\shortcut\SkillShortcut.dm"
 #include "Skills\sorted\newT3s\samsara.dm"
 #include "Skills\sorted\T5\armed.dm"
+#include "Skills\sorted\T5\chrono_devolution.dm"
 #include "Skills\sorted\T5\magic.dm"
 #include "Skills\sorted\T5\unarmed.dm"
 #include "Skills\sorted\T5\universal.dm"

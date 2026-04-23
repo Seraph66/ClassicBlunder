@@ -129,6 +129,13 @@ mob/Players
 		if(src.KO && !(src.icon_state == "KO"))
 			src.KO = 0
 
+		// Chrono Devolution safeguards
+		for(var/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Debuff/Chrono_Devolution/cd in src)
+			if(src.BuffOn(cd))
+				cd.Trigger(src, Override=1)
+			src.SlotlessBuffs.Remove("[cd.BuffName]")
+			src.DeleteSkill(cd)
+
 		src.RecovMod=2
 
 		for(var/obj/Skills/Buffs/NuStyle/ns in src)
