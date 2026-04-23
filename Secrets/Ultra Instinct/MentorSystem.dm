@@ -43,13 +43,6 @@ obj/Skills/Utility/Mentor_System
 				src.Using = 0
 				return
 
-		if(Mentor.Secret != "Ultra Instinct")//prevent abuse of verbs falling into unintended hands(read:idiot insurance.)
-			Mentor << "You must first walk the path of the Angels before you can teach Ultra Instinct."
-			src.Using = 0
-			return
-
-		if(Choice.Secret != "Ultra Instinct"&&!Choice.hasEldritchPower())
-			Choice.Secret = "Ultra Instinct"
 		if(Choice.hasEldritchPower())
 			Mentor << "Deep within your student, something terrible stirs..."
 			Choice << "You are, and have always been."
