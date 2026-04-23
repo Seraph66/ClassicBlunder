@@ -54,7 +54,53 @@
                     es.ShroudedPassives["SpiritFlow"]=1;
                     es.ShroudedPassives["TechniqueMastery"]=1;
                     es.ShroudedPassives["Pursuer"]=1;
-        //t2 later (subclass choices)
+        if(es.currentTier >= 2)
+            if(!es.ShroudedSubtype)
+                switch(es.ShroudedOrigin)
+                    if("Beastkin")
+                        es.ShroudedSubtype = input(src, "You've awakened to a deeper understanding of your Origin. But what Origin was it?", "Origin Enhancement") in list("Feathers", "Heart", "Predator")
+                    if("Human")
+                        es.ShroudedSubtype = input(src, "You've awakened to a deeper understanding of your Origin. But what Origin was it?", "Origin Enhancement") in list("Heroism", "Resourceful", "Dogged")
+                        switch(es.ShroudedSubtype)
+                            if("Resourceful")
+                                AngerMax -= 0.25;
+                                Intelligence *= 1.5;
+                                EconomyMult *= 1.5;
+                            if("Dogged")
+                                AngerMax += 0.5;
+                    if("Saiyan")
+                        es.ShroudedSubtype = input(src, "You've awakened to a deeper understanding of your Origin. But what Origin was it?", "Origin Enhancement") in list("Honor", "Zeal", "Pride")
+                    if("Namekian")
+                        es.ShroudedSubtype = input(src, "You've awakened to a deeper understanding of your Origin. But what Origin was it?", "Origin Enhancement") in list("Warrior", "Dragon", "Demon")
+            switch(es.ShroudedSubtype)
+                if("Feathers")
+                    es.ShroudedPassives["CriticalChance"] = 10;
+                    es.ShroudedPassives["CriticalDamage"] = 0.2;
+                    es.ShroudedPassives["CriticalBlock"] = 10;
+                    es.ShroudedPassives["BlockDamage"] = 0.2;
+                if("Heart")
+                    es.ShroudedPassives["Harden"] = 2;
+                    es.ShroudedPassives["CallousedHands"] = 0.2;
+                    es.ShroudedPassives["Adrenaline"] = 1;
+                if("Predator")
+                    es.ShroudedPassives["Steady"] = 2;
+                    es.ShroudedPassives["Brutalize"] = 2;
+                    es.ShroudedPassives["Unnerve"] = 1;
+                if("Heroism")
+                    es.ShroudedPassives["BuffMastery"] = 10;
+                    es.ShroudedPassives["ShounenPower"] = 0.5;
+                    es.ShroudedPassives["Persistence"] = 3;
+                if("Resourceful")
+                    es.ShroudedPassives["GodSpeed"] = 4;
+                if("Dogged")
+                    es.ShroudedPassives["Motivation"] = 0.25;
+                if("Honor") src << "oops"
+                if("Zeal") src << "oops"
+                if("Pride") src << "oops"
+                if("Warrior") src << "oops"
+                if("Dragon") src << "oops"
+                if("Demon") src << "oops"
+
         //t6 later (something unique)
                 
 

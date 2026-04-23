@@ -22,6 +22,20 @@
 			if(p.isBlackFlashFirstUse()) spawn() p.BlackFlashGlazing(src)
 			else ActiveMessage = "gets in tune with their energy output, unlocking 120% of their potential!"
 
+/obj/Skills/Buffs/SlotlessBuffs
+	BlackFlash_SureStrike
+		BuffName = "Sure-Strike Black Flash"
+		Mastery=-1
+		UnrestrictedBuff=1
+		TimerLimit=5
+		ActiveMessage="focuses and prepares to force a Black Flash!!!"
+		passives = list("Sure-Strike Black Flash" = 1)
+		Cooldown = 90
+		verb/Black_Flash_SureStrike()
+			set category="Skills"
+			adjust(usr)
+			src.Trigger(usr)
+
 #define JJK_NARRATOR_COLOUR "#f7da1b"
 /mob/proc/JJKNarrate(txt)
 	OMessage(50, Msg = "<font color=[JJK_NARRATOR_COLOUR]>[txt]</font color>");
@@ -60,9 +74,12 @@
 	getBlackFlashChance()
 		var/SecretInformation/BlackFlash/bf = getBlackFlashSecret();
 		var/force = bf.BlackFlashForcedChance;
+		var/sureStrike = passive_handler.Get("Sure-Strike Black Flash")
 		if(bf.BlackFlashChance < bf.BlackFlashBaseChance)
 			bf.BlackFlashChance = bf.BlackFlashBaseChance
+		if(sureStrike == 1) return 100;
 		if(force) return force;
+
 		else
 			bf.BlackFlashChance += 5
 			return clamp(bf.BlackFlashChance-5, bf.BlackFlashBaseChance, 90);
