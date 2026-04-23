@@ -4677,7 +4677,7 @@ obj
 						Cero
 							DamageMult=15
 							ChargeRate=0.5
-							Cooldown=120
+							Cooldown=150
 							ManaCost=5
 							Distance=40
 							IconLock='Cero2.dmi'
