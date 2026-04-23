@@ -19,8 +19,9 @@
 	BuffAffected="/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Debuff/Chrono_Devolution"
 	verb/Chrono_Devolution()
 		set category="Skills"
-		playChronoDevolutionVisual(usr)
-		usr.Activate(src)
+		if(!usr.Activate(src))
+			return
+		playChronoDevolutionVisual(usr, usr.Target)
 
 // Visual
 
@@ -30,55 +31,72 @@ var/global/list/CHRONO_DEV_GREYSCALE_MATRIX = list(
 	0.33, 0.33, 0.33,
 	0,    0,    0)
 
-/proc/playChronoDevolutionVisual(mob/user)
+/proc/playChronoDevolutionVisual(mob/user, atom/target)
 	set waitfor = FALSE
-	if(!user) return
-	var/turf/origin = get_turf(user)
-	if(!origin) return
+	if(!target) return
 
 	var/max_radius = 10
 	var/apply_hold = 5
 	var/ring_delay = 3
 
 	for(var/cycle in 1 to 3)
-		var/list/tile_orig = list()
-		var/list/atom_orig = list()
-		var/list/tiles_by_ring[max_radius+1]
-		for(var/n in 0 to max_radius)
-			tiles_by_ring[n+1] = list()
+		var/turf/origin = get_turf(target)
+		if(!origin) return
+
+		var/list/rings = list()
+		for(var/i in 1 to max_radius + 1)
+			rings += list(list())
 
 		for(var/turf/T in range(max_radius, origin))
-			var/dist = get_dist(T, origin)
+			var/dx = T.x - origin.x
+			var/dy = T.y - origin.y
+			var/dist = sqrt(dx*dx + dy*dy)
 			if(dist > max_radius) continue
-			tile_orig[T] = T.color
-			T.color = CHRONO_DEV_GREYSCALE_MATRIX
-			var/list/ring = tiles_by_ring[dist+1]
-			ring += T
-			for(var/atom/movable/A in T)
-				if(A == user) continue
-				if(A in atom_orig) continue
-				atom_orig[A] = A.color
-				A.color = CHRONO_DEV_GREYSCALE_MATRIX
+			var/r = round(dist + 0.5) // nearest-int ring index, biased outward
+			if(r < 0) r = 0
+			if(r > max_radius) r = max_radius
+			var/list/slot = rings[r + 1]
+			slot += T
+
+		var/list/tile_orig = list()
+		var/list/atom_orig = list()
+
+		// Paint everything grey, innermost ring first so layered visuals update
+		// in a predictable order.
+		for(var/r in 0 to max_radius)
+			var/list/slot = rings[r + 1]
+			for(var/turf/T in slot)
+				if(!T) continue
+				tile_orig[T] = T.color
+				animate(T, color = CHRONO_DEV_GREYSCALE_MATRIX, time = 1)
+				for(var/atom/movable/A in T)
+					if(A == user) continue
+					if(A in atom_orig) continue
+					atom_orig[A] = A.color
+					animate(A, color = CHRONO_DEV_GREYSCALE_MATRIX, time = 1)
 
 		sleep(apply_hold)
 
+		// Shrink the greyscale zone back toward the origin, ring by ring.
 		for(var/r = max_radius, r >= 0, r--)
-			var/list/ring = tiles_by_ring[r+1]
-			for(var/turf/T in ring)
+			var/list/slot = rings[r + 1]
+			for(var/turf/T in slot)
+				if(!T) continue
 				if(T in tile_orig)
-					T.color = tile_orig[T]
-					tile_orig.Remove(T)
+					animate(T, color = tile_orig[T], time = ring_delay)
+					tile_orig -= T
 				for(var/atom/movable/A in T)
 					if(A in atom_orig)
-						A.color = atom_orig[A]
-						atom_orig.Remove(A)
+						animate(A, color = atom_orig[A], time = ring_delay)
+						atom_orig -= A
 			sleep(ring_delay)
 
-		// Restore any leftover colors that weren't reached
-		for(var/turf/T in tile_orig)
-			T.color = tile_orig[T]
-		for(var/atom/movable/A in atom_orig)
-			A.color = atom_orig[A]
+		// Final sweep: anything that moved out of the zone or wasn't caught
+		// during ring restoration gets its original color forced back.
+		for(var/turf/T as anything in tile_orig)
+			if(T) T.color = tile_orig[T]
+		for(var/atom/movable/A as anything in atom_orig)
+			if(A) A.color = atom_orig[A]
 
 /mob/proc/forceRevertAll()
 	var/safety = 10

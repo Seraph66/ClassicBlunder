@@ -355,7 +355,7 @@ SecretInformation
 				if(6)
 					p.findOrAddSkill(/obj/Skills/Utility/Reclamation)
 					p << "You remember how to take it all away, stealing your threads back to yourself for your own gain! (Reclamation)"
-					
+
 	Eldritch
 		name = "Eldritch"
 		secretVariable = list("Madness" = 0, "Madness Active" = 0, "Lunatic Mode" = 0, "Power From Blood" = 0, "Blood Stock" = 0, "Resource Stock" = 0)
@@ -718,10 +718,15 @@ SecretInformation
 					BlackFlashBaseChance = 15;
 				if(3)
 					BlackFlashBaseChance = 25;
+					p << "You now have a chance to keep your focus when landing a Black Flash! (Your Chance to land a Black Flash has a 50% chance to not reset when landing one.)"
+					p.passive_handler.Set("Sparks of Black",1)
 				if(4)
 					BlackFlashBaseChance = 35;
 				if(5)
 					BlackFlashBaseChance = 50;
+					p << "The Blessing of the Sparks of Black allow you to force a Black Flash out no matter what!"
+					p << "(Black Flash SureStrike: A 5 second Slotless Buff that forces your chance to land a Black Flash to 100%.)"
+					p.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/BlackFlash_SureStrike)
 				if(6) // are you out of your motherfucking miiiiiiiiiind
 					BlackFlashBaseChance = 60;
 
