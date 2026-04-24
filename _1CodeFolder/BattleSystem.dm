@@ -445,8 +445,10 @@ mob/proc/Conscious()
 		src.OMessage(15,"[src] regains consciousness.","<font color=blue>[src]([src.key]) regains consciousness")
 
 mob/proc/Death(mob/P,var/text,var/SuperDead=0, var/NoRemains=0, var/Zombie, extraChance, fakeDeath)
+	if(majinCheatDeathInProgress) return
 	// Majin once-per-ascension cheat death
 	if(isRace(MAJIN) && !fakeDeath && !SuperDead && !NoVoid && !majinCheatDeathUsed)
+		majinCheatDeathInProgress = 1
 		majinCheatDeathUsed = 1
 		src.OMessage(20,"[src] was just killed by [text]!","<font color=red>[src] was just killed by [text]!")
 		sleep(20)
@@ -454,10 +456,12 @@ mob/proc/Death(mob/P,var/text,var/SuperDead=0, var/NoRemains=0, var/Zombie, extr
 		src.MortallyWounded=0
 		src.KOTimer=0
 		src.KO=0
+		src.icon_state=""
 		src.HealWounds(99999)
 		src.Health = 25
 		src.MaxEnergy()
 		src.MaxMana()
+		spawn() src.MajinCheatDeathReformFX()
 		return
 	if(isRace(MAJIN) && majinAbsorb && majinAbsorb.absorbed && majinAbsorb.absorbed.len)
 		majinAbsorb.releaseAll(src, "majin_died")
@@ -770,7 +774,8 @@ mob/proc/Death(mob/P,var/text,var/SuperDead=0, var/NoRemains=0, var/Zombie, extr
 			return
 
 	if(src.client)
-		Void(SuperDead, Zombie, fakeDeath, 0)
+		if(!(isRace(MAJIN) && (!majinCheatDeathUsed || majinCheatFXRunning || majinCheatDeathInProgress)))
+			Void(SuperDead, Zombie, fakeDeath, 0)
 
 	if(!src.Dead)
 		src.Conscious()

@@ -44,6 +44,133 @@ var/global/list/MAJIN_PENDING_EJECTIONS = list()
     Observing = 1
     src << "You focus your senses on [M]."
 
+// Majin cheat-death visual effect
+/obj/majin_cheat_frag
+    mouse_opacity = 0
+    density = 0
+    appearance_flags = 32
+
+/mob/proc/MajinCheatDeathReformFX(piece_count, out_ticks = 6, hold_ticks = 30, in_ticks = 18)
+    if(majinCheatFXRunning) return
+    if(!icon) return
+    majinCheatFXRunning = 1
+
+    var/icon/base = icon(icon, icon_state)
+    if(!base)
+        majinCheatFXRunning = 0
+        majinCheatDeathInProgress = 0
+        return
+
+    var/w = base.Width()
+    var/h = base.Height()
+    if(!w || !h)
+        majinCheatFXRunning = 0
+        majinCheatDeathInProgress = 0
+        return
+
+    // Scale piece count, radius, and scatter to the icon
+    var/size = max(w, h)
+    var/scale = size / 32
+    if(!piece_count)
+        piece_count = round(10 * scale * scale)
+        piece_count = max(10, min(60, piece_count))
+    var/radius_min = max(3, round(4 * scale))
+    var/radius_max = max(radius_min + 2, round(8 * scale))
+    var/scatter = round(40 * scale)
+
+    var/old_alpha = alpha
+    var/list/fragments = list()
+
+    // Host fragments on the turf rather than on src's own vis_contents so
+    // hiding src (alpha=0) doesn't hide the fragment
+    var/turf/host_turf = get_turf(src)
+
+    var/list/kept_overlays = list()
+    for(var/O in src.overlays)
+        if(O:blend_mode == BLEND_ADD) continue
+        kept_overlays += O
+
+    // Coverage grid prevents any pixel of the base sprite from appearing
+    // in more than one fragment.
+    var/list/coverage = new/list(w * h)
+
+    // Hide the original sprite while fragments separate.
+    alpha = 0
+
+    for(var/i = 1, i <= piece_count, i++)
+        var/cx = rand(max(2, round(5 * scale)), max(round(5 * scale) + 1, w - round(4 * scale)))
+        var/cy = rand(max(2, round(5 * scale)), max(round(5 * scale) + 1, h - round(4 * scale)))
+        var/radius = rand(radius_min, radius_max)
+        var/rsq = radius * radius
+
+        var/x1 = max(1, cx - radius)
+        var/y1 = max(1, cy - radius)
+        var/x2 = min(w, cx + radius)
+        var/y2 = min(h, cy + radius)
+
+        var/icon/fragment_icon = new/icon(base)
+        if(y2 < h) fragment_icon.DrawBox(null, 1, y2 + 1, w, h)
+        if(y1 > 1) fragment_icon.DrawBox(null, 1, 1, w, y1 - 1)
+        if(x1 > 1) fragment_icon.DrawBox(null, 1, y1, x1 - 1, y2)
+        if(x2 < w) fragment_icon.DrawBox(null, x2 + 1, y1, w, y2)
+
+        // Mask for the alpha filter: transparent everywhere, opaque only
+        // at this fragment's owned pixels. Clips overlays (clothing) to
+        // the same shape as the carved body.
+        var/icon/circle_mask = new/icon(base)
+        circle_mask.DrawBox(null, 1, 1, w, h)
+
+        var/claimed_any = 0
+        for(var/px = x1, px <= x2, px++)
+            for(var/py = y1, py <= y2, py++)
+                var/dx = px - cx
+                var/dy = py - cy
+                if((dx * dx) + (dy * dy) > rsq)
+                    fragment_icon.DrawBox(null, px, py, px, py)
+                    continue
+                var/idx = (py - 1) * w + px
+                if(coverage[idx])
+                    fragment_icon.DrawBox(null, px, py, px, py)
+                    continue
+                coverage[idx] = 1
+                circle_mask.DrawBox(rgb(255, 255, 255), px, py, px, py)
+                claimed_any = 1
+
+        // Entirely covered by prior fragments — skip to avoid an empty atom.
+        if(!claimed_any) continue
+
+        var/obj/majin_cheat_frag/fragment = new()
+        fragment.icon = fragment_icon
+        fragment.overlays = kept_overlays
+        fragment.filters = filter(type = "alpha", icon = circle_mask)
+        fragment.layer = MOB_LAYER + 100 + (i * 0.001)
+        fragment.plane = plane
+        fragment.pixel_x = 0
+        fragment.pixel_y = 0
+        if(host_turf)
+            host_turf.vis_contents += fragment
+        else
+            src.vis_contents += fragment
+        fragments += fragment
+
+        var/out_x = rand(-scatter, scatter)
+        var/out_y = rand(-scatter, scatter)
+        animate(fragment, pixel_x = out_x, pixel_y = out_y, alpha = 220, time = out_ticks)
+        animate(pixel_x = out_x, pixel_y = out_y, alpha = 220, time = hold_ticks)
+        animate(pixel_x = 0, pixel_y = 0, alpha = 255, time = in_ticks)
+
+    spawn(out_ticks + hold_ticks + in_ticks + 2)
+        for(var/obj/majin_cheat_frag/fragment in fragments)
+            if(host_turf)
+                host_turf.vis_contents -= fragment
+            src.vis_contents -= fragment
+            del(fragment)
+        alpha = old_alpha
+        // Ensure the user returns on their alive sprite
+        icon_state = ""
+        majinCheatFXRunning = 0
+        majinCheatDeathInProgress = 0
+
 majinAbsorb
     var/list/absorbed = list()
 

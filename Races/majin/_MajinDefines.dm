@@ -57,6 +57,8 @@ majinAbsorb/New(mob/Players/p)
 
 /mob/var/absorbedBy = null
 /mob/var/majinRoomIndex = 0 // which room (1..MAJIN_ROOM_COUNT) they were placed into.
+/mob/var/tmp/majinCheatFXRunning = 0
+/mob/var/tmp/majinCheatDeathInProgress = 0
 
 // Once-per-ascension cheat death
 /mob/var/majinCheatDeathUsed = 0
