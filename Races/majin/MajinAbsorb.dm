@@ -7,6 +7,10 @@
 //  Super:    +2 absorb slots, +2 stolen skills per victim.
 //  Unhinged: Power counts 2x in damage calcs
 
+// Pending ejection registry. When a Majin dies (or otherwise releases a
+// victim) while that victim is logged out, it records who should be ejected.
+var/global/list/MAJIN_PENDING_EJECTIONS = list()
+
 majinAbsorb
     var/list/absorbed = list()
 
@@ -161,6 +165,9 @@ majinAbsorb/proc/releaseVictim(mob/absorber, theCkey, reason = "")
         victim.KO = 1
         if(victim.client)
             victim << "You are violently expelled from [absorber]!"
+    else
+        // Victim is currently logged out. Stash an ejection point
+            MAJIN_PENDING_EJECTIONS["[theCkey]"] = list(absorber.x, absorber.y, absorber.z, "[absorber]")
 
     absorbed -= theCkey
 
@@ -195,6 +202,19 @@ majinAbsorb/proc/releaseAll(mob/absorber, reason = "")
 
 /mob/proc/MajinAbsorbOnLogin()
     if(!ckey) return
+    // Safeguard for if this player was absorbed by a Majin that has since died
+    var/list/pending = MAJIN_PENDING_EJECTIONS["[ckey]"]
+    if(islist(pending) && pending.len >= 3)
+        var/turf/T = locate(pending[1], pending[2], pending[3])
+        if(T)
+            src.loc = T
+        src.absorbedBy = null
+        src.majinRoomIndex = 0
+        src.KO = 1
+        var/absorberName = (pending.len >= 4) ? pending[4] : "your captor"
+        src << "<font color='red'>You are violently expelled from [absorberName]'s corpse!</font>"
+        MAJIN_PENDING_EJECTIONS -= "[ckey]"
+        return
     var/mob/Players/M = FindMajinAbsorbingCkey(ckey)
     if(!M) return
     var/list/entry = M.majinAbsorb.absorbed["[ckey]"]
