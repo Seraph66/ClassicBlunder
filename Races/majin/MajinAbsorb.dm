@@ -201,7 +201,8 @@ majinAbsorb/proc/releaseVictim(mob/absorber, theCkey, reason = "")
         if(victim.client)
             victim << "You are violently expelled from [absorber]!"
     else
-        // Victim is currently logged out. Stash an ejection point
+        // Victim is currently logged out. Stash an ejection point.
+        if(absorber)
             MAJIN_PENDING_EJECTIONS["[theCkey]"] = list(absorber.x, absorber.y, absorber.z, "[absorber]")
 
     absorbed -= theCkey
