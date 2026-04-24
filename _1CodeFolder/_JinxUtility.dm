@@ -993,7 +993,7 @@ mob
 			src.TotalCapacity+=val
 			if(src.TotalCapacity>=100)
 				src.TotalCapacity=100
-		HealHealth(var/val, var/_isEcho=0)
+		HealHealth(val, _isEcho=0)
 			if(src.GetEffectiveShearForStackingEffects())
 				if(src.HasShearImmunity())
 					val=val
@@ -1018,15 +1018,10 @@ mob
 							val=val/4
 					else if(!src.IsDarkDragonPlayer() && src.Frenzy > 0)
 						val=val/4
-			/*
-			if(src.PotionCD)
-				val/=glob.HEALTH_POTION_NERF
-				*/
 			if(icon_state == "Meditate")
 				src.Tension=max(0, Tension-(val*1.5))
 			if(passive_handler["Staked"])
 				val = 0
-			// SURELY NO PROBLEMS HERE
 			if(src.AwakeningSkillUsed==1)
 				val = 0
 			if(src.VaizardHealth&&!src.passive_handler.Get("HealThroughTempHP"))
@@ -1034,8 +1029,7 @@ mob
 			if(src.CelestialAscension=="Demon" && src.transActive>=5)
 				if(src.transUnlocked<6)
 					val = 0
-			if(val > 0 && src.passive_handler.Get("AngelicInfusion"))
-				val += val * (src.passive_handler.Get("AngelicInfusion") * 0.2)
+			val *= getAngelicInfusionMult();//returns 1 if no angelicinfusion
 			src.Health+=val
 			src.MaxHealth()
 			// Light Warden: delayed heal retrigger. Each selection of the Warden mage
@@ -1062,9 +1056,6 @@ mob
 			if(!src.FusionPowered&&!StableHeal)
 				val/=src.GetPowerUpRatio()
 				val/=src.EnergyExpenditure*src.Power_Multiplier
-			/*if(src.PotionCD)
-				val/=1.25
-			*/
 			src.Energy+=val
 			if(Energy<0)
 				Energy=0
@@ -1090,9 +1081,6 @@ mob
 						val=val/2
 				else if(!src.IsDarkDragonPlayer() && src.Frenzy > 0)
 					val=val/2
-			/* if(src.PotionCD)
-				val/=1.25
-				*/
 			src.TotalInjury-=val
 			if(src.TotalInjury < 0)
 				src.TotalInjury=0
@@ -1100,18 +1088,11 @@ mob
 		HealFatigue(var/val, var/StableHeal=0)
 			if(!src.FusionPowered&&!StableHeal)
 				val*=1/src.GetPowerUpRatio()
-			/* 
-			if(src.PotionCD)
-				val/=1.25
-				*/
 			src.TotalFatigue-=val
 			if(src.TotalFatigue < 0)
 				src.TotalFatigue=0
 			src.MaxEnergy()
 		HealCapacity(var/val, var/StableHeal=0)
-			/* if(src.PotionCD)
-				val/=1.25
-				*/
 			src.TotalCapacity-=val
 			if(src.TotalCapacity<=0)
 				src.TotalCapacity=0

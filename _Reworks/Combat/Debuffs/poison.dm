@@ -129,18 +129,16 @@ mob/proc/implodeDebuff(n, type)
 	if(last_implode + glob.IMPLODE_CD < world.time)
 		switch(type)
 			if("Burn")
-				// fevExplosion
 				var/obj/Effects/Bang/b = new()
 				b.Target = src
 				vis_contents += b
-				Health -= Health * (n/glob.IMPLODE_DIVISOR)
+				Health -= Health * (n/glob.IMPLODE_DIVISOR) * 1.25
 				Burn = 0
 			if("Chill")
 				var/obj/Effects/Freeze/b = new(overwrite_alpha = 255)
 				b.Target = src
 				vis_contents += b
 				Stun(src, 4)
-			//	passive_handler.Set("Shellshocked", 1)
 				Health -= Health * (n/glob.IMPLODE_DIVISOR)
 				Slow = 0
 			if("Shatter")

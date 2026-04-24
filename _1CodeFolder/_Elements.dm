@@ -445,7 +445,8 @@ mob
 
 
 			if(Attacker)
-				if(Attacker.passive_handler["EarthHerald"] && src.Shatter >= 100)
+				var/eh = getEarthHerald();
+				if(Shatter >= (100 / eh))
 					implodeDebuff(100, "Shatter")
 
 			if(src.Shatter>100)
