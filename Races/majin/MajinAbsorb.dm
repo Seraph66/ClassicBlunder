@@ -11,6 +11,39 @@
 // victim) while that victim is logged out, it records who should be ejected.
 var/global/list/MAJIN_PENDING_EJECTIONS = list()
 
+/mob/proc/GrantObserveMajinVerb()
+    if(!verbs) return
+    if(!(/mob/verb/Observe_Majin in verbs))
+        verbs += /mob/verb/Observe_Majin
+
+/mob/proc/RevokeObserveMajinVerb()
+    if(!verbs) return
+    if(/mob/verb/Observe_Majin in verbs)
+        verbs -= /mob/verb/Observe_Majin
+    if(client && client.eye != src && !absorbedBy)
+        Observify(src, src)
+        Observing = 0
+
+/mob/verb/Observe_Majin()
+    set category = "Other"
+    set name = "Observe Majin"
+    if(!absorbedBy)
+        src << "You are not currently absorbed by a Majin."
+        RevokeObserveMajinVerb()
+        return
+    var/mob/Players/M = GetMajinByCkey(absorbedBy)
+    if(!M)
+        src << "You cannot sense the Majin that absorbed you."
+        return
+    if(client && client.eye == M)
+        Observify(src, src)
+        Observing = 0
+        src << "You stop observing [M]."
+        return
+    Observify(src, M)
+    Observing = 1
+    src << "You focus your senses on [M]."
+
 majinAbsorb
     var/list/absorbed = list()
 
@@ -133,6 +166,7 @@ majinAbsorb/proc/doAbsorb(mob/absorber, mob/absorbee)
 
     absorbee.absorbedBy = absorber.ckey
     absorbee.majinRoomIndex = absorber.majinOwnedRoom
+    absorbee.GrantObserveMajinVerb()
     absorbee.loc = dest
 
     absorbed["[absorbee.ckey]"] = list(
@@ -162,6 +196,7 @@ majinAbsorb/proc/releaseVictim(mob/absorber, theCkey, reason = "")
             victim.loc = locate(absorber.x, absorber.y, absorber.z)
         victim.absorbedBy = null
         victim.majinRoomIndex = 0
+        victim.RevokeObserveMajinVerb()
         victim.KO = 1
         if(victim.client)
             victim << "You are violently expelled from [absorber]!"
@@ -210,6 +245,7 @@ majinAbsorb/proc/releaseAll(mob/absorber, reason = "")
             src.loc = T
         src.absorbedBy = null
         src.majinRoomIndex = 0
+        src.RevokeObserveMajinVerb()
         src.KO = 1
         var/absorberName = (pending.len >= 4) ? pending[4] : "your captor"
         src << "<font color='red'>You are violently expelled from [absorberName]'s corpse!</font>"
@@ -223,10 +259,26 @@ majinAbsorb/proc/releaseAll(mob/absorber, reason = "")
     entry["was_logged_in"] = TRUE
     src.absorbedBy = M.ckey
     src.majinRoomIndex = M.majinOwnedRoom
+    src.GrantObserveMajinVerb()
     var/turf/dest = M.GetMajinRoomTurf()
     if(dest)
         src.loc = dest
         src << "You are currently trapped inside of [M]."
+
+// if an absorbed victim is moved/summoned out of the
+// Majin absorb zone, immediately release them from the absorber's table
+/mob/proc/MajinAbsorbZoneSafeguard()
+    if(!ckey) return
+    if(!absorbedBy) return
+    if(z == MAJIN_ABSORB_Z) return
+    var/mob/Players/M = GetMajinByCkey(absorbedBy)
+    if(M && M.majinAbsorb && M.majinAbsorb.absorbed && M.majinAbsorb.absorbed["[ckey]"])
+        M.majinAbsorb.releaseVictim(M, "[ckey]", "left_zone")
+    else
+        // Defensive cleanup if the absorber reference disappeared.
+        absorbedBy = null
+        majinRoomIndex = 0
+        RevokeObserveMajinVerb()
 
 // Manual release
 /mob/proc/releaseAbsorbedPrompt()

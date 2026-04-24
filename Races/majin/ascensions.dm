@@ -136,12 +136,12 @@ ascension
 			intimidation = 15
 			anger = 0.2
 			imaginationAdd = 0.25
-			endurance = 2.5
-			defense = 2.5
-			strength = 2.5
-			force = 2.5
-			speed = 2.5
-			offense = 2.5
+			endurance = 2
+			defense = 2
+			strength = 2
+			force = 2
+			speed = 2
+			offense = 2
 			passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2, "Unstoppable" = 1)
 
 			onAscension(mob/owner)
