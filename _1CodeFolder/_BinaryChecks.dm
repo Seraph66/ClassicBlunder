@@ -1663,14 +1663,14 @@ mob
 				return 1
 			if(Secret == "Vampire")
 				return 1
-			if(isRace(MAJIN) && race.ascensions[1].choiceSelected == /ascension/sub_ascension/majin/unhinged)
+			if(isRace(MAJIN) && Class == "Unhinged")
 				return 1
 			return 0
 		GetLifeSteal()
 			var/extra = 0
 			if(passive_handler["Rage"] && Health <= 75)
 				extra = 5 * passive_handler["Rage"]
-			if(isRace(MAJIN) && race.ascensions[1].choiceSelected == /ascension/sub_ascension/majin/unhinged)
+			if(isRace(MAJIN) && Class == "Unhinged")
 				extra += 5 * AscensionsAcquired
 			if(Secret=="Vampire")
 				var/secretLevel = getSecretLevel()
@@ -3559,6 +3559,8 @@ atom
 			if(src.z == glob.DEATH_LOCATION[3] && !dead_use && !SP)
 				return 1
 			else if(src.z == global.ArcaneRealmZ && !arc_use)
+				return 1
+			else if(src.z == MAJIN_ABSORB_Z)
 				return 1
 			return 0
 

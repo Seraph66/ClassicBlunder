@@ -1,413 +1,281 @@
-/*
-The intention of absorb is to absorb the person when they are KO'd
- and apply a minor tax
-As well as a wound / maiming to the person who absorbed the person
-When absorbing people will be able to take passives from the target
-and there's a limit to how many they can have
-Super can absorb more and have more passives (stacking mayhaps?)
-Only issue i see with this is we either tie it to a slotless buff
-making it a style will cause issues.
-*/
+// Absorb is now lethal-and-imprisoning. A KO'd victim is sent
+// to the Majin's personal absorb room on z = MAJIN_ABSORB_Z and
+// stays there (even while logged out) until the Majin dies or
+// something pulls them out of the zone.
+//
+//  Innocent: regular absorb slots / skills; blob mechanic.
+//  Super:    +2 absorb slots, +2 stolen skills per victim.
+//  Unhinged: Power counts 2x in damage calcs
 
+// Pending ejection registry. When a Majin dies (or otherwise releases a
+// victim) while that victim is logged out, it records who should be ejected.
+var/global/list/MAJIN_PENDING_EJECTIONS = list()
 
 majinAbsorb
-    var/list/absorbed = list() // list of absorbed people
-    var/list/passives = list() // passives that are attacked to buffs
-    var/list/racialPassives = list() // passives attached to racials
-    var/absorbLimit = 2
-    var/absorbCount = 0
-    var/absorbTax = 5 // 3% tax
-    var/absorbPassiveTickLimit = 0.5
-    var/tickPerAbsorb = 0.25
-    // Some passives work differently and will get a boost, also some races provide more
-majinAbsorb/proc/updateVariables(mob/p, clear = FALSE)
-    var/Super = p.Class == "Super" ? TRUE : FALSE
+    var/list/absorbed = list()
+
+    // refreshed any time class or ascension changes.
+    var/absorbLimit = MAJIN_BASE_ABSORB_LIMIT
+    var/skillsPerVictim = MAJIN_BASE_SKILLS_PER_VICTIM
+
+majinAbsorb/proc/updateVariables(mob/p)
+    if(!p) return
+    var/isSuper = (p.Class == "Super")
     var/asc = p.AscensionsAcquired
-    absorbLimit = MAJIN_ABSORB_LIMIT + (Super ? (asc*2) : asc)
-    absorbPassiveTickLimit = MAJIN_PASSIVE_LIMIT + ( (asc-1) * MAJIN_PASSIVE_LIMIT ) + (Super ? MAJIN_PASSIVE_LIMIT : 0)
-    absorbTax = 3 + (MAJIN_ABSORB_TAX * asc)
-    tickPerAbsorb = 0.25 + ((asc*0.5) * 1) + (Super ? 1.25 : 0.25)
-    absorbCount = absorbed.len
+    absorbLimit = MAJIN_BASE_ABSORB_LIMIT + asc + (isSuper ? MAJIN_SUPER_ABSORB_BONUS : 0)
+    skillsPerVictim = MAJIN_BASE_SKILLS_PER_VICTIM + (isSuper ? (MAJIN_SUPER_SKILL_BONUS + asc) : 0)
 
-#define BOOSTPASSIVES list("Piloting Prowess", "Intimidation")
-#define NERFPASSIVES list("StealsStats", "HellPower","GodKi","SpiritPower", "BuffMastery", "Desperation", "DemonicDurability")
-#define MAKEFULL list("EnhancedSmell", "EnhancedHearing")
-#define NORMALBOOST 2.5
-#define SHINJINBOOST 5
+majinAbsorb/proc/SumAbsorbedPeakPower(mob/absorber)
+    . = 0
+    if(!absorbed || !absorbed.len) return
+    var/list/stale = null
+    for(var/key in absorbed)
+        var/list/entry = absorbed[key]
+        if(!islist(entry)) continue
+        var/mob/victim = entry["mob"]
+        var/valid = 0
+        if(victim && victim.z == MAJIN_ABSORB_Z)
+            valid = 1
+        else if(!victim && entry["was_logged_in"] == FALSE)
+            valid = 1
+        if(valid)
+            . += entry["peak"]
+        else
+            if(!stale) stale = list()
+            stale += key
+    if(stale)
+        for(var/k in stale)
+            releaseVictim(absorber, k, "left_zone")
 
+// Skill stealing
 
-majinAbsorb/proc/addAbsorbee(mob/p)
-    absorbed["[p.ckey]"] = p.ckey
-    p<< "You feel a part of your powers get absorbed away!"
-
-majinAbsorb/proc/nerfAbsorbee(mob/p)
-    var/nerf = absorbTax / 100
-    p.StrTax += nerf
-    p.EndTax += nerf
-    p.ForTax += nerf
-
-majinAbsorb/proc/addRacialPassive(passiveName)
-    if(passiveName in racialPassives)
-        return
-    racialPassives += passiveName
-
-majinAbsorb/proc/adjustPassive(passiveName, race/race)
-    if(race.name == "Shinjin")
-        return SHINJINBOOST
-    if(passiveName in BOOSTPASSIVES)
-        return NORMALBOOST
-    if(passiveName in NERFPASSIVES)
-        return 0.75
+majinAbsorb/proc/IsStealableSkill(obj/Skills/s)
+    if(!s) return 0
+    if(!istype(s, /obj/Skills)) return 0
+    // Never steal Absorb itself or variants.
+    if(istype(s, /obj/Skills/Absorb)) return 0
+    if(istype(s, /obj/Skills/Target_Clear)) return 0
+    if(istype(s, /obj/Skills/Target_Switch)) return 0
+    // No teleports
+    if(istype(s, /obj/Skills/Teleport)) return 0
     return 1
 
-/mob/proc/getMajinRacials()
+majinAbsorb/proc/CollectStealable(mob/absorbee)
     . = list()
-    switch(Class)
-        if("Innocent")
-            . += "DemonicDurability"
-            . += "Blubber"
-        if("Super")
-            . += "Steady"
-            . += "FluidForm"
-        if("Unhinged")
-            . += "UnhingedForm"
-            . += "Adrenaline"
-            . += "Hustle"
-    var/newPickslist = list()
-    if(length(majinPicks) > 0)
-        for(var/pick in majinPicks)
-            newPickslist = majinPicks["[pick]"]
-    // make newpickslist into a list but split the string by a comma
-    // so basically "Harness Evil,Brutality" becomes "Harness Evil" and "Brutality
-    // then we can use the switch statement to add the passives
-    newPickslist = splittext(newPickslist, ",")
-    if(length(newPickslist)> 0)
-        switch(newPickslist[1])
-            if("Harness Evil")
-                switch(newPickslist[2])
-                    if("Brutality")
-                        . += "Pursuer"
-                        . += "UnhingedForm"
-                    if("Both")
-                        . += "Pursuer"
-                        . += "UnhingedForm"
-            if("Remain Consistent")
-                switch(newPickslist[2])
-                    if("Adaptability")
-                        . += "Adaptation"
-                        . += "Flicker"
-                        . += "Huslte"
-                        if(AscensionsAcquired > 2)
-                            . += "StealsStats"
-                    if("Consistency")
-                        . += "Steady"
-                        . += "DebuffResistance"
-                        . += "StableBP"
-                    if("Both")
-                        . += "Steady"
-                        . += "DebuffResistance"
-                        . += "StableBP"
-                        . += "Adaptation"
-                        . += "Flicker"
-                        . += "Huslte"
-                        if(AscensionsAcquired > 2)
-                            . += "StealsStats"
-            if("Become Docile")
-                switch(newPickslist[2])
-                    if("Stability")
-                        . += "VenomResistance"
-                        . += "DebuffResistance"
-                        . += "Juggernaut"
-                    if("Peace")
-                        . += "Flow"
-                        . += "VoidField"
-                    if("Both")
-                        . += "VenomResistance"
-                        . += "DebuffResistance"
-                        . += "Juggernaut"
-                        . += "Flow"
-                        . += "VoidField"
+    if(!absorbee) return
+    for(var/obj/Skills/s in absorbee.contents)
+        if(IsStealableSkill(s))
+            . += s
 
-proc/removeDuplicates(list/list1)
-    var/list/newList = list()
-    for(var/element in list1)
-        if(element in newList)
-            continue
-        newList += element
-    return newList
+majinAbsorb/proc/StealSkills(mob/absorber, mob/absorbee)
+    var/list/result = list("types" = list(), "refs" = list())
+    var/list/available = CollectStealable(absorbee)
+    if(!available.len)
+        absorber << "[absorbee] has no skills you can absorb."
+        return result
 
-
-
-/mob/proc/getAllRacials()
-    . = list()
-    for(var/x in list("Majin", "Half Saiyan", "Saiyan", "Human", "Makyo", "Namekian", "Monster", "Shinjin", "Demon", "Celestial", "Angel", "Makaioshin", "Popo", "Beastkin", "Eldritch", "Dragon"))
-        . += getRacialPassives(x)
-    return .
-
-/mob/proc/findAlteredVariables()
-    for(var/x in getAllRacials())
-        if(vars[x] > 0)
-            src<<"You have an extra variable: [x], if you got this from absorb, you will need to get it removed and added back via an admin"
-            // we could do it auto with a bit more digging, as a majin will have some of these passives, and they could have potentially absorbed more to have more than they already have
-            if(passive_handler.Get(x))
-                src << "You have an extra passive: [x], if you got this from absorb, you will need to get it removed and added back via an admin"
-
-            for(var/mob/admin in world)
-                if(admin.Admin)
-                    admin << "[src] has an extra variable: [x], if they got this from absorb, you will need to get it removed and add it back"
-
-
-/mob/proc/getRacialPassives(hardRace = FALSE)
-    . = list()
-    if(!hardRace)
-        hardRace = race.type
-    switch(hardRace)
-        if(MAJIN)
-            . = getMajinRacials()
-        if(HALFSAIYAN)
-            . += "Tenacity"
-            . += "Brutalize"
-            . += "Adrenaline"
-        if(ELF)
-            . += "Deicide"
-            . += "TechniqueMastery"
-            . += "Flow"
-            . += "Unstoppable"
-            . += "BladeFisting"
-        if(SAIYAN)
-            . += "Brutalize"
-            if(Class=="Honor")
-                . += "Honor"
-                . += "Defiance"
-                . += "Juggernaut"
-            if(Class=="Pride")
-                . += "Pride"
-                . += "PureDamage"
-            if(Class=="Zeal")
-                . += "Zeal"
-                . += "Adaptation"
-        if(HUMAN)
-            . += "Tenacity"
-            . += "Adrenaline"
-            . += "Innovation"
-        if(MAKYO)
-            . += "Juggernaut"
-            . += "DemonicDurability"
-            . += "HeavyHitter"
-        if(NAMEKIAN)
-            if(Class=="Dragon")
-                . += "QuickCast"
-                . += "ManaGeneration"
-            if(Class=="Warrior")
-                . += "Pursuer"
-                . += "Tenacity"
-                . += "TechniqueMastery"
-            if(Class=="Demon")
-                . += "SpiritFlow"
-                . += "SpiritSword"
-                . += "TechniqueMastery"
-        if(BEASTKIN)
-            if(Class=="Heart of The Beastkin")
-                . += "Grit"
-            if(Class=="Unseen Predator")
-                . += "Steady"
-                . += "Brutalize"
-            if(Class=="Monkey King")
-                . += "Harden"
-                . += "Instinct"
-                . += "Nimbus"
-            if(Class=="Undying Rage")
-                . += "Fury"
-                . += "Wrathful Tenacity"
-            if(Class=="Feather Cowl")
-                . += "Harden"
-                . += "Pressure"
-                . += "BladeFisting"
-            if(Class=="Feather Knife")
-                . += "Tossing"
-                . += "Momentum"
-                . += "BladeFisting"
-            if(Class=="Fox Fire")
-                . += "SoftStyle"
-                . += "SoulFire"
-            if(Class=="Spirit Walker")
-                . += "Flow"
-                . += "Instinct"
-            if(Class=="Trickster")
-                . += "ManaGeneration"
-                . += "Touch of Death"
-        if(ELDRITCH)
-            . += "Void"
-            . += "VenomResistance"
-            . += "SoulFire"
-            . += "DeathField"
-            . += "VoidField"
-        if(DEMON)
-            . += "CursedWounds"
-            . += "AbyssMod"
-            . += "SpaceWalk"
-            . += "StaticWalk"
-            . += "FakePeace"
-            . += "MartialMagic"
-        if(ELF)
-            . += "Xenobiology"
-            . += "Deicide"
-            . += "TechniqueMastery"
-        if(GAJALAKA)
-            . += "CashCow"
-            . += "Blubber"
-        if(DRAGON)
-            if(Class=="Water")
-                . += "SoftStyle"
-                . += "Fishman"
-                . += "FluidForm"
-            if(Class=="Fire")
-                . += "DemonicDurability"
-                . += "SpiritHand"
-            if(Class=="Metal")
-                . += "Harden"
-                . += "KBRes"
-            if(Class=="Gold")
-                . += "Blubber"
-                . += "CashCow"
-            if(Class=="Dark")
-                . += "Fury"
-                . += "Momentum"
-        if(ANGEL)
-            . += "SpiritPower"
-            . += "HolyMod"
-            . += "StaticWalk"
-            . += "SpaceWalk"
-            . += "MartialMagic"
-            if(Class=="Mentor")
-                . += "TechniqueMastery"
-                . += "StyleMastery"
-                . += "SpiritPower"
-                . += "HolyMod"
-                . += "StaticWalk"
-                . += "SpaceWalk"
-                . += "MartialMagic"
-        if(CELESTIAL)
-            . += "Tenacity"
-            . += "Adrenaline"
-        if(MAKAIOSHIN)
-            . += "SpiritPower"
-            . += "HellPower"
-            . += "HolyMod"
-            . += "AbyssMod"
-            . += "StaticWalk"
-            . += "SpaceWalk"
-            . += "FakePeace"
-            . += "MartialMagic"
-            . += "BladeFisting"
-        if(POPO)
-            . += "ManaGeneration"
-            . += "QuickCast"
-            . += "CashCow"
-            . += "TechniqueMastery"
-            . += "StyleMastery"
-            . += "Holding Back"
-    . = removeDuplicates(.)
-
+    var/max_picks = skillsPerVictim
+    var/picks_left = max_picks
+    while(picks_left > 0 && available.len > 0)
+        var/list/menu = list("Cancel")
+        var/list/menu_lookup = list()
+        for(var/obj/Skills/s in available)
+            var/label = "[s.name ? s.name : s.type]"
+            menu += label
+            menu_lookup[label] = s
+        var/choice = input(absorber, "Pick a skill to absorb ([picks_left] picks left):", "Absorb Skills") in menu
+        if(choice == "Cancel" || !choice) break
+        var/obj/Skills/picked = menu_lookup[choice]
+        if(!picked) continue
+        var/chosenType = picked.type
+        var/obj/Skills/copy = new chosenType
+        absorber.AddSkill(copy)
+        result["types"] += chosenType
+        result["refs"] += copy
+        available -= picked
+        picks_left -= 1
+        absorber << "You rip the knowledge of [choice] from [absorbee] and make it your own."
+    return result
 
 majinAbsorb/proc/doAbsorb(mob/absorber, mob/absorbee)
+    if(!absorber || !absorbee) return
     updateVariables(absorber)
-    if(length(absorbed) > 0)
-        if(absorbed[absorbee.ckey] == absorbee.ckey)
-            absorber << "You've already absorbed this person, absorb another person."
-            return
-    if(absorbCount >= absorbLimit)
-        if(absorber.AscensionsAcquired==0 && absorber.Potential >= 10)
-            var/ascension/next
-            switch(absorber.AscensionsAcquired + 1)
-                if(1) next = new /ascension/majin/one
-            if(next)
-                next.onAscension(absorber)
-                absorber << "You've awakened to your next ascension through absorbing countless victims."
-        if(absorber.AscensionsAcquired==1 && absorber.Potential >= 20)
-            var/ascension/next
-            switch(absorber.AscensionsAcquired + 1)
-                if(2) next = new /ascension/majin/two
-            if(next)
-                next.onAscension(absorber)
-                absorber << "You've awakened to your next ascension through absorbing countless victims."
-        if(absorber.AscensionsAcquired==2 && absorber.Potential >= 45)
-            var/ascension/next
-            switch(absorber.AscensionsAcquired + 1)
-                if(3) next = new /ascension/majin/three
-            if(next)
-                next.onAscension(absorber)
-                absorber << "You've awakened to your next ascension through absorbing countless victims."
-        else
-            absorber << "You can't absorb any more passives, you've reached your limit."
-        return
-    var/list/racialPassives = absorbee.getRacialPassives()
-    var/passiveInQuestion = input(absorber, "Which passive would you like to absorb?", "Absorb") in racialPassives
-    var/maxGain
-    var/maxPasssiveCanHave = absorbPassiveTickLimit * adjustPassive(passiveInQuestion, absorbee.race)
 
-    var/absorbeePassiveTicks = absorbee.passive_handler.Get(passiveInQuestion)
-    if(absorbeePassiveTicks > 0)
-        maxGain = absorbeePassiveTicks
-    else
-        return // if they don't have the passive, we can't absorb it
-    var/passiveticks = tickPerAbsorb
-    passiveticks *= adjustPassive(passiveInQuestion, absorbee.race)
-    var/existingPassive = absorber.passive_handler.Get(passiveInQuestion) ? absorber.passive_handler.Get(passiveInQuestion) : 0
-    // now lets check how much the person absorbing can have
-    if((existingPassive + passiveticks) >= maxPasssiveCanHave)
-        passiveticks = maxPasssiveCanHave - existingPassive
-    else
-        if(existingPassive >= maxPasssiveCanHave)
-            absorber << "You can not absorb any more of [passiveInQuestion]"
-            return
-        // make it the limit
-    if(passiveticks > maxGain)
-        passiveticks = maxGain
-    if(existingPassive == maxGain)
-        absorber << "You can not absorb any more of [passiveInQuestion]"
+    // Already absorbed by us?
+    if(absorbed["[absorbee.ckey]"])
+        absorber << "You have already absorbed [absorbee]."
         return
-    if((existingPassive + passiveticks) > maxGain)
-        absorber << "You would exceed the passive limit, you can only absorb [maxGain] ticks of [passiveInQuestion]. Adjusting to [maxGain]"
-        passiveticks = maxGain
-        absorber.passive_handler.Set(passiveInQuestion, passiveticks)
+
+    // Room slot exhaustion
+    if(absorbed.len >= absorbLimit)
+        absorber << "You cannot contain any more bodies in your stomach. Release one first."
+        return
+
+    // Ensure a room is claimed
+    if(!absorber.majinOwnedRoom)
+        absorber.ClaimMajinRoom()
+    if(!absorber.majinOwnedRoom)
+        return // error already shown
+
+    // might overwrite mid-transport otherwise?
+    var/peak = max(absorbee.PeakPowerObserved, absorbee.Power)
+
+    // Steal skills
+    var/list/stolen = StealSkills(absorber, absorbee)
+
+    // Move victim into the Majin's room
+    var/turf/dest = absorber.GetMajinRoomTurf()
+    if(!dest)
+        absorber << "Your stomach is nowhere to be found. Report this to an Admin."
+        for(var/obj/Skills/s in stolen["refs"])
+            absorber.DeleteSkill(s)
+        return
+
+    absorbee.absorbedBy = absorber.ckey
+    absorbee.majinRoomIndex = absorber.majinOwnedRoom
+    absorbee.loc = dest
+
+    absorbed["[absorbee.ckey]"] = list(
+        "mob" = absorbee,
+        "skills" = stolen["types"],
+        "skill_refs" = stolen["refs"],
+        "peak" = peak,
+        "was_logged_in" = (absorbee.client ? TRUE : FALSE)
+    )
+
+    absorber << "You absorb [absorbee] into your stomach. Their power becomes yours."
+    absorbee << "You are absorbed into [absorber]! Your power and knowledge flow into them."
+    OMsg(absorber, "[absorber] absorbs [absorbee]!")
+
+// Possible FX here at some point
+majinAbsorb/proc/releaseVictim(mob/absorber, theCkey, reason = "")
+    if(!absorbed || !absorbed[theCkey]) return
+    var/list/entry = absorbed[theCkey]
+
+    if(islist(entry["skill_refs"]))
+        for(var/obj/Skills/s in entry["skill_refs"])
+            if(s) absorber.DeleteSkill(s)
+
+    var/mob/victim = entry["mob"]
+    if(victim)
+        if(victim.z == MAJIN_ABSORB_Z)
+            victim.loc = locate(absorber.x, absorber.y, absorber.z)
+        victim.absorbedBy = null
+        victim.majinRoomIndex = 0
+        victim.KO = 1
+        if(victim.client)
+            victim << "You are violently expelled from [absorber]!"
     else
-        if(passiveticks == 0)
-            passiveticks = 0.5
-        absorber.passive_handler.Increase("[passiveInQuestion]", passiveticks)
-    absorber << "You have absorbed [passiveInQuestion] from [absorbee] making your total [absorber.passive_handler.Get(passiveInQuestion)]]!"
-    absorbCount++
-    passives[passiveInQuestion] = passiveticks
-    absorber.HealHealth(15)
-    absorber.HealEnergy(15)
-    addAbsorbee(absorbee)
-    nerfAbsorbee(absorbee)
+        // Victim is currently logged out. Stash an ejection point
+            MAJIN_PENDING_EJECTIONS["[theCkey]"] = list(absorber.x, absorber.y, absorber.z, "[absorber]")
+
+    absorbed -= theCkey
+
+    if(!absorbed.len)
+        absorber.ReleaseMajinRoom()
+
+majinAbsorb/proc/releaseAll(mob/absorber, reason = "")
+    if(!absorbed || !absorbed.len) return
+    var/list/keys = absorbed.Copy()
+    for(var/k in keys)
+        releaseVictim(absorber, k, reason)
+    absorbed = list()
+    absorber.ReleaseMajinRoom()
+
+// Victims remain locked in their Majin's stomach even across relogs
+
+/proc/FindMajinAbsorbingCkey(theCkey)
+    if(!theCkey) return null
+    for(var/mob/Players/M in players)
+        if(M.majinAbsorb && M.majinAbsorb.absorbed && M.majinAbsorb.absorbed["[theCkey]"])
+            return M
+    return null
+
+/mob/proc/MajinAbsorbOnLogout()
+    if(!ckey) return
+    var/mob/Players/M = FindMajinAbsorbingCkey(ckey)
+    if(!M) return
+    var/list/entry = M.majinAbsorb.absorbed["[ckey]"]
+    if(!islist(entry)) return
+    entry["was_logged_in"] = FALSE
+    entry["mob"] = null
+
+/mob/proc/MajinAbsorbOnLogin()
+    if(!ckey) return
+    // Safeguard for if this player was absorbed by a Majin that has since died
+    var/list/pending = MAJIN_PENDING_EJECTIONS["[ckey]"]
+    if(islist(pending) && pending.len >= 3)
+        var/turf/T = locate(pending[1], pending[2], pending[3])
+        if(T)
+            src.loc = T
+        src.absorbedBy = null
+        src.majinRoomIndex = 0
+        src.KO = 1
+        var/absorberName = (pending.len >= 4) ? pending[4] : "your captor"
+        src << "<font color='red'>You are violently expelled from [absorberName]'s corpse!</font>"
+        MAJIN_PENDING_EJECTIONS -= "[ckey]"
+        return
+    var/mob/Players/M = FindMajinAbsorbingCkey(ckey)
+    if(!M) return
+    var/list/entry = M.majinAbsorb.absorbed["[ckey]"]
+    if(!islist(entry)) return
+    entry["mob"] = src
+    entry["was_logged_in"] = TRUE
+    src.absorbedBy = M.ckey
+    src.majinRoomIndex = M.majinOwnedRoom
+    var/turf/dest = M.GetMajinRoomTurf()
+    if(dest)
+        src.loc = dest
+        src << "You are currently trapped inside of [M]."
+
+// Manual release
+/mob/proc/releaseAbsorbedPrompt()
+    if(!isRace(MAJIN) || !majinAbsorb)
+        src << "You have nothing absorbed."
+        return
+    if(!majinAbsorb.absorbed || !majinAbsorb.absorbed.len)
+        src << "You have no one absorbed."
+        return
+    var/list/menu = list("Cancel")
+    var/list/menu_lookup = list()
+    for(var/key in majinAbsorb.absorbed)
+        var/list/entry = majinAbsorb.absorbed[key]
+        if(!islist(entry)) continue
+        var/mob/victim = entry["mob"]
+        var/label = victim ? "[victim.name] ([key])" : "[key] (offline)"
+        menu += label
+        menu_lookup[label] = key
+    var/choice = input(src, "Who do you want to spit out?", "Release Absorb") in menu
+    if(!choice || choice == "Cancel") return
+    var/targetKey = menu_lookup[choice]
+    if(!targetKey) return
+    majinAbsorb.releaseVictim(src, targetKey, "voluntary")
+    src << "You spit [choice] back out."
+    OMsg(src, "[src] violently ejects someone from their body!")
+
 /mob/proc/absorbSomebody(mob/target)
-    var/errorCodes = list("ERROR: CODE ERROR", "TRIED TO USE CURRENT TARGET BUT THERE IS NONE", \
-    "TARGET IS SELF", "TARGET IS NOT KNOCKED OUT", "THAT TARGET IS METAL")
     if(!target)
-        // let's check if its a code error and they're targeting them
-        . = errorCodes[1]
         target = src.Target
-        if(!target)
-            . = errorCodes[2]
-            src << .
-        src << . // let's tell them what happened
+    if(!target)
+        src << "You need a target to absorb."
+        return
     if(target == src)
-        . = errorCodes[3]
-        src << .
+        src << "You cannot absorb yourself, retard!"
+        return
     if(!target.KO)
-        . = errorCodes[4]
-        src<< .
+        src << "[target] must be knocked out before you can absorb them."
         return
     if(target.isRace(ANDROID))
-        . = errorCodes[5]
-        src << .
+        src << "[target] is mechanical and cannot be absorbed."
         return
-    if(target.client.address == src.client.address || target.client.computer_id == src.client.computer_id )
-        if(!soIgnore && target.client.computer_id != src.client.computer_id)
-            . = "ERROR: TARGET IS YOU"
-            src << .
-            return
-    if(majinAbsorb)
-        majinAbsorb.doAbsorb(src, target)
+    if(target.isRace(MAJIN))
+        src << "You cannot absorb another Majin."
+        return
+    if(!src.majinAbsorb)
+        return
+    if(target.client && src.client)
+        if(target.client.address == src.client.address || target.client.computer_id == src.client.computer_id)
+            if(!soIgnore && target.client.computer_id != src.client.computer_id)
+                src << "Nice try, bucko."
+                return
+    majinAbsorb.doAbsorb(src, target)

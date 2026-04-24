@@ -4,18 +4,19 @@ race
 		desc = "Primordial ooze given shape from the overuse of magic, given life by Aether."
 		visual = 'Majins.png'
 
-		passives = list("StaticWalk" = 1, "Steady" = 1)
-		skills = list(/obj/Skills/Absorb, /obj/Skills/Buffs/SlotlessBuffs/Regeneration)
+		passives = list("StaticWalk" = 1, "SpaceWalk" = 1, "Steady" = 1, "DrainlessPUSpike" = 1, "MartialMagic" = 1, "BladeFisting" = 1)
+		skills = list(/obj/Skills/Absorb, /obj/Skills/Release_Absorb, /obj/Skills/Buffs/SlotlessBuffs/Regeneration)
 
 		locked = TRUE
 		intellect = 1.25
 		imagination = 4
-		anger = 1.5
+		anger = 2
 		regeneration = 4
-		strength = 2
-		endurance = 2
+		recovery = 3
+		strength = 1.5
+		endurance = 3
 		speed = 1.5
-		force = 2
+		force = 1.5
 		offense = 1.5
 		defense = 1
 
@@ -23,8 +24,11 @@ race
 			..()
 			var/obj/Skills/Buffs/regen = user.findOrAddSkill(/obj/Skills/Buffs/SlotlessBuffs/Regeneration)
 			regen.RegenerateLimbs = 1;
+			user.findOrAddSkill(/obj/Skills/Release_Absorb)
 			if(!user.majinPassive)
 				user.majinPassive = new(user)
 			if(!user.majinAbsorb)
-				user.majinAbsorb = new()
-				user.findAlteredVariables()
+				user.majinAbsorb = new(user)
+			// Claim this Majin's personal absorb room. ClaimMajinRoom()
+			if(!user.majinOwnedRoom)
+				user.ClaimMajinRoom()

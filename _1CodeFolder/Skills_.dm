@@ -496,6 +496,10 @@ mob/proc/SkillX(var/Wut,var/obj/Skills/Z,var/bypass=0)
 						src.Melee1(1, 5, accmulti=1.125+(src.GetSuperDash()/4))
 
 
+			if("Release Absorb")
+				src.releaseAbsorbedPrompt()
+				return
+
 			if("Absorb")
 				// if(Z.Using)
 				// 	return

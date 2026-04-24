@@ -1,6 +1,11 @@
 #define GLOBAL_LEAK_REDUCTION 1.2
 #define isplayer(x) istype(x,/mob/Players)
 
+// Was previously in MajinAscensions.dm
+/mob/proc/prompt(message, title, list/options)
+	if(!islist(options)) return null
+	return input(src, message, title) in options
+
 /globalTracker/var/DEBUFF_EFFECTIVENESS = 0.004
 
 /mob/var/AbsorbingDamage = 0

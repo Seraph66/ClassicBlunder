@@ -9749,7 +9749,7 @@ NEW VARIABLES
 						StrMult=1.25 + (0.05*secretLevel*secretLevel)
 						ForMult=1.25 + (0.05*secretLevel*secretLevel)
 						EndMult=1.25 + (0.05*secretLevel*secretLevel)
-						passives = list("SpiralPowerUnlocked" = SpiralPower)
+						passives = list("SpiralPowerUnlocked" = SpiralPower, "PureDamage" = SpiralPower, "PureReduction" = SpiralPower)
 						TimerLimit= (2 * currentPot) + (20 * (p.transUnlocked ? p.transUnlocked : p.AscensionsAcquired))
 						Cooldown = 61 - ((5 * p.AscensionsAcquired) + (5 * secretLevel))
 				KenWave = 2

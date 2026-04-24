@@ -53,6 +53,9 @@ proc/log_func(x, a, b)
 #define HALFSAIYAN /race/half_saiyan
 #define DEMON /race/demon
 #define MAJIN /race/majin
+// Majin absorb zone
+#define MAJIN_ABSORB_Z 19
+#define MAJIN_UNHINGED_POWER_MULT 2
 #define MAKYO /race/makyo
 #define DRAGON /race/dragon
 #define ELF /race/high_faoroan

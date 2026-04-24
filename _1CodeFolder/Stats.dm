@@ -2,6 +2,12 @@ mob/verb/Character_Sheet()
 	set category = "Other"
 	src<<browse(src.GetAssess(),"window=Assess;size=275x650")
 
+// Unhinged Majins count their Power at MAJIN_UNHINGED_POWER_MULT (2x) in both offense and defense
+mob/proc/GetEffectivePower()
+	. = Power
+	if(isRace(MAJIN) && Class == "Unhinged")
+		. *= MAJIN_UNHINGED_POWER_MULT
+
 mob/proc/GetAssess()
 	var/PowerDisplay
 	var/PotentialPowerDisplay
@@ -1002,6 +1008,13 @@ mob/proc/
 					Power*=GetPowerUpRatio()
 		var/nerf = GetPowerUpRatio()+EPM > 2.3 ? 1 : 0
 		power_display=get_power_tier(0, Power, nerf)
+
+		// Track the highest sustained Power this mob has ever reached.
+		if(Power > PeakPowerObserved)
+			PeakPowerObserved = Power
+
+		if(majinAbsorb && majinAbsorb.absorbed && majinAbsorb.absorbed.len)
+			Power += majinAbsorb.SumAbsorbedPeakPower(src)
 
 		if(src.Dead&&!src.KeepBody)
 			Ratio*=0.5

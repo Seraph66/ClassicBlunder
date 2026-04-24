@@ -192,7 +192,7 @@ obj/Skills/AutoHit/Spiral
 		Cooldown=360
 		Area="Target"
 		Distance=15
-		DamageMult=30
+		DamageMult=15
 		HitSparkIcon='SparkleRed.dmi'
 		HitSparkTurns=1
 		HitSparkSize=5
