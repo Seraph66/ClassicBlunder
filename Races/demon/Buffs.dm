@@ -64,7 +64,7 @@
 	var/max_size = 4.0
 	var/wave_lifetime = 30
 	var/mob/Players/owner
-	var/DamageMult = 10
+	var/DamageMult = 30
 	var/StrOffense = 1
 	var/ForOffense = 1
 	var/EndRes = 1
@@ -178,7 +178,7 @@
 	name = "Sloth Factor"
 	BuffName = "Sloth Factor"
 	Cooldown = -1
-	var/DamageMult = 10
+	var/DamageMult = 30
 	var/StrOffense = 1
 	var/ForOffense = 1
 	var/EndRes = 1
