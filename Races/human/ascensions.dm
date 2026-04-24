@@ -61,7 +61,7 @@ ascension
 							defense = 0.25
 							endurance = 0.25
 							speed = 0.25
-							passives  = list("Motivation" = 0.1)
+							passives  += list("Motivation" = 0.1)
 						if("Heroic")
 							offense = 0.5
 							strength = 0.5
@@ -69,7 +69,7 @@ ascension
 							defense = 0.5
 							endurance = 0.5
 							speed = 0.4
-							passives = list("KiControlMastery"= 1)
+							passives += list("KiControlMastery"= 1)
 						if("Resourceful")
 							offense = 0.1
 							strength = 0.1
@@ -97,7 +97,7 @@ ascension
 							defense = 0.25
 							endurance = 0.25
 							speed = 0.25
-							passives  = list("Motivation" = 0.15)
+							passives  += list("Motivation" = 0.15)
 						if("Heroic")
 							offense = 1
 							strength = 1
@@ -150,7 +150,7 @@ ascension
 							defense = 0.75
 							endurance = 0.75
 							speed = 0.4
-							passives = list("KiControlMastery"= 1)
+							passives += list("KiControlMastery"= 1)
 							//TO DO - Something that makes them scale with SSj2. Passives? Inherent buff? hm.
 						if("Resourceful")
 							offense = 0.1
@@ -248,7 +248,7 @@ ascension
 							defense = 1.5
 							endurance = 1.5
 							speed = 0.4
-							passives = list("KiControlMastery"= 1)
+							passives += list("KiControlMastery"= 1)
 							//TO DO - Something that makes it not obvious that I just copied and pasted this four times
 						if("Resourceful")
 							offense = 0.1
