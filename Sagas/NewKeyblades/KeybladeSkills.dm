@@ -352,15 +352,15 @@ obj
 							StrMult=1.25
 							OffMult=1.25
 							SpdMult=1.5
-							passives+=SwordPassives
+							passives=SwordPassives
 						if(p.KeybladeType=="Shield")
 							EndMult=1.5
 							DefMult=1.5
-							passives+=ShieldPassives
+							passives=ShieldPassives
 						if(p.KeybladeType=="Staff")
 							ForMult=1.5
 							OffMult=1.5
-							passives+=StaffPassives
+							passives=StaffPassives
 					verb/Keyblade_Armor()
 						set category="Skills"
 						if(!usr.BuffOn(src))

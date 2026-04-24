@@ -972,6 +972,23 @@ mob/proc/
 			if(isRace(SAIYAN)&&transActive&&ActiveBuff)
 				if(passive_handler.Get("SaiyanPower"))
 					Ratio*=src.GetSaiyanPower()
+			if(isRace(SAIYAN)&&passive_handler.Get("SpiralPowerUnlocked")||isRace(HALFSAIYAN)&&passive_handler.Get("SpiralPowerUnlocked"))
+				switch(transUnlocked)
+					if(0)
+						Ratio*=1.4
+					if(1)
+						Ratio*=1.2
+					if(2)
+						Ratio*=1.5
+					if(3)
+						Ratio*=2
+					if(4)
+						Ratio*=1.5
+					if(5)
+						if(HasGodKi())
+							Ratio*=1.15
+						else
+							Ratio*=1.25
 			if(passive_handler.Get("SSJRose"))
 				Ratio*=1.60 //this will be Different but i'm leaving it like this now
 

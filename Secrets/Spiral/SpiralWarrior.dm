@@ -192,7 +192,7 @@ obj/Skills/AutoHit/Spiral
 		Cooldown=360
 		Area="Target"
 		Distance=15
-		DamageMult=30
+		DamageMult=15
 		HitSparkIcon='SparkleRed.dmi'
 		HitSparkTurns=1
 		HitSparkSize=5
@@ -229,4 +229,6 @@ obj/Skills/AutoHit/Spiral
 				Total*=2
 			else
 				Total*=1
+	if(isRace(HUMAN)&&Class=="Underdog"||NobodyOriginType="Spirit")
+		Total*=1+((SL)/5)
 	return Total

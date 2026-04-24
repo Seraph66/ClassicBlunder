@@ -1842,6 +1842,9 @@ mob
 			var/SaiyanPowerGod= passive_handler.Get("SaiyanPowerGod")
 			var/SaiyanPowerZenkai= passive_handler.Get("TrueZenkaiPower")
 			var/SaiyanPowerVoid= passive_handler.Get("SaiyanPowerVoid")
+			var/SEBoost=1+(passive_handler.Get("SpiralPowerUnlocked")/10)
+			if(passive_handler.Get("SpiralPowerUnlocked")&&NobodyOriginType=="Pride")
+				SaiyanPowerVoid*=SEBoost
 			var/SaiyanPower=1+(SaiyanPower1+SaiyanPower2+SaiyanPower3+SaiyanPower4+SaiyanPowerZenkai+SaiyanPowerGod+SaiyanPowerVoid)//It's like this because I intend on having Saiyan Unique buffs interact with this specifically. you'll see what i mean when i get to the grades
 			return SaiyanPower
 

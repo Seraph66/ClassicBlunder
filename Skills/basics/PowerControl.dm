@@ -7,7 +7,7 @@
         if(goingUp) CanTransform()
         return 0;
     if(goingUp)
-        if(CheckActive("Ki Control")) return 0;
+        if(CheckActive("Ki Control") && !canMangPU()) return 0;
     return 1;
 
 /mob/proc/canDoATransform()
