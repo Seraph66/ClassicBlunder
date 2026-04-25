@@ -28,6 +28,7 @@ obj/Skills
 
 			UnderworldWarp=0//if 1, traverse underworld is option
 			DepthsWarp=0 //Travel to the Depths
+			DepthsFocal=0;
 			DaatWarp=0//Travel to Da'at
 			DiveWarp=0//Dive to the Heart
 			FallThrough=0//go to this z plane around your coordinates if you arent on it
@@ -238,6 +239,8 @@ obj/Skills
 			desc="Warp to the Depths and back."
 			UseableDead=1
 			DepthsWarp=1
+			DepthsFocal=1;
+			NoFocals=1;
 			NoCoordinates=1
 			NoPassengers=0
 			NoReturn=0
@@ -247,9 +250,28 @@ obj/Skills
 			WindDownIcon='Icons/Effects/BlackHoleExit.dmi'
 			TeleportMessage="rips open a portal to a realm of screaming terror."
 			ArriveMessage="arrives through a portal."
+			var/list/depthsFocals=list();
 			verb/Traverse_Depths()
 				set category="Utility"
 				src.Activate(usr)
+			verb/Mark_Focal()
+				set category="Utility"
+				set name = "Mark Depths Focal"
+				if(depthsFocals.len >= usr.AscensionsAcquired)
+					usr << "You have already marked the maximum amount of focals for your ascension level.";
+					return;
+				var/fName = input(usr, "What will you call this focal point?", "Focal Label") as text;
+				if(!fName) return;
+				for(var/obj/Arcane/ArcaneFocal/f in world)
+					if(f.name == fName)
+						usr << "A focal named [fName] already exists. Pick a different name."
+						return;
+				var/confirm = alert(usr, "Do you want to assign one of your focals to the location [usr.x], [usr.y], [usr.z], with the label [fName]?", "Create Personal Focal Point", "No", "Yes");
+				if(confirm=="No") return;
+				var/obj/Arcane/ArcaneFocal/newFocal = new()
+				newFocal.loc = usr.loc;
+				newFocal.name = fName;
+				depthsFocals.Add(newFocal.name);
 		Dive_To_Heart
 			desc="Dive into the station of the heart."
 			DiveWarp=1
@@ -309,6 +331,10 @@ obj/Skills
 				var/list/Modes=list("Cancel")
 				if(!NoCoordinates)
 					Modes.Add("XYZ")
+				if(DepthsFocal)
+					var/obj/Skills/Teleport/Traverse_Depths/dw = User.findOrAddSkill(/obj/Skills/Teleport/Traverse_Depths)
+					if(dw.depthsFocals.len > 0)
+						Modes.Add("Depths Focal")
 				if(!NoFocals)//If focals are enabled
 					var/obj/Arcane/ArcaneFocal/f1
 					if(src.FocalArcane)
@@ -436,6 +462,18 @@ obj/Skills
 							else
 								User<< "Target coordinates not found."
 								return
+					if("Depths Focal")
+						var/obj/Skills/Teleport/Traverse_Depths/td = User.findOrAddSkill(/obj/Skills/Teleport/Traverse_Depths);
+						var/list/options = list("Nevermind") + td.depthsFocals;
+						var/choice = input(User, "What focal do you want to teleport to?", "Personal Focal Teleportation") in options;
+						if(choice=="Nevermind") return;
+						ReturnX = User.x;
+						ReturnY = User.y;
+						ReturnZ = User.z;
+						for(var/obj/Arcane/ArcaneFocal/f in world)
+							if(f.name == choice)
+								Destination = locate(f.x, f.y, f.z);
+								break;
 					if("Focal")
 						if(Focals.len<2)
 							User << "No focals to teleport to."
@@ -506,6 +544,8 @@ obj/Skills
 							src.ReturnZ=User.z
 							Destination=locate(glob.VOID_LOCATION[1], glob.VOID_LOCATION[2], glob.VOID_LOCATION[3])
 					if("Traverse Depths")
+						User << "You're already in the Depths, this wipe, love."
+						return;
 						src.ReturnX=User.x
 						src.ReturnY=User.y
 						src.ReturnZ=User.z
