@@ -88,7 +88,7 @@
                     es.ShroudedPassives["Unnerve"] = 1;
                 if("Heroism")
                     es.ShroudedPassives["BuffMastery"] = 10;
-                    es.ShroudedPassives["ShounenPower"] = 0.5;
+                    es.ShroudedPassives["ShonenPower"] = 0.5;
                     es.ShroudedPassives["Persistence"] = 3;
                 if("Resourceful")
                     es.ShroudedPassives["GodSpeed"] = 4;

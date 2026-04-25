@@ -294,11 +294,11 @@ ascension
 							endurance = 0.1
 							speed = 0.4
 			onAscension(mob/owner)
-				..()
 				simulateChoiceMutation(owner)
 				if(owner.Class=="Underdog" && owner.transUnlocked<5)
 					owner.transUnlocked=5
 				applyDormantDemonPassives(owner)
+				..()
 				if(owner.isMazokuHuman())
 					var/already_has_sea = FALSE
 					for(var/transformation/T in owner.race.transformations)

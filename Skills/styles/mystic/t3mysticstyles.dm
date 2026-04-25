@@ -154,7 +154,7 @@
 					ElementalClass = "Fire"
 					ElementalOffense = "Fire"
 					ElementalDefense = "Fire"
-					passives = list("Adaptation" = 5, "Scorching" = 2, "Combustion" = 60, "SpiritHand" = 4, "HeavyStrike" = "Inferno", "Fa Jin" = 2, "Instinct" = 4, "Momentum" = 4)
+					passives = list("Adaptation" = 5, "Scorching" = 2, "Combustion" = 60, "SpiritHand" = 4, "Heavy Strike" = "Inferno", "Fa Jin" = 2, "Instinct" = 4, "Momentum" = 4)
 					Finisher = "/obj/Skills/Queue/Finisher/Sorblow"
 				if("kaus")
 					StyleActive = "Kaus"
