@@ -67,6 +67,17 @@ mob/proc/Redo_Stats()
 	Redoing_Stats=1
 	RacialStats()
 	UpdateBio()
+	// Grant a fresh stat-point pool sourced from the race template. Without
+	// this, /obj/Redo_Stats reopens the Finalize screen with whatever Points
+	// the player happens to have (usually 0 mid-game), and admins had to edit
+	// Points=10 by hand. The newer mob/stat_redo path already does this; mirror
+	// it here so the legacy redo object behaves the same.
+	var/pointPool = race ? race.statPoints : 10
+	if(race && race.type)
+		var/race/template = GetRaceInstanceFromType(race.type)
+		if(template)
+			pointPool = template.statPoints
+	SetStatPoints(pointPool)
 	var/mob/Creation/C = new
 	C.NextStep2(src)
 	del C

@@ -24,7 +24,11 @@
 			ForMult = 1.4
 			StrMult = 1.35
 			OffMult = 1.3
-			passives = list("Scorching" = 1, "Momentum" = 1, "FireHerald" = 1, "Brutalize" = 1, "CriticalChance" = 20, "CriticalDamage" = 0.2, "DemonicDurability" = 4)
+			// Tenacity replaces DemonicDurability here: DemonicDurability's End scaling
+			// is gated by (Anger||HasCalmAnger()) in _JinxUtility.dm, which leaves it
+			// dead for non-Mazoku/Wrathful/etc. mages. Tenacity is universal and fits
+			// the same defensive role.
+			passives = list("Scorching" = 1, "Momentum" = 1, "FireHerald" = 1, "Brutalize" = 1, "CriticalChance" = 20, "CriticalDamage" = 0.2, "Tenacity" = 2)
 		else if(tier >= 2)
 			ForMult = 1.25
 			StrMult = 1.15
