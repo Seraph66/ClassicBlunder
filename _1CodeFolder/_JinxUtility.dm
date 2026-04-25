@@ -1732,18 +1732,6 @@ mob
 				TotalTax=0.9
 			var/Sub=Str*TotalTax
 			Str-=Sub
-			if(src.passive_handler.Get("UnhingedForm"))
-				var/UnhingedForm = src.passive_handler.Get("UnhingedForm")
-				var/perRange = UnhingedForm/30
-				var/def = round((1 - BaseDef()) / 0.1, 1)
-				// for each 0.1 def add perRange speed
-				var/end = round((1 - BaseEnd()) / 0.1, 1)
-				// for each 0.1 end add perRange speed
-				var/total = (def + end) * perRange
-				if(total > UnhingedForm)
-					Str += UnhingedForm
-				else
-					Str += total
 			Str+=src.GetMA("Str")
 			if(src.HasAdaptation())
 				if(src.AdaptationCounter!=0&&!CheckSlotless("Great Ape"))
@@ -1932,18 +1920,6 @@ mob
 			var/Sub=For*TotalTax
 			For-=Sub
 			For+=src.GetMA("For")
-			if(src.passive_handler.Get("UnhingedForm"))
-				var/UnhingedForm = src.passive_handler.Get("UnhingedForm")
-				var/perRange = UnhingedForm/30
-				var/def = round((1 - BaseDef()) / 0.1, 1)
-				// for each 0.1 def add perRange speed
-				var/end = round((1 - BaseEnd()) / 0.1, 1)
-				// for each 0.1 end add perRange speed
-				var/total = (def + end) * perRange
-				if(total > UnhingedForm)
-					For += UnhingedForm
-				else
-					For += total
 			// if(src.UsingYinYang()&&src.Target&&src.Target!=src&&!src.Target.UsingYinYang()&&istype(src.Target, /mob/Players))
 			// 	For+=src.Target.GetMA("End")*0.5
 			// else
@@ -2253,18 +2229,6 @@ mob
 				TotalTax=0.9
 			var/Sub=Spd*TotalTax
 			Spd-=Sub
-			if(src.passive_handler.Get("UnhingedForm"))
-				var/UnhingedForm = src.passive_handler.Get("UnhingedForm")
-				var/perRange = UnhingedForm/20
-				var/def = round((1 - BaseDef()) / 0.1, 1)
-				// for each 0.1 def add perRange speed
-				var/end = round((1 - BaseEnd()) / 0.1, 1)
-				// for each 0.1 end add perRange speed
-				var/total = (def + end) * perRange
-				if(total > UnhingedForm)
-					Spd += UnhingedForm
-				else
-					Spd += total
 			Spd+=src.GetMA("Spd")
 			// if(src.UsingYinYang()&&src.Target&&src.Target!=src&&!src.Target.UsingYinYang()&&istype(src.Target, /mob/Players))
 			// 	Spd+=src.Target.GetMA("Spd")*0.5
@@ -2381,18 +2345,6 @@ mob
 				TotalTax=0.9
 			var/Sub=Off*TotalTax
 			Off-=Sub
-			if(src.passive_handler.Get("UnhingedForm"))
-				var/UnhingedForm = src.passive_handler.Get("UnhingedForm")
-				var/perRange = UnhingedForm/20
-				var/def = round((1 - BaseDef()) / 0.1, 1)
-				// for each 0.1 def add perRange speed
-				var/end = round((1 - BaseEnd()) / 0.1, 1)
-				// for each 0.1 end add perRange speed
-				var/total = (def + end) * perRange
-				if(total > UnhingedForm)
-					Off += UnhingedForm
-				else
-					Off += total
 			Off+=src.GetMA("Off")
 			// if(src.UsingYinYang()&&src.Target&&src.Target!=src&&!src.Target.UsingYinYang()&&istype(src.Target, /mob/Players))
 			// 	Off+=src.Target.GetMA("Def")*0.5
