@@ -887,6 +887,28 @@ mob/Players/verb
 			usr<< "You will now use a normal Heavy Strike."
 			return
 
+// Demon (and Angel) combo spells
+/mob/proc/RPMode_AdjustNestedComboSpellCooldowns(pausing = 1)
+	for(var/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/dm in src)
+		if(!dm.possible_skills) continue
+		for(var/x in dm.possible_skills)
+			var/obj/Skills/s = dm.possible_skills[x]
+			if(!s || !s.cooldown_remaining) continue
+			if(pausing)
+				s.cooldown_remaining = s.cooldown_remaining - (world.realtime - s.cooldown_start)
+				s.cooldown_start = 0
+			else
+				s.Cooldown(modify=1,Time=s.cooldown_remaining, p=src)
+	for(var/obj/Skills/Buffs/SlotlessBuffs/AngelMagic/am in src)
+		if(!am.possible_skills) continue
+		for(var/x in am.possible_skills)
+			var/obj/Skills/s = am.possible_skills[x]
+			if(!s || !s.cooldown_remaining) continue
+			if(pausing)
+				s.cooldown_remaining = s.cooldown_remaining - (world.realtime - s.cooldown_start)
+				s.cooldown_start = 0
+			else
+				s.Cooldown(modify=1,Time=s.cooldown_remaining, p=src)
 
 mob/proc/RPModeSwitch()
 	if(src.PureRPMode)
@@ -900,6 +922,7 @@ mob/proc/RPModeSwitch()
 			if(istype(s, /obj/Skills/Grab)) continue
 			if(s.cooldown_remaining)
 				s.Cooldown(modify=1,Time=s.cooldown_remaining)
+		src.RPMode_AdjustNestedComboSpellCooldowns(0)
 		src.resumeStyleRatingExpiryAfterRP()
 		return
 	if(!src.PureRPMode)
@@ -915,6 +938,7 @@ mob/proc/RPModeSwitch()
 			if(s.cooldown_remaining)
 				s.cooldown_remaining = s.cooldown_remaining - (world.realtime - s.cooldown_start)
 				s.cooldown_start = 0
+		src.RPMode_AdjustNestedComboSpellCooldowns(1)
 		src.pauseStyleRatingExpiryForRP()
 		return
 
@@ -928,6 +952,7 @@ mob/proc/CutsceneMode()
 			if(istype(s, /obj/Skills/Grab)) continue
 			if(s.cooldown_remaining)
 				s.Cooldown(modify=1,Time=s.cooldown_remaining)
+		src.RPMode_AdjustNestedComboSpellCooldowns(0)
 		src.resumeStyleRatingExpiryAfterRP()
 		return
 	if(!src.PureRPMode)
@@ -942,6 +967,7 @@ mob/proc/CutsceneMode()
 			if(s.cooldown_remaining)
 				s.cooldown_remaining = s.cooldown_remaining - (world.realtime - s.cooldown_start)
 				s.cooldown_start = 0
+		src.RPMode_AdjustNestedComboSpellCooldowns(1)
 		src.pauseStyleRatingExpiryForRP()
 		return
 

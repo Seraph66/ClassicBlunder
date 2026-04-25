@@ -353,20 +353,9 @@ obj/Skills/Grapple
 		verb/Suplex()
 			set category="Skills"
 			adjust(usr)
-			if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic))
-				usr.endDemonMagicCast()
-				usr.gainStyleRating(1)
-			else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/HellFire))
-				var/obj/Skills/Buffs/SlotlessBuffs/Hellraiser/hr = usr.SlotlessBuffs["Hellraiser"]
-				if(!hr)
-					hr = new/obj/Skills/Buffs/SlotlessBuffs/Hellraiser()
-				hr.stackBuff(usr)
-				usr.endDemonMagicCast()
-				usr.gainStyleRating(1)
-			else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption))
-				usr.endDemonMagicCast()
-				usr.gainStyleRating(1)
+			var/can_fire = !(Using || cooldown_remaining)
 			src.Activate(usr)
+			applyDemonInnovationEffect(usr, can_fire)
 	Burning_Finger
 		NewCost = TIER_2_COST
 		NewCopyable = 3
