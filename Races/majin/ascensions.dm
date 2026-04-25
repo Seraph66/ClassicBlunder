@@ -23,7 +23,12 @@ ascension
 					if("Super")
 						passives = list("Adaptation" = 1, "Steady" = 1, "Momentum" = 1, "Fury" = 1, "Instinct" = 1, "Flow" = 1, "Duelist" = 1)
 					if("Unhinged")
-						passives = list("Brutalize" = 1, "AngerAdaptiveForce" = 0.15, "KillerInstinct" = 0.1, "CriticalChance" = 5, "CriticalDamage" = 0.05, "PureDamage" = 1)
+						// UnhingedForm enables the consumer code in _JinxUtility.dm
+						// (Str/For/Spd/Off scale up as Def/End approach 0). Without
+						// this grant, the four consumer hooks were dead. Each ascension
+						// stacks +1 via the parent's increaseList, matching how the
+						// other Unhinged passives ramp.
+						passives = list("Brutalize" = 1, "AngerAdaptiveForce" = 0.15, "KillerInstinct" = 0.1, "CriticalChance" = 5, "CriticalDamage" = 0.05, "PureDamage" = 1, "UnhingedForm" = 1)
 				if(owner.majinAbsorb)
 					owner.majinAbsorb.updateVariables(owner)
 				owner.majinCheatDeathUsed = 0
@@ -49,7 +54,12 @@ ascension
 					if("Super")
 						passives = list("Adaptation" = 1, "Steady" = 1, "Momentum" = 1, "Fury" = 1, "Instinct" = 1, "Flow" = 1, "Duelist" = 1)
 					if("Unhinged")
-						passives = list("Brutalize" = 1, "AngerAdaptiveForce" = 0.15, "KillerInstinct" = 0.1, "CriticalChance" = 5, "CriticalDamage" = 0.05, "PureDamage" = 1)
+						// UnhingedForm enables the consumer code in _JinxUtility.dm
+						// (Str/For/Spd/Off scale up as Def/End approach 0). Without
+						// this grant, the four consumer hooks were dead. Each ascension
+						// stacks +1 via the parent's increaseList, matching how the
+						// other Unhinged passives ramp.
+						passives = list("Brutalize" = 1, "AngerAdaptiveForce" = 0.15, "KillerInstinct" = 0.1, "CriticalChance" = 5, "CriticalDamage" = 0.05, "PureDamage" = 1, "UnhingedForm" = 1)
 				if(owner.majinAbsorb)
 					owner.majinAbsorb.updateVariables(owner)
 				owner.majinCheatDeathUsed = 0
@@ -74,7 +84,12 @@ ascension
 					if("Super")
 						passives = list("Adaptation" = 1, "Steady" = 1, "Momentum" = 1, "Fury" = 1, "Instinct" = 1, "Flow" = 1, "Duelist" = 1)
 					if("Unhinged")
-						passives = list("Brutalize" = 1, "AngerAdaptiveForce" = 0.15, "KillerInstinct" = 0.1, "CriticalChance" = 5, "CriticalDamage" = 0.05, "PureDamage" = 1)
+						// UnhingedForm enables the consumer code in _JinxUtility.dm
+						// (Str/For/Spd/Off scale up as Def/End approach 0). Without
+						// this grant, the four consumer hooks were dead. Each ascension
+						// stacks +1 via the parent's increaseList, matching how the
+						// other Unhinged passives ramp.
+						passives = list("Brutalize" = 1, "AngerAdaptiveForce" = 0.15, "KillerInstinct" = 0.1, "CriticalChance" = 5, "CriticalDamage" = 0.05, "PureDamage" = 1, "UnhingedForm" = 1)
 				if(owner.majinAbsorb)
 					owner.majinAbsorb.updateVariables(owner)
 				owner.majinCheatDeathUsed = 0
@@ -100,7 +115,12 @@ ascension
 					if("Super")
 						passives = list("Adaptation" = 1, "Steady" = 1, "Momentum" = 1, "Fury" = 1, "Instinct" = 1, "Flow" = 1, "Duelist" = 1)
 					if("Unhinged")
-						passives = list("Brutalize" = 1, "AngerAdaptiveForce" = 0.15, "KillerInstinct" = 0.1, "CriticalChance" = 5, "CriticalDamage" = 0.05, "PureDamage" = 1)
+						// UnhingedForm enables the consumer code in _JinxUtility.dm
+						// (Str/For/Spd/Off scale up as Def/End approach 0). Without
+						// this grant, the four consumer hooks were dead. Each ascension
+						// stacks +1 via the parent's increaseList, matching how the
+						// other Unhinged passives ramp.
+						passives = list("Brutalize" = 1, "AngerAdaptiveForce" = 0.15, "KillerInstinct" = 0.1, "CriticalChance" = 5, "CriticalDamage" = 0.05, "PureDamage" = 1, "UnhingedForm" = 1)
 				if(owner.majinAbsorb)
 					owner.majinAbsorb.updateVariables(owner)
 				owner.majinCheatDeathUsed = 0
@@ -125,7 +145,12 @@ ascension
 					if("Super")
 						passives = list("Adaptation" = 1, "Steady" = 1, "Momentum" = 1, "Fury" = 1, "Instinct" = 1, "Flow" = 1, "Duelist" = 1)
 					if("Unhinged")
-						passives = list("Brutalize" = 1, "AngerAdaptiveForce" = 0.15, "KillerInstinct" = 0.1, "CriticalChance" = 5, "CriticalDamage" = 0.05, "PureDamage" = 1)
+						// UnhingedForm enables the consumer code in _JinxUtility.dm
+						// (Str/For/Spd/Off scale up as Def/End approach 0). Without
+						// this grant, the four consumer hooks were dead. Each ascension
+						// stacks +1 via the parent's increaseList, matching how the
+						// other Unhinged passives ramp.
+						passives = list("Brutalize" = 1, "AngerAdaptiveForce" = 0.15, "KillerInstinct" = 0.1, "CriticalChance" = 5, "CriticalDamage" = 0.05, "PureDamage" = 1, "UnhingedForm" = 1)
 				if(owner.majinAbsorb)
 					owner.majinAbsorb.updateVariables(owner)
 				owner.majinCheatDeathUsed = 0
@@ -151,7 +176,12 @@ ascension
 					if("Super")
 						passives = list("Adaptation" = 1, "Steady" = 1, "Momentum" = 1, "Fury" = 1, "Instinct" = 1, "Flow" = 1, "Duelist" = 1)
 					if("Unhinged")
-						passives = list("Brutalize" = 1, "AngerAdaptiveForce" = 0.15, "KillerInstinct" = 0.1, "CriticalChance" = 5, "CriticalDamage" = 0.05, "PureDamage" = 1)
+						// UnhingedForm enables the consumer code in _JinxUtility.dm
+						// (Str/For/Spd/Off scale up as Def/End approach 0). Without
+						// this grant, the four consumer hooks were dead. Each ascension
+						// stacks +1 via the parent's increaseList, matching how the
+						// other Unhinged passives ramp.
+						passives = list("Brutalize" = 1, "AngerAdaptiveForce" = 0.15, "KillerInstinct" = 0.1, "CriticalChance" = 5, "CriticalDamage" = 0.05, "PureDamage" = 1, "UnhingedForm" = 1)
 				if(owner.majinAbsorb)
 					owner.majinAbsorb.updateVariables(owner)
 				owner.majinCheatDeathUsed = 0

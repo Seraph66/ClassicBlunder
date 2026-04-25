@@ -365,6 +365,15 @@ mob/proc/Admin(var/blah,var/Z,var/H)
 			else if(src.key in Admins)
 				src.Admin("Give",Admins[src.key])
 				admins |= src
+			else
+				// Strip stale admin verbs persisted in the mob savefile from a prior
+				// admin session. BYOND saves /verbs/ by default, and the original Check
+				// only added verbs for current admins - it never removed them when a
+				// player was demoted, so right-click menus on other mobs kept showing
+				// admin commands (Admin: Jump To, Admin: Summon, etc.). Calling Remove
+				// is safe for an actual non-admin: CodedAdmin guard on the inside short
+				// circuits coded keys, and the rest are no-ops on a clean mob.
+				src.Admin("Remove")
 			if(src.key in Mappers)
 				src.Admin("GiveMapper")
 		if("Give")
