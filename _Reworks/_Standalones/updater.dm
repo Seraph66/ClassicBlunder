@@ -135,8 +135,8 @@ update
 				p.stat_redo()
 			if(p.isRace(HUMAN))
 				if(p.Class=="Underdog")
-					p.passive_handler.Increase("Motivation", 0.25)
-					
+					p.passive_handler.Increase("Motivation", 0.5)
+
 
 /globalTracker/var/COOL_GAJA_PLAYERS = list("Thorgigamax", "Gemenilove" )
 /globalTracker/var/GAJA_PER_ASC_CONVERSION = 0.25
