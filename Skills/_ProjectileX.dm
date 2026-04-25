@@ -6188,7 +6188,7 @@ obj
 								Heal *= 0.5
 							if(Owner.passive_handler.Get("Determination(White)"))
 								Heal *= 0.15
-							EffectiveDamage-=Heal//negated
+							EffectiveDamage-=Heal*0.15//negated
 							a:HealEnergy(Heal)//and transfered into energy.
 						if(src.Burning&&!src.Owner.HasBurning())
 							EffectiveDamage*=max(1,ProjectileDamage(ElementalCheck(src.Owner, a, bonusElements=list("Fire"), damageOnly = 1))/10)

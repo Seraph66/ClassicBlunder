@@ -32,3 +32,16 @@ race
 			// Claim this Majin's personal absorb room. ClaimMajinRoom()
 			if(!user.majinOwnedRoom)
 				user.ClaimMajinRoom()
+
+		// ChangeRace hook: free the absorb room (releasing any victims), drop the
+		// majin-only racial datums, and clear the once-per-ascension cheat-death
+		// flag so an ex-Majin doesn't carry that state into another race.
+		onChangeOut(mob/user)
+			user.MajinCleanupOnDeletion()
+			if(user.majinAbsorb)
+				del(user.majinAbsorb)
+				user.majinAbsorb = null
+			if(user.majinPassive)
+				del(user.majinPassive)
+				user.majinPassive = null
+			user.majinCheatDeathUsed = 0

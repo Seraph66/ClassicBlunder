@@ -19,7 +19,7 @@
 
 /mob/proc/StandardTransformRequirements()
     if(ActiveBuff || icon_state=="Train")
-        if(transActive() < transUnlocked)
+        if(transActive() < transUnlocked || isRace(ELDRITCH))
             return 1;
     return 0;
 /mob/proc/ChangelingTransformRequirements()

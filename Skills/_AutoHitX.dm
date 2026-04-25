@@ -6704,7 +6704,7 @@ obj
 						Heal *= 0.5
 					if(Owner.passive_handler.Get("Determination(White)"))
 						Heal *= 0.15
-					FinalDmg-=Heal //negated
+					FinalDmg-=Heal*0.15 //negated
 					m.HealEnergy(Heal)
 				if(Owner.Attunement == "Fox Fire")
 					var/heal = FinalDmg * ( (1 + Owner.AscensionsAcquired + (FoxFire))/10)

@@ -175,8 +175,8 @@ obj/Skills/Buffs/SlotlessBuffs/Spiral/Impose_Evolution
 			return
 		if(!altered)
 			adjust(User)
-		for(var/mob/m in User.Target)
-			if(!m || !ismob(m)) continue
+		var/mob/m = User.Target
+		if(m && ismob(m))
 			var/obj/Skills/Buffs/SlotlessBuffs/Spiral/ImposedEvoApply/applyBuff = new
 			m.passive_handler.Set("SpiralSpark", 1)
 			applyBuff.StrMult=1.25
@@ -185,7 +185,6 @@ obj/Skills/Buffs/SlotlessBuffs/Spiral/Impose_Evolution
 			applyBuff.ActiveMessage="[ActiveMessage]"
 			applyBuff.passives = list("SpiralPowerUnlocked" = SpiralLevel)
 			applyBuff.Trigger(m, 1)
-	//	User.OMessage(1, null, "[User] inspires the evolution of [User.party.members.len == 1 ? "themselves" : "their party"]!")
 		src.Cooldown(1, null, User)
 obj/Skills/AutoHit/Spiral
 	Impose_Evolution

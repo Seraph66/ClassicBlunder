@@ -10,6 +10,10 @@ transformation
 			form_icon_1_icon = 'tentacles_overlay.dmi'
 			form_icon_1_x = -32
 			form_icon_1_y = -32
+			transformation_message = "Reality begins to fray around usrName. Comprehension eludes you."
+			transform_animation(mob/user)
+				LightningStrike2(user)
+				DarknessFlash(user, SetTime=5)
 		full_manifestation
 			passives = list("Unreality" = 0.9, "Full Manifestation" = 1, "PureDamage"=3, "PureReduction"=3,"DebuffResistance"=0.1, "BuffMastery"=3)
 			enduranceadd = 1.5
@@ -17,6 +21,17 @@ transformation
 			defenseadd = 1.5
 			strengthadd = 1.5
 			forceadd = 1.5
+			transformation_message = "usrName reveals itself to the detriment of all!"
+			transform_animation(mob/user)
+				LightningStrike2(user)
+				DarknessFlash(user, SetTime=5)
+				var/list/targets = list(user)
+				for(var/mob/M in view(user))
+					if(M.client && M != src)
+						targets += M
+
+				for(var/mob/M in targets)
+					ScreenShatter(M)
 /mob/proc/HandleManifestation(Stat)
 	var/CA=AscensionsAcquired
 	var/TA=3

@@ -5,7 +5,16 @@
 
 /mob/proc/unlockSpellSlot(magic_node/mn)
     for(var/t in mn.grantsSkills)
-        findOrAddSkill(t);
+        var/obj/Skills/granted = findOrAddSkill(t);
+        // If the granted spell lists "Grit" among its passives (e.g. Earth Ward of
+        // Stone), also grant the active dump skill so the listed passive is functional
+        // for non-Beastheart mages instead of decorative on the buff bar.
+        if(granted && istype(granted, /obj/Skills/Buffs))
+            var/obj/Skills/Buffs/granted_buff = granted
+            if(granted_buff.passives && ("Grit" in granted_buff.passives))
+                if(!FindSkill(/obj/Skills/Buffs/SlotlessBuffs/Racial/Beastkin/The_Grit))
+                    findOrAddSkill(/obj/Skills/Buffs/SlotlessBuffs/Racial/Beastkin/The_Grit)
+                    src << "Your magical resilience can now be channeled into a Vai Health shield."
 
 /mob/proc/getSpellSlots()
     var/list/slots = list()

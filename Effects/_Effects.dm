@@ -767,3 +767,4 @@ proc
 		if(target?.client)
 			target.client.screen -= shard
 		del shard
+		sleep(0.5)

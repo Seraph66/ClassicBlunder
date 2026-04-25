@@ -685,7 +685,7 @@
 									if(passive_handler.Get("Determination(White)"))
 										heal *= 0.15
 									//TODO TEST ENERGY SIPHON IT MIGHT BE WONKY
-									damage -= heal
+									damage -= heal*0.15
 									enemy.HealEnergy(heal)
 									#if DEBUG_MELEE
 									log2text("Damage", "After Energy Siphon", "damageDebugs.txt", "[ckey]/[name]")

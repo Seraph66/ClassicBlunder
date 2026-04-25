@@ -100,6 +100,79 @@ mob
 			race = new new_race.type
 			race.onSelection(src)
 
+		// Race CHANGE for already-finalized players. Unlike setRace (which is geared
+		// for character creation), this strips the old race's contributions before
+		// installing the new one, so passives/skills/ascensions/transformations don't
+		// stack across the transition.
+		//
+		//   new_race_or_path : either a /race type path or a race instance.
+		//   redo_stats       : if TRUE, base stats are reset to the new race's values.
+		//                      If FALSE (default) the player's earned stats are kept.
+		//   keep_ascensions  : if TRUE, AscensionsAcquired/Unlocked are preserved
+		//                      (the old race's ascensions are NOT reverted). Use this
+		//                      only when the caller has already accounted for ascension
+		//                      stat contributions.
+		//
+		// Returns 1 on success, 0 if no change happened (already that race / bad arg).
+		ChangeRace(new_race_or_path, redo_stats = FALSE, keep_ascensions = FALSE)
+			if(!new_race_or_path) return 0
+			if(!passive_handler) passive_handler = new
+
+			var/race/new_race
+			if(ispath(new_race_or_path))
+				new_race = new new_race_or_path
+			else if(istype(new_race_or_path, /race))
+				var/race/incoming = new_race_or_path
+				new_race = new incoming.type
+			else
+				return 0
+
+			if(race && race.type == new_race.type)
+				del(new_race)
+				return 0
+
+			if(race)
+				// Roll back every active transformation tier so trans-stat boosts
+				// don't linger after the race swap.
+				var/safety = 10
+				while(transActive > 0 && safety > 0)
+					var/prev = transActive
+					Revert()
+					if(transActive >= prev) break
+					safety--
+
+				// Unwind ascensions in reverse order so each layer's revertAscension
+				// sees the same state it was applied on top of.
+				if(!keep_ascensions && islist(race.ascensions))
+					for(var/i = race.ascensions.len, i >= 1, i--)
+						var/ascension/a = race.ascensions[i]
+						if(a && a.applied)
+							a.revertAscension(src)
+					AscensionsAcquired = 0
+					AscensionsUnlocked = 0
+
+				if(islist(race.passives) && race.passives.len)
+					passive_handler.decreaseList(race.passives)
+
+				// Only racial skills granted via race.skills are stripped. Skills the
+				// player learned through tomes / other sources are left alone.
+				if(islist(race.skills))
+					for(var/skill_path in race.skills)
+						if(!ispath(skill_path)) continue
+						var/obj/Skills/found = locate(skill_path) in src.contents
+						if(found)
+							DeleteSkill(found)
+
+				race.onChangeOut(src)
+				race.onDeselection(src)
+
+			race = new_race
+			new_race.onSelection(src, secondtime = !redo_stats, force_icon = TRUE)
+			new_race.onFinalization(src)
+			new_race.onChangeIn(src)
+
+			return 1
+
 		// isRace will accept either a type or a name.
 		isRace(raceCheck)
 			if(!race)
@@ -236,6 +309,16 @@ race
 				return vars[stat]
 		onDeselection(mob/user)
 			user.overlays -= overlays
+
+		// Hooks for ChangeRace. Default impls are no-ops; races override these
+		// to clean up race-specific mob state (e.g. Majin absorb rooms / blob
+		// passive datums) on the way out, or to set up race-specific state
+		// beyond what onFinalization covers on the way in.
+		onChangeOut(mob/user)
+			return
+
+		onChangeIn(mob/user)
+			return
 
 		onSelection(mob/user, secondtime = FALSE, force_icon = FALSE)
 			if(!user.passive_handler) user.passive_handler = new

@@ -18,6 +18,10 @@ obj/Arcane/ArcaneFocal //These are used for Arcane Traverse. I will eventually a
 	invisibility=1
 	var/list/signature_restricted = list()
 	var/identifier
+	// ckey of the player who created this focal via Mark Depths Focal. Empty
+	// for the world-generated/admin-placed focals that have no owner. Used by
+	// Remove Depths Focal to gate teardown to your own focals.
+	var/creator_ckey = ""
 	New()
 		..()
 		name = pick("Arcane Focal","Arcane Anomaly","Magic Anomaly","Strange Anomaly","Sparkly Spot")

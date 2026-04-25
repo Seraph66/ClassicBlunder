@@ -2889,13 +2889,13 @@ NEW VARIABLES
 				adjust(mob/p)
 					if(altered) return
 					var/totalPot = round(p.Potential,10)
-					SpdMult = 1.3 + totalPot/100
-					StrMult = 1.3 + totalPot/100
-					EndMult = 0.6 + clamp(totalPot/150, 0.1, 0.4)
-					DefMult = 0.6 + clamp(totalPot/150, 0.1, 0.4)
+					SpdMult = 1.3 + (0.1*p.AscensionsAcquired)
+					StrMult = 1.3 + (0.1*p.AscensionsAcquired)
+					EndMult = 0.6 + (0.05*p.AscensionsAcquired)
+					DefMult = 0.6 + (0.05*p.AscensionsAcquired)
 					var/reducedPot = totalPot/10
 					ManaDrain = 0.008 - (0.001 * reducedPot)
-					passives = list("ManaLeak" = 1 - totalPot/200 )
+					passives = list("ManaLeak" = 1 - totalPot/200, "KiControl" = 1, "ManaLeak" = 1, "AllOutPU" = 1, "Overdrive" = 1)
 
 
 				verb/Overdrive()
@@ -2926,9 +2926,9 @@ NEW VARIABLES
 				adjust(mob/p)
 					if(altered) return
 					var/totalPot = round(p.Potential,10)
-					SpdMult = 1 + totalPot/100
-					OffMult = 1.1 + totalPot/100
-					DefMult = 0.4 + clamp(totalPot/150, 0.1, 0.4)
+					SpdMult = 1.2 + (0.1*p.AscensionsAcquired)
+					OffMult = 1.3 + (0.1*p.AscensionsAcquired)
+					DefMult = 0.8 + (0.05*p.AscensionsAcquired)
 					var/reducedPot = totalPot/10
 					SureHitTimerLimit = -40 + (100-totalPot)
 					passives = list("ManaLeak" = 1 - totalPot/200, "HardStyle" = 0.3 * reducedPot, \
@@ -2960,9 +2960,9 @@ NEW VARIABLES
 				adjust(mob/p)
 					if(altered) return
 					var/totalPot = round(p.Potential,10)
-					EndMult = 1.2 + totalPot/100
-					StrMult = 1.1 + totalPot/100
-					DefMult = 0.1 + clamp(totalPot/150, 0.1, 0.4)
+					EndMult = 1.2 + (0.1*p.AscensionsAcquired)
+					StrMult = 1.1 + (0.1*p.AscensionsAcquired)
+					DefMult = 0.1 + (0.05*p.AscensionsAcquired)
 					var/reducedPot = totalPot/10
 					passives = list("ManaLeak" = 1 - totalPot/200, "WeaponBreaker" = 0.3 * reducedPot, \
 					"BlockChance" = round(reducedPot/10,1), "CriticalBlock" = round(reducedPot/15), \
@@ -2987,9 +2987,9 @@ NEW VARIABLES
 				adjust(mob/p)
 					if(altered) return
 					var/totalPot = round(p.Potential,10)
-					ForMult = 1.3 + totalPot/150
-					OffMult = 1.2 + totalPot/150
-					SpdMult = 0.7 + clamp(totalPot/150, 0.1, 0.4)
+					ForMult = 1.3 + (0.1*p.AscensionsAcquired)
+					OffMult = 1.2 + (0.1*p.AscensionsAcquired)
+					SpdMult = 0.7 + (0.05*p.AscensionsAcquired)
 					var/reducedPot = totalPot/10
 					passives = list("ManaLeak" = 1 - totalPot/200, "Instinct" = 0.5 * reducedPot, \
 					"QuickCast" = round(reducedPot/10,1), "SpecialStrike" = 1, "MovingCharge" = 1, "SpiritHand" = round(totalPot/4,1))
@@ -3012,18 +3012,17 @@ NEW VARIABLES
 				KenWaveBlend=2
 				KenWaveIcon='KenShockwavePurple.dmi'
 				IconTint=list(0.7,0.3,0.6, 0.99,0.59,0.88, 0.51,0.11,0.4, 0,0,0)
-				passives = list("ManaLeak" = 1, "MovementMastery" = 10, "SpiritSword" = 0.5, "SpiritHand" = 0.5,"Deicide" = 5)
+				passives = list("ManaLeak" = 1, "MovementMastery" = 10, "SpiritSword" = 0.25, "SpiritHand" = 0.25,"Deicide" = 5)
 				SureHitTimerLimit=30
 				ActiveMessage="breaches into a higher domain through the power of cybernetics!"
 				OffMessage="returns to the standard domain."
 				adjust(mob/p)
 					if(altered) return
-					var/totalPot = round(p.Potential,10)
-					ForMult = 1.2 + totalPot/100
-					StrMult = 1.2 + totalPot/100
-					DefMult = 0.6 + clamp(totalPot/150, 0.1, 0.4)
-					passives = list("ManaLeak" = 1 - totalPot/200, "MovementMastery" = 3+round(totalPot/20,1), \
-					"Deicide" = 5* round(totalPot/25,1), "SpiritSword" = 0.5+round(totalPot/200,1), "SpiritHand" = 0.5+round(totalPot/200,1))
+					ForMult = 1.2 + (0.1*p.AscensionsAcquired)
+					StrMult = 1.2 + (0.1*p.AscensionsAcquired)
+					DefMult = 0.6 + (0.05*p.AscensionsAcquired)
+					passives = list("ManaLeak" = 1 - (p.AscensionsAcquired/10), "MovementMastery" = 4+p.AscensionsAcquired, \
+					"Deicide" = 5*p.AscensionsAcquired, "SpiritSword" = 0.25*p.AscensionsAcquired, "SpiritHand" = 0.25*p.AscensionsAcquired)
 
 				verb/Hilbert_Effect()
 					set category="Skills"
@@ -6302,7 +6301,7 @@ NEW VARIABLES
 					set category="Skills"
 					src.Trigger(usr)
 			Jet_Boots
-				passives = list("SuperDash" = 1, "Skimming " = 1, "Pursuer" = 1)
+				passives = list("SuperDash" = 1, "Skimming" = 1, "Pursuer" = 1)
 				SuperDash=1
 				Skimming=1
 				Pursuer=1
@@ -9171,6 +9170,8 @@ NEW VARIABLES
 			var/identifier = null
 			var/demonName = null
 			var/icon/customTurfIcon = null
+			var/icon/customRoofIcon = null
+			var/useShroud = TRUE
 			Cooldown = -1
 			ActiveMessage="releases their Domain!"
 			OffMessage="conceals their Domain...."
@@ -14178,6 +14179,16 @@ mob
 				if(s&&s.Conjured)
 					s.AlignEquip(src)
 					del s
+				else
+					// Conjured sword may have landed in the second slot if the user
+					// had NeedsSecondSword (Two Sword Style etc.) at activation —
+					// Items.dm:Equip() places it there when slot 1 is occupied.
+					// Without this branch the conjured sword leaks: slot 2 stays
+					// blocked even after the buff is toggled off.
+					var/obj/Items/Sword/s2=src.EquippedSecondSword()
+					if(s2&&s2.Conjured&&!B.MakesSecondSword)
+						s2.AlignEquip(src)
+						del s2
 				if(B.MakesSword==3)
 					for(s in src)
 						if(s.Conjured)
