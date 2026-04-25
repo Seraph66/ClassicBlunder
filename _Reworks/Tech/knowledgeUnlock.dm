@@ -198,6 +198,8 @@ var/knowledgePaths/tech/list/TechnologyTree = list()
 		if("Soul Infusion")
 			ArmamentEnchantmentUnlocked=5
 			src << "You learn how to enchant weapons with the forces of chaos and make them rival arms of legend!"
+			if(!locate(/obj/Skills/Utility/Enchant_Equipment, src))
+				src.AddSkill(new/obj/Skills/Utility/Enchant_Equipment)
 		// END ENHANCEMENT SHIT //
 		// TOME START //
 		if("TomeCreation")
@@ -319,6 +321,7 @@ var/knowledgePaths/tech/list/TechnologyTree = list()
 		if("MilitaryEngineering")
 			MilitaryEngineeringUnlocked=1
 			ForgingUnlocked++
+
 		if("Forge")
 			ForgingUnlocked++
 		if("Enhancement")

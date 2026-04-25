@@ -445,6 +445,26 @@ mob/proc/Conscious()
 		src.OMessage(15,"[src] regains consciousness.","<font color=blue>[src]([src.key]) regains consciousness")
 
 mob/proc/Death(mob/P,var/text,var/SuperDead=0, var/NoRemains=0, var/Zombie, extraChance, fakeDeath)
+	if(majinCheatDeathInProgress) return
+	// Majin once-per-ascension cheat death
+	if(isRace(MAJIN) && !fakeDeath && !SuperDead && !NoVoid && !majinCheatDeathUsed)
+		majinCheatDeathInProgress = 1
+		majinCheatDeathUsed = 1
+		src.OMessage(20,"[src] was just killed by [text]!","<font color=red>[src] was just killed by [text]!")
+		sleep(20)
+		src.OMessage(15,"<b><font color=[src.Text_Color]><font size=+1>...but [src] begins to rapidly regenerate!</b></font color></font size>","<font color=blue>[src]([src.key]) isn't dead yet.")
+		src.MortallyWounded=0
+		src.KOTimer=0
+		src.KO=0
+		src.icon_state=""
+		src.HealWounds(99999)
+		src.Health = 25
+		src.MaxEnergy()
+		src.MaxMana()
+		spawn() src.MajinCheatDeathReformFX()
+		return
+	if(isRace(MAJIN) && majinAbsorb && majinAbsorb.absorbed && majinAbsorb.absorbed.len)
+		majinAbsorb.releaseAll(src, "majin_died")
 	BreakViewers() //STOP LOOKING AT ME THE SHAME OF DEATH TOO MUCH
 	if(src.passive_handler.Get("The Legend of REBIRTH"))
 		src.OMessage(20,"[src] was just killed by [text]!","<font color=red>[src] was just killed by [text]!")
@@ -754,7 +774,8 @@ mob/proc/Death(mob/P,var/text,var/SuperDead=0, var/NoRemains=0, var/Zombie, extr
 			return
 
 	if(src.client)
-		Void(SuperDead, Zombie, fakeDeath, 0)
+		if(!(isRace(MAJIN) && (!majinCheatDeathUsed || majinCheatFXRunning || majinCheatDeathInProgress)))
+			Void(SuperDead, Zombie, fakeDeath, 0)
 
 	if(!src.Dead)
 		src.Conscious()
@@ -1007,6 +1028,8 @@ mob/proc/Leave_Body(var/SuperDead=0, var/Zombie, var/ForceVoid=0)
 						if(src.NoSoul)
 							src << "You have no soul contained within your body; there is nothing after life for you."
 							src.Savable=0
+							if(src.isRace(MAJIN))
+								src.MajinCleanupOnDeletion()
 							if(istype(src, /mob/Players))
 								fdel("Saves/Players/[src.ckey]")
 							src.loc=locate(0,0,0)
@@ -1032,6 +1055,8 @@ mob/proc/Leave_Body(var/SuperDead=0, var/Zombie, var/ForceVoid=0)
 		if(src.NoSoul)
 			src << "<font size='big'><b>You have been destroyed completely by some overwhelming force -- body and soul. Nothing remains.</b></font size>"
 			src.Savable=0
+			if(src.isRace(MAJIN))
+				src.MajinCleanupOnDeletion()
 			if(istype(src, /mob/Players))
 				fdel("Saves/Players/[src.ckey]")
 			src.loc=locate(0,0,0)
@@ -1090,6 +1115,8 @@ mob/proc/Leave_Body(var/SuperDead=0, var/Zombie, var/ForceVoid=0)
 	if(src.NoSoul && !ForceVoid && !Zombie)
 		src << "<font size='big'><b>You have died on a plane with no Afterlife; there is nothing for you now. This is oblivion.</b></font size>"
 		src.Savable=0
+		if(src.isRace(MAJIN))
+			src.MajinCleanupOnDeletion()
 		if(istype(src, /mob/Players))
 			fdel("Saves/Players/[src.ckey]")
 		src.loc=locate(0,0,0)
@@ -1638,8 +1665,10 @@ proc/Accuracy_Formula(mob/Offender,mob/Defender,AccMult=1,BaseChance=glob.WorldD
 		// START OF REAL FUNCTION
 		var/OffenseModifier
 		var/DefenseModifier
-		var/OffenseAdvantage = Offender.Power / max(Defender.Power,0.01)
-		var/DefenseAdvantage = Defender.Power / max(Offender.Power,0.01)
+		var/OffenderEffPower = Offender.GetEffectivePower()
+		var/DefenderEffPower = Defender.GetEffectivePower()
+		var/OffenseAdvantage = OffenderEffPower / max(DefenderEffPower,0.01)
+		var/DefenseAdvantage = DefenderEffPower / max(OffenderEffPower,0.01)
 		var/Offense
 		var/Defense
 		var/TotalAccuracy
@@ -1659,8 +1688,8 @@ proc/Accuracy_Formula(mob/Offender,mob/Defender,AccMult=1,BaseChance=glob.WorldD
 
 
 			if(glob.OLD_ACCURACY)
-				Offense=(Offender.Power*(Offender.GetOff(glob.ACC_OFF)+Offender.GetSpd(glob.ACC_OFF_SPD)))*(1+((Offender.GetMaouKi()) + !Offender.HasNullTarget()&&!Offender.HasMaouKi() ? Offender.GetGodKi() : 0))
-				Defense=(Defender.Power*(Defender.GetDef(glob.ACC_DEF)+Defender.GetSpd(glob.ACC_DEF_SPD)))*(1+((Defender.GetMaouKi()) + !Defender.HasNullTarget()&&!Defender.HasMaouKi() ? Defender.GetGodKi() : 0))
+				Offense=(OffenderEffPower*(Offender.GetOff(glob.ACC_OFF)+Offender.GetSpd(glob.ACC_OFF_SPD)))*(1+((Offender.GetMaouKi()) + !Offender.HasNullTarget()&&!Offender.HasMaouKi() ? Offender.GetGodKi() : 0))
+				Defense=(DefenderEffPower*(Defender.GetDef(glob.ACC_DEF)+Defender.GetSpd(glob.ACC_DEF_SPD)))*(1+((Defender.GetMaouKi()) + !Defender.HasNullTarget()&&!Defender.HasMaouKi() ? Defender.GetGodKi() : 0))
 				mod = clamp(((Offense*AccMult)/max(Defense,0.01)), 0.5, 2)
 
 			var/roll = randValue((100-BaseChance) * mod, 100)
@@ -1775,8 +1804,10 @@ proc/Deflection_Formula(var/mob/Offender,var/mob/Defender,var/AccMult=1,var/Base
 
 		var/OffenseModifier
 		var/DefenseModifier
-		var/OffenseAdvantage = Offender.Power / max(Defender.Power,0.01)
-		var/DefenseAdvantage = Defender.Power / max(Offender.Power,0.01)
+		var/OffenderEffPower = Offender.GetEffectivePower()
+		var/DefenderEffPower = Defender.GetEffectivePower()
+		var/OffenseAdvantage = OffenderEffPower / max(DefenderEffPower,0.01)
+		var/DefenseAdvantage = DefenderEffPower / max(OffenderEffPower,0.01)
 		if(glob.CLAMP_POWER)
 			if(!Offender.ignoresPowerClamp())
 				OffenseAdvantage = clamp(OffenseAdvantage,glob.MIN_POWER_DIFF, glob.MAX_POWER_DIFF)

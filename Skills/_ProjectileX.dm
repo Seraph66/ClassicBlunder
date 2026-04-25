@@ -4675,10 +4675,10 @@ obj
 								usr.UseProjectile(src)
 					Vaizard
 						Cero
-							DamageMult=6
-							ChargeRate=3
-							Cooldown=300
-							ManaCost=2
+							DamageMult=15
+							ChargeRate=0.5
+							Cooldown=150
+							ManaCost=10
 							Distance=40
 							IconLock='Cero2.dmi'
 							IconSize=2

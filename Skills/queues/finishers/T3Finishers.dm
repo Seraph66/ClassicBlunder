@@ -73,3 +73,33 @@
         BuffSelf="/obj/Skills/Buffs/SlotlessBuffs/Autonomous/QueueBuff/Finisher/Judge_of_Heaven"
         BuffAffected="/obj/Skills/Buffs/SlotlessBuffs/Autonomous/QueueBuff/Finisher/Justice_of_Hell"
         HitMessage= "unleashes the Fury of the Heavens!"
+
+    //Gamma Style finishers
+    Sorblow //Betel
+        DamageMult = T3_DMG_MULT
+        Scorching = 100
+        HitSparkIcon='Hit Effect.dmi'
+        HitSparkX=-32
+        HitSparkY=-32
+        HitMessage="amasses powerful flames in their hands and strikes true!"
+    Urda_Impulse //Kaus
+        DamageMult = T3_DMG_MULT/2
+        FollowUp="/obj/Skills/AutoHit/Urda_Impulse"
+        HitSparkIcon='Hit Effect.dmi'
+        HitSparkX=-32
+        HitSparkY=-32
+        HitMessage="leaps into the air and begins to glide..."
+    Albion //Wezen
+        DamageMult = T3_DMG_MULT/2
+        FollowUp="/obj/Skills/AutoHit/Albion"
+        HitSparkIcon='Hit Effect.dmi'
+        HitSparkX=-32
+        HitSparkY=-32
+        HitMessage="grounds themselves..."
+    Desdemona //Gulus
+        DamageMult = T3_DMG_MULT/2
+        FollowUp="/obj/Skills/AutoHit/Desdemona"
+        HitSparkIcon='Hit Effect.dmi'
+        HitSparkX=-32
+        HitSparkY=-32
+        HitMessage="gathers wicked flames within their hands..."

@@ -17,7 +17,7 @@ proc/generateVersionDatum()
 		glob.currentUpdate = updateversion
 
 globalTracker
-	var/UPDATE_VERSION = 4
+	var/UPDATE_VERSION = 6
 	var/tmp/update/currentUpdate
 
 	proc/updatePlayer(mob/p)
@@ -116,8 +116,27 @@ update
 				if(p.Class=="Underdog")
 					p.AngerMax=2
 					p.RPPMult = 1.35
-				
-					
+	version5
+		version = 5;
+		updateMob(mob/p)
+			. = ..()//left alone for difficult copy pasting
+			if(p.isRace(HALFSAIYAN))
+				p.stat_redo()
+			if(p.isRace(HUMAN))
+				if(p.Class=="Underdog")
+					p.passive_handler.Increase("Motivation", 0.25)
+					if(p.AscensionsAcquired==1)
+						p.passive_handler.Increase("Motivation", 0.1)
+	version6
+		version = 6;
+		updateMob(mob/p)
+			. = ..()//left alone for slightly easier copy pasting
+			if(p.isRace(HALFSAIYAN))
+				p.stat_redo()
+			if(p.isRace(HUMAN))
+				if(p.Class=="Underdog")
+					p.passive_handler.Increase("Motivation", 0.5)
+
 
 /globalTracker/var/COOL_GAJA_PLAYERS = list("Thorgigamax", "Gemenilove" )
 /globalTracker/var/GAJA_PER_ASC_CONVERSION = 0.25

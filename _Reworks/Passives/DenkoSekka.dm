@@ -23,17 +23,20 @@ mob/proc/
         . = passive_handler.Get("DenkoSekka");
         . = clamp(., glob.DENKO_SEKKA_MIN, glob.DENKO_SEKKA_MAX);
 
-    DenkoSekkaZanzoVisual(mob/Tgt)
+    DenkoSekkaZanzoFade(savedPixelZ)
         set waitfor = 0
-        var/savedColor = color
+        animate(src, pixel_z = savedPixelZ + 48, time = 5, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
         animate(src, color = "#FFD700", alpha = 140, time = 3)
         sleep(3)
         animate(src, alpha = 0, time = 2)
-        sleep(2)
-        if(Tgt)
-            LightningStrike2(Tgt)
+
+    DenkoSekkaZanzoLand(savedColor, savedPixelZ)
+        set waitfor = 0
+        src.pixel_z = savedPixelZ
+        LightningStrike2(src)
         animate(src, color = savedColor, alpha = 255, time = 3)
         sleep(3)
         animate(src)
         src.color = savedColor
         src.alpha = 255
+        src.pixel_z = savedPixelZ

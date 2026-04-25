@@ -420,6 +420,9 @@ obj/Skills
 									if(!d)
 										User << "You lack the authority to teleport to this place at will."
 										return
+								if(tz == MAJIN_ABSORB_Z)
+									User << "You cannot teleport here."
+									return
 							t=locate(tx, ty, tz)
 							if(t)
 								Destination=t

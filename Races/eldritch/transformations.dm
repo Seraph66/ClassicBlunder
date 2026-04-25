@@ -17,7 +17,7 @@ transformation
 			defenseadd = 1.5
 			strengthadd = 1.5
 			forceadd = 1.5
-/mob/proc/HandleManifestation(var/Stat)
+/mob/proc/HandleManifestation(Stat)
 	var/CA=AscensionsAcquired
 	var/TA=3
 	var/Total

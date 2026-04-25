@@ -129,6 +129,13 @@ mob/Players
 		if(src.KO && !(src.icon_state == "KO"))
 			src.KO = 0
 
+		// Chrono Devolution safeguards
+		for(var/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Debuff/Chrono_Devolution/cd in src)
+			if(src.BuffOn(cd))
+				cd.Trigger(src, Override=1)
+			src.SlotlessBuffs.Remove("[cd.BuffName]")
+			src.DeleteSkill(cd)
+
 		src.RecovMod=2
 
 		for(var/obj/Skills/Buffs/NuStyle/ns in src)
@@ -462,8 +469,10 @@ mob/Players
 				p.breakPact(TRUE, whoToInflict)
 		DevilSummonerRestoreVerbs()
 		initShortcuts();
+		MajinAbsorbOnLogin()
 		return
 	Logout()
+		MajinAbsorbOnLogout()
 		DevilSummonerLogout()
 		OverwatchNotifyLogin(src, "logged out")
 		players -= src
@@ -961,9 +970,7 @@ client
 						if(!mob.majinPassive)
 							mob.majinPassive = new(mob)
 						if(!mob.majinAbsorb)
-							mob<<"lacking majin absorb"
-							mob.majinAbsorb = new()
-							mob.findAlteredVariables()
+							mob.majinAbsorb = new(mob)
 
 				var/donator/d_info = donationInformation.getDonator(key = src.key)
 				var/supporter/s_info = donationInformation.getSupporter(key = src.key)

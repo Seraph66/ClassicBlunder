@@ -226,6 +226,11 @@ globalTracker
 		REBELHEARTMOD=200
 		MYTHICALPUREREDMULT = 3
 		SATSUICHANCE = 10
+// nobody stuff
+		ASHEN_BURN_POWER_DIVISOR = 10
+		ASHEN_TENSION_DIVISOR = 10
+		LONGING_DIVISOR = 1
+		LONGING_MAX_CLAMP = 3
 // globals
 		WorldBaseAmount = 1
 		WorldDamageMult = 1.5

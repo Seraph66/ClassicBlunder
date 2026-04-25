@@ -266,7 +266,11 @@ mob/proc/SkillX(var/Wut,var/obj/Skills/Z,var/bypass=0)
 				if(src.Knockbacked)
 					return
 				if(Secret == "Heavenly Restriction" && secretDatum?:hasImprovement("Reverse Dash"))
-					GetAndUseSkill(/obj/Skills/Buffs/SlotlessBuffs/Heavenly_Reversal, Buffs, TRUE)
+					if(!locate(/obj/Skills/Buffs/SlotlessBuffs/Heavenly_Reversal, src))
+						src.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Heavenly_Reversal)
+					else
+						for(var/obj/Skills/Buffs/SlotlessBuffs/Heavenly_Reversal/W in src)
+							W.Trigger(src)
 				var/Distance=5
 				var/Delay=1
 				src.Frozen=1
@@ -491,6 +495,10 @@ mob/proc/SkillX(var/Wut,var/obj/Skills/Z,var/bypass=0)
 						src.dir=get_dir(src, src.Target)
 						src.Melee1(1, 5, accmulti=1.125+(src.GetSuperDash()/4))
 
+
+			if("Release Absorb")
+				src.releaseAbsorbedPrompt()
+				return
 
 			if("Absorb")
 				// if(Z.Using)
@@ -962,10 +970,13 @@ mob/proc/SkillX(var/Wut,var/obj/Skills/Z,var/bypass=0)
 									if(MovementCharges<0)
 										MovementCharges=0
 									lastZanzoUsage = world.time + 8
-									src.DenkoSekkaZanzoVisual(src.Target)
+									var/denkoSavedColor = src.color
+									var/denkoSavedPixelZ = src.pixel_z
+									src.DenkoSekkaZanzoFade(denkoSavedPixelZ)
 									sleep(5)
 									src.Comboz(src.Target, FALSE, FALSE, passive_handler["Backstabber"])
 									src.dir=get_dir(src,src.Target)
+									src.DenkoSekkaZanzoLand(denkoSavedColor, denkoSavedPixelZ)
 									src.DenkoSekkaCharged = denko
 									src.Melee1(1, 5, accmulti=1.1, SureKB=1, BreakAttackRate=1)
 									return

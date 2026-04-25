@@ -7,18 +7,37 @@ mob/proc/stat_redo()
 	statArchive = new()
 	statArchive.reset(list(1,1,1,1,1,1))
 	race_selecting=0
-	Class = race.classes[race.current_class]
-	winset(src, "Finalize_Screen.className", "text=\"[race.classes[race.current_class]]\"")
+	// Keep ascension / special classes
+	if(race && length(race.classes))
+		if(Class in race.classes)
+			var/idx = 0
+			for(var/cname in race.classes)
+				idx++
+				if(cname == Class)
+					race.current_class = idx
+					break
+			Class = race.classes[race.current_class]
+		else if(!Class)
+			Class = race.classes[race.current_class]
+	winset(src, "Finalize_Screen.className", "text=\"[Class]\"")
 	winshow(src,"Finalize_Screen",1)
 	if(length(race.stats_per_class) > 0)
-		src.RacialStats(race.stats_per_class[race.getClass()])
+		if(race.stats_per_class[Class])
+			src.RacialStats(race.stats_per_class[Class])
+		else
+			src.RacialStats(race)
 	else
 		src.RacialStats(race)
 	src.UpdateBio()
 	src.dir = SOUTH
 	src.screen_loc = "IconUpdate:1,1"
 	client.screen += src
-	SetStatPoints(race.statPoints)
+	var/pointPool = race.statPoints
+	if(race.type)
+		var/race/template = GetRaceInstanceFromType(race.type)
+		if(template)
+			pointPool = template.statPoints
+	SetStatPoints(pointPool)
 	src.UpdateBio()
 	src.GetIncrements()
 	race_selecting = FALSE
@@ -29,18 +48,36 @@ mob/proc/stat_retwo()
 	statArchive = new()
 	statArchive.reset(list(1,1,1,1,1,1))
 	race_selecting=0
-	Class = race.classes[race.current_class]
-	winset(src, "Finalize_Screen.className", "text=\"[race.classes[race.current_class]]\"")
+	if(race && length(race.classes))
+		if(Class in race.classes)
+			var/idx = 0
+			for(var/cname in race.classes)
+				idx++
+				if(cname == Class)
+					race.current_class = idx
+					break
+			Class = race.classes[race.current_class]
+		else if(!Class)
+			Class = race.classes[race.current_class]
+	winset(src, "Finalize_Screen.className", "text=\"[Class]\"")
 	winshow(src,"Finalize_Screen",1)
 	if(length(race.stats_per_class) > 0)
-		src.RacialStats(race.stats_per_class[race.getClass()])
+		if(race.stats_per_class[Class])
+			src.RacialStats(race.stats_per_class[Class])
+		else
+			src.RacialStats(race)
 	else
 		src.RacialStats(race)
 	src.UpdateBio()
 	src.dir = SOUTH
 	src.screen_loc = "IconUpdate:1,1"
 	client.screen += src
-	SetStatPoints(race.statPoints)
+	var/pool = race.statPoints
+	if(race.type)
+		var/race/rtp = GetRaceInstanceFromType(race.type)
+		if(rtp)
+			pool = rtp.statPoints
+	SetStatPoints(pool)
 	src.UpdateBio()
 	src.GetIncrements()
 	src.passive_handler = null

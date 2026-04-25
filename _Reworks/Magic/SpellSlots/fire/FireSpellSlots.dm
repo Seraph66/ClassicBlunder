@@ -39,13 +39,17 @@
 	SpellSlot=1
 	Dragon_Arc
 		DamageMult=3
+		Radius=1;
 		Scorching=1
 		Knockback=2
-		Speed=1
+		Speed=0
+		Stream=2
+		MultiTrail = 1
 		Distance=12
 		ManaCost=4
 		Cooldown=40
-		IconLock='Fireball.dmi'
+		Trail='Fireball.dmi'
+		TrailVariance = 32;
 		ActiveMessage="invokes: <font size=+1>DRAGON ARC!</font size>"
 		adjust(mob/p)
 			if(!altered)

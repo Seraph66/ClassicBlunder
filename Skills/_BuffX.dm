@@ -8379,6 +8379,9 @@ NEW VARIABLES
 
 			verb/Aria_Chant()
 				set category = "Skills"
+				if(usr.absorbedBy)
+					usr << "You cannot recite your aria while absorbed."
+					return
 				if(usr.AriaCount-2 == usr.SagaLevel && usr.UBWPath != "Feeble")
 					usr << "You try to speak more of your aria, but you don't know any more lines..."
 					return
@@ -9746,7 +9749,10 @@ NEW VARIABLES
 								SpiralPower=3
 							if(5)
 								SpiralPower=7
-						passives = list("SpiralPowerUnlocked" = SpiralPower )
+						StrMult=1.25 + (0.05*secretLevel*secretLevel)
+						ForMult=1.25 + (0.05*secretLevel*secretLevel)
+						EndMult=1.25 + (0.05*secretLevel*secretLevel)
+						passives = list("SpiralPowerUnlocked" = SpiralPower, "PureDamage" = SpiralPower, "PureReduction" = SpiralPower)
 						TimerLimit= (2 * currentPot) + (20 * (p.transUnlocked ? p.transUnlocked : p.AscensionsAcquired))
 						Cooldown = 61 - ((5 * p.AscensionsAcquired) + (5 * secretLevel))
 				KenWave = 2
@@ -12411,6 +12417,9 @@ mob
 						if(!src.passive_handler.Get("Scarlet-Overdriven"))
 							src.Death(null, "suicidal stupidity!", SuperDead=1)
 							return
+				if(src.absorbedBy && (B.WarpZone || B.Duel || istype(B, /obj/Skills/Buffs/SlotlessBuffs/Domain_Expansion)))
+					src << "You cannot invoke duel or domain techniques while absorbed."
+					return
 				if(B.WarpZone)
 					if(!B.WarpX||!B.WarpY||!B.WarpZ)
 						src << "Your duel location hasn't been set!"
@@ -12500,6 +12509,9 @@ mob
 					src << "You channel the haziness of Shadow through your style!"
 				if(src.Secret=="Zombie")
 					src << "You channel the stillness of the Underworld through your style!"
+				if(hasSecret("Eldritch (Shrouded)"))
+					src << "You channel the Origin behind your Shroud through your style!"
+					setShroudedStyle();
 				src.AddStyleBuff()
 				B.current_passives = B.passives
 				passive_handler.increaseList(B.passives)
@@ -12654,6 +12666,9 @@ mob
 				OMsg(src, "[src] takes back what belongs to them, as they call upon [src.StyleBuff]!")
 			else
 				OMsg(src, "[src] takes up the [src.StyleBuff]!")
+			if(hasSecret("Eldritch (Shrouded)"))
+				var/SecretInformation/EldritchShrouded/es = secretDatum;
+				passive_handler.increaseList(es.ShroudedPassives);
 
 		RemoveStyleBuff()
 			if(src.StyleBuff.current_passives && src.StyleBuff.current_passives.len)
@@ -12667,6 +12682,9 @@ mob
 			src.OffMultTotal-=(src.StyleBuff.OffMult-1)
 			src.DefMultTotal-=(src.StyleBuff.DefMult-1)
 			src.RecovMultTotal-=(src.StyleBuff.RecovMult-1)
+			if(hasSecret("Eldritch (Shrouded)"))
+				var/SecretInformation/EldritchShrouded/es = secretDatum;
+				passive_handler.decreaseList(es.ShroudedPassives);
 			src.AllSkillsRemove(src.StyleBuff)
 			if(StyleBuff.BuffSelf)
 				var/obj/Skills/Buffs/s = FindSkill(StyleBuff.BuffSelf)

@@ -129,6 +129,9 @@ mob
 
 		UnlimitedBladeWorks()
 			if(usingUBW) return
+			if(absorbedBy)
+				src << "You cannot unfold Unlimited Blade Works while absorbed."
+				return
 			var/list/targets = list()
 			for(var/mob/m in range(15))
 				targets |= m

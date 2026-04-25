@@ -2,7 +2,7 @@
 
 //changed these to line up with ~10 potential after intended SSj Levels (recorded in saiyan/transformations.dm and below)
 #define ASCENSION_ONE_POTENTIAL 10 //Sub-SSj Level
-#define ASCENSION_TWO_POTENTIAL 30 //SSj1
+#define ASCENSION_TWO_POTENTIAL 25 //SSj1
 #define ASCENSION_THREE_POTENTIAL 40 //SSj2
 
 //This is kind of gonna be a lull period for Ascension races. Tough beans...

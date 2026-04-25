@@ -268,8 +268,14 @@
         BuffSelf="/obj/Skills/Buffs/SlotlessBuffs/Autonomous/QueueBuff/BlackFlash_Potential"
         adjust(mob/p)
             var/SecretInformation/BlackFlash/bf = p.secretDatum
-            bf.BlackFlashChance = bf.BlackFlashBaseChance
-            admins << "Queue'd a Black Flash, reset the chance to [bf.BlackFlashChance]"
+            var/sparks = p.passive_handler.Get("Sparks of Black")
+            if (sparks == 1)
+                if (prob(50))
+                    p.JJKNarrate("-- And the momentum is kept. [p]'s retain their current chance to land a Black Flash!!")
+                else
+                    bf.BlackFlashChance = bf.BlackFlashBaseChance
+            else
+                bf.BlackFlashChance = bf.BlackFlashBaseChance
 
 //SPIRAL
 /obj/Skills/Queue/Secret_Heavy_Strike/

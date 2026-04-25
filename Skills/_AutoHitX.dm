@@ -2248,6 +2248,7 @@ obj
 				SpecialAttack=1
 				CanBeDodged=0
 				CanBeBlocked=1
+				ComboMaster=1
 				DamageMult=11
 				Stunner=3
 				MortalBlow=1
@@ -5156,6 +5157,7 @@ mob
 					if(!src.HasSpellFocus(Z))
 						src << "You need a spell focus to use [Z]."
 						return
+			Z.adjust(src)
 			Z.SpellSlotModification();
 			if(disarmed_cut)
 				Z.DamageMult = (Z.DamageMult / 2)
@@ -6960,9 +6962,6 @@ obj
 						if(m!=src.Owner.Grab)
 							src.Owner.Knockback(src.Knockback+extraKnock, m, get_dir(src.Owner, m), extraKnock)
 
-				if(PullIn)
-					src.Owner.Knockback(PullIn, m, Direction=get_dir(m, Owner))
-
 				if(src.Stunner)
 					Stun(m, src.Stunner+src.Owner.GetStunningStrike())
 					if(src.Stunner>5)
@@ -7042,6 +7041,8 @@ obj
 
 			Life()
 				if(src.loc == null) return
+				if(PullIn && Owner)
+					Owner.ApplyPullInArea(PullIn, PullIn)
 				if(src.Circle)
 					if(src.TargetLoc)
 						if(src.Slow&&src.Distance>1)

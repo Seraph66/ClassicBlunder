@@ -4,7 +4,7 @@ blobDropper/proc/updateVars(mob/Players/p)
     var/ascen = p.AscensionsAcquired
     numBlobsMax = MAX_BLOBS + getMaxBlobs(ascen)
     blobDropRate = MAJIN_BLOB_DROP_RATE + getDropRate(ascen)
-    dropThreshold = MAJIN_BLOB_DROP_THRESHOLD + getDropThreshold(ascen)
+    dropThreshold = MAJIN_BLOB_DROP_THRESHOLD - getDropThreshold(ascen)
 
 blobDropper/proc/getMaxBlobs(ascen)
     return 2 *  ascen
@@ -86,19 +86,18 @@ blobDropper/proc/resetVariables(mob/Players/p)
         blobLoop += src
 
 /obj/blob/proc/getRandValue(mob/Players/p, override)
-    // get either a random buff with health or a super health
     var/ascen = p.AscensionsAcquired
-    var/val = rand(1, 100)
+    var/roll = rand(1, 100)
+    var/val = 0
     var/buff = FALSE
-    if(val <= 10 || override)
-        // make the super heal buff
+    var/powerFloor = max(p.Power, 1)
+    if(roll <= 10 || override)
         icon_state = "superheal"
-        val = 1 + (0.1 * ascen) + (0.05 * (100 - p.Health))
+        val = 1 + (0.1 * ascen) + (0.05 * (100 - p.Health)) + (powerFloor * INNOCENT_BLOB_HEAL_FRAC)
     else
         buff = pick("PureReduction","Juggernaut","GiantForm","DemonicDurability")
-        val = 0.1 + (0.1 * ascen) + (0.05 * ((100 - p.Health)/2))
+        val = 0.1 + (0.1 * ascen) + (0.05 * ((100 - p.Health)/2)) + (powerFloor * INNOCENT_BLOB_BUFF_FRAC)
     heldBuff = new(p, val, buff)
-    // heldBuff.loc = src
 
 /obj/blob/Cross(atom/obstacle)
     ..()
