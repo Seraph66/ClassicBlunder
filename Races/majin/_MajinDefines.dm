@@ -2,7 +2,7 @@
 #define FULL_RATE 0.5
 #define LOW_RATE 0.15
 
-#define MAJIN_BLOB_DROP_THRESHOLD 15 // Health threshold below which blobs start dropping (reduced further by ascension).
+#define MAJIN_BLOB_DROP_THRESHOLD 15 // Base health threshold (% HP) below which blobs start dropping. Raised by ascension via getDropThreshold; capped at 75.
 #define MAJIN_BLOB_DROP_RATE 0.15 // Chance per tick to drop a blob while under threshold (raised by ascension).
 #define MAX_BLOBS 2 // Starting cap on simultaneous active blobs (raised by ascension).
 
@@ -40,7 +40,7 @@ blobDropper
         numBlobs = 0
         numBlobsMax = MAX_BLOBS + getMaxBlobs(ascen)
         blobDropRate = MAJIN_BLOB_DROP_RATE + getDropRate(ascen)
-        dropThreshold = MAJIN_BLOB_DROP_THRESHOLD - getDropThreshold(ascen)
+        dropThreshold = clamp(MAJIN_BLOB_DROP_THRESHOLD + getDropThreshold(ascen), MAJIN_BLOB_DROP_THRESHOLD, 75)
 
 majinAbsorb/New(mob/Players/p)
     if(p)

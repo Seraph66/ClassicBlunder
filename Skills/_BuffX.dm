@@ -6301,7 +6301,7 @@ NEW VARIABLES
 					set category="Skills"
 					src.Trigger(usr)
 			Jet_Boots
-				passives = list("SuperDash" = 1, "Skimming " = 1, "Pursuer" = 1)
+				passives = list("SuperDash" = 1, "Skimming" = 1, "Pursuer" = 1)
 				SuperDash=1
 				Skimming=1
 				Pursuer=1
@@ -9170,6 +9170,8 @@ NEW VARIABLES
 			var/identifier = null
 			var/demonName = null
 			var/icon/customTurfIcon = null
+			var/icon/customRoofIcon = null
+			var/useShroud = TRUE
 			Cooldown = -1
 			ActiveMessage="releases their Domain!"
 			OffMessage="conceals their Domain...."
@@ -14177,6 +14179,16 @@ mob
 				if(s&&s.Conjured)
 					s.AlignEquip(src)
 					del s
+				else
+					// Conjured sword may have landed in the second slot if the user
+					// had NeedsSecondSword (Two Sword Style etc.) at activation —
+					// Items.dm:Equip() places it there when slot 1 is occupied.
+					// Without this branch the conjured sword leaks: slot 2 stays
+					// blocked even after the buff is toggled off.
+					var/obj/Items/Sword/s2=src.EquippedSecondSword()
+					if(s2&&s2.Conjured&&!B.MakesSecondSword)
+						s2.AlignEquip(src)
+						del s2
 				if(B.MakesSword==3)
 					for(s in src)
 						if(s.Conjured)

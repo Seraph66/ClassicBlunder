@@ -194,7 +194,7 @@ mob/proc/endMangBuff() // Turns Mang off (Oops)
         if(BuffOn(mr)) mr.Trigger(src, Override=1);
 
 /mob/proc/canMangPU()
-    return ((GetMangMastery() >= GetMangLevel()+1) && ((usingShinBuff() && !MangOnCD()) || usingMangBuff()));
+    return ((GetMangMastery() >= GetMangLevel()) && ((usingShinBuff() && !MangOnCD()) || usingMangBuff()));
 
 //tbh i think we could probably make a proc that handles both CD expiration and turning mang rings off but... i'm just gonna leave well enough alone
 mob/proc/MangCDSwap(obj/Skills/Buffs/b) // This is no longer commented out and I just put it where I should have advised to put it in the first place ~ Xoxo
