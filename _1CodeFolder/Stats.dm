@@ -989,6 +989,8 @@ mob/proc/
 							Ratio*=1.15
 						else
 							Ratio*=1.25
+			if(passive_handler.Get("Undeterred"))
+				Ratio*=1+((StrTax+ForTax)/2)
 			if(passive_handler.Get("SSJRose"))
 				Ratio*=1.60 //this will be Different but i'm leaving it like this now
 

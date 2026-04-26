@@ -7,7 +7,7 @@ obj/Skills/Buffs/SlotlessBuffs/Heavenly_Reversal
 		var/boon = p.secretDatum?:getBoon(p,"Reverse Dash")
 		passives = list("Godspeed" = boon, "Juggernaut" = boon)
 		SpdMult = 1 + (boon/2)
-		TimerLimit = boon
+		TimerLimit = 5 * boons
 	Trigger(mob/User, Override = FALSE)
 		if(!User.BuffOn(src))
 			adjust(User)
