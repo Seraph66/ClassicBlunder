@@ -130,6 +130,99 @@ mob/Admin3/verb/LoadSwapMap()
 	for(var/mob/Player/AI/ai in ticking_ai)
 		ai.EndLife(0)*/
 
+// Live-tweak a stat var on a T1/T2/T3 Style template or T1/T2 Sig template.
+// Picks a category, lets the admin pick a specific type, then a scalar var on
+// that type, then a new value. Updates the var on every live instance of that
+// type currently in world contents. Note: not persisted across reboots — the
+// compile-time default is restored when the world starts. Re-run after reboot
+// or after balance is finalized in code.
+/mob/Admin3/verb/Tweak_Style_Sig_Var()
+	set category = "Admin"
+	set name = "Tweak Style/Sig Var"
+	set desc = "Edit a scalar var on a T1/T2/T3 Style or T1/T2 Sig template + propagate to live instances."
+	var/category = input(usr, "Pick a category to tweak.", "Tweak Style/Sig") as null|anything in list("T1 Style", "T2 Style", "T3 Style", "T1 Sig", "T2 Sig")
+	if(!category)
+		return
+	var/list/typeChoices = list()
+	if(category == "T1 Style" || category == "T2 Style" || category == "T3 Style")
+		var/wantTier = 1
+		if(category == "T2 Style")
+			wantTier = 2
+		else if(category == "T3 Style")
+			wantTier = 3
+		for(var/T in subtypesof(/obj/Skills/Buffs/NuStyle))
+			if(!ispath(T))
+				continue
+			var/obj/Skills/Buffs/NuStyle/probe = new T
+			if(probe.SignatureTechnique == wantTier)
+				typeChoices["[T]"] = T
+			del probe
+	else if(category == "T1 Sig")
+		for(var/k in Tier1)
+			var/v = Tier1[k]
+			if(istext(v))
+				var/p = text2path(v)
+				if(ispath(p))
+					typeChoices["[k] ([p])"] = p
+	else if(category == "T2 Sig")
+		for(var/k in Tier2)
+			var/v = Tier2[k]
+			if(istext(v))
+				var/p = text2path(v)
+				if(ispath(p))
+					typeChoices["[k] ([p])"] = p
+	if(!typeChoices.len)
+		usr << "No types found in [category]."
+		return
+	var/pickedKey = input(usr, "Pick a type from [category].", "Tweak Type") as null|anything in typeChoices
+	if(!pickedKey)
+		return
+	var/path = typeChoices[pickedKey]
+	if(!ispath(path))
+		usr << "Invalid type."
+		return
+	var/obj/Skills/probe = new path
+	if(!probe)
+		usr << "Could not instantiate [path]."
+		return
+	var/list/varChoices = list()
+	var/list/exclude = list("type", "parent_type", "loc", "x", "y", "z", "contents", "vars", "verbs", "overlays", "underlays", "transform", "appearance", "filters", "color", "alpha", "mouse_opacity", "icon", "icon_state", "pixel_x", "pixel_y", "Initialized", "tag", "gender", "density", "opacity", "layer", "plane", "dir")
+	for(var/v in probe.vars)
+		if(v in exclude)
+			continue
+		var/val = probe.vars[v]
+		if(istype(val, /list))
+			continue
+		if(!isnum(val) && !istext(val))
+			continue
+		varChoices["[v] = [val]"] = v
+	if(!varChoices.len)
+		usr << "No editable scalar vars found on [pickedKey]."
+		del probe
+		return
+	var/varKey = input(usr, "Which var to edit on [pickedKey]?", "Tweak Var") as null|anything in varChoices
+	if(!varKey)
+		del probe
+		return
+	var/varName = varChoices[varKey]
+	var/curVal = probe.vars[varName]
+	var/newVal
+	if(isnum(curVal))
+		newVal = input(usr, "Current [varName] = [curVal]. New numeric value?", "Tweak", curVal) as null|num
+	else
+		newVal = input(usr, "Current [varName] = \"[curVal]\". New text value?", "Tweak", curVal) as null|text
+	if(isnull(newVal))
+		del probe
+		return
+	var/count = 0
+	for(var/obj/Skills/S in world)
+		if(S.type == path)
+			S.vars[varName] = newVal
+			count++
+	Log("Admin", "[ExtractInfo(usr)] tweaked [path].[varName] from [curVal] to [newVal]. [count] live instances updated.")
+	usr << "Set [path].[varName] from [curVal] to [newVal]. Updated [count] live instance\s. Note: change is in-memory only — compile-time default returns on world reboot."
+	del probe
+
 /mob/Admin2/verb/PrivateNarrate(mob/m in players)
 	set category="Admin"
 	var/message = input(usr,"What do you want to whisper to them?","Cursespeak") as message | null
