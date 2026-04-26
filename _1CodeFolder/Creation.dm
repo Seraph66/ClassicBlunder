@@ -419,9 +419,8 @@ mob/Players
 				s.cooldown_remaining=0
 				s.cooldown_start=0
 				s.Using=0
-			for(var/obj/Skills/AutoHit/DemiFiend/Lunge/L in src)
-				L.Charges = L.MaxCharges
-				L.Recharging = 0
+				if(s.MaxCharges > 0)
+					s.Charges = s.MaxCharges
 			for(var/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/dm in src)
 				if(dm.possible_skills)
 					for(var/path in dm.possible_skills)

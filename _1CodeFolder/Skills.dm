@@ -29,6 +29,9 @@ obj/Skills
 	var/CooldownStatic=0
 	var/CooldownScaling=0
 	var/CooldownScalingCounter=0
+	var/MaxCharges=0
+	var/Charges=0
+	var/ChargeRefresh=30
 	var/Mastery=1
 	var/BeamUsing
 	var/BuffUsing
@@ -186,7 +189,9 @@ obj/Skills
 	proc
 		skillDescription()
 			description = "[src.name]\n"
-			if(Cooldown!=-1)
+			if(MaxCharges > 0)
+				description += "Charges: [Charges]/[MaxCharges] (refreshes every [ChargeRefresh]s)\n"
+			else if(Cooldown!=-1)
 				description += "Cooldown: [Cooldown] seconds.\n"
 			else
 				description += "Cooldown: On Meditate.\n"

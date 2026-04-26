@@ -203,7 +203,7 @@ obj
 				Combo=12
 				Warp=3
 				Duration=5
-				Cooldown=180 //once per fight
+				Cooldown=180
 				Decider=1
 				NeedsSword=1
 				Instinct=4
@@ -224,7 +224,7 @@ obj
 						AccuracyMult=2
 						Combo=2
 						Instinct=2
-						Cooldown=-1
+						Cooldown=180
 						HitStep=/obj/Skills/Queue/Furioso2
 					else
 						name="Omnislash"
@@ -236,7 +236,7 @@ obj
 						Combo=12
 						Warp=3
 						Duration=5
-						Cooldown=180 //once per fight
+						Cooldown=180
 						Decider=1
 						NeedsSword=1
 						Instinct=4

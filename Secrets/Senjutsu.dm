@@ -13,7 +13,7 @@ var/senjutsuOverloadAlert = FALSE
 
 
 /mob/proc/getManaStatsBoon()
-    var/manaStatPerc = GetManaStats() // 1 per tick
+    var/manaStatPerc = GetManaStats() * glob.MANA_STATS_EFF_MULT // 1 per tick * EFF Mult
     var/maxStatBoon = 2
     var/baseBoon = glob.MANA_STATS_BASE_BOON // 0.1 extra stat for 1 mana stat
     if(Class=="Trickster")

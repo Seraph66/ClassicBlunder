@@ -11,7 +11,7 @@ ascension
 			force = 0.75
 			speed = 0.75
 			offense = 0.75
-			passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2)
+			passives = list()
 
 			onAscension(mob/owner)
 				if(!owner.Class || (owner.Class != "Innocent" && owner.Class != "Super" && owner.Class != "Unhinged"))
@@ -19,16 +19,11 @@ ascension
 					owner.Class = picked
 				switch(owner.Class)
 					if("Innocent")
-						passives = list("Blubber" = 1, "DemonicDurability" = 1, "Harden" = 1, "Juggernaut" = 1, "LifeGeneration" = 1, "PureReduction" = 1)
+						passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2, "Blubber" = 1, "DemonicDurability" = 1, "Harden" = 1, "Juggernaut" = 1, "LifeGeneration" = 1, "PureReduction" = 1)
 					if("Super")
-						passives = list("Adaptation" = 1, "Steady" = 1, "Momentum" = 1, "Fury" = 1, "Instinct" = 1, "Flow" = 1, "Duelist" = 1)
+						passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2, "Adaptation" = 1, "Steady" = 1, "Momentum" = 1, "Fury" = 1, "Instinct" = 1, "Flow" = 1, "Duelist" = 1)
 					if("Unhinged")
-						// UnhingedForm enables the consumer code in _JinxUtility.dm
-						// (Str/For/Spd/Off scale up as Def/End approach 0). Without
-						// this grant, the four consumer hooks were dead. Each ascension
-						// stacks +1 via the parent's increaseList, matching how the
-						// other Unhinged passives ramp.
-						passives = list("Brutalize" = 1, "AngerAdaptiveForce" = 0.15, "KillerInstinct" = 0.1, "CriticalChance" = 5, "CriticalDamage" = 0.05, "PureDamage" = 1, "UnhingedForm" = 1)
+						passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2, "Brutalize" = 1, "AngerAdaptiveForce" = 0.15, "KillerInstinct" = 0.1, "CriticalChance" = 5, "CriticalDamage" = 0.05, "PureDamage" = 1)
 				if(owner.majinAbsorb)
 					owner.majinAbsorb.updateVariables(owner)
 				owner.majinCheatDeathUsed = 0
@@ -45,21 +40,16 @@ ascension
 			force = 1.25
 			speed = 1.25
 			offense = 1.25
-			passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2)
+			passives = list()
 
 			onAscension(mob/owner)
 				switch(owner.Class)
 					if("Innocent")
-						passives = list("Blubber" = 1, "DemonicDurability" = 1, "Harden" = 1, "Juggernaut" = 1, "LifeGeneration" = 1, "PureReduction" = 1)
+						passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2, "Blubber" = 1, "DemonicDurability" = 1, "Harden" = 1, "Juggernaut" = 1, "LifeGeneration" = 1, "PureReduction" = 1)
 					if("Super")
-						passives = list("Adaptation" = 1, "Steady" = 1, "Momentum" = 1, "Fury" = 1, "Instinct" = 1, "Flow" = 1, "Duelist" = 1)
+						passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2, "Adaptation" = 1, "Steady" = 1, "Momentum" = 1, "Fury" = 1, "Instinct" = 1, "Flow" = 1, "Duelist" = 1)
 					if("Unhinged")
-						// UnhingedForm enables the consumer code in _JinxUtility.dm
-						// (Str/For/Spd/Off scale up as Def/End approach 0). Without
-						// this grant, the four consumer hooks were dead. Each ascension
-						// stacks +1 via the parent's increaseList, matching how the
-						// other Unhinged passives ramp.
-						passives = list("Brutalize" = 1, "AngerAdaptiveForce" = 0.15, "KillerInstinct" = 0.1, "CriticalChance" = 5, "CriticalDamage" = 0.05, "PureDamage" = 1, "UnhingedForm" = 1)
+						passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2, "Brutalize" = 1, "AngerAdaptiveForce" = 0.15, "KillerInstinct" = 0.1, "CriticalChance" = 5, "CriticalDamage" = 0.05, "PureDamage" = 1)
 				if(owner.majinAbsorb)
 					owner.majinAbsorb.updateVariables(owner)
 				owner.majinCheatDeathUsed = 0
@@ -75,21 +65,16 @@ ascension
 			force = 1.25
 			speed = 1.25
 			offense = 1.25
-			passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2)
+			passives = list()
 
 			onAscension(mob/owner)
 				switch(owner.Class)
 					if("Innocent")
-						passives = list("Blubber" = 1, "DemonicDurability" = 1, "Harden" = 1, "Juggernaut" = 1, "LifeGeneration" = 1, "PureReduction" = 1)
+						passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2, "Blubber" = 1, "DemonicDurability" = 1, "Harden" = 1, "Juggernaut" = 1, "LifeGeneration" = 1, "PureReduction" = 1)
 					if("Super")
-						passives = list("Adaptation" = 1, "Steady" = 1, "Momentum" = 1, "Fury" = 1, "Instinct" = 1, "Flow" = 1, "Duelist" = 1)
+						passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2, "Adaptation" = 1, "Steady" = 1, "Momentum" = 1, "Fury" = 1, "Instinct" = 1, "Flow" = 1, "Duelist" = 1)
 					if("Unhinged")
-						// UnhingedForm enables the consumer code in _JinxUtility.dm
-						// (Str/For/Spd/Off scale up as Def/End approach 0). Without
-						// this grant, the four consumer hooks were dead. Each ascension
-						// stacks +1 via the parent's increaseList, matching how the
-						// other Unhinged passives ramp.
-						passives = list("Brutalize" = 1, "AngerAdaptiveForce" = 0.15, "KillerInstinct" = 0.1, "CriticalChance" = 5, "CriticalDamage" = 0.05, "PureDamage" = 1, "UnhingedForm" = 1)
+						passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2, "Brutalize" = 1, "AngerAdaptiveForce" = 0.15, "KillerInstinct" = 0.1, "CriticalChance" = 5, "CriticalDamage" = 0.05, "PureDamage" = 1)
 				if(owner.majinAbsorb)
 					owner.majinAbsorb.updateVariables(owner)
 				owner.majinCheatDeathUsed = 0
@@ -106,21 +91,16 @@ ascension
 			force = 1.25
 			speed = 1.25
 			offense = 1.25
-			passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2)
+			passives = list()
 
 			onAscension(mob/owner)
 				switch(owner.Class)
 					if("Innocent")
-						passives = list("Blubber" = 1, "DemonicDurability" = 1, "Harden" = 1, "Juggernaut" = 1, "LifeGeneration" = 1, "PureReduction" = 1)
+						passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2, "Blubber" = 1, "DemonicDurability" = 1, "Harden" = 1, "Juggernaut" = 1, "LifeGeneration" = 1, "PureReduction" = 1)
 					if("Super")
-						passives = list("Adaptation" = 1, "Steady" = 1, "Momentum" = 1, "Fury" = 1, "Instinct" = 1, "Flow" = 1, "Duelist" = 1)
+						passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2, "Adaptation" = 1, "Steady" = 1, "Momentum" = 1, "Fury" = 1, "Instinct" = 1, "Flow" = 1, "Duelist" = 1)
 					if("Unhinged")
-						// UnhingedForm enables the consumer code in _JinxUtility.dm
-						// (Str/For/Spd/Off scale up as Def/End approach 0). Without
-						// this grant, the four consumer hooks were dead. Each ascension
-						// stacks +1 via the parent's increaseList, matching how the
-						// other Unhinged passives ramp.
-						passives = list("Brutalize" = 1, "AngerAdaptiveForce" = 0.15, "KillerInstinct" = 0.1, "CriticalChance" = 5, "CriticalDamage" = 0.05, "PureDamage" = 1, "UnhingedForm" = 1)
+						passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2, "Brutalize" = 1, "AngerAdaptiveForce" = 0.15, "KillerInstinct" = 0.1, "CriticalChance" = 5, "CriticalDamage" = 0.05, "PureDamage" = 1)
 				if(owner.majinAbsorb)
 					owner.majinAbsorb.updateVariables(owner)
 				owner.majinCheatDeathUsed = 0
@@ -136,21 +116,16 @@ ascension
 			force = 1.75
 			speed = 1.75
 			offense = 1.75
-			passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2)
+			passives = list()
 
 			onAscension(mob/owner)
 				switch(owner.Class)
 					if("Innocent")
-						passives = list("Blubber" = 1, "DemonicDurability" = 1, "Harden" = 1, "Juggernaut" = 1, "LifeGeneration" = 1, "PureReduction" = 1)
+						passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2, "Blubber" = 1, "DemonicDurability" = 1, "Harden" = 1, "Juggernaut" = 1, "LifeGeneration" = 1, "PureReduction" = 1)
 					if("Super")
-						passives = list("Adaptation" = 1, "Steady" = 1, "Momentum" = 1, "Fury" = 1, "Instinct" = 1, "Flow" = 1, "Duelist" = 1)
+						passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2, "Adaptation" = 1, "Steady" = 1, "Momentum" = 1, "Fury" = 1, "Instinct" = 1, "Flow" = 1, "Duelist" = 1)
 					if("Unhinged")
-						// UnhingedForm enables the consumer code in _JinxUtility.dm
-						// (Str/For/Spd/Off scale up as Def/End approach 0). Without
-						// this grant, the four consumer hooks were dead. Each ascension
-						// stacks +1 via the parent's increaseList, matching how the
-						// other Unhinged passives ramp.
-						passives = list("Brutalize" = 1, "AngerAdaptiveForce" = 0.15, "KillerInstinct" = 0.1, "CriticalChance" = 5, "CriticalDamage" = 0.05, "PureDamage" = 1, "UnhingedForm" = 1)
+						passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2, "Brutalize" = 1, "AngerAdaptiveForce" = 0.15, "KillerInstinct" = 0.1, "CriticalChance" = 5, "CriticalDamage" = 0.05, "PureDamage" = 1)
 				if(owner.majinAbsorb)
 					owner.majinAbsorb.updateVariables(owner)
 				owner.majinCheatDeathUsed = 0
@@ -167,21 +142,16 @@ ascension
 			force = 2
 			speed = 2
 			offense = 2
-			passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2, "Unstoppable" = 1)
+			passives = list()
 
 			onAscension(mob/owner)
 				switch(owner.Class)
 					if("Innocent")
-						passives = list("Blubber" = 1, "DemonicDurability" = 1, "Harden" = 1, "Juggernaut" = 1, "LifeGeneration" = 1, "PureReduction" = 1)
+						passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2, "Unstoppable" = 1, "Blubber" = 1, "DemonicDurability" = 1, "Harden" = 1, "Juggernaut" = 1, "LifeGeneration" = 1, "PureReduction" = 1)
 					if("Super")
-						passives = list("Adaptation" = 1, "Steady" = 1, "Momentum" = 1, "Fury" = 1, "Instinct" = 1, "Flow" = 1, "Duelist" = 1)
+						passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2, "Unstoppable" = 1, "Adaptation" = 1, "Steady" = 1, "Momentum" = 1, "Fury" = 1, "Instinct" = 1, "Flow" = 1, "Duelist" = 1)
 					if("Unhinged")
-						// UnhingedForm enables the consumer code in _JinxUtility.dm
-						// (Str/For/Spd/Off scale up as Def/End approach 0). Without
-						// this grant, the four consumer hooks were dead. Each ascension
-						// stacks +1 via the parent's increaseList, matching how the
-						// other Unhinged passives ramp.
-						passives = list("Brutalize" = 1, "AngerAdaptiveForce" = 0.15, "KillerInstinct" = 0.1, "CriticalChance" = 5, "CriticalDamage" = 0.05, "PureDamage" = 1, "UnhingedForm" = 1)
+						passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2, "Unstoppable" = 1, "Brutalize" = 1, "AngerAdaptiveForce" = 0.15, "KillerInstinct" = 0.1, "CriticalChance" = 5, "CriticalDamage" = 0.05, "PureDamage" = 1)
 				if(owner.majinAbsorb)
 					owner.majinAbsorb.updateVariables(owner)
 				owner.majinCheatDeathUsed = 0

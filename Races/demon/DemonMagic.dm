@@ -20,6 +20,23 @@
     if(!client?.keyQueue) return
     client.keyQueue.clearInfo()
 
+/obj/Skills/proc/applyDemonInnovationEffect(mob/p, can_fire_override = null)
+    // fix for style stacking even on cd
+    if(!p) return FALSE
+    if(!p.isInnovative(CELESTIAL, "Any")) return FALSE
+    if(isInnovationDisable(p)) return FALSE
+    if(!p.isDemonMagicCasting()) return FALSE
+    var/skill_can_fire = isnull(can_fire_override) ? !(Using || cooldown_remaining) : can_fire_override
+    if(skill_can_fire && p.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/HellFire))
+        var/obj/Skills/Buffs/SlotlessBuffs/Hellraiser/hr = p.SlotlessBuffs["Hellraiser"]
+        if(!hr)
+            hr = new/obj/Skills/Buffs/SlotlessBuffs/Hellraiser()
+        hr.stackBuff(p)
+    p.endDemonMagicCast()
+    if(skill_can_fire)
+        p.gainStyleRating(1)
+    return skill_can_fire
+
 /obj/Skills/Buffs/SlotlessBuffs/DemonMagic
     // VARS
     var/keyMacro = null

@@ -1228,6 +1228,7 @@ obj
 				adjust(mob/p)
 				verb/Lightning_Kicks()
 					set category="Skills"
+					var/can_fire = !(Using || cooldown_remaining)
 					if(!altered)
 						if(usr.isInnovative(HUMAN, "Unarmed"))
 							if(!isInnovationDisable(usr))
@@ -1239,33 +1240,20 @@ obj
 									usr.UseProjectile(kb)
 								else
 									return
-						else if(usr.isInnovative(CELESTIAL, "Any"))
-							if(!isInnovationDisable(usr))
-								if(usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic))
-									if(!Using && usr.Energy >= 5)
-										if(!locate(/obj/Skills/Projectile/Magic/DarkMagic/Abyssal_Sphere) in usr)
-											usr.AddSkill(new/obj/Skills/Projectile/Magic/DarkMagic/Abyssal_Sphere)
-										var/obj/Skills/Projectile/Magic/DarkMagic/Abyssal_Sphere/ap = usr.FindSkill(/obj/Skills/Projectile/Magic/DarkMagic/Abyssal_Sphere)
-										ap.adjust(usr)
-										usr.UseProjectile(ap)
-										usr.endDemonMagicCast()
-										usr.gainStyleRating(1)
-									else
-										return
-								else if(usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/HellFire))
-									var/obj/Skills/Buffs/SlotlessBuffs/Hellraiser/hr = usr.SlotlessBuffs["Hellraiser"]
-									if(!hr)
-										hr = new/obj/Skills/Buffs/SlotlessBuffs/Hellraiser()
-									hr.stackBuff(usr)
-									usr.endDemonMagicCast()
-									usr.gainStyleRating(1)
-								else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption))
-									src.CorruptionDebuff = 1
-									usr.endDemonMagicCast()
-									usr.gainStyleRating(1)
-								else
-									src.CorruptionDebuff = 0
+						else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr))
+							can_fire = !(Using || cooldown_remaining)
+							if(usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic) && can_fire && usr.Energy >= 5)
+								if(!locate(/obj/Skills/Projectile/Magic/DarkMagic/Abyssal_Sphere) in usr)
+									usr.AddSkill(new/obj/Skills/Projectile/Magic/DarkMagic/Abyssal_Sphere)
+								var/obj/Skills/Projectile/Magic/DarkMagic/Abyssal_Sphere/ap = usr.FindSkill(/obj/Skills/Projectile/Magic/DarkMagic/Abyssal_Sphere)
+								ap.adjust(usr)
+								usr.UseProjectile(ap)
+							if(usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption) && can_fire)
+								src.CorruptionDebuff = 1
+							else
+								src.CorruptionDebuff = 0
 					usr.Activate(src)
+					applyDemonInnovationEffect(usr, can_fire)
 				verb/Disable_Innovate()
 					set category = "Other"
 					disableInnovation(usr)
@@ -1373,21 +1361,9 @@ obj
 						CorruptionDebuff = 0
 				verb/Spinning_Clothesline()
 					set category="Skills"
-					adjust(usr)
-					if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic))
-						usr.endDemonMagicCast()
-						usr.gainStyleRating(1)
-					else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/HellFire))
-						var/obj/Skills/Buffs/SlotlessBuffs/Hellraiser/hr = usr.SlotlessBuffs["Hellraiser"]
-						if(!hr)
-							hr = new/obj/Skills/Buffs/SlotlessBuffs/Hellraiser()
-						hr.stackBuff(usr)
-						usr.endDemonMagicCast()
-						usr.gainStyleRating(1)
-					else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption))
-						usr.endDemonMagicCast()
-						usr.gainStyleRating(1)
+					var/can_fire = !(Using || cooldown_remaining)
 					usr.Activate(src)
+					applyDemonInnovationEffect(usr, can_fire)
 				verb/Disable_Innovate()
 					set category = "Other"
 					disableInnovation(usr)
@@ -1531,21 +1507,9 @@ obj
 						CorruptionDebuff = 0
 				verb/Hyper_Crash()
 					set category="Skills"
-					adjust(usr)
-					if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic))
-						usr.endDemonMagicCast()
-						usr.gainStyleRating(1)
-					else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/HellFire))
-						var/obj/Skills/Buffs/SlotlessBuffs/Hellraiser/hr = usr.SlotlessBuffs["Hellraiser"]
-						if(!hr)
-							hr = new/obj/Skills/Buffs/SlotlessBuffs/Hellraiser()
-						hr.stackBuff(usr)
-						usr.endDemonMagicCast()
-						usr.gainStyleRating(1)
-					else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption))
-						usr.endDemonMagicCast()
-						usr.gainStyleRating(1)
+					var/can_fire = !(Using || cooldown_remaining)
 					usr.Activate(src)
+					applyDemonInnovationEffect(usr, can_fire)
 				verb/Disable_Innovate()
 					set category = "Other"
 					disableInnovation(usr)
@@ -3546,21 +3510,9 @@ obj
 						CorruptionDebuff = 0
 				verb/Jet_Slicer()
 					set category="Skills"
-					adjust(usr)
-					if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic))
-						usr.endDemonMagicCast()
-						usr.gainStyleRating(1)
-					else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/HellFire))
-						var/obj/Skills/Buffs/SlotlessBuffs/Hellraiser/hr = usr.SlotlessBuffs["Hellraiser"]
-						if(!hr)
-							hr = new/obj/Skills/Buffs/SlotlessBuffs/Hellraiser()
-						hr.stackBuff(usr)
-						usr.endDemonMagicCast()
-						usr.gainStyleRating(1)
-					else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption))
-						usr.endDemonMagicCast()
-						usr.gainStyleRating(1)
+					var/can_fire = !(Using || cooldown_remaining)
 					usr.Activate(src)
+					applyDemonInnovationEffect(usr, can_fire)
 			Crowd_Cutter
 				SkillCost=TIER_3_COST
 				Copyable=5
