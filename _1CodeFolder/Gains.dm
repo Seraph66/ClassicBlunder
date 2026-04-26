@@ -358,6 +358,7 @@ mob
 			var/distance = get_dist(Target, src)
 			if((glob.BREAK_TARGET_ON_Z_CHANGE && Target.z != src.z) || (glob.BREAK_TARGET_ON_DIST && distance >= glob.BREAK_TARGET_ON_DIST))
 				Target = null
+		MajinAbsorbZoneSafeguard()
 		checkHealthAlert()
 
 		if(src.Grab) src.Grab_Update()
@@ -1453,7 +1454,7 @@ mob
 						if(b.Engrain)
 							src.Stasis = 1
 						if(b.TimerLimit)
-							if(!(istype(b, /obj/Skills/Buffs/SlotlessBuffs/Autonomous/Debuff/Charmed) && src.PureRPMode))
+							if(!(b.PauseInRP && src.PureRPMode))
 								if(!isnum(b.Timer))
 									b.Timer=0
 								b.Timer+=world.tick_lag
@@ -1574,7 +1575,7 @@ mob
 						if(src.isRace(SAIYAN)&&src.transActive!=A.NeedsSSJ)
 							A.Trigger(src,Override=1)
 					if(A.TimerLimit)
-						if(!(istype(A, /obj/Skills/Buffs/SlotlessBuffs/Autonomous/Debuff/Charmed) && src.PureRPMode) && A.Timer>=A.TimerLimit)
+						if(!(A.PauseInRP && src.PureRPMode) && A.Timer>=A.TimerLimit)
 							A.Trigger(src,Override=1)
 							continue
 					if(A.AwakeningRequired)

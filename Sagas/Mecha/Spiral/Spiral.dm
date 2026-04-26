@@ -90,7 +90,7 @@ mob/tierUpSaga(path)
 			Size = 1 + dr
 			TurfStrike = Size
 			WindUp = 0.1 + (0.15 * sl) + (0.1 * sp)
-			DamageMult = (2 + (round(dr/3))
+			DamageMult = (2 + (round(dr/3)))
 			Rounds = 25
 			PullIn = max(0, dr - 4)
 			Primordial = round(dr/4)

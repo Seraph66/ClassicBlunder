@@ -79,21 +79,9 @@ obj
 					CorruptionDebuff = 0
 			verb/Sword_Pressure()
 				set category="Skills"
-				adjust(usr)
-				if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic))
-					usr.endDemonMagicCast()
-					usr.gainStyleRating(1)
-				else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/HellFire))
-					var/obj/Skills/Buffs/SlotlessBuffs/Hellraiser/hr = usr.SlotlessBuffs["Hellraiser"]
-					if(!hr)
-						hr = new/obj/Skills/Buffs/SlotlessBuffs/Hellraiser()
-					hr.stackBuff(usr)
-					usr.endDemonMagicCast()
-					usr.gainStyleRating(1)
-				else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption))
-					usr.endDemonMagicCast()
-					usr.gainStyleRating(1)
+				var/can_fire = !(Using || cooldown_remaining)
 				usr.Activate(src)
+				applyDemonInnovationEffect(usr, can_fire)
 			verb/Disable_Innovate()
 				set category = "Other"
 				disableInnovation(usr)
@@ -362,21 +350,9 @@ obj
 					CorruptionDebuff = 0
 			verb/Cross_Slash()
 				set category="Skills"
-				adjust(usr)
-				if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic))
-					usr.endDemonMagicCast()
-					usr.gainStyleRating(1)
-				else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/HellFire))
-					var/obj/Skills/Buffs/SlotlessBuffs/Hellraiser/hr = usr.SlotlessBuffs["Hellraiser"]
-					if(!hr)
-						hr = new/obj/Skills/Buffs/SlotlessBuffs/Hellraiser()
-					hr.stackBuff(usr)
-					usr.endDemonMagicCast()
-					usr.gainStyleRating(1)
-				else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption))
-					usr.endDemonMagicCast()
-					usr.gainStyleRating(1)
+				var/can_fire = !(Using || cooldown_remaining)
 				usr.Activate(src)
+				applyDemonInnovationEffect(usr, can_fire)
 
 		Cross_Slash_Inno_Follow
 			name = "Parting Seas"

@@ -2889,13 +2889,13 @@ NEW VARIABLES
 				adjust(mob/p)
 					if(altered) return
 					var/totalPot = round(p.Potential,10)
-					SpdMult = 1.3 + totalPot/100
-					StrMult = 1.3 + totalPot/100
-					EndMult = 0.6 + clamp(totalPot/150, 0.1, 0.4)
-					DefMult = 0.6 + clamp(totalPot/150, 0.1, 0.4)
+					SpdMult = 1.3 + (0.1*p.AscensionsAcquired)
+					StrMult = 1.3 + (0.1*p.AscensionsAcquired)
+					EndMult = 0.6 + (0.05*p.AscensionsAcquired)
+					DefMult = 0.6 + (0.05*p.AscensionsAcquired)
 					var/reducedPot = totalPot/10
 					ManaDrain = 0.008 - (0.001 * reducedPot)
-					passives = list("ManaLeak" = 1 - totalPot/200 )
+					passives = list("ManaLeak" = 1 - totalPot/200, "KiControl" = 1, "ManaLeak" = 1, "AllOutPU" = 1, "Overdrive" = 1)
 
 
 				verb/Overdrive()
@@ -2926,9 +2926,9 @@ NEW VARIABLES
 				adjust(mob/p)
 					if(altered) return
 					var/totalPot = round(p.Potential,10)
-					SpdMult = 1 + totalPot/100
-					OffMult = 1.1 + totalPot/100
-					DefMult = 0.4 + clamp(totalPot/150, 0.1, 0.4)
+					SpdMult = 1.2 + (0.1*p.AscensionsAcquired)
+					OffMult = 1.3 + (0.1*p.AscensionsAcquired)
+					DefMult = 0.8 + (0.05*p.AscensionsAcquired)
 					var/reducedPot = totalPot/10
 					SureHitTimerLimit = -40 + (100-totalPot)
 					passives = list("ManaLeak" = 1 - totalPot/200, "HardStyle" = 0.3 * reducedPot, \
@@ -2960,9 +2960,9 @@ NEW VARIABLES
 				adjust(mob/p)
 					if(altered) return
 					var/totalPot = round(p.Potential,10)
-					EndMult = 1.2 + totalPot/100
-					StrMult = 1.1 + totalPot/100
-					DefMult = 0.1 + clamp(totalPot/150, 0.1, 0.4)
+					EndMult = 1.2 + (0.1*p.AscensionsAcquired)
+					StrMult = 1.1 + (0.1*p.AscensionsAcquired)
+					DefMult = 0.1 + (0.05*p.AscensionsAcquired)
 					var/reducedPot = totalPot/10
 					passives = list("ManaLeak" = 1 - totalPot/200, "WeaponBreaker" = 0.3 * reducedPot, \
 					"BlockChance" = round(reducedPot/10,1), "CriticalBlock" = round(reducedPot/15), \
@@ -2987,9 +2987,9 @@ NEW VARIABLES
 				adjust(mob/p)
 					if(altered) return
 					var/totalPot = round(p.Potential,10)
-					ForMult = 1.3 + totalPot/150
-					OffMult = 1.2 + totalPot/150
-					SpdMult = 0.7 + clamp(totalPot/150, 0.1, 0.4)
+					ForMult = 1.3 + (0.1*p.AscensionsAcquired)
+					OffMult = 1.2 + (0.1*p.AscensionsAcquired)
+					SpdMult = 0.7 + (0.05*p.AscensionsAcquired)
 					var/reducedPot = totalPot/10
 					passives = list("ManaLeak" = 1 - totalPot/200, "Instinct" = 0.5 * reducedPot, \
 					"QuickCast" = round(reducedPot/10,1), "SpecialStrike" = 1, "MovingCharge" = 1, "SpiritHand" = round(totalPot/4,1))
@@ -3012,18 +3012,17 @@ NEW VARIABLES
 				KenWaveBlend=2
 				KenWaveIcon='KenShockwavePurple.dmi'
 				IconTint=list(0.7,0.3,0.6, 0.99,0.59,0.88, 0.51,0.11,0.4, 0,0,0)
-				passives = list("ManaLeak" = 1, "MovementMastery" = 10, "SpiritSword" = 0.5, "SpiritHand" = 0.5,"Deicide" = 5)
+				passives = list("ManaLeak" = 1, "MovementMastery" = 10, "SpiritSword" = 0.25, "SpiritHand" = 0.25,"Deicide" = 5)
 				SureHitTimerLimit=30
 				ActiveMessage="breaches into a higher domain through the power of cybernetics!"
 				OffMessage="returns to the standard domain."
 				adjust(mob/p)
 					if(altered) return
-					var/totalPot = round(p.Potential,10)
-					ForMult = 1.2 + totalPot/100
-					StrMult = 1.2 + totalPot/100
-					DefMult = 0.6 + clamp(totalPot/150, 0.1, 0.4)
-					passives = list("ManaLeak" = 1 - totalPot/200, "MovementMastery" = 3+round(totalPot/20,1), \
-					"Deicide" = 5* round(totalPot/25,1), "SpiritSword" = 0.5+round(totalPot/200,1), "SpiritHand" = 0.5+round(totalPot/200,1))
+					ForMult = 1.2 + (0.1*p.AscensionsAcquired)
+					StrMult = 1.2 + (0.1*p.AscensionsAcquired)
+					DefMult = 0.6 + (0.05*p.AscensionsAcquired)
+					passives = list("ManaLeak" = 1 - (p.AscensionsAcquired/10), "MovementMastery" = 4+p.AscensionsAcquired, \
+					"Deicide" = 5*p.AscensionsAcquired, "SpiritSword" = 0.25*p.AscensionsAcquired, "SpiritHand" = 0.25*p.AscensionsAcquired)
 
 				verb/Hilbert_Effect()
 					set category="Skills"
@@ -6302,7 +6301,7 @@ NEW VARIABLES
 					set category="Skills"
 					src.Trigger(usr)
 			Jet_Boots
-				passives = list("SuperDash" = 1, "Skimming " = 1, "Pursuer" = 1)
+				passives = list("SuperDash" = 1, "Skimming" = 1, "Pursuer" = 1)
 				SuperDash=1
 				Skimming=1
 				Pursuer=1
@@ -7256,7 +7255,28 @@ NEW VARIABLES
 			verb/Mark_of_the_Crone()
 				set category="Skills"
 				if(!usr.BuffOn(src))
-					passives = list("Brutalize" = 5, "PureDamage" = 5, "PureReduction" = 5, "Pursuer" = 2, "HellPower" = 1, "Gum Gum" = 2, "Extend" = 2, "PowerReplacement" = glob.progress.totalPotentialToDate+5)
+					var/PactBoostPow=0
+					var/PactBoostDef=0
+					if(usr.EldritchPacted)
+						switch(usr.ReflectedPactType)
+							if("Devotion")
+								PactBoostPow=0.25
+								PactBoostDef=0.25
+							if("Power")
+								PactBoostPow=0.5
+								PactBoostDef=0
+							if("Knowledge")
+								PactBoostPow=0.35
+								PactBoostDef=0.15
+							if("Ambition")
+								PactBoostPow=0.15
+								PactBoostDef=0.35
+							if("Survival")
+								PactBoostPow=0
+								PactBoostDef=0.5
+					passives = list("Brutalize" = 1+(usr.AscensionsAcquired*(0.5+PactBoostDef)) , "PureDamage" = 1+(usr.AscensionsAcquired*(0.75+PactBoostPow)), \
+					"PureReduction" = 1+(usr.AscensionsAcquired*(0.75+PactBoostDef)), "Pursuer" = 2, "HellPower" = 0.1+(PactBoostPow/2), \
+					"Gum Gum" = 1, "Extend" = 1,"Unbreakable" = 0.25+PactBoostDef,"Undeterred" = 1)
 				src.Trigger(usr)
 
 		God_Ki
@@ -8379,6 +8399,9 @@ NEW VARIABLES
 
 			verb/Aria_Chant()
 				set category = "Skills"
+				if(usr.absorbedBy)
+					usr << "You cannot recite your aria while absorbed."
+					return
 				if(usr.AriaCount-2 == usr.SagaLevel && usr.UBWPath != "Feeble")
 					usr << "You try to speak more of your aria, but you don't know any more lines..."
 					return
@@ -9168,6 +9191,8 @@ NEW VARIABLES
 			var/identifier = null
 			var/demonName = null
 			var/icon/customTurfIcon = null
+			var/icon/customRoofIcon = null
+			var/useShroud = TRUE
 			Cooldown = -1
 			ActiveMessage="releases their Domain!"
 			OffMessage="conceals their Domain...."
@@ -9735,7 +9760,13 @@ NEW VARIABLES
 					if(!altered)
 						var/currentPot = p.Potential
 						var/secretLevel = p.secretDatum.currentTier
-						PowerMult=1+(0.05*secretLevel*secretLevel)
+						if(p.Health<50)
+							secretLevel+=1
+						if(p.Health<25)
+							secretLevel+=2
+						if(secretLevel>7)
+							secretLevel=7
+						PowerMult=1+(0.02*secretLevel*secretLevel)
 						var/SpiralPower=1
 						switch(secretLevel)
 							if(1 to 2)
@@ -9745,12 +9776,16 @@ NEW VARIABLES
 							if(4)
 								SpiralPower=3
 							if(5)
+								SpiralPower=4
+							if(6)
+								SpiralPower=5
+							if(7)
 								SpiralPower=7
-						StrMult=1.25 + (0.05*secretLevel*secretLevel)
-						ForMult=1.25 + (0.05*secretLevel*secretLevel)
-						EndMult=1.25 + (0.05*secretLevel*secretLevel)
-						passives = list("SpiralPowerUnlocked" = SpiralPower)
-						TimerLimit= (2 * currentPot) + (20 * (p.transUnlocked ? p.transUnlocked : p.AscensionsAcquired))
+						StrMult=1.25 + (0.03*secretLevel*secretLevel)
+						ForMult=1.25 + (0.03*secretLevel*secretLevel)
+						EndMult=1.25 + (0.03*secretLevel*secretLevel)
+						passives = list("SpiralPowerUnlocked" = SpiralPower, "PureDamage" = SpiralPower, "PureReduction" = SpiralPower)
+						TimerLimit= (2 * currentPot) + (10 * (p.transUnlocked ? p.transUnlocked : p.AscensionsAcquired))
 						Cooldown = 61 - ((5 * p.AscensionsAcquired) + (5 * secretLevel))
 				KenWave = 2
 				KenWaveIcon='SparkleGreen.dmi'
@@ -12414,6 +12449,9 @@ mob
 						if(!src.passive_handler.Get("Scarlet-Overdriven"))
 							src.Death(null, "suicidal stupidity!", SuperDead=1)
 							return
+				if(src.absorbedBy && (B.WarpZone || B.Duel || istype(B, /obj/Skills/Buffs/SlotlessBuffs/Domain_Expansion)))
+					src << "You cannot invoke duel or domain techniques while absorbed."
+					return
 				if(B.WarpZone)
 					if(!B.WarpX||!B.WarpY||!B.WarpZ)
 						src << "Your duel location hasn't been set!"
@@ -12503,6 +12541,9 @@ mob
 					src << "You channel the haziness of Shadow through your style!"
 				if(src.Secret=="Zombie")
 					src << "You channel the stillness of the Underworld through your style!"
+				if(hasSecret("Eldritch (Shrouded)"))
+					src << "You channel the Origin behind your Shroud through your style!"
+					setShroudedStyle();
 				src.AddStyleBuff()
 				B.current_passives = B.passives
 				passive_handler.increaseList(B.passives)
@@ -12657,6 +12698,9 @@ mob
 				OMsg(src, "[src] takes back what belongs to them, as they call upon [src.StyleBuff]!")
 			else
 				OMsg(src, "[src] takes up the [src.StyleBuff]!")
+			if(hasSecret("Eldritch (Shrouded)"))
+				var/SecretInformation/EldritchShrouded/es = secretDatum;
+				passive_handler.increaseList(es.ShroudedPassives);
 
 		RemoveStyleBuff()
 			if(src.StyleBuff.current_passives && src.StyleBuff.current_passives.len)
@@ -12670,6 +12714,9 @@ mob
 			src.OffMultTotal-=(src.StyleBuff.OffMult-1)
 			src.DefMultTotal-=(src.StyleBuff.DefMult-1)
 			src.RecovMultTotal-=(src.StyleBuff.RecovMult-1)
+			if(hasSecret("Eldritch (Shrouded)"))
+				var/SecretInformation/EldritchShrouded/es = secretDatum;
+				passive_handler.decreaseList(es.ShroudedPassives);
 			src.AllSkillsRemove(src.StyleBuff)
 			if(StyleBuff.BuffSelf)
 				var/obj/Skills/Buffs/s = FindSkill(StyleBuff.BuffSelf)
@@ -14163,6 +14210,16 @@ mob
 				if(s&&s.Conjured)
 					s.AlignEquip(src)
 					del s
+				else
+					// Conjured sword may have landed in the second slot if the user
+					// had NeedsSecondSword (Two Sword Style etc.) at activation —
+					// Items.dm:Equip() places it there when slot 1 is occupied.
+					// Without this branch the conjured sword leaks: slot 2 stays
+					// blocked even after the buff is toggled off.
+					var/obj/Items/Sword/s2=src.EquippedSecondSword()
+					if(s2&&s2.Conjured&&!B.MakesSecondSword)
+						s2.AlignEquip(src)
+						del s2
 				if(B.MakesSword==3)
 					for(s in src)
 						if(s.Conjured)
@@ -14512,18 +14569,24 @@ mob
 
 			if(B.RecovCut)
 				src.AddRecovCut(B.RecovCut)
+			var/TaxIncrease=1
+			if("Unbreakable" in B.passives)
+				TaxIncrease+=B.passives["Unbreakable"]
 			if(B.StrTax)
-				src.AddStrTax(B.StrTax)
+				src.AddStrTax(B.StrTax*TaxIncrease)
 			if(B.EndTax)
-				src.AddEndTax(B.EndTax)
+				src.AddEndTax(B.EndTax*TaxIncrease)
 			if(B.SpdTax)
-				src.AddSpdTax(B.SpdTax)
+				src.AddSpdTax(B.SpdTax*TaxIncrease)
 			if(B.ForTax)
-				src.AddForTax(B.ForTax)
+				src.AddForTax(B.ForTax*TaxIncrease)
 			if(B.OffTax)
-				src.AddOffTax(B.OffTax)
+				src.AddOffTax(B.OffTax*TaxIncrease)
 			if(B.DefTax)
-				src.AddDefTax(B.DefTax)
+				src.AddDefTax(B.DefTax*TaxIncrease)
+			if("Unbreakable" in B.passives)
+				if(src.StrTax>=0.75||src.ForTax>=0.75||src.EndTax>=0.75||src.SpdTax>=0.75||src.OffTax>=0.75||src.DefTax>=0.75)
+					src.Maimed+=1
 			if(B.RecovTax)
 				src.AddRecovTax(B.RecovTax)
 			if(B.WaveringAngerLimit)

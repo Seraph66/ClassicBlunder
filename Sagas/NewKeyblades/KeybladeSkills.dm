@@ -13,10 +13,13 @@ obj
 				DamageMult=1.5
 				Rush=3
 				ControlledRush=1
-				Cooldown=45
+				Cooldown=30
 				EnergyCost=2
 				DelayTime=1.5
 				Rounds=3
+				MaxCharges=3
+				Charges=3
+				ChargeRefresh=30
 				ActiveMessage="dashes forward repeatedly with a jousting strike!"
 				adjust(mob/P)
 					if(src.UpgradedKeybladeSkill)
@@ -26,6 +29,9 @@ obj
 						DelayTime=2
 						src.Rounds=5
 						DamageMult=2
+						MaxCharges=3
+						Charges=3
+						ChargeRefresh=15
 				verb/Sonic_Blade()
 					set category="Skills"
 					adjust(usr)
@@ -352,15 +358,15 @@ obj
 							StrMult=1.25
 							OffMult=1.25
 							SpdMult=1.5
-							passives+=SwordPassives
+							passives=SwordPassives
 						if(p.KeybladeType=="Shield")
 							EndMult=1.5
 							DefMult=1.5
-							passives+=ShieldPassives
+							passives=ShieldPassives
 						if(p.KeybladeType=="Staff")
 							ForMult=1.5
 							OffMult=1.5
-							passives+=StaffPassives
+							passives=StaffPassives
 					verb/Keyblade_Armor()
 						set category="Skills"
 						if(!usr.BuffOn(src))

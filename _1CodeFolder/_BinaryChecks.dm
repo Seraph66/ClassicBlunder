@@ -696,6 +696,7 @@ mob
 				return 1
 			if(src.HasMaouKi())
 				return 1
+			if(scalingEldritchPower()) return 1
 		HasClarity()
 			if(passive_handler.Get("Omnipotent")) // so admins can fucking see
 				return 1
@@ -721,6 +722,7 @@ mob
 					return 1
 				if(src.HasSpiritPower()>=1)
 					return 1
+				if(scalingEldritchPower()) return 1
 			return 0
 		HasTransMimic()
 			return passive_handler.Get("TransMimic")
@@ -1125,6 +1127,19 @@ mob
 			if(passive_handler.Get("You Thought"))
 				return 1
 			return 0
+		HasUnbreakable()
+			if(passive_handler.Get("Unbreakable")>=1||passive_handler.Get("The Immovable Object"))
+				return 1
+			if(Saga == "Eight Gates")
+				return 1
+			return 0
+		GetUnbreakable() //0.1=ignore 10% of stat taxes
+			var/Return=0
+			if(passive_handler.Get("Unbreakable"))
+				Return +=passive_handler.Get("Unbreakable")
+			if(Saga == "Eight Gates"&&GatesActive>SagaLevel)
+				Return = 0.375*(GatesActive-SagaLevel)
+			return Return
 		SaiyanTransPower()/*
 			if(isRace(SAIYAN) || isRace(HALFSAIYAN))
 				var/t = transActive
@@ -1661,14 +1676,14 @@ mob
 				return 1
 			if(Secret == "Vampire")
 				return 1
-			if(isRace(MAJIN) && race.ascensions[1].choiceSelected == /ascension/sub_ascension/majin/unhinged)
+			if(isRace(MAJIN) && Class == "Unhinged")
 				return 1
 			return 0
 		GetLifeSteal()
 			var/extra = 0
 			if(passive_handler["Rage"] && Health <= 75)
 				extra = 5 * passive_handler["Rage"]
-			if(isRace(MAJIN) && race.ascensions[1].choiceSelected == /ascension/sub_ascension/majin/unhinged)
+			if(isRace(MAJIN) && Class == "Unhinged")
 				extra += 5 * AscensionsAcquired
 			if(Secret=="Vampire")
 				var/secretLevel = getSecretLevel()
@@ -1840,6 +1855,9 @@ mob
 			var/SaiyanPowerGod= passive_handler.Get("SaiyanPowerGod")
 			var/SaiyanPowerZenkai= passive_handler.Get("TrueZenkaiPower")
 			var/SaiyanPowerVoid= passive_handler.Get("SaiyanPowerVoid")
+			var/SEBoost=1+(passive_handler.Get("SpiralPowerUnlocked")/10)
+			if(passive_handler.Get("SpiralPowerUnlocked")&&NobodyOriginType=="Pride")
+				SaiyanPowerVoid*=SEBoost
 			var/SaiyanPower=1+(SaiyanPower1+SaiyanPower2+SaiyanPower3+SaiyanPower4+SaiyanPowerZenkai+SaiyanPowerGod+SaiyanPowerVoid)//It's like this because I intend on having Saiyan Unique buffs interact with this specifically. you'll see what i mean when i get to the grades
 			return SaiyanPower
 
@@ -2538,6 +2556,8 @@ mob
 			// 	Return+=(src.SagaLevel-4)*0.25
 			if(passive_handler.Get("MaimMastery"))
 				Return+=passive_handler.Get("MaimMastery")
+			if(passive_handler.Get("MaimMastery"))
+				Return = 0
 			return Return
 		CheckKeybladeStyle(var/Style)
 			if(src.StyleActive=="[Style]"&&src.CheckActive("Keyblade"))
@@ -3557,6 +3577,8 @@ atom
 			if(src.z == glob.DEATH_LOCATION[3] && !dead_use && !SP)
 				return 1
 			else if(src.z == global.ArcaneRealmZ && !arc_use)
+				return 1
+			else if(src.z == MAJIN_ABSORB_Z)
 				return 1
 			return 0
 

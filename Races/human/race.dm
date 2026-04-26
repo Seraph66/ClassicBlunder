@@ -29,6 +29,7 @@ race
 				user.AngerMax = 2
 				user.RPPMult = 1.35
 				user.Intelligence = 2
+				passives += list("Motivation" = 0.75)
 			if(user.Class=="Heroic")
 				user.AngerMax = 1.5
 				user.RPPMult = 1.25

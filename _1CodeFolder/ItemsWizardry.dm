@@ -567,14 +567,14 @@ obj/Items/Enchantment
 				return
 			else
 				var/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Potion_Power/PP=new
-				var/CD=1800 // 3 min base cooldown
-				var/WEAK_EFFECT_CD = 100
-				var/MEDIUM_EFFECT_CD = 200
-				var/STRONG_EFFECT_CD = 300
+				var/CD= 360 // 6 min base cooldown
+				var/WEAK_EFFECT_CD = 0
+				var/MEDIUM_EFFECT_CD = 0
+				var/STRONG_EFFECT_CD = 0
 				if(src.Energy)
 					PP.InstantAffect=1
 					PP.EnergyHeal=src.Energy*10
-					CD+=(src.Energy*WEAK_EFFECT_CD) // 10
+					CD+=(src.Energy*WEAK_EFFECT_CD)
 				if(src.Mana)
 					PP.InstantAffect=1
 					PP.ManaHeal=src.Mana*10
@@ -597,7 +597,7 @@ obj/Items/Enchantment
 				if(src.Hallucinogen)
 					FoundHallucinogen=1
 					PP.AutoAnger=1
-					var/buff = 0.25 * src.Hallucinogen // 25%
+					var/buff = 0.25 * src.Hallucinogen
 					PP.AngerMult= 1 + buff
 					PP.DefMult = 1 - buff
 					PP.EndMult = 1 - buff
@@ -611,7 +611,7 @@ obj/Items/Enchantment
 				if(src.Sexy)
 					FoundSexy=1
 					PP.Infatuated=src.Sexy
-					CD+=(src.Sexy*90) // this doesn't do anything
+					CD+=(src.Sexy*90)
 				if(src.Transform)
 					switch(src.Transform)
 						if("Weak")

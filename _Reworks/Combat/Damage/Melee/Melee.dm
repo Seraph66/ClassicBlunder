@@ -685,7 +685,7 @@
 									if(passive_handler.Get("Determination(White)"))
 										heal *= 0.15
 									//TODO TEST ENERGY SIPHON IT MIGHT BE WONKY
-									damage -= heal
+									damage -= heal*0.15
 									enemy.HealEnergy(heal)
 									#if DEBUG_MELEE
 									log2text("Damage", "After Energy Siphon", "damageDebugs.txt", "[ckey]/[name]")
@@ -1055,6 +1055,7 @@
 /mob/var/Momentum = 0
 
 /mob/proc/handlePostDamage(mob/enemy, damage)
+	var/acu = enemy.passive_handler["Acupuncture"]
 	if(passive_handler["LeakCash"])
 		for(var/obj/Money/money in src.contents)
 			if(money.Level>0)
@@ -1084,15 +1085,7 @@
 			for(var/obj/Skills/Projectile/Comet_Spear/cp in src)
 				cp.adjust(src)
 				src.UseProjectile(cp)
-	if(glob.MOMENTUM_PROCS_OFF_DAMAGE)
-		var/momentum = passive_handler.Get("Momentum")
-		var/acu = enemy.passive_handler["Acupuncture"]
-		if(momentum)
-			if(acu)
-				if(prob(acu * glob.ACUPUNCTURE_BASE_CHANCE))
-					Momentum = clamp( Momentum - acu/glob.ACUPUNCTURE_DIVISOR, 0 , passive_handler["Relentlessness"] ? 100 : glob.MAX_MOMENTUM_STACKS)
-			else
-				if(prob(glob.BASE_MOMENTUM_CHANCE * momentum))
-					Momentum = clamp( round(Momentum + (1 + momentum/glob.MOMENTUM_DIVISOR)), 0 , passive_handler["Relentlessness"] ? 100 : glob.MAX_MOMENTUM_STACKS)
-		if(passive_handler["Fury"])
-			src.FuryAccumulate(acu);
+	if(passive_handler["Momentum"])
+		MomentumAccumulate(acu)
+	if(passive_handler["Fury"])
+		FuryAccumulate(acu);

@@ -27,6 +27,10 @@ obj/DomainExpansionRoof
 	opacity = 0
 	mouse_opacity = 0
 	Savable = 0
+	// Visual overlay only. The default obj Attackable=1 was leaving the shroud
+	// hittable by punches / AOE, which both broke immersion and let players
+	// destructively interact with what is supposed to be a passive backdrop.
+	Attackable = 0
 
 /mob/Admin3/verb/GiveDomainExpansion()
 	set category = "Admin"
@@ -46,6 +50,11 @@ obj/DomainExpansionRoof
 	var/finalRange = round(rawRange)
 	if(finalRange < 1) finalRange = 1
 	if(finalRange > 50) finalRange = 50
+	var/shroudChoice = input(src, "Should the Domain use a shroud overlay on top of the floor? (Selecting No leaves only the custom floor.)", "Domain Expansion - Shroud") in list("Yes","No")
+	var/useShroud = (shroudChoice == "Yes")
+	var/icon/customRoofIcon = null
+	if(useShroud)
+		customRoofIcon = input(src, "Upload the custom shroud icon for the Domain (32x32 .dmi, single state). Cancel to fall back to the default Roofs.dmi shroud.", "Domain Expansion - Shroud Icon") as icon|null
 	var/mob/p = input(src, "Who to give this Domain Expansion to?", "Domain Expansion - Recipient") in players
 	if(!p)
 		src << "Cancelled. No recipient."
@@ -53,11 +62,13 @@ obj/DomainExpansionRoof
 	var/obj/Skills/Buffs/SlotlessBuffs/Domain_Expansion/d = new()
 	d.demonName = demonName
 	d.customTurfIcon = customTurfIcon
+	d.customRoofIcon = customRoofIcon
+	d.useShroud = useShroud
 	d.range = finalRange
 	d.ActiveMessage = "says: Domain Expansion.. [demonName]!"
 	d.OffMessage = "conceals the domain of [demonName]..."
 	p.AddSkill(d)
-	src << "Gave [p] a Domain Expansion ([demonName], range [finalRange])."
+	src << "Gave [p] a Domain Expansion ([demonName], range [finalRange], shroud [useShroud ? "on" : "off"])."
 
 
 mob
@@ -80,13 +91,24 @@ mob
 			var/list/floors = list()
 			var/list/barriers = list()
 			var/icon/floorIcon = buff.customTurfIcon
+			var/icon/roofIcon = buff.customRoofIcon
+			var/useShroud = buff.useShroud
+			// Iterate the bounding square but gate on Euclidean distance so the
+			// boundary forms a circle (canon Domain Expansion shape) rather than
+			// the previous square.
+			var/rangeSq = useRange * useRange
+			var/innerSq = (useRange - 1) * (useRange - 1)
 			for(var/turf/t in range(useRange, src))
-				if(t.domain_expansion_owner && t.domain_expansion_owner != src)
-					continue
-				var/dist = max(abs(t.x - centerX), abs(t.y - centerY))
 				if(t.z != centerZ)
 					continue
-				if(dist == useRange)
+				if(t.domain_expansion_owner && t.domain_expansion_owner != src)
+					continue
+				var/dx = t.x - centerX
+				var/dy = t.y - centerY
+				var/distSq = dx*dx + dy*dy
+				if(distSq > rangeSq)
+					continue
+				if(distSq > innerSq)
 					var/obj/DomainExpansionBarrier/b = new(t)
 					barriers += b
 					t.domain_expansion_owner = src
@@ -95,8 +117,13 @@ mob
 					var/list/backup = list(t.icon, t.icon_state)
 					t.icon = floorIcon
 					t.icon_state = ""
-					var/obj/DomainExpansionRoof/r = new(t)
-					barriers += r
+					if(useShroud)
+						var/obj/DomainExpansionRoof/r = new(t)
+						if(roofIcon)
+							r.icon = roofIcon
+							r.icon_state = ""
+							r.color = null
+						barriers += r
 					t.domain_expansion_owner = src
 					floors[t] = backup
 			src.domainExpansionFloors = floors
@@ -107,28 +134,49 @@ mob
 		stopDomainExapansion()
 			if(!src.domainExpansionActive)
 				return
-			if(src.domainExpansionBarriers)
-				for(var/obj/b in src.domainExpansionBarriers)
-					if(b)
-						del(b)
-			if(src.domainExpansionFloors)
-				for(var/turf/t in src.domainExpansionFloors)
-					if(!t)
-						continue
-					if(t.domain_expansion_owner != src)
-						continue
-					var/list/backup = src.domainExpansionFloors[t]
-					if(backup && backup.len >= 2 && backup[1] != null)
-						t.icon = backup[1]
-						t.icon_state = backup[2]
-					t.domain_expansion_owner = null
+			// Snapshot the lists, clear the flag synchronously, then chunk the
+			// heavy teardown into spawn() so the verb returns immediately.
+			// Range-50 domains hold ~7800 turfs/objs after the circle change;
+			// del()-ing them and restoring icons in a single tick was locking
+			// the world for several seconds and could run past world.tick_lag,
+			// which is what users were calling a "freeze". 200 ops per yield
+			// keeps each slice under a tick on typical hardware.
+			var/list/oldBarriers = src.domainExpansionBarriers
+			var/list/oldFloors = src.domainExpansionFloors
 			src.domainExpansionFloors = null
 			src.domainExpansionBarriers = null
 			src.domainExpansionActive = 0
+			spawn()
+				var/processed = 0
+				if(oldBarriers)
+					for(var/obj/b in oldBarriers)
+						if(b)
+							del(b)
+						processed++
+						if(processed >= 200)
+							processed = 0
+							sleep(1)
+				if(oldFloors)
+					for(var/turf/t in oldFloors)
+						if(!t)
+							continue
+						if(t.domain_expansion_owner == src || t.domain_expansion_owner == null)
+							var/list/backup = oldFloors[t]
+							if(backup && backup.len >= 2 && backup[1] != null)
+								t.icon = backup[1]
+								t.icon_state = backup[2]
+							t.domain_expansion_owner = null
+						processed++
+						if(processed >= 200)
+							processed = 0
+							sleep(1)
 
 
 		UnlimitedBladeWorks()
 			if(usingUBW) return
+			if(absorbedBy)
+				src << "You cannot unfold Unlimited Blade Works while absorbed."
+				return
 			var/list/targets = list()
 			for(var/mob/m in range(15))
 				targets |= m

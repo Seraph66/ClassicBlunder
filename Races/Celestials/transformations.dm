@@ -23,7 +23,7 @@ transformation
 
 			transform(mob/user, forceTrans)
 				var/armory_count = get_divine_armory_count(user)
-				var/add_per_stat = 0.1 + (armory_count * 0.4)
+				var/add_per_stat = 0.1 + (armory_count * 0.6)
 				strengthadd = add_per_stat
 				enduranceadd = add_per_stat
 				forceadd = add_per_stat

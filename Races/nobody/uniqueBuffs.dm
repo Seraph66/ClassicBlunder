@@ -1,4 +1,5 @@
 obj/Skills/Buffs/NuStyle/NobodyLegendary
+	CyberSignature = 1
 	Legacy_of_Ashes // T0/1. This is based on the Legendary styles from last wipe. Fire/Sword
 		SignatureTechnique=1
 		NeedsSword = 1

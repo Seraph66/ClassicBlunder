@@ -404,7 +404,7 @@ obj/Skills/Buffs/SpecialBuffs/Heavenly_Regalia
 		StrMult=1.5
 		EndMult=0.9
 		SpdMult=1.5
-		passives = list("Erosion" = 0.5, "DeathField" = 5, "AbyssMod" = 3)
+		passives = list("Erosion" = 0.5, "DeathField" = 5, "AbyssMod" = 3, "Entropic"=1)
 		ActiveMessage= "invokes the Foundation of Death, bringing the End with their blade..:"
 		OffMessage="allows the Entropic energy to fade from their legendary weapon..."
 		verb/Fundament_Entropy()

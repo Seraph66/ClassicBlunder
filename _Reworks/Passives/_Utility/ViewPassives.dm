@@ -99,4 +99,6 @@ var/list/PassiveInfo = list("Extend"="increases the range of armed autohits base
 "KillerInstinct"= "increases force when below 75% hp, increases str when below 50%",
 "BurningShot"= "burn yourself, the amount of burn stacks you have gives you Boons",
 "Piloting"="Replaces your effective stats with the stats of your mech.",
-"EndlessNine"=" Defensive version of Deicide, negate a percentage of the damage buff having higher God ki grants someone");
+"EndlessNine"=" Defensive version of Deicide, negate a percentage of the damage buff having higher God ki grants someone",
+"SpiralPowerUnlocked"="Through the power of Spiral Energy, unlocks a number of early ascensions equal to the value. And then, at 7...",
+"SpiralSpark"="You have experienced the power of Spiral Energy. And, while you can't awaken it again of your own accord without being a Spiral Warrior...");

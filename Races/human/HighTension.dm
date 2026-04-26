@@ -26,8 +26,8 @@
 
         if(ants) tensionGain += ants;
         if(passive_handler.Get("Ashen One"))
-            val*=1+(Burn/glob.ASHEN_TENSION_DIVISOR)
-        src.addTension(val, maxTension);
+            tensionGain*=1+(Burn/glob.ASHEN_TENSION_DIVISOR)
+        src.addTension(tensionGain, maxTension);
 
     addTension(val, maxVal)
         if(val==maxVal) return

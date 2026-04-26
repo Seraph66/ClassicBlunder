@@ -3,9 +3,15 @@
 // The 'tier' var is set by the unlock system when granting the buff
 // adjust() dynamically sets stats and passives based on current tier
 
+/mob/proc/getGestaltTier()
+	if(Saga || CyberCancel) return 1;
+	var/p = get_potential();
+	if(p < 25) return 1;
+	else if(p < glob.AdvancedElementPotential) return 2;
+	else return 3;
+
 /obj/Skills/Buffs/SpecialBuffs/Fire_Gestalt_Buff
 	MagicNeeded = 1
-	Cooldown = -1
 	var/tier = 1
 	ActiveMessage = "channels the blazing essence of Fire!"
 	OffMessage = "lets the flames recede..."
@@ -13,21 +19,16 @@
 		SpdMult = 1
 		EndMult = 1
 		DefMult = 1
-		var/EffectivePotential=p.Potential
-		switch(EffectivePotential)
-			if(1 to 24)
-				tier = 1
-			if(25 to 39)
-				tier = 2
-			if(40 to 100)
-				tier = 3
-		if(p.Saga||p.CyberCancel)
-			tier = 1
+		tier=p.getGestaltTier();
 		if(tier >= 3)
 			ForMult = 1.4
 			StrMult = 1.35
 			OffMult = 1.3
-			passives = list("Scorching" = 1, "Momentum" = 1, "FireHerald" = 1, "Brutalize" = 1, "CriticalChance" = 20, "CriticalDamage" = 0.2, "DemonicDurability" = 4)
+			// Tenacity replaces DemonicDurability here: DemonicDurability's End scaling
+			// is gated by (Anger||HasCalmAnger()) in _JinxUtility.dm, which leaves it
+			// dead for non-Mazoku/Wrathful/etc. mages. Tenacity is universal and fits
+			// the same defensive role.
+			passives = list("Scorching" = 1, "Momentum" = 1, "FireHerald" = 1, "Brutalize" = 1, "CriticalChance" = 20, "CriticalDamage" = 0.2, "Tenacity" = 2)
 		else if(tier >= 2)
 			ForMult = 1.25
 			StrMult = 1.15
@@ -44,7 +45,6 @@
 
 /obj/Skills/Buffs/SpecialBuffs/Water_Gestalt_Buff
 	MagicNeeded = 1
-	Cooldown = -1
 	var/tier = 1
 	ActiveMessage = "draws upon the flowing essence of Water!"
 	OffMessage = "lets the current still..."
@@ -52,16 +52,7 @@
 		StrMult = 1
 		SpdMult = 1
 		OffMult = 1
-		var/EffectivePotential=p.Potential
-		switch(EffectivePotential)
-			if(1 to 24)
-				tier = 1
-			if(25 to 39)
-				tier = 2
-			if(40 to 100)
-				tier = 3
-		if(p.Saga||p.CyberCancel)
-			tier = 1
+		tier=p.getGestaltTier();
 		if(tier >= 3)
 			EndMult = 1.4
 			ForMult = 1.35
@@ -83,7 +74,6 @@
 
 /obj/Skills/Buffs/SpecialBuffs/Earth_Gestalt_Buff
 	MagicNeeded = 1
-	Cooldown = -1
 	var/tier = 1
 	ActiveMessage = "hardens with the unyielding essence of Earth!"
 	OffMessage = "releases the stone resolve..."
@@ -91,16 +81,7 @@
 		StrMult = 1
 		SpdMult = 1
 		OffMult = 1
-		var/EffectivePotential=p.Potential
-		switch(EffectivePotential)
-			if(1 to 24)
-				tier = 1
-			if(25 to 39)
-				tier = 2
-			if(40 to 100)
-				tier = 3
-		if(p.Saga||p.CyberCancel)
-			tier = 1
+		tier=p.getGestaltTier();
 		if(tier >= 3)
 			ForMult = 1.4
 			EndMult = 1.35
@@ -122,7 +103,6 @@
 
 /obj/Skills/Buffs/SpecialBuffs/Wind_Gestalt_Buff
 	MagicNeeded = 1
-	Cooldown = -1
 	var/tier = 1
 	ActiveMessage = "surges with the crackling essence of Wind!"
 	OffMessage = "lets the storm calm..."
@@ -130,16 +110,7 @@
 		StrMult = 1
 		EndMult = 1
 		DefMult = 1
-		var/EffectivePotential=p.Potential
-		switch(EffectivePotential)
-			if(1 to 24)
-				tier = 1
-			if(25 to 39)
-				tier = 2
-			if(40 to 100)
-				tier = 3
-		if(p.Saga||p.CyberCancel)
-			tier = 1
+		tier=p.getGestaltTier();
 		if(tier >= 3)
 			ForMult = 1.4
 			SpdMult = 1.35
@@ -161,7 +132,6 @@
 
 /obj/Skills/Buffs/SpecialBuffs/Light_Gestalt_Buff
 	MagicNeeded = 1
-	Cooldown = -1
 	var/tier = 1
 	ActiveMessage = "radiates with the holy essence of Light!"
 	OffMessage = "dims the divine glow..."
@@ -169,16 +139,7 @@
 		StrMult = 1
 		ForMult = 1
 		OffMult = 1
-		var/EffectivePotential=p.Potential
-		switch(EffectivePotential)
-			if(1 to 24)
-				tier = 1
-			if(25 to 39)
-				tier = 2
-			if(40 to 100)
-				tier = 3
-		if(p.Saga||p.CyberCancel)
-			tier = 1
+		tier=p.getGestaltTier();
 		if(tier >= 3)
 			SpdMult = 1.4
 			EndMult = 1.35
@@ -200,7 +161,6 @@
 
 /obj/Skills/Buffs/SpecialBuffs/Dark_Gestalt_Buff
 	MagicNeeded = 1
-	Cooldown = -1
 	var/tier = 1
 	ActiveMessage = "embraces the consuming essence of Darkness!"
 	OffMessage = "suppresses the dark power..."
@@ -208,26 +168,17 @@
 		EndMult = 1
 		SpdMult = 1
 		DefMult = 1
-		var/EffectivePotential=p.Potential
-		switch(EffectivePotential)
-			if(1 to 24)
-				tier = 1
-			if(25 to 39)
-				tier = 2
-			if(40 to 100)
-				tier = 3
-		if(p.Saga||p.CyberCancel)
-			tier = 1
+		tier=p.getGestaltTier();
 		if(tier >= 3)
 			StrMult = 1.4
 			ForMult = 1.35
 			OffMult = 1.3
-			passives = list("KillerInstinct" = 1, "Pressure" = 1, "CriticalChance" = 20, "CriticalDamage" = 0.2, "LifeSteal" = 2, "DemonicInfusion" = 1)
+			passives = list("KillerInstinct" = 1, "Pressure" = 1, "CriticalChance" = 20, "CriticalDamage" = 0.2, "LifeSteal" = 20, "DemonicInfusion" = 1)
 		else if(tier >= 2)
 			StrMult = 1.25
 			ForMult = 1.15
 			OffMult = 1
-			passives = list("KillerInstinct" = 1, "Pressure" = 1, "CriticalChance" = 20, "CriticalDamage" = 0.2, "LifeSteal" = 1)
+			passives = list("KillerInstinct" = 1, "Pressure" = 1, "CriticalChance" = 20, "CriticalDamage" = 0.2, "LifeSteal" = 10)
 		else
 			StrMult = 1.1
 			ForMult = 1
@@ -239,7 +190,6 @@
 
 /obj/Skills/Buffs/SpecialBuffs/Time_Gestalt_Buff
 	MagicNeeded = 1
-	Cooldown = -1
 	var/tier = 1
 	ActiveMessage = "attunes to the temporal essence of Time!"
 	OffMessage = "releases the temporal flow..."
@@ -247,16 +197,7 @@
 		StrMult = 1
 		EndMult = 1
 		OffMult = 1
-		var/EffectivePotential=p.Potential
-		switch(EffectivePotential)
-			if(1 to 24)
-				tier = 1
-			if(25 to 39)
-				tier = 2
-			if(40 to 100)
-				tier = 3
-		if(p.Saga||p.CyberCancel)
-			tier = 1
+		tier=p.getGestaltTier();
 		if(tier >= 3)
 			ForMult = 1.4
 			SpdMult = 1.35
@@ -278,7 +219,6 @@
 
 /obj/Skills/Buffs/SpecialBuffs/Space_Gestalt_Buff
 	MagicNeeded = 1
-	Cooldown = -1
 	var/tier = 1
 	ActiveMessage = "warps with the spatial essence of Space!"
 	OffMessage = "stabilizes the spatial field..."
@@ -286,16 +226,7 @@
 		StrMult = 1
 		EndMult = 1
 		DefMult = 1
-		var/EffectivePotential=p.Potential
-		switch(EffectivePotential)
-			if(1 to 24)
-				tier = 1
-			if(25 to 39)
-				tier = 2
-			if(40 to 100)
-				tier = 3
-		if(p.Saga||p.CyberCancel)
-			tier = 1
+		tier=p.getGestaltTier();
 		if(tier >= 3)
 			SpdMult = 1.4
 			ForMult = 1.35

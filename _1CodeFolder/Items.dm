@@ -190,9 +190,7 @@ obj/Items
 
 	proc/decreaseShatterCounter(val, mob/owner, mob/attacker, type)
 		// Entropic: equipment interacting against the Entropic player breaks faster
-		if(type == "armor" && owner && owner.passive_handler.Get("Entropic"))
-			val *= (1 + owner.passive_handler.Get("Entropic"))
-		else if((type == "sword" || type == "staff") && owner && owner.passive_handler.Get("Entropic"))
+		if(type && owner && owner.passive_handler.Get("Entropic"))
 			val *= (1 + owner.passive_handler.Get("Entropic"))
 		if(ShatterCounter > 0)
 			ShatterCounter -= val

@@ -1,6 +1,11 @@
 #define GLOBAL_LEAK_REDUCTION 1.2
 #define isplayer(x) istype(x,/mob/Players)
 
+// Was previously in MajinAscensions.dm
+/mob/proc/prompt(message, title, list/options)
+	if(!islist(options)) return null
+	return input(src, message, title) in options
+
 /globalTracker/var/DEBUFF_EFFECTIVENESS = 0.004
 
 /mob/var/AbsorbingDamage = 0
@@ -285,10 +290,11 @@ mob
 
 
 			if(UnarmedAttack || SwordAttack || SpiritAttack)
+				var/Motivation=1+passive_handler.Get("Motivation")
 				if(src.StyleBuff && canGainTension())
 					src.gainTension(val);
 				if(defender && defender.StyleBuff && defender.canGainTension())
-					defender.gainTension(val*glob.DEFENDER_TENSION_REDUCER);
+					defender.gainTension((val*Motivation)*glob.DEFENDER_TENSION_REDUCER);
 
 			var/leakVal = val/GLOBAL_LEAK_REDUCTION
 			if(passive_handler.Get("Corruption"))
@@ -886,8 +892,9 @@ mob
 			//	if(src.Kaioken)
 			//		if(src.Anger)
 			//			val*=src.Anger
-				if(src.PotionCD)
+				/* if(src.PotionCD)
 					val*=1.25
+					*/
 			var/PrideDrain
 			if(passive_handler.Get("Pride"))
 				PrideDrain=(100-Health)*0.01
@@ -951,8 +958,9 @@ mob
 	//		if(src.Kaioken)
 	//			if(src.Anger)
 	//				val*=src.Anger
-			if(src.PotionCD)
+			/* if(src.PotionCD)
 				val*=1.25
+			*/
 			// if(src.isRace(MAJIN))
 			// 	val*=0.25
 			if(!src.HasFatigueImmune())
@@ -964,8 +972,9 @@ mob
 			val*=src.EnergyExpenditure*src.Power_Multiplier
 			if(src.HasDrainlessMana()&&!Override)
 				return//Nope.
-			if(src.PotionCD)
+			/* if(src.PotionCD)
 				val*=1.25
+			*/
 			src.ManaAmount-=val
 			if(src.ManaAmount<=0)
 				src.ManaAmount=0
@@ -978,12 +987,13 @@ mob
 			if(src.hasMagePassive(/mage_passive/space/Linearity))
 				val *= 0.5
 			val/=src.GetManaCapMult()
-			if(src.PotionCD)
+			/* if(src.PotionCD)
 				val*=1.25
+				*/
 			src.TotalCapacity+=val
 			if(src.TotalCapacity>=100)
 				src.TotalCapacity=100
-		HealHealth(var/val, var/_isEcho=0)
+		HealHealth(val, _isEcho=0)
 			if(src.GetEffectiveShearForStackingEffects())
 				if(src.HasShearImmunity())
 					val=val
@@ -1008,13 +1018,10 @@ mob
 							val=val/4
 					else if(!src.IsDarkDragonPlayer() && src.Frenzy > 0)
 						val=val/4
-			if(src.PotionCD)
-				val/=glob.HEALTH_POTION_NERF
 			if(icon_state == "Meditate")
 				src.Tension=max(0, Tension-(val*1.5))
 			if(passive_handler["Staked"])
 				val = 0
-			// SURELY NO PROBLEMS HERE
 			if(src.AwakeningSkillUsed==1)
 				val = 0
 			if(src.VaizardHealth&&!src.passive_handler.Get("HealThroughTempHP"))
@@ -1022,8 +1029,7 @@ mob
 			if(src.CelestialAscension=="Demon" && src.transActive>=5)
 				if(src.transUnlocked<6)
 					val = 0
-			if(val > 0 && src.passive_handler.Get("AngelicInfusion"))
-				val += val * (src.passive_handler.Get("AngelicInfusion") * 0.2)
+			val *= getAngelicInfusionMult();//returns 1 if no angelicinfusion
 			src.Health+=val
 			src.MaxHealth()
 			// Light Warden: delayed heal retrigger. Each selection of the Warden mage
@@ -1050,8 +1056,8 @@ mob
 			if(!src.FusionPowered&&!StableHeal)
 				val/=src.GetPowerUpRatio()
 				val/=src.EnergyExpenditure*src.Power_Multiplier
-			if(src.PotionCD)
-				val/=1.25
+			if(src.passive_handler.Get("EnergyLeak")>1)
+				val *= 0.5
 			src.Energy+=val
 			if(Energy<0)
 				Energy=0
@@ -1061,6 +1067,8 @@ mob
 				val *= max(1,GetManaCapMult())
 			if(src.passive_handler.Get("Unrelenting Wrath"))
 				val = 0
+			if(src.passive_handler.Get("ManaLeak")>=0.25||src.ActiveBuff.ManaDrain||src.SpecialBuff.ManaDrain)
+				val *= 0.1
 			src.ManaAmount+=val
 			src.MaxMana()
 		HealWounds(var/val, var/StableHeal=0)
@@ -1077,8 +1085,6 @@ mob
 						val=val/2
 				else if(!src.IsDarkDragonPlayer() && src.Frenzy > 0)
 					val=val/2
-			if(src.PotionCD)
-				val/=1.25
 			src.TotalInjury-=val
 			if(src.TotalInjury < 0)
 				src.TotalInjury=0
@@ -1086,15 +1092,11 @@ mob
 		HealFatigue(var/val, var/StableHeal=0)
 			if(!src.FusionPowered&&!StableHeal)
 				val*=1/src.GetPowerUpRatio()
-			if(src.PotionCD)
-				val/=1.25
 			src.TotalFatigue-=val
 			if(src.TotalFatigue < 0)
 				src.TotalFatigue=0
 			src.MaxEnergy()
 		HealCapacity(var/val, var/StableHeal=0)
-			if(src.PotionCD)
-				val/=1.25
 			src.TotalCapacity-=val
 			if(src.TotalCapacity<=0)
 				src.TotalCapacity=0
@@ -1656,8 +1658,8 @@ mob
 						Mod+=0.5*passive_handler.Get("BurningShot")
 					else
 						Mod+=0.75*passive_handler.Get("BurningShot")
-			if(src.Momentum)
-				Mod *= 1 + (src.Momentum * (glob.MOMENTUM_BASE_BOON * clamp(src.passive_handler.Get("Momentum"), 0.1, glob.MOMENTUM_MAX_BOON)))
+			if(Momentum)
+				Mod *= getMomentumMult();
 
 			if(src.CheckSlotless("Genesic Brave")||src.CheckSpecial("King of Braves")) //okay take two
 				if(glob.KOB_GETS_STATS_LOW_LIFE)
@@ -1730,22 +1732,12 @@ mob
 				TotalTax+=src.StrTax
 			if(src.StrCut)
 				TotalTax+=src.StrCut
+			if(HasUnbreakable())
+				TotalTax*=1-GetUnbreakable()
 			if(TotalTax>=1)
 				TotalTax=0.9
 			var/Sub=Str*TotalTax
 			Str-=Sub
-			if(src.passive_handler.Get("UnhingedForm"))
-				var/UnhingedForm = src.passive_handler.Get("UnhingedForm")
-				var/perRange = UnhingedForm/30
-				var/def = round((1 - BaseDef()) / 0.1, 1)
-				// for each 0.1 def add perRange speed
-				var/end = round((1 - BaseEnd()) / 0.1, 1)
-				// for each 0.1 end add perRange speed
-				var/total = (def + end) * perRange
-				if(total > UnhingedForm)
-					Str += UnhingedForm
-				else
-					Str += total
 			Str+=src.GetMA("Str")
 			if(src.HasAdaptation())
 				if(src.AdaptationCounter!=0&&!CheckSlotless("Great Ape"))
@@ -1929,23 +1921,13 @@ mob
 				TotalTax+=src.ForTax
 			if(src.ForCut)
 				TotalTax+=src.ForCut
+			if(HasUnbreakable())
+				TotalTax*=1-GetUnbreakable()
 			if(TotalTax>=1)
 				TotalTax=0.9
 			var/Sub=For*TotalTax
 			For-=Sub
 			For+=src.GetMA("For")
-			if(src.passive_handler.Get("UnhingedForm"))
-				var/UnhingedForm = src.passive_handler.Get("UnhingedForm")
-				var/perRange = UnhingedForm/30
-				var/def = round((1 - BaseDef()) / 0.1, 1)
-				// for each 0.1 def add perRange speed
-				var/end = round((1 - BaseEnd()) / 0.1, 1)
-				// for each 0.1 end add perRange speed
-				var/total = (def + end) * perRange
-				if(total > UnhingedForm)
-					For += UnhingedForm
-				else
-					For += total
 			// if(src.UsingYinYang()&&src.Target&&src.Target!=src&&!src.Target.UsingYinYang()&&istype(src.Target, /mob/Players))
 			// 	For+=src.Target.GetMA("End")*0.5
 			// else
@@ -2109,6 +2091,8 @@ mob
 				TotalTax+=src.EndTax
 			if(src.EndCut)
 				TotalTax+=src.EndCut
+			if(HasUnbreakable())
+				TotalTax*=1-GetUnbreakable()
 			if(TotalTax>=1)
 				TotalTax=0.9
 			var/Sub=End*TotalTax
@@ -2251,22 +2235,12 @@ mob
 				TotalTax+=src.SpdTax
 			if(src.SpdCut)
 				TotalTax+=src.SpdCut
+			if(HasUnbreakable())
+				TotalTax*=1-GetUnbreakable()
 			if(TotalTax>=1)
 				TotalTax=0.9
 			var/Sub=Spd*TotalTax
 			Spd-=Sub
-			if(src.passive_handler.Get("UnhingedForm"))
-				var/UnhingedForm = src.passive_handler.Get("UnhingedForm")
-				var/perRange = UnhingedForm/20
-				var/def = round((1 - BaseDef()) / 0.1, 1)
-				// for each 0.1 def add perRange speed
-				var/end = round((1 - BaseEnd()) / 0.1, 1)
-				// for each 0.1 end add perRange speed
-				var/total = (def + end) * perRange
-				if(total > UnhingedForm)
-					Spd += UnhingedForm
-				else
-					Spd += total
 			Spd+=src.GetMA("Spd")
 			// if(src.UsingYinYang()&&src.Target&&src.Target!=src&&!src.Target.UsingYinYang()&&istype(src.Target, /mob/Players))
 			// 	Spd+=src.Target.GetMA("Spd")*0.5
@@ -2379,22 +2353,12 @@ mob
 				TotalTax+=src.OffTax
 			if(src.OffCut)
 				TotalTax+=src.OffCut
+			if(HasUnbreakable())
+				TotalTax*=1-GetUnbreakable()
 			if(TotalTax>=1)
 				TotalTax=0.9
 			var/Sub=Off*TotalTax
 			Off-=Sub
-			if(src.passive_handler.Get("UnhingedForm"))
-				var/UnhingedForm = src.passive_handler.Get("UnhingedForm")
-				var/perRange = UnhingedForm/20
-				var/def = round((1 - BaseDef()) / 0.1, 1)
-				// for each 0.1 def add perRange speed
-				var/end = round((1 - BaseEnd()) / 0.1, 1)
-				// for each 0.1 end add perRange speed
-				var/total = (def + end) * perRange
-				if(total > UnhingedForm)
-					Off += UnhingedForm
-				else
-					Off += total
 			Off+=src.GetMA("Off")
 			// if(src.UsingYinYang()&&src.Target&&src.Target!=src&&!src.Target.UsingYinYang()&&istype(src.Target, /mob/Players))
 			// 	Off+=src.Target.GetMA("Def")*0.5
@@ -2506,6 +2470,8 @@ mob
 				TotalTax+=src.DefTax
 			if(src.DefCut)
 				TotalTax+=src.DefCut
+			if(HasUnbreakable())
+				TotalTax*=1-GetUnbreakable()
 			if(TotalTax>=1)
 				TotalTax=0.9
 			var/Sub=Def*TotalTax
@@ -2573,6 +2539,8 @@ mob
 				TotalTax+=src.RecovTax
 			if(src.RecovCut)
 				TotalTax+=src.RecovCut
+			if(HasUnbreakable())
+				TotalTax*=1-GetUnbreakable()
 			if(TotalTax>=1)
 				TotalTax=0.9
 			var/Sub=Recov*TotalTax

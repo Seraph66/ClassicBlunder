@@ -4,6 +4,9 @@ ascension
 			unlock_potential = ASCENSION_ONE_POTENTIAL
 			intimidation = 20
 			onAscension(mob/owner)
+				simulateChoiceMutation(owner)
+				..()
+			simulateChoiceMutation(mob/owner)
 				switch(owner.Class)
 					if("Metal")
 						var/newpassives = list("Juggernaut" = 1, "HeavyHitter" = 0.5, "DeathField" = 1)
@@ -47,6 +50,9 @@ ascension
 			unlock_potential = ASCENSION_TWO_POTENTIAL
 			intimidation = 30
 			onAscension(mob/owner)
+				simulateChoiceMutation(owner)
+				..()
+			simulateChoiceMutation(mob/owner)
 				switch(owner.Class)
 					if("Metal")
 						var/newpassives = list("Juggernaut" = 1, "HeavyHitter" = 0.5, "DeathField" = 1)
@@ -89,6 +95,9 @@ ascension
 			unlock_potential = ASCENSION_THREE_POTENTIAL
 			intimidation = 40
 			onAscension(mob/owner)
+				simulateChoiceMutation(owner)
+				..()
+			simulateChoiceMutation(mob/owner)
 				switch(owner.Class)
 					if("Metal")
 						var/newpassives = list("Juggernaut" = 1, "HeavyHitter" = 1, "DeathField" = 2)
@@ -126,11 +135,13 @@ ascension
 						strength = 0.25
 						speed = 0.25
 						offense = 0.25
-				passives["Incomplete"] = -0.25
 				..()
 		four
 			unlock_potential = ASCENSION_FOUR_POTENTIAL
 			onAscension(mob/owner)
+				simulateChoiceMutation(owner)
+				..()
+			simulateChoiceMutation(mob/owner)
 				switch(owner.Class)
 					if("Metal")
 						var/newpassives = list("HeavyHitter" = 0.5, "DeathField" = 2, "Unstoppable" = 1)
@@ -172,6 +183,9 @@ ascension
 		five
 			unlock_potential = ASCENSION_FIVE_POTENTIAL
 			onAscension(mob/owner)
+				simulateChoiceMutation(owner)
+				..()
+			simulateChoiceMutation(mob/owner)
 				switch(owner.Class)
 					if("Metal")
 						var/newpassives = list("HeavyHitter" = 0.5, "DeathField" = 3)
@@ -213,6 +227,9 @@ ascension
 		six
 			unlock_potential = ASCENSION_SIX_POTENTIAL
 			onAscension(mob/owner)
+				simulateChoiceMutation(owner)
+				..()
+			simulateChoiceMutation(mob/owner)
 				switch(owner.Class)
 					if("Metal")
 						var/newpassives = list("HeavyHitter" = 0.5, "DeathField" = 3)
