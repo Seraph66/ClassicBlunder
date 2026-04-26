@@ -130,6 +130,112 @@ mob/Admin3/verb/LoadSwapMap()
 	for(var/mob/Player/AI/ai in ticking_ai)
 		ai.EndLife(0)*/
 
+// Read-only browser view of all the potential thresholds for Style and Sig
+// development, with one table per tier listing every type at that tier and the
+// key balance vars on each (Style: Str/For/End/Spd/Off/Def + passives; Sig:
+// Cooldown/ManaCost/EnergyCost/DamageMult). Useful for double-checking pot
+// reqs against the progression curve and for spotting outliers in tier values.
+/mob/Admin3/verb/View_Style_Sig_Reqs()
+	set category = "Admin"
+	set name = "View Style/Sig Reqs"
+	set desc = "Browser view of pot requirements for each tier and the balance vars on every Style/Sig in that tier."
+	var/html = "<html><head><title>Style/Sig Pot Reqs</title><style>"
+	html += "body{background:#1a1a1a;color:#ddd;font-family:monospace;padding:10px;font-size:12px}"
+	html += "h2{color:#ffaa00;border-bottom:1px solid #444;padding-bottom:4px;margin-top:18px}"
+	html += "h3{color:#88ccff;margin-top:14px;margin-bottom:6px}"
+	html += "table{border-collapse:collapse;margin:6px 0;width:100%}"
+	html += "th{background:#333;color:#ffcc66;padding:4px 8px;text-align:left;border:1px solid #555}"
+	html += "td{padding:3px 8px;border:1px solid #2c2c2c;color:#ccc;vertical-align:top}"
+	html += "td.path{color:#777;font-size:11px}"
+	html += "td.val{color:#aaffaa;text-align:right}"
+	html += "td.muted{color:#555;text-align:right}"
+	html += "td.passives{color:#cc99ff;font-size:11px}"
+	html += "</style></head><body>"
+	html += "<h2>Potential Requirements (from glob.progress)</h2>"
+	html += "<table><tr><th>Unlock</th><th>Pot Req</th></tr>"
+	html += "<tr><td>1st T1 Style</td><td class='val'>[glob.progress.T1_STYLES[1]]</td></tr>"
+	html += "<tr><td>2nd T1 Style</td><td class='val'>[glob.progress.T1_STYLES[2]]</td></tr>"
+	html += "<tr><td>1st T2 Style</td><td class='val'>[glob.progress.T2_STYLES[1]]</td></tr>"
+	html += "<tr><td>2nd T2 Style</td><td class='val'>[glob.progress.T2_STYLES[2]]</td></tr>"
+	html += "<tr><td>1st T3 Style</td><td class='val'>[glob.progress.T3_STYLES[1]]</td></tr>"
+	html += "<tr><td>1st T1 Sig</td><td class='val'>[glob.progress.T1_SIGS[1]]</td></tr>"
+	html += "<tr><td>2nd T1 Sig</td><td class='val'>[glob.progress.T1_SIGS[2]]</td></tr>"
+	html += "<tr><td>3rd T1 Sig</td><td class='val'>[glob.progress.T1_SIGS[3]]</td></tr>"
+	html += "<tr><td>1st T2 Sig</td><td class='val'>[glob.progress.T2_SIGS[1]]</td></tr>"
+	html += "<tr><td>2nd T2 Sig</td><td class='val'>[glob.progress.T2_SIGS[2]]</td></tr>"
+	html += "</table>"
+	html += "<h2>Styles by Tier</h2>"
+	for(var/tier in 1 to 3)
+		html += "<h3>T[tier] Styles</h3>"
+		html += "<table><tr><th>Name</th><th>Type Path</th><th>Str</th><th>For</th><th>End</th><th>Spd</th><th>Off</th><th>Def</th><th>Passives</th></tr>"
+		var/anyShown = 0
+		for(var/T in subtypesof(/obj/Skills/Buffs/NuStyle))
+			if(!ispath(T))
+				continue
+			var/obj/Skills/Buffs/NuStyle/probe = new T
+			if(!probe)
+				continue
+			if(probe.SignatureTechnique == tier)
+				anyShown = 1
+				html += "<tr>"
+				var/displayName = probe.name ? probe.name : "[T]"
+				html += "<td>[displayName]</td>"
+				html += "<td class='path'>[T]</td>"
+				html += probe.StyleStr ? "<td class='val'>[probe.StyleStr]</td>" : "<td class='muted'>—</td>"
+				html += probe.StyleFor ? "<td class='val'>[probe.StyleFor]</td>" : "<td class='muted'>—</td>"
+				html += probe.StyleEnd ? "<td class='val'>[probe.StyleEnd]</td>" : "<td class='muted'>—</td>"
+				html += probe.StyleSpd ? "<td class='val'>[probe.StyleSpd]</td>" : "<td class='muted'>—</td>"
+				html += probe.StyleOff ? "<td class='val'>[probe.StyleOff]</td>" : "<td class='muted'>—</td>"
+				html += probe.StyleDef ? "<td class='val'>[probe.StyleDef]</td>" : "<td class='muted'>—</td>"
+				var/passText = ""
+				if(probe.passives && probe.passives.len)
+					for(var/p in probe.passives)
+						passText += "[p]=[probe.passives[p]] "
+				html += passText ? "<td class='passives'>[passText]</td>" : "<td class='muted'>—</td>"
+				html += "</tr>"
+			del probe
+		if(!anyShown)
+			html += "<tr><td colspan=9 class='muted'>(no entries)</td></tr>"
+		html += "</table>"
+	html += "<h2>Sigs by Tier</h2>"
+	for(var/tier in 1 to 2)
+		html += "<h3>T[tier] Sigs</h3>"
+		html += "<table><tr><th>Name</th><th>Type Path</th><th>Cooldown</th><th>ManaCost</th><th>EnergyCost</th><th>DamageMult</th></tr>"
+		var/list/srcList = (tier == 1) ? Tier1 : Tier2
+		var/anyShown = 0
+		for(var/k in srcList)
+			var/v = srcList[k]
+			if(istext(v))
+				var/p = text2path(v)
+				if(!ispath(p))
+					continue
+				var/obj/Skills/probe = new p
+				if(!probe)
+					continue
+				anyShown = 1
+				html += "<tr>"
+				html += "<td>[k]</td>"
+				html += "<td class='path'>[p]</td>"
+				var/cd = probe.vars["Cooldown"]
+				html += isnum(cd) ? "<td class='val'>[cd]</td>" : "<td class='muted'>—</td>"
+				var/mc = probe.vars["ManaCost"]
+				html += isnum(mc) && mc ? "<td class='val'>[mc]</td>" : "<td class='muted'>—</td>"
+				var/ec = probe.vars["EnergyCost"]
+				html += isnum(ec) && ec ? "<td class='val'>[ec]</td>" : "<td class='muted'>—</td>"
+				var/dm = probe.vars["DamageMult"]
+				html += isnum(dm) && dm ? "<td class='val'>[dm]</td>" : "<td class='muted'>—</td>"
+				html += "</tr>"
+				del probe
+			else if(istype(v, /list))
+				var/list/bundle = v
+				anyShown = 1
+				html += "<tr><td>[k]</td><td colspan=5 class='path'>(bundle of [bundle.len] skills — not a single tweakable type)</td></tr>"
+		if(!anyShown)
+			html += "<tr><td colspan=6 class='muted'>(no entries)</td></tr>"
+		html += "</table>"
+	html += "</body></html>"
+	src << browse(html, "window=StyleSigReqs;size=900x900")
+
 // Live-tweak a stat var on a T1/T2/T3 Style template or T1/T2 Sig template.
 // Picks a category, lets the admin pick a specific type, then a scalar var on
 // that type, then a new value. Updates the var on every live instance of that
