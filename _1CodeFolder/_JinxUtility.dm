@@ -1290,8 +1290,18 @@ mob
 			if(isRace(ANDROID)||CyberneticMainframe)
 				enhance = vars["Enhanced[statName]"] * 0.6
 			if(Target && ismob(Target))
-				if(Target.passive_handler["Rusting"]&&Poison>=1)
-					enhance *= (Poison * (glob.RUSTING_RATE * passive_handler["Rusting"])) / 100
+				// Rusting: when target carries the Rusting passive (mystic/hybrid styles)
+				// and the player is poisoned, debuff the player's enhance-chip stat by an
+				// amount that scales with both poison stacks and target's Rusting tier.
+				// Prior version had three bugs: (1) read self's Rusting instead of target's,
+				// which zeroed enhance for everyone without their own Rusting source;
+				// (2) formula scaled the multiplier UP with bigger Rusting/Poison, so high
+				// tiers debuffed less; (3) at extreme stacks the multiplier exceeded 1 and
+				// the debuff flipped into a buff. Rewritten as a clamped 1-x reduction.
+				var/targetRusting = Target.passive_handler["Rusting"]
+				if(targetRusting && Poison >= 1)
+					var/rustReduction = (Poison * glob.RUSTING_RATE * targetRusting) / 100
+					enhance *= max(0, 1 - rustReduction)
 			return enhance
 		BaseStr()
 			var/enhanced = getEnhanced("Strength")

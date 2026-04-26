@@ -886,6 +886,22 @@ mob/proc/PM2(var/mob/who)
 /mob/var/PingSound = TRUE
 /mob/var/PingVolume = 30
 
+// Opt-out flag for buffs that force Anger on activation (Jinchuuriki M<3,
+// Vaizard Mask, Wrathful, Hellbornfury, etc — anything with AutoAnger=1 or
+// passives["AutoAnger"]=1). Read in _BuffX.dm at the BuffOn/BuffOff handlers.
+// Default 0 = original behavior preserved for everyone.
+/mob/var/AutoBerserkOptOut = 0
+
+mob/verb
+	Toggle_Auto_Berserk()
+		set category = "Other"
+		set name = "Toggle Auto Berserk"
+		if(usr.AutoBerserkOptOut)
+			usr.AutoBerserkOptOut = 0
+			usr << "Auto Berserk re-enabled. Buffs that force Anger (Jinchuuriki, Vaizard Mask, Wrathful, etc.) will trigger it normally."
+		else
+			usr.AutoBerserkOptOut = 1
+			usr << "Auto Berserk disabled. Buffs with the Auto Anger flag will no longer force you into the Anger state on activation."
 
 mob/Admin3/verb
 	editRace(mob/Players/m in players)

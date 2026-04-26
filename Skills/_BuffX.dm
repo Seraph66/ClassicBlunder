@@ -1955,9 +1955,6 @@ NEW VARIABLES
 							AutoAnger=1
 							passives = list("Maki" = 1, "Curse" = 1, "LifeGeneration" = 1, "Deflection" = 2, "AutoAnger" = 1, "Reversal" = Mastery/10)
 							CalmAnger=0
-					if(src.Mastery==1)
-						usr << "You don't have enough of a rapport to manipulate your demon at will!"
-						return
 					src.Trigger(usr)
 			Vaizard_Mask
 				SignatureTechnique=3
@@ -13794,7 +13791,7 @@ mob
 				src.SenseUnlocked+=B.SenseUnlocked
 			if(B.Afterimages)
 				src.Afterimages+=1
-			if(B.AutoAnger || B.passives["AutoAnger"])
+			if((B.AutoAnger || B.passives["AutoAnger"]) && !src.AutoBerserkOptOut)
 				Anger()
 				passive_handler.Increase("EndlessAnger")
 			if(B.CalmAnger)
@@ -14295,7 +14292,7 @@ mob
 				src.SenseUnlocked-=B.SenseUnlocked
 			if(B.Afterimages)
 				src.Afterimages-=B.Afterimages
-			if(B.AutoAnger || B.passives["AutoAnger"])
+			if((B.AutoAnger || B.passives["AutoAnger"]) && !src.AutoBerserkOptOut)
 				if(passive_handler.Get("EndlessAnger"))
 					passive_handler.Decrease("EndlessAnger")
 				src.Calm()
