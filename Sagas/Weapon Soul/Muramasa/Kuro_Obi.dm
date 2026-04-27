@@ -27,7 +27,7 @@
 	Instinct=1
 	ActiveMessage="strikes everything with an wave of inevitable, masterful death."
 	adjust(mob/p)
-		DamageMult = 0.9 + (p.SagaLevel/6)
+		DamageMult = 4 + (p.SagaLevel/2)
 		Size = 1.5 + p.SagaLevel
 		Toxic = 20 * p.SagaLevel
 		Burning = 20 * p.SagaLevel

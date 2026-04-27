@@ -3197,9 +3197,9 @@ obj/Skills/Utility
 					ModChoices.Add("Repair")
 				if("Singularity" in usr.knowledgeTracker.learnedKnowledge || (usr.isRace(ANDROID)))
 					ModChoices.Add("Biological Cybernetics")
-			if(M.BioAndroid)
+			if(M.BioAndroid||M.SuperAndroid)
 				ModChoices.Remove("Biological Cybernetics")
-			if(M.CyberneticMainframe)
+			if(M.CyberneticMainframe||M.isRace(ANDROID)&&M.Potential<30)
 				ModChoices.Remove("Cybernetic Mainframe")
 
 			ModChoice=input(usr, "What modification would you like to install?", "Cybernetic Augmentation") in ModChoices
@@ -3567,6 +3567,10 @@ obj/Skills/Utility
 						src.Using=0
 						return
 					M.CyberneticMainframe=1
+					if(M.isRace(ANDROID))
+						M.SuperAndroid=1
+						M.transUnlocked=1
+						M.race.transformations += new /transformation/android/super_android()
 					M.AddSkill(new/obj/Skills/Utility/Cyborg_Integration)
 				if("Repair")
 					M.Maimed=0

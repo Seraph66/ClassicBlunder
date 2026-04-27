@@ -1319,7 +1319,7 @@ NEW VARIABLES
 									src.ActiveMessage="calls forth the true form of █████████████, the ███████ of ████████!"
 									src.OffMessage="conceals █████████████.."
 						if("Soul Edge")
-							passives = list("AbyssMod" = usr.SagaLevel, "Steady" = usr.SagaLevel, "Extend" = 1, "BleedHit" = 1, "PULock" = 1)
+							passives = list("AbyssMod" = usr.SagaLevel, "Steady" = usr.SagaLevel, "Extend" = 1, "BleedHit" = 0.25, "PULock" = 1)
 							if(!redacted)
 								src.SwordName="Soul Edge"
 								src.ActiveMessage="calls forth the true form of Soul Edge, the Blade of Chaos!"
@@ -9769,7 +9769,6 @@ NEW VARIABLES
 				HealthThreshold=0.1
 				adjust(mob/p)
 					if(!altered)
-						var/currentPot = p.Potential
 						var/secretLevel = p.secretDatum.currentTier
 						if(p.Health<50)
 							secretLevel+=1

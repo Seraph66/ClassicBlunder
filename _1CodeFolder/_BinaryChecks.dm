@@ -1345,7 +1345,7 @@ mob
 			if(Saga=="Cosmo" && !SpecialBuff)
 				Total += SagaLevel * 2.5
 			if(InfinityModule)
-				Total += round(glob.progress.totalPotentialToDate,5) / 10
+				Total += (2 * AscensionsAcquired)
 			if(Secret=="Shin")
 				Total += secretDatum.currentTier
 			if(passive_handler.Get("Hopes and Dreams")) Total += (5 * AscensionsAcquired)
@@ -1632,7 +1632,7 @@ mob
 				Extra+=1
 			Extra += scalingEldritchPower();
 			if(InfinityModule)
-				Extra += round(glob.progress.totalPotentialToDate,5) / 25
+				Extra += AscensionsAcquired
 			if(Target&&Target.passive_handler.Get("Instinct") >= Base+Extra)
 				Extra += (passive_handler.Get("LikeWater")) / 2
 			return (Base+Extra)
@@ -1656,7 +1656,7 @@ mob
 			if(round(t/4))
 				Return+=1
 			if(InfinityModule)
-				Return += round(glob.progress.totalPotentialToDate,5) / 25
+				Return += AscensionsAcquired
 			if(Target&&Target.passive_handler.Get("Flow") >= Return)
 				Return+=passive_handler.Get("LikeWater") / 2
 			Return += scalingEldritchPower();
@@ -2502,7 +2502,7 @@ mob
 			if(src.TarotFate=="The Emperor")
 				Return += 4
 			if(InfinityModule)
-				Return += round(glob.progress.totalPotentialToDate,5) / 50
+				Return += AscensionsAcquired/2
 			return Return
 		HasSpiritSword()//Str(0.75)+For(0.75)
 			if(passive_handler.Get("SpiritSword"))
@@ -2519,7 +2519,7 @@ mob
 		GetHybridStrike()//Str(0.75)+For(0.75)
 			var/Return = passive_handler.Get("HybridStrike")
 			if(InfinityModule)
-				Return += round(glob.progress.totalPotentialToDate,5) / 50
+				Return += AscensionsAcquired/2//round(glob.progress.totalPotentialToDate,5) / 50
 			return Return
 		HasPhysPleroma()
 			if(passive_handler.Get("PhysPleroma"))
