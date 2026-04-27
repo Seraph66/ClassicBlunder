@@ -920,7 +920,7 @@ mob
 				cursedSheathValue = clamp(0, cursedSheathValue, SagaLevel*50)
 				if(client && hudIsLive("CursedSheath", /obj/Bar))
 					client.hud_ids["CursedSheath"]?:Update()
-			
+
 
 			if(src.SureHitTimerLimit)
 				if(!src.SureHit)
@@ -1546,6 +1546,18 @@ mob
 						if(src.AwakeningSkillUsed>=A.AwakeningRequired)
 							A.Trigger(src,Override=1)
 							continue
+					if(A.ABBuffer)
+						if(src.ActiveBuff)
+							A.Trigger(src,Override=1)
+							continue
+					if(A.SBBuffer)
+						if(src.SpecialBuff)
+							A.Trigger(src,Override=1)
+							continue
+					if(A.STBuffer)
+						if(src.StyleActive)
+							A.Trigger(src,Override=1)
+							continue
 				if(A.AlwaysOn)
 					if(!A.Using&&!A.SlotlessOn)
 						A.Trigger(src,Override=1)
@@ -1581,6 +1593,18 @@ mob
 							A.Trigger(src,Override=1)
 							continue
 						if(src.StyleActive!=A.StyleNeeded)
+							A.Trigger(src,Override=1)
+							continue
+					if(A.ABBuffer)
+						if(!src.ActiveBuff)
+							A.Trigger(src,Override=1)
+							continue
+					if(A.SBBuffer)
+						if(!src.SpecialBuff)
+							A.Trigger(src,Override=1)
+							continue
+					if(A.STBuffer)
+						if(!src.StyleActive)
 							A.Trigger(src,Override=1)
 							continue
 					if(A.NeedsSSJ)

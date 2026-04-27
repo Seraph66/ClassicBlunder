@@ -2,7 +2,7 @@ obj/Items/Sword/Heavy/Legendary/WeaponSoul/Sword_of_Hope//Durendal
 	name="Sword of Hope"
 	icon='Durendal.dmi'
 	passives = list("ShockwaveBlows" = 1, "ArmorPeeling" = 1)
-	Ascended=3
+	Ascended=6
 	Destructable=0
 	ShatterTier=0
 

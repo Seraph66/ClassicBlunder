@@ -234,6 +234,11 @@ majinAbsorb/proc/IsStealableSkill(obj/Skills/s)
     if(istype(s, /obj/Skills/Target_Switch)) return 0
     // No teleports
     if(istype(s, /obj/Skills/Teleport)) return 0
+    if(!s.Copyable)
+        if(s.SignatureTechnique)
+            return 1
+        else
+            return 0
     return 1
 
 majinAbsorb/proc/CollectStealable(mob/absorbee)
