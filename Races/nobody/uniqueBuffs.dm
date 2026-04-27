@@ -16,3 +16,35 @@ obj/Skills/Buffs/NuStyle/NobodyLegendary
 			set hidden=1
 			adjust(usr)
 			src.Trigger(usr)
+	Champion_Of_Ash
+		SignatureTechnique=2
+		NeedsSword = 1
+		Copyable=0
+		StyleSpd=1.3
+		StyleStr=1.3
+		ElementalOffense="Fire"
+		ElementalDefense="Fire"
+		passives = list("BlurringStrikes" = 1, "GodSpeed" = 2, "Momentum" = 1, "DoubleStrike" = 2, "Instinct" = 3, "Flow" = 2, "Iaido" = 1, "Iaijutsu" = 1,\
+						"Musoken" = 1, "BurnHit" = 30, "Combustion" = 30, "Parry" = 2,"Ashen One" = 1, "SweepingStrike" = 1, "Deflection" = 1)
+		StyleActive="Legacy of the Champion of Ashes"
+		Finisher="/obj/Skills/Queue/Finisher/Session"
+		verb/Champion_Of_Ash()
+			set hidden=1
+			adjust(usr)
+			src.Trigger(usr)
+	Heir_of_Grief
+		SignatureTechnique=3
+		NeedsSword = 1
+		Copyable=0
+		StyleSpd=1.5
+		StyleStr=1.5
+		ElementalOffense="Fire"
+		ElementalDefense="Fire"
+		passives = list("BlurringStrikes" = 2, "GodSpeed" = 2, "Momentum" = 1, "DoubleStrike" = 3, "Instinct" = 4, "Flow" = 3, "Iaido" = 1, "Iaijutsu" = 1,\
+						"Musoken" = 1, "BurnHit" = 30, "Combustion" = 30, "Parry" = 2,"Ashen One" = 1, "SweepingStrike" = 1, "Deflection" = 2)
+		StyleActive="Heir of Grief"
+		Finisher="/obj/Skills/Queue/Finisher/Session"
+		verb/Heir_of_Grief()
+			set hidden=1
+			adjust(usr)
+			src.Trigger(usr)
