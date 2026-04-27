@@ -8,6 +8,7 @@
     return TRUE
 
 /mob/var/hasDemonCasting = FALSE
+/mob/var/lastInnovationDemonMagic = null
 
 /mob/proc/isDemonMagicCasting(checkType = null)
     if(!client?.keyQueue) return FALSE
@@ -27,6 +28,7 @@
     if(isInnovationDisable(p)) return FALSE
     if(!p.isDemonMagicCasting()) return FALSE
     var/skill_can_fire = isnull(can_fire_override) ? !(Using || cooldown_remaining) : can_fire_override
+    var/curMagicType = p.client?.keyQueue?.initType
     if(skill_can_fire && p.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/HellFire))
         var/obj/Skills/Buffs/SlotlessBuffs/Hellraiser/hr = p.SlotlessBuffs["Hellraiser"]
         if(!hr)
@@ -34,7 +36,11 @@
         hr.stackBuff(p)
     p.endDemonMagicCast()
     if(skill_can_fire)
-        p.gainStyleRating(1)
+        var/styleGain = 1
+        if(curMagicType && p.lastInnovationDemonMagic && curMagicType != p.lastInnovationDemonMagic)
+            styleGain = 2
+        p.lastInnovationDemonMagic = curMagicType
+        p.gainStyleRating(styleGain)
     return skill_can_fire
 
 /obj/Skills/Buffs/SlotlessBuffs/DemonMagic

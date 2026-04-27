@@ -70,6 +70,7 @@
     StyleRating = 0
     StyleRatingLastWasPose = FALSE
     StyleRatingRPPauseRemainder = 0
+    lastInnovationDemonMagic = null
     client?.updateStyleRating()
 
 /client/var/tmp/obj/styleRatingHolder = new()
