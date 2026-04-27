@@ -922,6 +922,8 @@ mob/proc/
 						a=src.AngerMax
 						if((src.AnsatsukenAscension=="Chikara"&&src.StyleActive=="Ansatsuken"))
 							a=max(src.AngerMax,2)
+						if(Secret == "Heavenly Restriction" && secretDatum?:hasImprovement("Anger"))
+							a *= 1+(secretDatum?:getBoon(src, "Anger")/10)
 						if(src.HasAngerThreshold())
 							if(a<src.GetAngerThreshold())
 								a=src.GetAngerThreshold()
@@ -1032,8 +1034,10 @@ mob/proc/
 		if(Power > PeakPowerObserved)
 			PeakPowerObserved = Power
 
-		if(majinAbsorb && majinAbsorb.absorbed && majinAbsorb.absorbed.len)
-			Power += majinAbsorb.SumAbsorbedPeakPower(src)
+		if(majinAbsorb)
+			if(majinAbsorb.absorbed && majinAbsorb.absorbed.len)
+				Power += majinAbsorb.SumAbsorbedPeakPower(src)
+			Power += majinAbsorb.permanentAbsorbPower
 
 		if(src.Dead&&!src.KeepBody)
 			Ratio*=0.5

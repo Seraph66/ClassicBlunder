@@ -19,11 +19,11 @@ ascension
 					owner.Class = picked
 				switch(owner.Class)
 					if("Innocent")
-						passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2, "Blubber" = 1, "DemonicDurability" = 1, "Harden" = 1, "Juggernaut" = 1, "LifeGeneration" = 1, "PureReduction" = 1)
+						passives = list("Gum Gum" = 0.5, "PUSpike" = 25, "KiControlMastery" = 2, "Blubber" = 1, "PureReduction" = 1)
 					if("Super")
-						passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2, "Adaptation" = 1, "Steady" = 1, "Momentum" = 1, "Fury" = 1, "Instinct" = 1, "Flow" = 1, "Duelist" = 1)
+						passives = list("Gum Gum" = 0.5, "PUSpike" = 25, "KiControlMastery" = 2, "Adaptation" = 1, "Duelist" = 1)
 					if("Unhinged")
-						passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2, "Brutalize" = 1, "AngerAdaptiveForce" = 0.15, "KillerInstinct" = 0.1, "CriticalChance" = 5, "CriticalDamage" = 0.05, "PureDamage" = 1)
+						passives = list("Gum Gum" = 0.5, "PUSpike" = 25, "KiControlMastery" = 2, "CriticalChance" = 5, "CriticalDamage" = 0.05, "PureDamage" = 1)
 				if(owner.majinAbsorb)
 					owner.majinAbsorb.updateVariables(owner)
 				owner.majinCheatDeathUsed = 0
@@ -34,22 +34,22 @@ ascension
 			intimidation = 15
 			anger = 0.1
 			imaginationAdd = 0.25
-			endurance = 1.25
-			defense = 1.25
-			strength = 1.25
-			force = 1.25
-			speed = 1.25
-			offense = 1.25
+			endurance = 0.75
+			defense = 0.75
+			strength = 0.75
+			force = 0.75
+			speed = 0.75
+			offense = 0.75
 			passives = list()
 
 			onAscension(mob/owner)
 				switch(owner.Class)
 					if("Innocent")
-						passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2, "Blubber" = 1, "DemonicDurability" = 1, "Harden" = 1, "Juggernaut" = 1, "LifeGeneration" = 1, "PureReduction" = 1)
+						passives = list("Gum Gum" = 0.5, "PUSpike" = 25, "KiControlMastery" = 1, "Blubber" = 1, "PureReduction" = 1)
 					if("Super")
-						passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2, "Adaptation" = 1, "Steady" = 1, "Momentum" = 1, "Fury" = 1, "Instinct" = 1, "Flow" = 1, "Duelist" = 1)
+						passives = list("Gum Gum" = 0.5, "PUSpike" = 25, "KiControlMastery" = 1, "Adaptation" = 1, "Duelist" = 1)
 					if("Unhinged")
-						passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2, "Brutalize" = 1, "AngerAdaptiveForce" = 0.15, "KillerInstinct" = 0.1, "CriticalChance" = 5, "CriticalDamage" = 0.05, "PureDamage" = 1)
+						passives = list("Gum Gum" = 0.5, "PUSpike" = 25, "KiControlMastery" = 1, "CriticalChance" = 5, "CriticalDamage" = 0.05, "PureDamage" = 1)
 				if(owner.majinAbsorb)
 					owner.majinAbsorb.updateVariables(owner)
 				owner.majinCheatDeathUsed = 0
@@ -59,22 +59,22 @@ ascension
 			unlock_potential = ASCENSION_THREE_POTENTIAL
 			intimidationMult = 0.5
 			anger = 0.1
-			endurance = 1.25
-			defense = 1.25
-			strength = 1.25
-			force = 1.25
-			speed = 1.25
-			offense = 1.25
+			endurance = 0.75
+			defense = 0.75
+			strength = 0.75
+			force = 0.75
+			speed = 0.75
+			offense = 0.75
 			passives = list()
 
 			onAscension(mob/owner)
 				switch(owner.Class)
 					if("Innocent")
-						passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2, "Blubber" = 1, "DemonicDurability" = 1, "Harden" = 1, "Juggernaut" = 1, "LifeGeneration" = 1, "PureReduction" = 1)
+						passives = list("Gum Gum" = 0.5, "PUSpike" = 25, "KiControlMastery" = 1, "Blubber" = 1, "PureReduction" = 1)
 					if("Super")
-						passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2, "Adaptation" = 1, "Steady" = 1, "Momentum" = 1, "Fury" = 1, "Instinct" = 1, "Flow" = 1, "Duelist" = 1)
+						passives = list("Gum Gum" = 0.5, "PUSpike" = 25, "KiControlMastery" = 1, "Adaptation" = 1, "Duelist" = 1)
 					if("Unhinged")
-						passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2, "Brutalize" = 1, "AngerAdaptiveForce" = 0.15, "KillerInstinct" = 0.1, "CriticalChance" = 5, "CriticalDamage" = 0.05, "PureDamage" = 1)
+						passives = list("Gum Gum" = 0.5, "PUSpike" = 25, "KiControlMastery" = 1, "CriticalChance" = 5, "CriticalDamage" = 0.05, "PureDamage" = 1)
 				if(owner.majinAbsorb)
 					owner.majinAbsorb.updateVariables(owner)
 				owner.majinCheatDeathUsed = 0
@@ -85,6 +85,57 @@ ascension
 			intimidation = 10
 			anger = 0.15
 			imaginationAdd = 0.2
+			endurance = 1
+			defense = 1
+			strength = 1
+			force = 1
+			speed = 1
+			offense = 1
+			passives = list()
+
+			onAscension(mob/owner)
+				switch(owner.Class)
+					if("Innocent")
+						passives = list("Gum Gum" = 0.5, "PUSpike" = 25, "KiControlMastery" = 1, "Blubber" = 1, "PureReduction" = 1)
+					if("Super")
+						passives = list("Gum Gum" = 0.5, "PUSpike" = 25, "KiControlMastery" = 1, "Adaptation" = 1, "Duelist" = 1)
+					if("Unhinged")
+						passives = list("Gum Gum" = 0.5, "PUSpike" = 25, "KiControlMastery" = 1, "CriticalChance" = 5, "CriticalDamage" = 0.05, "PureDamage" = 1)
+				if(owner.majinAbsorb)
+					owner.majinAbsorb.updateVariables(owner)
+				owner.majinCheatDeathUsed = 0
+				..()
+
+		five
+			unlock_potential = ASCENSION_FIVE_POTENTIAL
+			intimidation = 10
+			anger = 0.15
+			endurance = 1
+			defense = 1
+			strength = 1
+			force = 1
+			speed = 1
+			offense = 1
+			passives = list()
+
+			onAscension(mob/owner)
+				switch(owner.Class)
+					if("Innocent")
+						passives = list("Gum Gum" = 0.5, "PUSpike" = 25, "KiControlMastery" = 1, "Blubber" = 1, "PureReduction" = 1)
+					if("Super")
+						passives = list("Gum Gum" = 0.5, "PUSpike" = 25, "KiControlMastery" = 1, "Adaptation" = 1, "Duelist" = 1)
+					if("Unhinged")
+						passives = list("Gum Gum" = 0.5, "PUSpike" = 25, "KiControlMastery" = 1, "CriticalChance" = 5, "CriticalDamage" = 0.05, "PureDamage" = 1)
+				if(owner.majinAbsorb)
+					owner.majinAbsorb.updateVariables(owner)
+				owner.majinCheatDeathUsed = 0
+				..()
+
+		six
+			unlock_potential = ASCENSION_SIX_POTENTIAL
+			intimidation = 15
+			anger = 0.2
+			imaginationAdd = 0.25
 			endurance = 1.25
 			defense = 1.25
 			strength = 1.25
@@ -96,62 +147,11 @@ ascension
 			onAscension(mob/owner)
 				switch(owner.Class)
 					if("Innocent")
-						passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2, "Blubber" = 1, "DemonicDurability" = 1, "Harden" = 1, "Juggernaut" = 1, "LifeGeneration" = 1, "PureReduction" = 1)
+						passives = list("Gum Gum" = 0.5, "PUSpike" = 25, "KiControlMastery" = 1, "Unstoppable" = 1, "Blubber" = 1, "PureReduction" = 1)
 					if("Super")
-						passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2, "Adaptation" = 1, "Steady" = 1, "Momentum" = 1, "Fury" = 1, "Instinct" = 1, "Flow" = 1, "Duelist" = 1)
+						passives = list("Gum Gum" = 0.5, "PUSpike" = 25, "KiControlMastery" = 1, "Unstoppable" = 1, "Adaptation" = 1, "Duelist" = 1)
 					if("Unhinged")
-						passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2, "Brutalize" = 1, "AngerAdaptiveForce" = 0.15, "KillerInstinct" = 0.1, "CriticalChance" = 5, "CriticalDamage" = 0.05, "PureDamage" = 1)
-				if(owner.majinAbsorb)
-					owner.majinAbsorb.updateVariables(owner)
-				owner.majinCheatDeathUsed = 0
-				..()
-
-		five
-			unlock_potential = ASCENSION_FIVE_POTENTIAL
-			intimidation = 10
-			anger = 0.15
-			endurance = 1.75
-			defense = 1.75
-			strength = 1.75
-			force = 1.75
-			speed = 1.75
-			offense = 1.75
-			passives = list()
-
-			onAscension(mob/owner)
-				switch(owner.Class)
-					if("Innocent")
-						passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2, "Blubber" = 1, "DemonicDurability" = 1, "Harden" = 1, "Juggernaut" = 1, "LifeGeneration" = 1, "PureReduction" = 1)
-					if("Super")
-						passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2, "Adaptation" = 1, "Steady" = 1, "Momentum" = 1, "Fury" = 1, "Instinct" = 1, "Flow" = 1, "Duelist" = 1)
-					if("Unhinged")
-						passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2, "Brutalize" = 1, "AngerAdaptiveForce" = 0.15, "KillerInstinct" = 0.1, "CriticalChance" = 5, "CriticalDamage" = 0.05, "PureDamage" = 1)
-				if(owner.majinAbsorb)
-					owner.majinAbsorb.updateVariables(owner)
-				owner.majinCheatDeathUsed = 0
-				..()
-
-		six
-			unlock_potential = ASCENSION_SIX_POTENTIAL
-			intimidation = 15
-			anger = 0.2
-			imaginationAdd = 0.25
-			endurance = 2
-			defense = 2
-			strength = 2
-			force = 2
-			speed = 2
-			offense = 2
-			passives = list()
-
-			onAscension(mob/owner)
-				switch(owner.Class)
-					if("Innocent")
-						passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2, "Unstoppable" = 1, "Blubber" = 1, "DemonicDurability" = 1, "Harden" = 1, "Juggernaut" = 1, "LifeGeneration" = 1, "PureReduction" = 1)
-					if("Super")
-						passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2, "Unstoppable" = 1, "Adaptation" = 1, "Steady" = 1, "Momentum" = 1, "Fury" = 1, "Instinct" = 1, "Flow" = 1, "Duelist" = 1)
-					if("Unhinged")
-						passives = list("Gum Gum" = 0.5, "PUSpike" = 50, "KiControlMastery" = 2, "Unstoppable" = 1, "Brutalize" = 1, "AngerAdaptiveForce" = 0.15, "KillerInstinct" = 0.1, "CriticalChance" = 5, "CriticalDamage" = 0.05, "PureDamage" = 1)
+						passives = list("Gum Gum" = 0.5, "PUSpike" = 25, "KiControlMastery" = 1, "Unstoppable" = 1, "CriticalChance" = 5, "CriticalDamage" = 0.05, "PureDamage" = 1)
 				if(owner.majinAbsorb)
 					owner.majinAbsorb.updateVariables(owner)
 				owner.majinCheatDeathUsed = 0

@@ -206,8 +206,8 @@ obj/Skills/Projectile/Gates_of_Babylon
 			granted_enkidu = TRUE
 
 		if(Mastery >= 5 && !granted_enuma_elish)
-			if(!locate(/obj/Skills/Projectile/Enuma_Elish, p))
-				p.AddSkill(new/obj/Skills/Projectile/Enuma_Elish)
+			if(!locate(/obj/Skills/AutoHit/Enuma_Elish, p))
+				p.AddSkill(new/obj/Skills/AutoHit/Enuma_Elish)
 			if(!locate(/obj/Skills/Summon_Ea, p))
 				p.AddSkill(new/obj/Skills/Summon_Ea)
 			p << "<font color='gold'><b>The Sword of Rupturing Heaven, Ea, rests within your treasury — and with it, the power to shatter heaven itself.</b></font>"
@@ -447,38 +447,109 @@ obj/Skills/Projectile/Enkidu_Chains
 		usr.UseProjectile(src)
 
 
-obj/Skills/Projectile/Enuma_Elish
+proc/ApplyEnumaElishDomainLock(mob/m, duration_ticks)
+	if(!m) return
+	var/obj/Skills/Buffs/SlotlessBuffs/Domain_Lock/DL = locate() in m
+	if(!DL)
+		DL = new
+		m.AddSkill(DL)
+	if(DL.SlotlessOn)
+		m.RemoveSlotlessBuff(DL)
+	DL.TimerLimit = duration_ticks
+	m.AddSlotlessBuff(DL)
+
+proc/PurgeEnumaElishSharedZones(mob/u, mob/v)
+	if(!u || !v) return
+	if(u.in_tmp_map && v.in_tmp_map && u.in_tmp_map == v.in_tmp_map)
+		for(var/mob/Players/p in players)
+			if(p.usingUBW && p.in_tmp_map == u.in_tmp_map)
+				OMsg(u, "<b><font color='gold'>[u]'s Enuma Elish ruptures the bounded field — the Reality Marble collapses!</font></b>")
+				p.stopUnlimitedBladeWorks()
+				return
+	var/turf/tu = u.loc
+	var/turf/tv = v.loc
+	if(istype(tu, /turf) && istype(tv, /turf) && tu.domain_expansion_owner && tu.domain_expansion_owner == tv.domain_expansion_owner)
+		var/mob/DO = tu.domain_expansion_owner
+		if(DO && DO.domainExpansionActive)
+			var/list/escapees = list()
+			if(DO.domainExpansionFloors)
+				for(var/turf/TF in DO.domainExpansionFloors)
+					if(!istype(TF, /turf)) continue
+					for(var/mob/M in TF)
+						escapees |= M
+			if(istype(tu, /turf))
+				for(var/mob/M in escapees)
+					if(!M || !M.loc) continue
+					var/iter
+					for(iter = 1, iter <= 12, iter++)
+						var/ox = tu.x + rand(-12, 12)
+						var/oy = tu.y + rand(-12, 12)
+						var/turf/out = locate(ox, oy, tu.z)
+						if(out && !out.density)
+							M.loc = out
+							break
+			OMsg(u, "<b><font color='gold'>[u]'s Enuma Elish shatters the Domain!</font></b>")
+			DO.stopDomainExapansion()
+			var/obj/Skills/Buffs/SlotlessBuffs/Domain_Expansion/dex = locate() in DO
+			if(dex && dex.SlotlessOn)
+				dex.Trigger(DO, Override=1)
+			return
+	for(var/mob/Players/p in players)
+		if(!p.SlotlessBuffs || !p.SlotlessBuffs.len) continue
+		for(var/k in p.SlotlessBuffs)
+			var/obj/Skills/Buffs/bp = p.SlotlessBuffs[k]
+			if(!bp || !bp.SlotlessOn) continue
+			if(!bp.WarpZone || !bp.Duel) continue
+			if(!bp.WarpTarget) continue
+			if((p == u && bp.WarpTarget == v) || (p == v && bp.WarpTarget == u))
+				OMsg(u, "<b><font color='gold'>[u]'s Enuma Elish smashes the barrier!</font></b>")
+				bp.Trigger(p, Override=1)
+				return
+
+
+obj/Skills/AutoHit/Enuma_Elish
 	SignatureTechnique = 3
 	name = "Enuma Elish"
 	Cooldown = 300
 	CooldownStatic = 1
-
-	Speed       = 0.15
-	Distance    = 35
-	DamageMult  = 40
-	AccMult     = 2.0
-	Homing      = 3
-	HyperHoming = 1
-	Instinct    = 3
-	Striking    = 1
-	Explode     = 3
-	Radius      = 3
-	Dodgeable   = -1
-	Deflectable = 0
-	Scorching  = 1
-	Freezing   = 1
-	Shattering = 1
-	Paralyzing = 1
-	Toxic      = 1
-	IconLock   = 'Hellnova.dmi'
-	LockX      = -32
-	LockY      = -32
-	ProjectileSpin = 8
-
+	Area = "Around Target"
+	Distance = 35
+	DistanceAround = 3
+	DamageMult = 40
+	StrOffense = 1
+	ForOffense = 1
+	EndDefense = 1
+	CanBeBlocked = 0
+	CanBeDodged = 0
+	Scorching = 50
+	Freezing = 50
+	Shattering = 50
+	Paralyzing = 50
+	Toxic = 1
+	Icon = 'Hellnova.dmi'
+	IconX = -32
+	IconY = -32
+	Size = 1.2
+	NeedsSword = 1
 	ActiveMessage = "channels the Sword of Rupturing Heaven — Enuma Elish!"
+	var/tmp/enuma_shatter_fired = 0
+	var/tmp/charging_enuma = 0
 
-	proc/ChargeEnumaElish(mob/shooter, mob/target)
+	proc/EnumaElishOnHit(mob/owner, mob/m, damageDealt)
+		if(!owner || !m || !damageDealt) return
+		if(!enuma_shatter_fired)
+			enuma_shatter_fired = 1
+			for(var/mob/Players/P in view(12, m))
+				spawn() ScreenShatter(P)
+		if(m == owner.Target)
+			var/ticks = round(Cooldown * 10)
+			if(cooldown_remaining > 0)
+				ticks = max(ticks, round(cooldown_remaining))
+			ApplyEnumaElishDomainLock(m, ticks)
+
+	proc/ChargeEnumaElish(mob/shooter, obj/Skills/AutoHit/Enuma_Elish/skill, mob/target)
 		var/charge_start = world.time
+		skill.enuma_shatter_fired = 0
 
 		spawn()
 			while(shooter && shooter.loc && (world.time - charge_start) < 150)
@@ -487,12 +558,18 @@ obj/Skills/Projectile/Enuma_Elish
 
 		sleep(50)
 
-		if(!shooter || !shooter.loc) return
-
+		if(!shooter || !shooter.loc)
+			skill.charging_enuma = 0
+			return
+		if(shooter.Target && shooter.Target != shooter) target = shooter.Target
+		if(!target || !target.loc || target == shooter)
+			skill.charging_enuma = 0
+			return
 		// EaVisual spawns at the shooter's tile and is shifted 2 tiles up
-
 		var/obj/EaVisual/ev = new(shooter.loc)
-		if(!ev) return
+		if(!ev)
+			skill.charging_enuma = 0
+			return
 
 		ev.pixel_x = -158
 		ev.pixel_y = 32
@@ -500,7 +577,6 @@ obj/Skills/Projectile/Enuma_Elish
 
 		var/obj/EaParticleEmitter/pe = new(shooter.loc)
 
-		// Keep both the visual and emitter above the shooter as they move
 		spawn()
 			while(ev && ev.loc && shooter && shooter.loc)
 				ev.loc = shooter.loc
@@ -512,40 +588,44 @@ obj/Skills/Projectile/Enuma_Elish
 			if(!ev || !ev.loc || !shooter || !shooter.loc) break
 			animate(ev, transform = matrix().Scale(0.2 + (step * 0.2)), time = 18)
 
-		var/turf/fire_pos = (ev && ev.loc) ? ev.loc : shooter.loc
 		if(pe) del pe
 		if(ev)
 			animate(ev, alpha = 0, time = 5)
 			sleep(5)
 			if(ev) del ev
 
-		if(!shooter || !shooter.loc) return
-		if(shooter.Target && shooter.Target != shooter)
-			target = shooter.Target
-		if(!target || !target.loc || target == shooter) return
-
-		OMsg(shooter, "<b><font color='gold'>[shooter] [ActiveMessage]</font></b>")
-		shooter.Blast(src, fire_pos, 0)
+		if(!shooter || !shooter.loc)
+			skill.charging_enuma = 0
+			return
+		if(shooter.Target && shooter.Target != shooter) target = shooter.Target
+		if(!target || !target.loc || target == shooter)
+			skill.charging_enuma = 0
+			return
+		if(!skill.enuma_shatter_fired)
+			skill.enuma_shatter_fired = 1
+			for(var/mob/Players/P in view(12, target))
+				spawn() ScreenShatter(P)
+		skill.charging_enuma = 0
+		PurgeEnumaElishSharedZones(shooter, target)
+		OMsg(shooter, "<b><font color='gold'>[shooter] [skill.ActiveMessage]</font></b>")
+		shooter.Activate(skill)
 
 	verb/Enuma_Elish()
 		set category = "Skills"
-		if(src.Using) return
-
+		if(charging_enuma) return
+		if(cooldown_remaining) return
+		if(usr.AutoHitting) return
 		var/obj/Items/Sword/Medium/Legendary/Ea/ea = locate(/obj/Items/Sword/Medium/Legendary/Ea, usr)
 		if(!ea || !ea.suffix)
 			usr << "<font color='red'>Ea must be equipped to use Enuma Elish.</font>"
 			return
-
 		if(!usr.Target || usr.Target == usr)
 			usr << "You need a target to use Enuma Elish."
 			return
-
-		src.Cooldown(1, null, usr)
+		charging_enuma = 1
 		usr << "<font color='gold'><b>The air tears apart as Ea begins to rotate...</b></font>"
-
-		var/mob/target = usr.Target
-		spawn()
-			ChargeEnumaElish(usr, target)
+		var/mob/mtarget = usr.Target
+		spawn() ChargeEnumaElish(usr, src, mtarget)
 
 
 obj/Skills/Summon_Ea

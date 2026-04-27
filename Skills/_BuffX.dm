@@ -9226,6 +9226,15 @@ NEW VARIABLES
 					usr.DomainExpansion(src)
 				else
 					usr.stopDomainExapansion()
+		Domain_Lock
+			Slotless = 1
+			BuffName = "Domain Lock"
+			TimerLimit = 300
+			ActiveMessage = "is sealed from manifesting domains and duels!"
+			OffMessage = "is no longer domain locked."
+			IconLock = 'BLANK.dmi'
+			LockX = -32
+			LockY = -32
 		Dividing_Driver
 			WarpZone=1
 			Duel=1
@@ -12453,6 +12462,9 @@ mob
 				if(src.absorbedBy && (B.WarpZone || B.Duel || istype(B, /obj/Skills/Buffs/SlotlessBuffs/Domain_Expansion)))
 					src << "You cannot invoke duel or domain techniques while absorbed."
 					return
+				if(src.HasDomainLock() && (B.WarpZone || B.Duel || istype(B, /obj/Skills/Buffs/SlotlessBuffs/Domain_Expansion)))
+					src << "You cannot use domain or duel techniques while <b>Domain Lock</b> is active."
+					return
 				if(B.WarpZone)
 					if(!B.WarpX||!B.WarpY||!B.WarpZ)
 						src << "Your duel location hasn't been set!"
@@ -14742,6 +14754,11 @@ mob
 
 mob
 	proc
+		HasDomainLock()
+			if(src.SlotlessBuffs && src.SlotlessBuffs["Domain Lock"])
+				return 1
+			return 0
+
 		BuffOn(var/obj/Skills/Buffs/B)
 			if(src.StanceBuff)
 				if(src.StanceBuff.type==B.type)
