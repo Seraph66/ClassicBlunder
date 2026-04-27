@@ -130,6 +130,205 @@ mob/Admin3/verb/LoadSwapMap()
 	for(var/mob/Player/AI/ai in ticking_ai)
 		ai.EndLife(0)*/
 
+// Read-only browser view of all the potential thresholds for Style and Sig
+// development, with one table per tier listing every type at that tier and the
+// key balance vars on each (Style: Str/For/End/Spd/Off/Def + passives; Sig:
+// Cooldown/ManaCost/EnergyCost/DamageMult). Useful for double-checking pot
+// reqs against the progression curve and for spotting outliers in tier values.
+/mob/Admin3/verb/View_Style_Sig_Reqs()
+	set category = "Admin"
+	set name = "View Style/Sig Reqs"
+	set desc = "Browser view of pot requirements for each tier and the balance vars on every Style/Sig in that tier."
+	var/html = "<html><head><title>Style/Sig Pot Reqs</title><style>"
+	html += "body{background:#1a1a1a;color:#ddd;font-family:monospace;padding:10px;font-size:12px}"
+	html += "h2{color:#ffaa00;border-bottom:1px solid #444;padding-bottom:4px;margin-top:18px}"
+	html += "h3{color:#88ccff;margin-top:14px;margin-bottom:6px}"
+	html += "table{border-collapse:collapse;margin:6px 0;width:100%}"
+	html += "th{background:#333;color:#ffcc66;padding:4px 8px;text-align:left;border:1px solid #555}"
+	html += "td{padding:3px 8px;border:1px solid #2c2c2c;color:#ccc;vertical-align:top}"
+	html += "td.path{color:#777;font-size:11px}"
+	html += "td.val{color:#aaffaa;text-align:right}"
+	html += "td.muted{color:#555;text-align:right}"
+	html += "td.passives{color:#cc99ff;font-size:11px}"
+	html += "</style></head><body>"
+	html += "<h2>Potential Requirements (from glob.progress)</h2>"
+	html += "<table><tr><th>Unlock</th><th>Pot Req</th></tr>"
+	html += "<tr><td>1st T1 Style</td><td class='val'>[glob.progress.T1_STYLES[1]]</td></tr>"
+	html += "<tr><td>2nd T1 Style</td><td class='val'>[glob.progress.T1_STYLES[2]]</td></tr>"
+	html += "<tr><td>1st T2 Style</td><td class='val'>[glob.progress.T2_STYLES[1]]</td></tr>"
+	html += "<tr><td>2nd T2 Style</td><td class='val'>[glob.progress.T2_STYLES[2]]</td></tr>"
+	html += "<tr><td>1st T3 Style</td><td class='val'>[glob.progress.T3_STYLES[1]]</td></tr>"
+	html += "<tr><td>1st T1 Sig</td><td class='val'>[glob.progress.T1_SIGS[1]]</td></tr>"
+	html += "<tr><td>2nd T1 Sig</td><td class='val'>[glob.progress.T1_SIGS[2]]</td></tr>"
+	html += "<tr><td>3rd T1 Sig</td><td class='val'>[glob.progress.T1_SIGS[3]]</td></tr>"
+	html += "<tr><td>1st T2 Sig</td><td class='val'>[glob.progress.T2_SIGS[1]]</td></tr>"
+	html += "<tr><td>2nd T2 Sig</td><td class='val'>[glob.progress.T2_SIGS[2]]</td></tr>"
+	html += "</table>"
+	html += "<h2>Styles by Tier</h2>"
+	for(var/tier in 1 to 3)
+		html += "<h3>T[tier] Styles</h3>"
+		html += "<table><tr><th>Name</th><th>Type Path</th><th>Str</th><th>For</th><th>End</th><th>Spd</th><th>Off</th><th>Def</th><th>Passives</th></tr>"
+		var/anyShown = 0
+		for(var/T in subtypesof(/obj/Skills/Buffs/NuStyle))
+			if(!ispath(T))
+				continue
+			var/obj/Skills/Buffs/NuStyle/probe = new T
+			if(!probe)
+				continue
+			if(probe.SignatureTechnique == tier)
+				anyShown = 1
+				html += "<tr>"
+				var/displayName = probe.name ? probe.name : "[T]"
+				html += "<td>[displayName]</td>"
+				html += "<td class='path'>[T]</td>"
+				html += probe.StyleStr ? "<td class='val'>[probe.StyleStr]</td>" : "<td class='muted'>—</td>"
+				html += probe.StyleFor ? "<td class='val'>[probe.StyleFor]</td>" : "<td class='muted'>—</td>"
+				html += probe.StyleEnd ? "<td class='val'>[probe.StyleEnd]</td>" : "<td class='muted'>—</td>"
+				html += probe.StyleSpd ? "<td class='val'>[probe.StyleSpd]</td>" : "<td class='muted'>—</td>"
+				html += probe.StyleOff ? "<td class='val'>[probe.StyleOff]</td>" : "<td class='muted'>—</td>"
+				html += probe.StyleDef ? "<td class='val'>[probe.StyleDef]</td>" : "<td class='muted'>—</td>"
+				var/passText = ""
+				if(probe.passives && probe.passives.len)
+					for(var/p in probe.passives)
+						passText += "[p]=[probe.passives[p]] "
+				html += passText ? "<td class='passives'>[passText]</td>" : "<td class='muted'>—</td>"
+				html += "</tr>"
+			del probe
+		if(!anyShown)
+			html += "<tr><td colspan=9 class='muted'>(no entries)</td></tr>"
+		html += "</table>"
+	html += "<h2>Sigs by Tier</h2>"
+	for(var/tier in 1 to 2)
+		html += "<h3>T[tier] Sigs</h3>"
+		html += "<table><tr><th>Name</th><th>Type Path</th><th>Cooldown</th><th>ManaCost</th><th>EnergyCost</th><th>DamageMult</th></tr>"
+		var/list/srcList = (tier == 1) ? Tier1 : Tier2
+		var/anyShown = 0
+		for(var/k in srcList)
+			var/v = srcList[k]
+			if(istext(v))
+				var/p = text2path(v)
+				if(!ispath(p))
+					continue
+				var/obj/Skills/probe = new p
+				if(!probe)
+					continue
+				anyShown = 1
+				html += "<tr>"
+				html += "<td>[k]</td>"
+				html += "<td class='path'>[p]</td>"
+				var/cd = probe.vars["Cooldown"]
+				html += isnum(cd) ? "<td class='val'>[cd]</td>" : "<td class='muted'>—</td>"
+				var/mc = probe.vars["ManaCost"]
+				html += isnum(mc) && mc ? "<td class='val'>[mc]</td>" : "<td class='muted'>—</td>"
+				var/ec = probe.vars["EnergyCost"]
+				html += isnum(ec) && ec ? "<td class='val'>[ec]</td>" : "<td class='muted'>—</td>"
+				var/dm = probe.vars["DamageMult"]
+				html += isnum(dm) && dm ? "<td class='val'>[dm]</td>" : "<td class='muted'>—</td>"
+				html += "</tr>"
+				del probe
+			else if(istype(v, /list))
+				var/list/bundle = v
+				anyShown = 1
+				html += "<tr><td>[k]</td><td colspan=5 class='path'>(bundle of [bundle.len] skills — not a single tweakable type)</td></tr>"
+		if(!anyShown)
+			html += "<tr><td colspan=6 class='muted'>(no entries)</td></tr>"
+		html += "</table>"
+	html += "</body></html>"
+	src << browse(html, "window=StyleSigReqs;size=900x900")
+
+// Live-tweak a stat var on a T1/T2/T3 Style template or T1/T2 Sig template.
+// Picks a category, lets the admin pick a specific type, then a scalar var on
+// that type, then a new value. Updates the var on every live instance of that
+// type currently in world contents. Note: not persisted across reboots — the
+// compile-time default is restored when the world starts. Re-run after reboot
+// or after balance is finalized in code.
+/mob/Admin3/verb/Tweak_Style_Sig_Var()
+	set category = "Admin"
+	set name = "Tweak Style/Sig Var"
+	set desc = "Edit a scalar var on a T1/T2/T3 Style or T1/T2 Sig template + propagate to live instances."
+	var/category = input(usr, "Pick a category to tweak.", "Tweak Style/Sig") as null|anything in list("T1 Style", "T2 Style", "T3 Style", "T1 Sig", "T2 Sig")
+	if(!category)
+		return
+	var/list/typeChoices = list()
+	if(category == "T1 Style" || category == "T2 Style" || category == "T3 Style")
+		var/wantTier = 1
+		if(category == "T2 Style")
+			wantTier = 2
+		else if(category == "T3 Style")
+			wantTier = 3
+		for(var/T in subtypesof(/obj/Skills/Buffs/NuStyle))
+			if(!ispath(T))
+				continue
+			var/obj/Skills/Buffs/NuStyle/probe = new T
+			if(probe.SignatureTechnique == wantTier)
+				typeChoices["[T]"] = T
+			del probe
+	else if(category == "T1 Sig")
+		for(var/k in Tier1)
+			var/v = Tier1[k]
+			if(istext(v))
+				var/p = text2path(v)
+				if(ispath(p))
+					typeChoices["[k] ([p])"] = p
+	else if(category == "T2 Sig")
+		for(var/k in Tier2)
+			var/v = Tier2[k]
+			if(istext(v))
+				var/p = text2path(v)
+				if(ispath(p))
+					typeChoices["[k] ([p])"] = p
+	if(!typeChoices.len)
+		usr << "No types found in [category]."
+		return
+	var/pickedKey = input(usr, "Pick a type from [category].", "Tweak Type") as null|anything in typeChoices
+	if(!pickedKey)
+		return
+	var/path = typeChoices[pickedKey]
+	if(!ispath(path))
+		usr << "Invalid type."
+		return
+	var/obj/Skills/probe = new path
+	if(!probe)
+		usr << "Could not instantiate [path]."
+		return
+	var/list/varChoices = list()
+	var/list/exclude = list("type", "parent_type", "loc", "x", "y", "z", "contents", "vars", "verbs", "overlays", "underlays", "transform", "appearance", "filters", "color", "alpha", "mouse_opacity", "icon", "icon_state", "pixel_x", "pixel_y", "Initialized", "tag", "gender", "density", "opacity", "layer", "plane", "dir")
+	for(var/v in probe.vars)
+		if(v in exclude)
+			continue
+		var/val = probe.vars[v]
+		if(istype(val, /list))
+			continue
+		if(!isnum(val) && !istext(val))
+			continue
+		varChoices["[v] = [val]"] = v
+	if(!varChoices.len)
+		usr << "No editable scalar vars found on [pickedKey]."
+		del probe
+		return
+	var/varKey = input(usr, "Which var to edit on [pickedKey]?", "Tweak Var") as null|anything in varChoices
+	if(!varKey)
+		del probe
+		return
+	var/varName = varChoices[varKey]
+	var/curVal = probe.vars[varName]
+	var/newVal
+	if(isnum(curVal))
+		newVal = input(usr, "Current [varName] = [curVal]. New numeric value?", "Tweak", curVal) as null|num
+	else
+		newVal = input(usr, "Current [varName] = \"[curVal]\". New text value?", "Tweak", curVal) as null|text
+	if(isnull(newVal))
+		del probe
+		return
+	var/count = 0
+	for(var/obj/Skills/S in world)
+		if(S.type == path)
+			S.vars[varName] = newVal
+			count++
+	Log("Admin", "[ExtractInfo(usr)] tweaked [path].[varName] from [curVal] to [newVal]. [count] live instances updated.")
+	usr << "Set [path].[varName] from [curVal] to [newVal]. Updated [count] live instance\s. Note: change is in-memory only — compile-time default returns on world reboot."
+	del probe
+
 /mob/Admin2/verb/PrivateNarrate(mob/m in players)
 	set category="Admin"
 	var/message = input(usr,"What do you want to whisper to them?","Cursespeak") as message | null
@@ -886,6 +1085,22 @@ mob/proc/PM2(var/mob/who)
 /mob/var/PingSound = TRUE
 /mob/var/PingVolume = 30
 
+// Opt-out flag for buffs that force Anger on activation (Jinchuuriki M<3,
+// Vaizard Mask, Wrathful, Hellbornfury, etc — anything with AutoAnger=1 or
+// passives["AutoAnger"]=1). Read in _BuffX.dm at the BuffOn/BuffOff handlers.
+// Default 0 = original behavior preserved for everyone.
+/mob/var/AutoBerserkOptOut = 0
+
+mob/verb
+	Toggle_Auto_Berserk()
+		set category = "Other"
+		set name = "Toggle Auto Berserk"
+		if(usr.AutoBerserkOptOut)
+			usr.AutoBerserkOptOut = 0
+			usr << "Auto Berserk re-enabled. Buffs that force Anger (Jinchuuriki, Vaizard Mask, Wrathful, etc.) will trigger it normally."
+		else
+			usr.AutoBerserkOptOut = 1
+			usr << "Auto Berserk disabled. Buffs with the Auto Anger flag will no longer force you into the Anger state on activation."
 
 mob/Admin3/verb
 	editRace(mob/Players/m in players)

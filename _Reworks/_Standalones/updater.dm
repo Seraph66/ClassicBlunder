@@ -136,7 +136,13 @@ update
 			if(p.isRace(HUMAN))
 				if(p.Class=="Underdog")
 					p.passive_handler.Increase("Motivation", 0.5)
-
+				if(!p.passive_handler.Get("Shonen"))
+					if(p.AscensionsAcquired==1)
+						p.passive_handler.Increase("Shonen", 1)
+						p.passive_handler.Increase("ShonenPower", 0.15)
+						p.passive_handler.Increase("UnderDog", 1)
+						p.passive_handler.Increase("Persistence", 1)
+						admins<< "[p] had their missed ascension passives applied. If they already had them, whoops, I fucked up"
 
 /globalTracker/var/COOL_GAJA_PLAYERS = list("Thorgigamax", "Gemenilove" )
 /globalTracker/var/GAJA_PER_ASC_CONVERSION = 0.25

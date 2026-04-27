@@ -1955,9 +1955,6 @@ NEW VARIABLES
 							AutoAnger=1
 							passives = list("Maki" = 1, "Curse" = 1, "LifeGeneration" = 1, "Deflection" = 2, "AutoAnger" = 1, "Reversal" = Mastery/10)
 							CalmAnger=0
-					if(src.Mastery==1)
-						usr << "You don't have enough of a rapport to manipulate your demon at will!"
-						return
 					src.Trigger(usr)
 			Vaizard_Mask
 				SignatureTechnique=3
@@ -7255,7 +7252,28 @@ NEW VARIABLES
 			verb/Mark_of_the_Crone()
 				set category="Skills"
 				if(!usr.BuffOn(src))
-					passives = list("Brutalize" = 5, "PureDamage" = 5, "PureReduction" = 5, "Pursuer" = 2, "HellPower" = 1, "Gum Gum" = 2, "Extend" = 2, "PowerReplacement" = glob.progress.totalPotentialToDate+5)
+					var/PactBoostPow=0
+					var/PactBoostDef=0
+					if(usr.EldritchPacted)
+						switch(usr.ReflectedPactType)
+							if("Devotion")
+								PactBoostPow=0.25
+								PactBoostDef=0.25
+							if("Power")
+								PactBoostPow=0.5
+								PactBoostDef=0
+							if("Knowledge")
+								PactBoostPow=0.35
+								PactBoostDef=0.15
+							if("Ambition")
+								PactBoostPow=0.15
+								PactBoostDef=0.35
+							if("Survival")
+								PactBoostPow=0
+								PactBoostDef=0.5
+					passives = list("Brutalize" = 1+(usr.AscensionsAcquired*(0.5+PactBoostDef)) , "PureDamage" = 1+(usr.AscensionsAcquired*(0.75+PactBoostPow)), \
+					"PureReduction" = 1+(usr.AscensionsAcquired*(0.75+PactBoostDef)), "Pursuer" = 2, "HellPower" = 0.1+(PactBoostPow/2), \
+					"Gum Gum" = 1, "Extend" = 1,"Unbreakable" = 0.25+PactBoostDef,"Undeterred" = 1)
 				src.Trigger(usr)
 
 		God_Ki
@@ -7626,7 +7644,7 @@ NEW VARIABLES
 			SignatureTechnique=3
 			AutoAnger=1
 			AngerThreshold=2
-			IconLock='DarknessGlow.dmi'
+			IconLock='MajinAura.dmi'
 			LockX=0
 			LockY=0
 			FlashChange=1
@@ -9739,7 +9757,13 @@ NEW VARIABLES
 					if(!altered)
 						var/currentPot = p.Potential
 						var/secretLevel = p.secretDatum.currentTier
-						PowerMult=1+(0.05*secretLevel*secretLevel)
+						if(p.Health<50)
+							secretLevel+=1
+						if(p.Health<25)
+							secretLevel+=2
+						if(secretLevel>7)
+							secretLevel=7
+						PowerMult=1+(0.02*secretLevel*secretLevel)
 						var/SpiralPower=1
 						switch(secretLevel)
 							if(1 to 2)
@@ -9749,12 +9773,16 @@ NEW VARIABLES
 							if(4)
 								SpiralPower=3
 							if(5)
+								SpiralPower=4
+							if(6)
+								SpiralPower=5
+							if(7)
 								SpiralPower=7
-						StrMult=1.25 + (0.05*secretLevel*secretLevel)
-						ForMult=1.25 + (0.05*secretLevel*secretLevel)
-						EndMult=1.25 + (0.05*secretLevel*secretLevel)
+						StrMult=1.25 + (0.03*secretLevel*secretLevel)
+						ForMult=1.25 + (0.03*secretLevel*secretLevel)
+						EndMult=1.25 + (0.035*secretLevel*secretLevel)
 						passives = list("SpiralPowerUnlocked" = SpiralPower, "PureDamage" = SpiralPower, "PureReduction" = SpiralPower)
-						TimerLimit= (2 * currentPot) + (20 * (p.transUnlocked ? p.transUnlocked : p.AscensionsAcquired))
+						TimerLimit= (2 * currentPot) + (10 * (p.transUnlocked ? p.transUnlocked : p.AscensionsAcquired))
 						Cooldown = 61 - ((5 * p.AscensionsAcquired) + (5 * secretLevel))
 				KenWave = 2
 				KenWaveIcon='SparkleGreen.dmi'
@@ -13794,7 +13822,7 @@ mob
 				src.SenseUnlocked+=B.SenseUnlocked
 			if(B.Afterimages)
 				src.Afterimages+=1
-			if(B.AutoAnger || B.passives["AutoAnger"])
+			if((B.AutoAnger || B.passives["AutoAnger"]) && !src.AutoBerserkOptOut)
 				Anger()
 				passive_handler.Increase("EndlessAnger")
 			if(B.CalmAnger)
@@ -14295,7 +14323,7 @@ mob
 				src.SenseUnlocked-=B.SenseUnlocked
 			if(B.Afterimages)
 				src.Afterimages-=B.Afterimages
-			if(B.AutoAnger || B.passives["AutoAnger"])
+			if((B.AutoAnger || B.passives["AutoAnger"]) && !src.AutoBerserkOptOut)
 				if(passive_handler.Get("EndlessAnger"))
 					passive_handler.Decrease("EndlessAnger")
 				src.Calm()
@@ -14538,18 +14566,24 @@ mob
 
 			if(B.RecovCut)
 				src.AddRecovCut(B.RecovCut)
+			var/TaxIncrease=1
+			if("Unbreakable" in B.passives)
+				TaxIncrease+=B.passives["Unbreakable"]
 			if(B.StrTax)
-				src.AddStrTax(B.StrTax)
+				src.AddStrTax(B.StrTax*TaxIncrease)
 			if(B.EndTax)
-				src.AddEndTax(B.EndTax)
+				src.AddEndTax(B.EndTax*TaxIncrease)
 			if(B.SpdTax)
-				src.AddSpdTax(B.SpdTax)
+				src.AddSpdTax(B.SpdTax*TaxIncrease)
 			if(B.ForTax)
-				src.AddForTax(B.ForTax)
+				src.AddForTax(B.ForTax*TaxIncrease)
 			if(B.OffTax)
-				src.AddOffTax(B.OffTax)
+				src.AddOffTax(B.OffTax*TaxIncrease)
 			if(B.DefTax)
-				src.AddDefTax(B.DefTax)
+				src.AddDefTax(B.DefTax*TaxIncrease)
+			if("Unbreakable" in B.passives)
+				if(src.StrTax>=0.75||src.ForTax>=0.75||src.EndTax>=0.75||src.SpdTax>=0.75||src.OffTax>=0.75||src.DefTax>=0.75)
+					src.Maimed+=1
 			if(B.RecovTax)
 				src.AddRecovTax(B.RecovTax)
 			if(B.WaveringAngerLimit)

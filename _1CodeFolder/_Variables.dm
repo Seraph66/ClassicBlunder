@@ -49,6 +49,7 @@ mob/var
 	tmp/mob/Target
 	tmp/PoseEnhancement//Pose for 3 seconds to get a bonus to rippling.
 	tmp/PoseTime//timer
+	tmp/LastPose
 	tmp/BuffingUp=0//to stop people from pushing through weird buff behaviour
 	tmp/WindingUp//new var for autohitsu
 	tmp/PoweringUp=0

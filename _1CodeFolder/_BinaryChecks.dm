@@ -1127,6 +1127,19 @@ mob
 			if(passive_handler.Get("You Thought"))
 				return 1
 			return 0
+		HasUnbreakable()
+			if(passive_handler.Get("Unbreakable")>=1||passive_handler.Get("The Immovable Object"))
+				return 1
+			if(Saga == "Eight Gates")
+				return 1
+			return 0
+		GetUnbreakable() //0.1=ignore 10% of stat taxes
+			var/Return=0
+			if(passive_handler.Get("Unbreakable"))
+				Return +=passive_handler.Get("Unbreakable")
+			if(Saga == "Eight Gates"&&GatesActive>SagaLevel)
+				Return = 0.375*(GatesActive-SagaLevel)
+			return Return
 		SaiyanTransPower()/*
 			if(isRace(SAIYAN) || isRace(HALFSAIYAN))
 				var/t = transActive

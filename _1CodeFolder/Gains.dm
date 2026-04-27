@@ -306,6 +306,11 @@ var/game_loop/mainLoop = new(0, "newGainLoop")
 	if(!client)
 		mainLoop -= src
 		return
+	// One-shot stale-Kamui-lock cleanup. Proc short-circuits on its first line
+	// once the lock clears, so per-tick cost is one var read for any player
+	// without a stuck lock. Locked players unstick on their next gain tick.
+	if(KamuiBuffLock)
+		AutoClearStaleKamuiLock()
 	if(src.KO&&src.icon_state!="KO")
 		src.icon_state="KO"
 	if(src.PureRPMode)
@@ -1466,14 +1471,21 @@ mob
 				if(B.Using)
 					del B
 
+			// AGLock depends only on src.contents and src.passive_handler — invariant
+			// for the duration of this gain tick. Compute once before the Autonomous
+			// loop instead of recomputing per-buff. Prior code was O(N_Autonomous ×
+			// N_Contents) per tick: a player with admin-granted "all skills" walked
+			// ~30 Autonomous × ~300 contents = ~9000 inner iterations every tick.
+			var/PrecomputedAGLock = 0
+			for(var/obj/Items/omni in src.contents)
+				if(omni.LocksOutAutonomous && omni.suffix=="*Equipped*")
+					PrecomputedAGLock = 1
+					break
+			if(src.passive_handler.Get("Utterly Powerless") && !src.passive_handler.Get("Our Future"))
+				PrecomputedAGLock = 1
 			for(var/obj/Skills/Buffs/SlotlessBuffs/Autonomous/A in src.Buffs)
 				//Activations
-				var/AGLock
-				for(var/obj/Items/omni in src.contents)
-					if(omni.LocksOutAutonomous && omni.suffix=="*Equipped*")
-						AGLock=1
-				if(src.passive_handler.Get("Utterly Powerless") && !src.passive_handler.Get("Our Future"))
-					AGLock=1
+				var/AGLock = PrecomputedAGLock
 				if(!A.SlotlessOn)
 					if(A.NeedsPassword&&!AGLock)
 						if(!A.Password)

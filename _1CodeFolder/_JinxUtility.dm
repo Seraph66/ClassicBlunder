@@ -894,7 +894,7 @@ mob
 			//			val*=src.Anger
 				/* if(src.PotionCD)
 					val*=1.25
-					*/ 
+					*/
 			var/PrideDrain
 			if(passive_handler.Get("Pride"))
 				PrideDrain=(100-Health)*0.01
@@ -959,7 +959,7 @@ mob
 	//			if(src.Anger)
 	//				val*=src.Anger
 			/* if(src.PotionCD)
-				val*=1.25 
+				val*=1.25
 			*/
 			// if(src.isRace(MAJIN))
 			// 	val*=0.25
@@ -1056,6 +1056,8 @@ mob
 			if(!src.FusionPowered&&!StableHeal)
 				val/=src.GetPowerUpRatio()
 				val/=src.EnergyExpenditure*src.Power_Multiplier
+			if(src.passive_handler.Get("EnergyLeak")>1)
+				val *= 0.5
 			src.Energy+=val
 			if(Energy<0)
 				Energy=0
@@ -1065,6 +1067,8 @@ mob
 				val *= max(1,GetManaCapMult())
 			if(src.passive_handler.Get("Unrelenting Wrath"))
 				val = 0
+			if(src.passive_handler.Get("ManaLeak")>=0.25||src.ActiveBuff.ManaDrain||src.SpecialBuff.ManaDrain)
+				val *= 0.1
 			src.ManaAmount+=val
 			src.MaxMana()
 		HealWounds(var/val, var/StableHeal=0)
@@ -1290,8 +1294,18 @@ mob
 			if(isRace(ANDROID)||CyberneticMainframe)
 				enhance = vars["Enhanced[statName]"] * 0.6
 			if(Target && ismob(Target))
-				if(Target.passive_handler["Rusting"]&&Poison>=1)
-					enhance *= (Poison * (glob.RUSTING_RATE * passive_handler["Rusting"])) / 100
+				// Rusting: when target carries the Rusting passive (mystic/hybrid styles)
+				// and the player is poisoned, debuff the player's enhance-chip stat by an
+				// amount that scales with both poison stacks and target's Rusting tier.
+				// Prior version had three bugs: (1) read self's Rusting instead of target's,
+				// which zeroed enhance for everyone without their own Rusting source;
+				// (2) formula scaled the multiplier UP with bigger Rusting/Poison, so high
+				// tiers debuffed less; (3) at extreme stacks the multiplier exceeded 1 and
+				// the debuff flipped into a buff. Rewritten as a clamped 1-x reduction.
+				var/targetRusting = Target.passive_handler["Rusting"]
+				if(targetRusting && Poison >= 1)
+					var/rustReduction = (Poison * glob.RUSTING_RATE * targetRusting) / 100
+					enhance *= max(0, 1 - rustReduction)
 			return enhance
 		BaseStr()
 			var/enhanced = getEnhanced("Strength")
@@ -1728,6 +1742,8 @@ mob
 				TotalTax+=src.StrTax
 			if(src.StrCut)
 				TotalTax+=src.StrCut
+			if(HasUnbreakable())
+				TotalTax*=1-GetUnbreakable()
 			if(TotalTax>=1)
 				TotalTax=0.9
 			var/Sub=Str*TotalTax
@@ -1915,6 +1931,8 @@ mob
 				TotalTax+=src.ForTax
 			if(src.ForCut)
 				TotalTax+=src.ForCut
+			if(HasUnbreakable())
+				TotalTax*=1-GetUnbreakable()
 			if(TotalTax>=1)
 				TotalTax=0.9
 			var/Sub=For*TotalTax
@@ -2083,6 +2101,8 @@ mob
 				TotalTax+=src.EndTax
 			if(src.EndCut)
 				TotalTax+=src.EndCut
+			if(HasUnbreakable())
+				TotalTax*=1-GetUnbreakable()
 			if(TotalTax>=1)
 				TotalTax=0.9
 			var/Sub=End*TotalTax
@@ -2225,6 +2245,8 @@ mob
 				TotalTax+=src.SpdTax
 			if(src.SpdCut)
 				TotalTax+=src.SpdCut
+			if(HasUnbreakable())
+				TotalTax*=1-GetUnbreakable()
 			if(TotalTax>=1)
 				TotalTax=0.9
 			var/Sub=Spd*TotalTax
@@ -2341,6 +2363,8 @@ mob
 				TotalTax+=src.OffTax
 			if(src.OffCut)
 				TotalTax+=src.OffCut
+			if(HasUnbreakable())
+				TotalTax*=1-GetUnbreakable()
 			if(TotalTax>=1)
 				TotalTax=0.9
 			var/Sub=Off*TotalTax
@@ -2456,6 +2480,8 @@ mob
 				TotalTax+=src.DefTax
 			if(src.DefCut)
 				TotalTax+=src.DefCut
+			if(HasUnbreakable())
+				TotalTax*=1-GetUnbreakable()
 			if(TotalTax>=1)
 				TotalTax=0.9
 			var/Sub=Def*TotalTax
@@ -2523,6 +2549,8 @@ mob
 				TotalTax+=src.RecovTax
 			if(src.RecovCut)
 				TotalTax+=src.RecovCut
+			if(HasUnbreakable())
+				TotalTax*=1-GetUnbreakable()
 			if(TotalTax>=1)
 				TotalTax=0.9
 			var/Sub=Recov*TotalTax

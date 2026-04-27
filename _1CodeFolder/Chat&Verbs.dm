@@ -1054,6 +1054,9 @@ mob/Players/verb
 					spawn(Second(30))
 						src.PoseEnhancement=0
 				return
+			if(world.time>usr.LastPose+20)
+				usr.PoseTime+=1
+				usr.LastPose=world.time
 			src.icon_state="Train"
 			return
 		if(src.icon_state=="Train")

@@ -211,6 +211,8 @@ obj/Skills/AutoHit/Spiral
 	var/Total
 	if(TA>6)
 		TA=6
+	if(SL>=7&&CA>3)
+		CA=3
 	Total=PullAscensionStats(CA, TA, Stat)
 	if(SL>=7)
 		Total*=3
