@@ -68,6 +68,9 @@ NEW VARIABLES
 	var/list/ABuffNeeded=null
 	var/SBuffNeeded//special buff req
 	var/UBuffNeeded//universal (slotless) buff req, not used/implemented yet
+	var/ABBuffer //activates w/ any active buff
+	var/SBBuffer //activates w/ any slotless buff
+	var/STBuffer // activates w/ any active style
 	var/NeedsAnger//Cant use the buff before youre angry.
 	var/NeedsHealth//Cant use the buff before youre below x health.
 	var/NeedsSSJ//defines if buff only can be used in SSJ and in what level
@@ -138,6 +141,8 @@ NEW VARIABLES
 	var/ArmamentGlowSize
 	var/AwakeningRequired
 	var/GatesNeeded
+
+
 
 	var/BleedHit //Makes you deal damage to yourself when you hit.
 	var/ManaLeak //Makes you spend mana when you hit
@@ -3009,7 +3014,7 @@ NEW VARIABLES
 				KenWaveBlend=2
 				KenWaveIcon='KenShockwavePurple.dmi'
 				IconTint=list(0.7,0.3,0.6, 0.99,0.59,0.88, 0.51,0.11,0.4, 0,0,0)
-				passives = list("ManaLeak" = 1, "MovementMastery" = 10, "SpiritSword" = 0.25, "SpiritHand" = 0.25,"Deicide" = 5)
+				passives = list("ManaLeak" = 1, "SpiritSword" = 0.25, "SpiritHand" = 0.25,"Deicide" = 5)
 				SureHitTimerLimit=30
 				ActiveMessage="breaches into a higher domain through the power of cybernetics!"
 				OffMessage="returns to the standard domain."
@@ -3018,7 +3023,7 @@ NEW VARIABLES
 					ForMult = 1.2 + (0.1*p.AscensionsAcquired)
 					StrMult = 1.2 + (0.1*p.AscensionsAcquired)
 					DefMult = 0.6 + (0.05*p.AscensionsAcquired)
-					passives = list("ManaLeak" = 1 - (p.AscensionsAcquired/10), "MovementMastery" = 4+p.AscensionsAcquired, \
+					passives = list("ManaLeak" = 1 - (p.AscensionsAcquired/10), "EndlessNine" = 0.1*p.AscensionsAcquired, \
 					"Deicide" = 5*p.AscensionsAcquired, "SpiritSword" = 0.25*p.AscensionsAcquired, "SpiritHand" = 0.25*p.AscensionsAcquired)
 
 				verb/Hilbert_Effect()
@@ -9782,7 +9787,7 @@ NEW VARIABLES
 						ForMult=1.25 + (0.03*secretLevel*secretLevel)
 						EndMult=1.25 + (0.035*secretLevel*secretLevel)
 						passives = list("SpiralPowerUnlocked" = SpiralPower, "PureDamage" = SpiralPower, "PureReduction" = SpiralPower)
-						TimerLimit= (2 * currentPot) + (10 * (p.transUnlocked ? p.transUnlocked : p.AscensionsAcquired))
+						TimerLimit= (10 * (p.transUnlocked ? p.transUnlocked : p.AscensionsAcquired))
 						Cooldown = 61 - ((5 * p.AscensionsAcquired) + (5 * secretLevel))
 				KenWave = 2
 				KenWaveIcon='SparkleGreen.dmi'
@@ -12734,7 +12739,6 @@ mob
 				src:move_speed = MovementSpeed()
 
 		AddActiveBuff()
-
 			if(src.ActiveBuff.BuffName=="Ki Control")
 				if(src.passive_handler.Get("Anaerobic"))
 					src.ActiveBuff.passives["PUSpike"] = 25

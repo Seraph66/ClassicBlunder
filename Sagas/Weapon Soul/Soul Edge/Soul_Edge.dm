@@ -2,7 +2,7 @@ obj/Items/Sword/Heavy/Legendary/WeaponSoul/Blade_of_Chaos
 	name="Blade of Chaos"
 	icon='SoulEdge.dmi'
 	ExtraClass=1
-	Ascended=3
+	Ascended=6
 	passives = list("Extend" = 1)
 	Destructable=0
 	ShatterTier=0
@@ -32,7 +32,7 @@ obj/Skills/AutoHit/Soul_Drain
 	EnergyCost=15
 	Instinct=1
 	adjust(mob/p)
-		DamageMult = 3 + p.SagaLevel
+		DamageMult = 5 + p.SagaLevel
 		WindUp = 1 - p.SagaLevel/10
 	verb/Soul_Drain()
 		set category="Skills"

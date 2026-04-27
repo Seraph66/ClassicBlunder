@@ -1067,7 +1067,7 @@ mob
 				val *= max(1,GetManaCapMult())
 			if(src.passive_handler.Get("Unrelenting Wrath"))
 				val = 0
-			if(src.passive_handler.Get("ManaLeak")>=0.25||src.ActiveBuff.ManaDrain||src.SpecialBuff.ManaDrain)
+			if(src.passive_handler.Get("ManaLeak")>=0.25)
 				val *= 0.1
 			src.ManaAmount+=val
 			src.MaxMana()
