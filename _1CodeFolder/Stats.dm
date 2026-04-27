@@ -922,6 +922,8 @@ mob/proc/
 						a=src.AngerMax
 						if((src.AnsatsukenAscension=="Chikara"&&src.StyleActive=="Ansatsuken"))
 							a=max(src.AngerMax,2)
+						if(Secret == "Heavenly Restriction" && secretDatum?:hasImprovement("Anger"))
+							a *= 1+(secretDatum?:getBoon(src, "Anger")/10)
 						if(src.HasAngerThreshold())
 							if(a<src.GetAngerThreshold())
 								a=src.GetAngerThreshold()

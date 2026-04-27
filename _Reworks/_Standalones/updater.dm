@@ -17,7 +17,7 @@ proc/generateVersionDatum()
 		glob.currentUpdate = updateversion
 
 globalTracker
-	var/UPDATE_VERSION = 6
+	var/UPDATE_VERSION = 7
 	var/tmp/update/currentUpdate
 
 	proc/updatePlayer(mob/p)
@@ -143,6 +143,14 @@ update
 						p.passive_handler.Increase("UnderDog", 1)
 						p.passive_handler.Increase("Persistence", 1)
 						admins<< "[p] had their missed ascension passives applied. If they already had them, whoops, I fucked up"
+	version7
+		version = 7;
+		updateMob(mob/p)
+			. = ..()//left alone for easy copy pasting
+			if(p.ArmamentEnchantmentUnlocked>=5||("Soul Infusion" in p.knowledgeTracker.learnedMagic))
+				if(!locate(/obj/Skills/Utility/Enchant_Equipment, p))
+					p.AddSkill(new/obj/Skills/Utility/Enchant_Equipment)
+					p << "Your knowledge of Soul Infusion grants you the Enchant Equipment skill."
 
 /globalTracker/var/COOL_GAJA_PLAYERS = list("Thorgigamax", "Gemenilove" )
 /globalTracker/var/GAJA_PER_ASC_CONVERSION = 0.25
