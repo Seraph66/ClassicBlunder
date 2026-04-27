@@ -594,6 +594,7 @@
 #include "Races\Android\ascensions.dm"
 #include "Races\Android\BioAndroid.dm"
 #include "Races\Android\race.dm"
+#include "Races\Android\transformations.dm"
 #include "Races\Angels\AngelMagic.dm"
 #include "Races\Angels\AngelRacials.dm"
 #include "Races\Angels\ascensions.dm"
