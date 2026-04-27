@@ -14,6 +14,13 @@
         BuffSelf="/obj/Skills/Buffs/SlotlessBuffs/Autonomous/QueueBuff/Finisher/Intercepting_Fist"
         BuffAffected = "/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Debuff/Death_Mark"
         HitMessage="looks <i>locked in</i>."
+    Endless_Session // Heir of Grief
+        Instinct=2
+        Combo=25
+        DamageMult = T3_DMG_MULT/2/20
+        HitMessage="manifests the One who Completed Them-- and together, crushes through all obstacles!"
+        BuffSelf=0
+        HitSparkIcon = 'Slash_Multi.dmi'
 
     Big_Boot
         Instinct=2

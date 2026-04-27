@@ -16,7 +16,7 @@ obj/Skills/Buffs/NuStyle/NobodyLegendary
 			set hidden=1
 			adjust(usr)
 			src.Trigger(usr)
-	Champion_Of_Ash
+	Sunslammer
 		SignatureTechnique=2
 		NeedsSword = 1
 		Copyable=0
@@ -26,9 +26,9 @@ obj/Skills/Buffs/NuStyle/NobodyLegendary
 		ElementalDefense="Fire"
 		passives = list("BlurringStrikes" = 1, "GodSpeed" = 2, "Momentum" = 1, "DoubleStrike" = 2, "Instinct" = 3, "Flow" = 2, "Iaido" = 1, "Iaijutsu" = 1,\
 						"Musoken" = 1, "BurnHit" = 30, "Combustion" = 30, "Parry" = 2,"Ashen One" = 1, "SweepingStrike" = 1, "Deflection" = 1)
-		StyleActive="Legacy of the Champion of Ashes"
+		StyleActive="Legacy of the Sunslammer"
 		Finisher="/obj/Skills/Queue/Finisher/Session"
-		verb/Champion_Of_Ash()
+		verb/Sunslammer()
 			set hidden=1
 			adjust(usr)
 			src.Trigger(usr)
@@ -43,7 +43,7 @@ obj/Skills/Buffs/NuStyle/NobodyLegendary
 		passives = list("BlurringStrikes" = 2, "GodSpeed" = 2, "Momentum" = 1, "DoubleStrike" = 3, "Instinct" = 4, "Flow" = 3, "Iaido" = 1, "Iaijutsu" = 1,\
 						"Musoken" = 1, "BurnHit" = 30, "Combustion" = 30, "Parry" = 2,"Ashen One" = 1, "SweepingStrike" = 1, "Deflection" = 2)
 		StyleActive="Heir of Grief"
-		Finisher="/obj/Skills/Queue/Finisher/Session"
+		Finisher="/obj/Skills/Queue/Finisher/Endless_Session"
 		verb/Heir_of_Grief()
 			set hidden=1
 			adjust(usr)
