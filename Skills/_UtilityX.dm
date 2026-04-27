@@ -2642,6 +2642,9 @@ obj/Skills/Utility
 			if(src.Using)
 				usr << "You're already preparing to perform surgery!"
 				return
+			if(usr.KO)
+				usr << "You can't perform surgery while knocked out!"
+				return
 			if(usr.HasPiloting()||usr.HasPossessive())
 				usr << "You're not capable of necessary precision!"
 				return

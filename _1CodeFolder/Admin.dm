@@ -138,7 +138,94 @@ mob/Admin3/verb/LoadSwapMap()
 /mob/Admin3/verb/View_Style_Sig_Reqs()
 	set category = "Admin"
 	set name = "View Style/Sig Reqs"
-	set desc = "Browser view of pot requirements for each tier and the balance vars on every Style/Sig in that tier."
+	set desc = "Chat dump + browser view of pot reqs and tier balance vars on every Style/Sig."
+
+	usr << "<b><font color='#ffaa00'>=== Style/Sig Pot Reqs ===</font></b>"
+	usr << "<font color='#88ccff'>Pot Thresholds:</font>"
+	usr << "  T1 Style: 1st=[glob.progress.T1_STYLES[1]], 2nd=[glob.progress.T1_STYLES[2]]"
+	usr << "  T2 Style: 1st=[glob.progress.T2_STYLES[1]], 2nd=[glob.progress.T2_STYLES[2]]"
+	usr << "  T3 Style: 1st=[glob.progress.T3_STYLES[1]]"
+	usr << "  T1 Sig: 1st=[glob.progress.T1_SIGS[1]], 2nd=[glob.progress.T1_SIGS[2]], 3rd=[glob.progress.T1_SIGS[3]]"
+	usr << "  T2 Sig: 1st=[glob.progress.T2_SIGS[1]], 2nd=[glob.progress.T2_SIGS[2]]"
+
+	// Single pass through NuStyle subtypes — bucket by tier
+	var/list/stylesByTier = list("1" = list(), "2" = list(), "3" = list())
+	for(var/T in subtypesof(/obj/Skills/Buffs/NuStyle))
+		if(!ispath(T))
+			continue
+		var/obj/Skills/Buffs/NuStyle/probe = new T
+		if(!probe)
+			continue
+		var/sig = probe.SignatureTechnique
+		if(sig == 1 || sig == 2 || sig == 3)
+			var/displayName = probe.name ? probe.name : "[T]"
+			var/passText = ""
+			if(probe.passives && probe.passives.len)
+				for(var/p in probe.passives)
+					passText += "[p]=[probe.passives[p]] "
+			var/list/row = list(
+				"name" = displayName,
+				"path" = "[T]",
+				"str"  = probe.StyleStr,
+				"for"  = probe.StyleFor,
+				"end"  = probe.StyleEnd,
+				"spd"  = probe.StyleSpd,
+				"off"  = probe.StyleOff,
+				"def"  = probe.StyleDef,
+				"passives" = passText
+			)
+			stylesByTier["[sig]"] += list(row)
+		del probe
+
+	// Single pass through Tier1 / Tier2 sig lists — bucket by tier
+	var/list/sigsByTier = list("1" = list(), "2" = list())
+	for(var/tierKey in list("1", "2"))
+		var/list/srcList = (tierKey == "1") ? Tier1 : Tier2
+		for(var/k in srcList)
+			var/v = srcList[k]
+			if(istext(v))
+				var/p = text2path(v)
+				if(!ispath(p))
+					continue
+				var/obj/Skills/probe = new p
+				if(!probe)
+					continue
+				var/list/row = list(
+					"name" = k,
+					"path" = "[p]",
+					"cooldown"   = probe.vars["Cooldown"],
+					"manacost"   = probe.vars["ManaCost"],
+					"energycost" = probe.vars["EnergyCost"],
+					"damagemult" = probe.vars["DamageMult"]
+				)
+				sigsByTier[tierKey] += list(row)
+				del probe
+			else if(istype(v, /list))
+				var/list/bundle = v
+				var/list/row = list("name" = k, "path" = "(bundle of [bundle.len] skills)", "cooldown" = null, "manacost" = null, "energycost" = null, "damagemult" = null)
+				sigsByTier[tierKey] += list(row)
+
+	// Chat output of styles
+	for(var/tier in 1 to 3)
+		var/list/rows = stylesByTier["[tier]"]
+		usr << "<font color='#88ccff'>T[tier] Styles ([rows.len]):</font>"
+		if(!rows.len)
+			usr << "  (none)"
+		else
+			for(var/list/r in rows)
+				usr << "  [r["name"]] | Str=[r["str"] || "—"] For=[r["for"] || "—"] End=[r["end"] || "—"] Spd=[r["spd"] || "—"] Off=[r["off"] || "—"] Def=[r["def"] || "—"] | [r["passives"] || "no passives"]"
+
+	// Chat output of sigs
+	for(var/tierKey in list("1", "2"))
+		var/list/rows = sigsByTier[tierKey]
+		usr << "<font color='#88ccff'>T[tierKey] Sigs ([rows.len]):</font>"
+		if(!rows.len)
+			usr << "  (none)"
+		else
+			for(var/list/r in rows)
+				usr << "  [r["name"]] | CD=[r["cooldown"] || "—"] Mana=[r["manacost"] || "—"] Energy=[r["energycost"] || "—"] DmgMult=[r["damagemult"] || "—"]"
+
+	// Build browser html as bonus (chat output above is the source of truth)
 	var/html = "<html><head><title>Style/Sig Pot Reqs</title><style>"
 	html += "body{background:#1a1a1a;color:#ddd;font-family:monospace;padding:10px;font-size:12px}"
 	html += "h2{color:#ffaa00;border-bottom:1px solid #444;padding-bottom:4px;margin-top:18px}"
@@ -166,75 +253,46 @@ mob/Admin3/verb/LoadSwapMap()
 	html += "</table>"
 	html += "<h2>Styles by Tier</h2>"
 	for(var/tier in 1 to 3)
-		html += "<h3>T[tier] Styles</h3>"
+		html += "<h3>T[tier] Styles ([stylesByTier["[tier]"].len])</h3>"
 		html += "<table><tr><th>Name</th><th>Type Path</th><th>Str</th><th>For</th><th>End</th><th>Spd</th><th>Off</th><th>Def</th><th>Passives</th></tr>"
-		var/anyShown = 0
-		for(var/T in subtypesof(/obj/Skills/Buffs/NuStyle))
-			if(!ispath(T))
-				continue
-			var/obj/Skills/Buffs/NuStyle/probe = new T
-			if(!probe)
-				continue
-			if(probe.SignatureTechnique == tier)
-				anyShown = 1
-				html += "<tr>"
-				var/displayName = probe.name ? probe.name : "[T]"
-				html += "<td>[displayName]</td>"
-				html += "<td class='path'>[T]</td>"
-				html += probe.StyleStr ? "<td class='val'>[probe.StyleStr]</td>" : "<td class='muted'>—</td>"
-				html += probe.StyleFor ? "<td class='val'>[probe.StyleFor]</td>" : "<td class='muted'>—</td>"
-				html += probe.StyleEnd ? "<td class='val'>[probe.StyleEnd]</td>" : "<td class='muted'>—</td>"
-				html += probe.StyleSpd ? "<td class='val'>[probe.StyleSpd]</td>" : "<td class='muted'>—</td>"
-				html += probe.StyleOff ? "<td class='val'>[probe.StyleOff]</td>" : "<td class='muted'>—</td>"
-				html += probe.StyleDef ? "<td class='val'>[probe.StyleDef]</td>" : "<td class='muted'>—</td>"
-				var/passText = ""
-				if(probe.passives && probe.passives.len)
-					for(var/p in probe.passives)
-						passText += "[p]=[probe.passives[p]] "
-				html += passText ? "<td class='passives'>[passText]</td>" : "<td class='muted'>—</td>"
-				html += "</tr>"
-			del probe
-		if(!anyShown)
+		var/list/rows = stylesByTier["[tier]"]
+		if(!rows.len)
 			html += "<tr><td colspan=9 class='muted'>(no entries)</td></tr>"
+		else
+			for(var/list/r in rows)
+				html += "<tr>"
+				html += "<td>[r["name"]]</td>"
+				html += "<td class='path'>[r["path"]]</td>"
+				html += r["str"] ? "<td class='val'>[r["str"]]</td>" : "<td class='muted'>—</td>"
+				html += r["for"] ? "<td class='val'>[r["for"]]</td>" : "<td class='muted'>—</td>"
+				html += r["end"] ? "<td class='val'>[r["end"]]</td>" : "<td class='muted'>—</td>"
+				html += r["spd"] ? "<td class='val'>[r["spd"]]</td>" : "<td class='muted'>—</td>"
+				html += r["off"] ? "<td class='val'>[r["off"]]</td>" : "<td class='muted'>—</td>"
+				html += r["def"] ? "<td class='val'>[r["def"]]</td>" : "<td class='muted'>—</td>"
+				html += r["passives"] ? "<td class='passives'>[r["passives"]]</td>" : "<td class='muted'>—</td>"
+				html += "</tr>"
 		html += "</table>"
 	html += "<h2>Sigs by Tier</h2>"
-	for(var/tier in 1 to 2)
-		html += "<h3>T[tier] Sigs</h3>"
+	for(var/tierKey in list("1", "2"))
+		html += "<h3>T[tierKey] Sigs ([sigsByTier[tierKey].len])</h3>"
 		html += "<table><tr><th>Name</th><th>Type Path</th><th>Cooldown</th><th>ManaCost</th><th>EnergyCost</th><th>DamageMult</th></tr>"
-		var/list/srcList = (tier == 1) ? Tier1 : Tier2
-		var/anyShown = 0
-		for(var/k in srcList)
-			var/v = srcList[k]
-			if(istext(v))
-				var/p = text2path(v)
-				if(!ispath(p))
-					continue
-				var/obj/Skills/probe = new p
-				if(!probe)
-					continue
-				anyShown = 1
-				html += "<tr>"
-				html += "<td>[k]</td>"
-				html += "<td class='path'>[p]</td>"
-				var/cd = probe.vars["Cooldown"]
-				html += isnum(cd) ? "<td class='val'>[cd]</td>" : "<td class='muted'>—</td>"
-				var/mc = probe.vars["ManaCost"]
-				html += isnum(mc) && mc ? "<td class='val'>[mc]</td>" : "<td class='muted'>—</td>"
-				var/ec = probe.vars["EnergyCost"]
-				html += isnum(ec) && ec ? "<td class='val'>[ec]</td>" : "<td class='muted'>—</td>"
-				var/dm = probe.vars["DamageMult"]
-				html += isnum(dm) && dm ? "<td class='val'>[dm]</td>" : "<td class='muted'>—</td>"
-				html += "</tr>"
-				del probe
-			else if(istype(v, /list))
-				var/list/bundle = v
-				anyShown = 1
-				html += "<tr><td>[k]</td><td colspan=5 class='path'>(bundle of [bundle.len] skills — not a single tweakable type)</td></tr>"
-		if(!anyShown)
+		var/list/rows = sigsByTier[tierKey]
+		if(!rows.len)
 			html += "<tr><td colspan=6 class='muted'>(no entries)</td></tr>"
+		else
+			for(var/list/r in rows)
+				html += "<tr>"
+				html += "<td>[r["name"]]</td>"
+				html += "<td class='path'>[r["path"]]</td>"
+				html += isnum(r["cooldown"]) ? "<td class='val'>[r["cooldown"]]</td>" : "<td class='muted'>—</td>"
+				html += isnum(r["manacost"]) && r["manacost"] ? "<td class='val'>[r["manacost"]]</td>" : "<td class='muted'>—</td>"
+				html += isnum(r["energycost"]) && r["energycost"] ? "<td class='val'>[r["energycost"]]</td>" : "<td class='muted'>—</td>"
+				html += isnum(r["damagemult"]) && r["damagemult"] ? "<td class='val'>[r["damagemult"]]</td>" : "<td class='muted'>—</td>"
+				html += "</tr>"
 		html += "</table>"
 	html += "</body></html>"
 	src << browse(html, "window=StyleSigReqs;size=900x900")
+	usr << "<font color='#aaffaa'>(Browser window also opened — if you don't see it, this chat dump has the same data.)</font>"
 
 // Live-tweak a stat var on a T1/T2/T3 Style template or T1/T2 Sig template.
 // Picks a category, lets the admin pick a specific type, then a scalar var on
@@ -328,6 +386,56 @@ mob/Admin3/verb/LoadSwapMap()
 	Log("Admin", "[ExtractInfo(usr)] tweaked [path].[varName] from [curVal] to [newVal]. [count] live instances updated.")
 	usr << "Set [path].[varName] from [curVal] to [newVal]. Updated [count] live instance\s. Note: change is in-memory only — compile-time default returns on world reboot."
 	del probe
+
+// Live-edit potential thresholds for Style/Sig tier unlocks. These live in
+// glob.progress (T1_STYLES, T2_STYLES, T3_STYLES, T1_SIGS, T2_SIGS) and are
+// what req_pot() and styles_available() check against. Note: in-memory only —
+// reverts on world reboot, same as Tweak_Style_Sig_Var.
+/mob/Admin3/verb/Tweak_Pot_Reqs()
+	set category = "Admin"
+	set name = "Tweak Pot Reqs"
+	set desc = "Edit potential threshold for a Style/Sig tier unlock slot in glob.progress."
+	var/list/slots = list(
+		"1st T1 Style" = list("T1_STYLES", 1),
+		"2nd T1 Style" = list("T1_STYLES", 2),
+		"1st T2 Style" = list("T2_STYLES", 1),
+		"2nd T2 Style" = list("T2_STYLES", 2),
+		"1st T3 Style" = list("T3_STYLES", 1),
+		"1st T1 Sig"   = list("T1_SIGS", 1),
+		"2nd T1 Sig"   = list("T1_SIGS", 2),
+		"3rd T1 Sig"   = list("T1_SIGS", 3),
+		"1st T2 Sig"   = list("T2_SIGS", 1),
+		"2nd T2 Sig"   = list("T2_SIGS", 2)
+	)
+	var/list/labels = list()
+	for(var/k in slots)
+		var/list/info = slots[k]
+		var/listName = info[1]
+		var/idx = info[2]
+		var/list/targetList = glob.progress.vars[listName]
+		var/curVal = (targetList && idx <= targetList.len) ? targetList[idx] : "?"
+		labels["[k] (current: [curVal])"] = k
+	var/pickedLabel = input(usr, "Pick a threshold to tweak.", "Tweak Pot Reqs") as null|anything in labels
+	if(!pickedLabel)
+		return
+	var/pickedKey = labels[pickedLabel]
+	var/list/info = slots[pickedKey]
+	var/listName = info[1]
+	var/idx = info[2]
+	var/list/targetList = glob.progress.vars[listName]
+	if(!targetList)
+		usr << "Could not access glob.progress.[listName]."
+		return
+	if(idx > targetList.len)
+		usr << "Index [idx] out of range for [listName] (len=[targetList.len])."
+		return
+	var/curVal = targetList[idx]
+	var/newVal = input(usr, "Current [pickedKey] = [curVal]. New potential value?", "Tweak Pot Req", curVal) as null|num
+	if(isnull(newVal))
+		return
+	targetList[idx] = newVal
+	Log("Admin", "[ExtractInfo(usr)] tweaked glob.progress.[listName]\[[idx]\] from [curVal] to [newVal] ([pickedKey]).")
+	usr << "Set [pickedKey] from [curVal] to [newVal]. Note: in-memory only — reverts on world reboot."
 
 /mob/Admin2/verb/PrivateNarrate(mob/m in players)
 	set category="Admin"

@@ -100,8 +100,8 @@ var/list/heavenly_improvements = list("Dragon Clash", "Grab", "Reverse Dash", "L
 	var/boon_value = restr[2]
 	switch(improv)
 		if("Dragon Clash")
-			p.passive_handler.Increase("Technique Mastery", min(boon_value, 4))
-			p.passive_handler.Increase("Attack Speed", min(boon_value, 4))
+			p.passive_handler.Increase("TechniqueMastery", min(boon_value, 4))
+			p.passive_handler.Increase("AttackSpeed", min(boon_value, 4))
 		if("Grab")
 			p.passive_handler.Increase("Grippy", min(boon_value, 4))
 			p.passive_handler.Increase("Muscle Power", min(boon_value, 4))
