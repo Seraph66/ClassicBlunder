@@ -526,7 +526,7 @@ obj/Skills/AutoHit/Enuma_Elish
 	Shattering = 50
 	Paralyzing = 50
 	Toxic = 1
-	Icon = ‘Hellnova.dmi’
+	Icon = 'Hellnova.dmi'
 	Size = 1.2
 	IconX = -158
 	IconY = -169
