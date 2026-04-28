@@ -30,12 +30,12 @@ obj/Skills/Queue/Heavy_Strike/proc/ShinHeavyStrike(mob/m) // This is called in Q
 
 obj/Skills/Queue/Heavy_Strike/proc/MangHeavyStrike(mob/m) // This is also called in QueueX
     src.name="Mang Strike"
-    src.DamageMult=clamp(m.GetMangLevel()*2, 3, 10) // yeah this is gonna get out of hand real fucking fast
+    src.DamageMult=clamp(m.GetMangLevel()*3, 6, 15) // yeah this is gonna get out of hand real fucking fast
     src.AccuracyMult=1
     Duration=10
     src.KBAdd=5
     src.KBMult=3
-    src.Cooldown=40
+    src.Cooldown=30
     src.ActiveMessage="concentrates their mang."
     src.HitMessage="strikes with the power of [m.GetMangLevel()] Mang."
     src.Ooze = 0
