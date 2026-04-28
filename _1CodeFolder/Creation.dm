@@ -59,6 +59,9 @@ mob/Players
 		client.perspective=MOB_PERSPECTIVE
 		players += usr
 		OverwatchNotifyLogin(usr, "logged in")
+		if(isRace(CELESTIAL) && CelestialAscension == "Demon")
+			resetStyleRating()
+			StyleRatingDecaying = FALSE
 		usr.density=1
 		usr.client.view=8
 		if(in_tmp_map)
