@@ -27,6 +27,15 @@ transformation
 					if(D && user.BuffOn(D))
 						D.Trigger(user, TRUE)
 						user << "<i>Your Devil Trigger shatters your disguise.</i>"
+					var/obj/Skills/Buffs/SlotlessBuffs/Devil_Arm2/da
+					for(var/obj/Skills/Buffs/SlotlessBuffs/Devil_Arm2/candidate in user)
+						if(user.BuffOn(candidate))
+							da = candidate
+							break
+					if(!da)
+						da = user.FindSkill(/obj/Skills/Buffs/SlotlessBuffs/Devil_Arm2)
+					if(da)
+						da.applyDTIcons(user)
 
 			mastery_boons(mob/user)
 				if(mastery >= 25)
@@ -68,6 +77,15 @@ transformation
 					ShockSize/=2
 
 			revert(mob/user)
+				var/obj/Skills/Buffs/SlotlessBuffs/Devil_Arm2/da
+				for(var/obj/Skills/Buffs/SlotlessBuffs/Devil_Arm2/candidate in user)
+					if(user.BuffOn(candidate))
+						da = candidate
+						break
+				if(!da)
+					da = user.FindSkill(/obj/Skills/Buffs/SlotlessBuffs/Devil_Arm2)
+				if(da)
+					da.revertDTIcons(user)
 				..()
 				if(!user || user.isInDemonDevilTrigger()) return
 				user.resetDevilTriggerSinBonuses()

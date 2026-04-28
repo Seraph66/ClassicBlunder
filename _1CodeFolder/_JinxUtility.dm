@@ -1330,7 +1330,7 @@ mob
 			return (src.RecovMod+src.RecovAscension)*RecovChaos
 
 		isInDemonDevilTrigger()
-			if(!isRace(DEMON)) return FALSE
+			if(!isRace(DEMON) && !isRace(MAKAIOSHIN)) return FALSE
 			if(!transActive || !race || !race.transformations || transActive > race.transformations.len) return FALSE
 			var/transformation/current = race.transformations[transActive]
 			if(!istype(current, /transformation/demon/devil_trigger)) return FALSE
