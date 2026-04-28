@@ -6,31 +6,37 @@ globalTracker/var/list/ZBlockedComms = list()
 globalListener
 	var/tmp/list/connected = list()
 	var/freq = 0
-	proc/outputToComms(obj/Items/Tech/source, msg)
-		for(var/obj/Items/Tech/sendTo in connected)
+	proc/outputToComms(obj/source, msg)
+		for(var/obj/sendTo in connected)
 			if(source == sendTo) continue
-			sendTo.recieveBroadcast(msg)
+			sendTo.recieveBroadcast(msg, src.freq)
 
-proc/addToGlobalListeners(obj/Items/Tech/listener)
-	if(!listener.Frequency) return
+proc/addToGlobalListenerOnFreq(obj/listener, freq)
+	if(!freq) return
 
 	for(var/globalListener/globalL in globalListeners)
-		if(globalL.freq == listener.Frequency)
+		if(globalL.freq == freq)
 			globalL.connected |= listener
 			return
 	var/globalListener/newListener = new()
-	newListener.freq = listener.Frequency
+	newListener.freq = freq
 	newListener.connected += listener
 	globalListeners += newListener
 
-proc/removeFromGlobalListeners(obj/Items/Tech/listener)
-	if(!listener.Frequency) return
+proc/removeFromGlobalListenerOnFreq(obj/listener, freq)
+	if(!freq) return
 
 	for(var/globalListener/globalL in globalListeners)
-		if(globalL.freq == listener.Frequency)
+		if(globalL.freq == freq)
 			if(listener in globalL.connected)
 				globalL.connected -= listener
 				return
+
+proc/addToGlobalListeners(obj/Items/Tech/listener)
+	addToGlobalListenerOnFreq(listener, listener.Frequency)
+
+proc/removeFromGlobalListeners(obj/Items/Tech/listener)
+	removeFromGlobalListenerOnFreq(listener, listener.Frequency)
 
 obj/Items/Tech/proc/broadcastToListeners(msg)
 //	if(!Active) return
@@ -51,7 +57,10 @@ obj/Items/Tech/proc/broadcastToListeners(msg)
 		if(listener.freq == Frequency)
 			listener.outputToComms(src, msg)
 
-obj/Items/Tech/proc/recieveBroadcast(msg)
+obj/proc/recieveBroadcast(msg, freq)
+	return
+
+obj/Items/Tech/recieveBroadcast(msg, freq)
 //	if(!Active) return
 	if(!Frequency) return
 	if((z in glob.ZBlockedComms) || (src.loc.z in glob.ZBlockedComms))
@@ -85,9 +94,13 @@ mob/Players/
 		for(var/obj/Items/Tech/F in contents)
 			if(!F.Frequency) continue
 			addToGlobalListeners(F)
+		for(var/obj/Skills/Utility/Internal_Communicator/IC in contents)
+			IC.registerInternalCommunicator()
 
 	Logout()
 		..()
 		for(var/obj/Items/Tech/F in contents)
 			if(!F.Frequency) continue
 			removeFromGlobalListeners(F)
+		for(var/obj/Skills/Utility/Internal_Communicator/IC in contents)
+			IC.unregisterInternalCommunicator()

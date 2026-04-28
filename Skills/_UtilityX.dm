@@ -2781,6 +2781,43 @@ obj/Skills/Utility
 		var/Detecting=0
 		var/Range=1
 		desc="A internal communicator. Broadcasts on Scouter frequencies. It can also monitor a frequency you are not actively broadcasting on."
+
+		New()
+			..()
+			registerInternalCommunicator()
+
+		Del()
+			unregisterInternalCommunicator()
+			..()
+
+		proc/registerInternalCommunicator()
+			if(ICFrequency)
+				addToGlobalListenerOnFreq(src, ICFrequency)
+			if(MonitoringFrequency && MonitoringFrequency != ICFrequency)
+				addToGlobalListenerOnFreq(src, MonitoringFrequency)
+
+		proc/unregisterInternalCommunicator()
+			if(ICFrequency)
+				removeFromGlobalListenerOnFreq(src, ICFrequency)
+			if(MonitoringFrequency && MonitoringFrequency != ICFrequency)
+				removeFromGlobalListenerOnFreq(src, MonitoringFrequency)
+
+		recieveBroadcast(msg, freq)
+			if(!ismob(loc)) return
+			var/mob/owner = loc
+			if(!owner.client) return
+			var/label
+			if(freq == ICFrequency)
+				label = "Freq: [ICFrequency]"
+			else if(freq == MonitoringFrequency)
+				label = "Monitor Freq: [MonitoringFrequency]"
+			else
+				return
+			var/formatted = "<font color=green><b>(Internal Comms ([label])):</b>[msg]"
+			owner.client.outputToChat(formatted, IC_OUTPUT)
+			Log(owner.ChatLog(), formatted)
+			Log(owner.sanitizedChatLog(), formatted)
+
 		verb/Toggle_Internal_Scouter()
 			set category="Utility"
 			if(usr.InternalScouter)
@@ -2817,7 +2854,7 @@ obj/Skills/Utility
 						M<<"<font color=green><b>(Internal Comms (Freq: [src.ICFrequency])):</b> [usr.name]: [html_encode(A)]"
 						Log(M.ChatLog(),"<font color=green>(Internal Comms (Freq: [src.ICFrequency]))[usr]([usr.key]): [html_encode(A)]")
 					if(B.MonitoringFrequency==src.ICFrequency)
-						M<<"<font color=green><b>(Internal Comms (Monitor Freq: [src.MonitoringFrequency])):</b> [usr.name]: [html_encode(A)]"
+						M<<"<font color=green><b>(Internal Comms (Monitor Freq: [B.MonitoringFrequency])):</b> [usr.name]: [html_encode(A)]"
 			for(var/obj/Items/Tech/Speaker/X in world)
 				if(X.Frequency==src.ICFrequency&&X.Active==1)
 					for(var/mob/Y in hearers(X.AudioRange,X))
@@ -2848,12 +2885,26 @@ obj/Skills/Utility
 			set category="Utility"
 			set name="Communicator Frequency"
 			set src in usr
-			src.ICFrequency=input(usr,"Change your Internal Communicator frequency to what?","Frequency")as num
+			var/previousFreq = src.ICFrequency
+			var/newFreq = input(usr,"Change your Internal Communicator frequency to what?","Frequency",src.ICFrequency) as num
+			if(previousFreq == newFreq) return
+			if(previousFreq && previousFreq != src.MonitoringFrequency)
+				removeFromGlobalListenerOnFreq(src, previousFreq)
+			src.ICFrequency = newFreq
+			if(newFreq && newFreq != src.MonitoringFrequency)
+				addToGlobalListenerOnFreq(src, newFreq)
 		verb/MonitorFrequency()
 			set category="Utility"
 			set name="Monitoring Frequency"
 			set src in usr
-			src.MonitoringFrequency=input(usr,"Change your Internal Communicator Monitoring frequency to what?","Monitoring Frequency")as num
+			var/previousFreq = src.MonitoringFrequency
+			var/newFreq = input(usr,"Change your Internal Communicator Monitoring frequency to what?","Monitoring Frequency",src.MonitoringFrequency) as num
+			if(previousFreq == newFreq) return
+			if(previousFreq && previousFreq != src.ICFrequency)
+				removeFromGlobalListenerOnFreq(src, previousFreq)
+			src.MonitoringFrequency = newFreq
+			if(newFreq && newFreq != src.ICFrequency)
+				addToGlobalListenerOnFreq(src, newFreq)
 
 		verb/Scan()
 			set src in usr
