@@ -687,6 +687,8 @@ obj/Skills/Utility
 					who.Remove(W)
 				if(W.invisibility)
 					who.Remove(W)
+				if(W.isRace(ELDRITCH)||W.isRace(NOBODY))
+					who.Remove(W)
 				if(usr.Dead&&!usr.HasEnlightenment()&&(W.z!=usr.z))
 					who.Remove(W)
 			var/mob/Players/selector=input("Who do you want to observe?","Observe")in who||null
