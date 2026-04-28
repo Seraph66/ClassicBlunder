@@ -19,7 +19,7 @@
 	verb/Lightsaber_Color()
 		set src in usr
 		lightSaberColorChoice=input(usr, "What color would you like for your lightsaber?", "Set Color") in list("Blue", "Green", "Purple", "Red")
-			
+
 /obj/Items/Gear/
 	verb/Improve()
 		set category=null
@@ -69,8 +69,8 @@
 		Improvable = 1
 		verb/Lightsaber_Color()
 			set src in usr
-			lightSaberColorChoice=input(usr, "What color would you like for your lightsaber?", "Set Color") in list("Blue", "Green", "Purple", "Red")
-		
+			lightSaberColorChoice=input(usr, "What color would you like for your lightsaber?", "Set Color") in list("Blue", "Green", "Purple", "Red","Yellow")
+
 	Great_Lightsaber
 		var/lightSaberColorChoice = "Blue"
 		Cost = 40
@@ -85,7 +85,7 @@
 		verb/Lightsaber_Color()
 			set src in usr
 			lightSaberColorChoice=input(usr, "What color would you like for your lightsaber?", "Set Color") in list("Blue", "Green", "Purple", "Red")
-	
+
 	Crossguard_Lightsaber
 		var/lightSaberColorChoice = "Blue"
 		Cost = 40
@@ -100,7 +100,7 @@
 		verb/Lightsaber_Color()
 			set src in usr
 			lightSaberColorChoice=input(usr, "What color would you like for your lightsaber?", "Set Color") in list("Blue", "Green", "Purple", "Red")
-	
+
 	Shoto_Lightsaber
 		var/lightSaberColorChoice = "Blue"
 		Cost = 40
@@ -115,4 +115,3 @@
 		verb/Lightsaber_Color()
 			set src in usr
 			lightSaberColorChoice=input(usr, "What color would you like for your lightsaber?", "Set Color") in list("Blue", "Green", "Purple", "Red")
-	

@@ -872,7 +872,7 @@ monster_info
 		name="Sunlight Swordsman"
 		potential=50
 		intimidation=20
-		//icon='DemonHumanoidSunlight.dmi'
+		icon='Chaos_Chosen.dmi'
 		str_mod=3
 		end_mod=3
 		for_mod=3

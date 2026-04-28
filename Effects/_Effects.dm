@@ -690,6 +690,9 @@ proc
 		return
 
 	var/list/all_tiles = list()
+	var/list/cached_overlays = list()
+	for(var/sn = 2 to 8)
+		cached_overlays += image('Icons/Effects/GlassEffect.dmi', icon_state = "[sn]")
 
 	for(var/tx = 1 to eff_w)
 		for(var/ty = 1 to eff_h)
@@ -707,14 +710,15 @@ proc
 			tile.rel_x = tx - cx
 			tile.rel_y = ty - cy
 			tile.transform = T
-			for(var/sn = 2 to 8)
-				tile.overlays += image('Icons/Effects/GlassEffect.dmi', icon_state = "[sn]")
-			C.screen += tile
+			tile.overlays += cached_overlays
 			all_tiles += tile
+
+	C.screen += all_tiles
 
 	sleep(5)
 
 	if(!target?.client)
+		C.screen -= all_tiles
 		for(var/obj/screen/glass_shard/tile in all_tiles)
 			del tile
 		C.screen -= flash_overlay
@@ -722,6 +726,7 @@ proc
 		return
 
 	var/list/all_shards = list()
+	var/list/new_pieces = list()
 	for(var/obj/screen/glass_shard/tile in all_tiles)
 		tile.overlays.Cut()
 		tile.appearance_flags = 0
@@ -731,14 +736,17 @@ proc
 			piece.icon_state = "[sn]"
 			piece.screen_loc = tile.screen_loc
 			piece.transform = tile.transform
-			C.screen += piece
+			new_pieces += piece
 			all_shards += piece
+
+	C.screen += new_pieces
 
 	animate(flash_overlay, alpha = 0, time = 10)
 
 	sleep(5)
 
 	if(!target?.client)
+		C.screen -= all_shards
 		for(var/obj/screen/glass_shard/shard in all_shards)
 			del shard
 		C.screen -= flash_overlay
@@ -763,8 +771,7 @@ proc
 
 	sleep(10)
 
+	if(target?.client)
+		target.client.screen -= all_shards
 	for(var/obj/screen/glass_shard/shard in all_shards)
-		if(target?.client)
-			target.client.screen -= shard
 		del shard
-		sleep(0.5)

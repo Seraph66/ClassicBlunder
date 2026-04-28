@@ -3570,7 +3570,10 @@ obj/Skills/Utility
 					if(M.isRace(ANDROID))
 						M.SuperAndroid=1
 						M.transUnlocked=1
-						M.race.transformations += new /transformation/android/super_android()
+						if(!M.race.transformations)
+							M.race.transformations = list()
+						if(!(locate(/transformation/android/super_android) in M.race.transformations))
+							M.race.transformations += new /transformation/android/super_android()
 					M.AddSkill(new/obj/Skills/Utility/Cyborg_Integration)
 				if("Repair")
 					M.Maimed=0

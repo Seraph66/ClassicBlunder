@@ -282,7 +282,7 @@ SecretInformation
 				secretVariable["BloodPower"] = 0
 		applySecret(mob/p)
 			if(!p.vampireBlood)
-				p.vampireBlood = new(p, 6, 45)
+				p.vampireBlood = new(p, 6, 184)
 			switch(currentTier)
 				if(1)
 					p << "You have willingly consumed blood, forsaking your humanity...You've awakened the power of a Vampire!"

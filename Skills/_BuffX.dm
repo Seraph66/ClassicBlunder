@@ -9795,7 +9795,7 @@ NEW VARIABLES
 						ForMult=1.25 + (0.03*secretLevel*secretLevel)
 						EndMult=1.25 + (0.035*secretLevel*secretLevel)
 						passives = list("SpiralPowerUnlocked" = SpiralPower, "PureDamage" = SpiralPower, "PureReduction" = SpiralPower)
-						TimerLimit= (10 * (p.transUnlocked ? p.transUnlocked : p.AscensionsAcquired))
+						TimerLimit= (10 * (p.transUnlocked ? p.transUnlocked : p.AscensionsAcquired)*secretLevel)
 						Cooldown = 61 - ((5 * p.AscensionsAcquired) + (5 * secretLevel))
 				KenWave = 2
 				KenWaveIcon='SparkleGreen.dmi'
@@ -13588,7 +13588,9 @@ mob
 				B.OldIcon=src.icon
 				B.OldX=src.pixel_x
 				B.OldY=src.pixel_y
-				src.icon=image(icon=B.icon, pixel_x=B.pixel_x, pixel_y=B.pixel_y)
+				src.icon=B.icon
+				src.pixel_x=B.pixel_x
+				src.pixel_y=B.pixel_y
 			IgnoreReplace
 
 			if(B.IconLock)

@@ -1660,6 +1660,12 @@ proc/Accuracy_Formula(mob/Offender,mob/Defender,AccMult=1,BaseChance=glob.WorldD
 			GodKiDif = 1 + Offender.GetGodKi()
 		if(Defender.GetGodKi() && !Defender.HasNullTarget())
 			GodKiDif /= (1 + Defender.GetGodKi())
+		if(Defender.passive_handler.Get("Justice"))
+			if(Offender.GetGodKi()>Defender.GetGodKi())
+				GodKiDif=1
+		if(Offender.passive_handler.Get("Justice"))
+			if(Defender.GetGodKi()>Offender.GetGodKi())
+				GodKiDif=1
 		AccMult *= GodKiDif
 
 		// START OF REAL FUNCTION
@@ -1677,6 +1683,14 @@ proc/Accuracy_Formula(mob/Offender,mob/Defender,AccMult=1,BaseChance=glob.WorldD
 				OffenseAdvantage = clamp(OffenseAdvantage,glob.MIN_POWER_DIFF, glob.MAX_POWER_DIFF)
 			if(!Defender.ignoresPowerClamp())
 				DefenseAdvantage = clamp(DefenseAdvantage,glob.MIN_POWER_DIFF, glob.MAX_POWER_DIFF)
+		if(Offender.passive_handler.Get("Justice"))
+			if(DefenseAdvantage>OffenseAdvantage)
+				DefenseAdvantage=1
+				OffenseAdvantage=1
+		if(Defender.passive_handler.Get("Justice"))
+			if(OffenseAdvantage>DefenseAdvantage)
+				DefenseAdvantage=1
+				OffenseAdvantage=1
 
 		if(glob.JORDAN_ACCURACY)
 			// trying to make it less complex for the very roughly same result

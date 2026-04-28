@@ -17,7 +17,7 @@ proc/generateVersionDatum()
 		glob.currentUpdate = updateversion
 
 globalTracker
-	var/UPDATE_VERSION = 7
+	var/UPDATE_VERSION = 8
 	var/tmp/update/currentUpdate
 
 	proc/updatePlayer(mob/p)
@@ -151,7 +151,20 @@ update
 				if(!locate(/obj/Skills/Utility/Enchant_Equipment, p))
 					p.AddSkill(new/obj/Skills/Utility/Enchant_Equipment)
 					p << "Your knowledge of Soul Infusion grants you the Enchant Equipment skill."
-
+	version8
+		version = 8;
+		updateMob(mob/p)
+			. = ..()//left alone for mildly challenging copy pasting
+			if(p.Saga=="Hiten Mitsurugi-Ryuu")
+				if(p.SagaLevel>=2)
+					p.passive_handler.Decrease("SlayerMod", 1)
+					p.passive_handler.Increase("Flow", 1)
+					p.passive_handler.Increase("Instinct", 1)
+				if(p.SagaLevel>=3)
+					p.passive_handler.Decrease("SlayerMod", 1)
+					p.passive_handler.Decrease("Brutalize", 2)
+					p.passive_handler.Increase("Flow", 1)
+					p.passive_handler.Increase("Instinct", 1)
 /globalTracker/var/COOL_GAJA_PLAYERS = list("Thorgigamax", "Gemenilove" )
 /globalTracker/var/GAJA_PER_ASC_CONVERSION = 0.25
 /globalTracker/var/GAJA_MAX_EXCHANGE = 1

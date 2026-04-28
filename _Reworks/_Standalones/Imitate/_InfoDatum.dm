@@ -73,17 +73,32 @@ characterInformation/proc/loadProfile(mob/p, file_name, infoDump)
 /mob/verb/Save_Profile()
     set category = "Roleplay"
     var/profileName = input(src, "What is the preset name of this profile?") as text
-    var/currentIndex = 0
-    for(var/x in flist("[PROFILE_SAVING_PATH]/[ckey]/"))
-        if(findtext(x,"Custom_Profile"))
-            var/name = copytext(x,length(x)-5, length(x)-4)
-            currentIndex = text2num(name)
-    src<<"You currently have [currentIndex] profiles"
-    if(currentIndex+1>5)
-        src << "You have too many saved profiles bro."
+    if(!profileName)
         return
-    currentIndex++
-    information.takeInformation(src, null, profileName, "Custom_Profile", FALSE, currentIndex)
+    var/list/usedSlots = list()
+    var/reuseIndex = 0
+    for(var/x in flist("[PROFILE_SAVING_PATH]/[ckey]/"))
+        if(!findtext(x,"Custom_Profile"))
+            continue
+        var/idx = text2num(copytext(x,length(x)-5, length(x)-4))
+        if(!idx)
+            continue
+        usedSlots += idx
+        var/read = file("[PROFILE_SAVING_PATH]/[ckey]/[x]")
+        var/data = json_decode(file2text(read))
+        if(data && data["presetName"] == profileName)
+            reuseIndex = idx
+    var/targetIndex = reuseIndex
+    if(!targetIndex)
+        if(usedSlots.len >= 5)
+            src << "You have too many saved profiles bro."
+            return
+        for(var/i = 1 to 5)
+            if(!(i in usedSlots))
+                targetIndex = i
+                break
+    src<<"You currently have [usedSlots.len] profiles"
+    information.takeInformation(src, null, profileName, "Custom_Profile", FALSE, targetIndex)
 
 /mob/verb/Swap_Profiles()
     set category = "Roleplay"

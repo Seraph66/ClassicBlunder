@@ -46,23 +46,27 @@ var/list/allSpellPassives=list();
     // Reset all spell-passive-affected vars to their initial values before accumulating
     for(var/p in allSpellPassives)
         if(p in vars) vars["[p]"] = initial(vars["[p]"])
-    // For buff-type slots, also reset the associative passives list to its compile-time
-    // base before re-merging enchant contributions. Without this reset, repeated
-    // activations would stack the same enchant entries indefinitely. Hit-only vars
-    // (Scorching, Reinforcement, PureDamage, etc.) are no-ops on a buff because buffs
-    // don't run through autohit/projectile hit hooks — buff effects flow through the
-    // associative `passives` list which the passive_handler reads on BuffOn. So for
-    // buffs we route enchant `passives` and `buffOnlyPassives` into that list instead.
+    // For buff-type slots, build the merged passives list in a LOCAL variable first,
+    // then assign once at the end. Assigning to obj.list_var and then indexing into
+    // it on the same proc tick races on 516.1681 (the same quirk that bites
+    // GLOBAL = list() / GLOBAL["k"] = v patterns). Building locally and assigning
+    // once is the workaround.
+    //
+    // Hit-only vars (Scorching, Reinforcement, PureDamage, etc.) are no-ops on a buff
+    // because buffs don't run through autohit/projectile hit hooks — buff effects flow
+    // through the associative `passives` list which the passive_handler reads on BuffOn.
+    // So for buffs we route enchant `passives` and `buffOnlyPassives` into that list.
     var/obj/Skills/Buffs/buffSrc = istype(src, /obj/Skills/Buffs) ? src : null
+    var/list/buildPassives = null
     if(buffSrc)
         var/list/initialPassives = initial(buffSrc.passives)
-        buffSrc.passives = initialPassives ? initialPassives.Copy() : list()
-    // Apply modifications from all enchanted passives — these now stack correctly
+        buildPassives = initialPassives ? initialPassives.Copy() : list()
+    // Apply modifications from all enchanted passives
     for(var/spell_passive/sp in SpellPassives)
         for(var/pass in sp.passives)
             if(buffSrc)
-                if(buffSrc.passives[pass]) buffSrc.passives[pass] += sp.passives[pass]
-                else buffSrc.passives[pass] = sp.passives[pass]
+                if(buildPassives[pass]) buildPassives[pass] += sp.passives[pass]
+                else buildPassives[pass] = sp.passives[pass]
             else if(pass in MULT_EXCEPTIONS)
                 vars["[pass]"] *= sp.passives["[pass]"]
             else if(pass in SET_EXCEPTIONS)
@@ -87,14 +91,16 @@ var/list/allSpellPassives=list();
                 vars["[projPass]"] += sp.projectileOnlyPassives["[projPass]"]
         for(var/buffPass in sp.buffOnlyPassives)
             if(buffSrc)
-                if(buffSrc.passives[buffPass]) buffSrc.passives[buffPass] += sp.buffOnlyPassives[buffPass]
-                else buffSrc.passives[buffPass] = sp.buffOnlyPassives[buffPass]
+                if(buildPassives[buffPass]) buildPassives[buffPass] += sp.buffOnlyPassives[buffPass]
+                else buildPassives[buffPass] = sp.buffOnlyPassives[buffPass]
             else if(buffPass in MULT_EXCEPTIONS)
                 vars["[buffPass]"] *= sp.buffOnlyPassives["[buffPass]"]
             else if(buffPass in SET_EXCEPTIONS)
                 vars["[buffPass]"] = sp.buffOnlyPassives["[buffPass]"]
             else
                 vars["[buffPass]"] += sp.buffOnlyPassives["[buffPass]"]
+    if(buffSrc)
+        buffSrc.passives = buildPassives
 
 
 

@@ -992,7 +992,7 @@ client
 				mob.gajaConversionCheck()
 				switch(mob.Secret)
 					if("Vampire")
-						mob.vampireBlood = new(mob, 6,70)
+						mob.vampireBlood = new(mob, 6, 184)
 				if(mob:assigningStats)
 					mob.Redo_Stats()
 				if(mob.updateVersion && mob.updateVersion.version != glob.UPDATE_VERSION)

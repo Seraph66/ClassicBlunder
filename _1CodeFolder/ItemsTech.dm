@@ -1451,9 +1451,7 @@ obj/Items/Tech
 					usr.SenseRobbed=0
 				if(usr.MortallyWounded)
 					usr.MortallyWounded=0
-				usr.Maimed--
-				usr.Maimed--
-				usr.Maimed--
+				usr.Maimed = max(0, usr.Maimed - 3)
 				usr.TotalInjury=0
 				usr.NextSerum=world.realtime+Day(0.5)
 				usr << "You're fully revitalized!"
