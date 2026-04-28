@@ -9795,7 +9795,7 @@ NEW VARIABLES
 						ForMult=1.25 + (0.03*secretLevel*secretLevel)
 						EndMult=1.25 + (0.035*secretLevel*secretLevel)
 						passives = list("SpiralPowerUnlocked" = SpiralPower, "PureDamage" = SpiralPower, "PureReduction" = SpiralPower)
-						TimerLimit= (10 * (p.transUnlocked ? p.transUnlocked : p.AscensionsAcquired))
+						TimerLimit= (10 * (p.transUnlocked ? p.transUnlocked : p.AscensionsAcquired)*secretLevel)
 						Cooldown = 61 - ((5 * p.AscensionsAcquired) + (5 * secretLevel))
 				KenWave = 2
 				KenWaveIcon='SparkleGreen.dmi'
