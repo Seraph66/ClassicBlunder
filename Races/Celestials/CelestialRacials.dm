@@ -465,7 +465,7 @@ obj/Skills/Utility/Recall_Celestial_Armaments
 obj/Skills/Projectile
 	Warp_Strike_MasterOfArms
 		name = "Divine Warp Strike"
-		HomingCharge = 2
+		Homing = 1
 		IconLock = 'Blast2.dmi'
 		Variation = 4
 		Distance = 25

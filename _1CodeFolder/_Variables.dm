@@ -480,6 +480,7 @@ mob/var
 	EnergyAssimilators=0
 	EnhancedSmell=0
 	BioAndroid=0
+	SuperAndroid=0
 	CyberneticMainframe
 	SampleCollected=0
 	list/bio_samples = null      // collected genetic samples, list of "RaceName:Tier" strings

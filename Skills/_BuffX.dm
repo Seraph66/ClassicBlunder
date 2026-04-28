@@ -68,6 +68,9 @@ NEW VARIABLES
 	var/list/ABuffNeeded=null
 	var/SBuffNeeded//special buff req
 	var/UBuffNeeded//universal (slotless) buff req, not used/implemented yet
+	var/ABBuffer //activates w/ any active buff
+	var/SBBuffer //activates w/ any slotless buff
+	var/STBuffer // activates w/ any active style
 	var/NeedsAnger//Cant use the buff before youre angry.
 	var/NeedsHealth//Cant use the buff before youre below x health.
 	var/NeedsSSJ//defines if buff only can be used in SSJ and in what level
@@ -138,6 +141,8 @@ NEW VARIABLES
 	var/ArmamentGlowSize
 	var/AwakeningRequired
 	var/GatesNeeded
+
+
 
 	var/BleedHit //Makes you deal damage to yourself when you hit.
 	var/ManaLeak //Makes you spend mana when you hit
@@ -1314,7 +1319,7 @@ NEW VARIABLES
 									src.ActiveMessage="calls forth the true form of █████████████, the ███████ of ████████!"
 									src.OffMessage="conceals █████████████.."
 						if("Soul Edge")
-							passives = list("AbyssMod" = usr.SagaLevel, "Steady" = usr.SagaLevel, "Extend" = 1, "BleedHit" = 1, "PULock" = 1)
+							passives = list("AbyssMod" = usr.SagaLevel, "Steady" = usr.SagaLevel, "Extend" = 1, "BleedHit" = 0.25, "PULock" = 1)
 							if(!redacted)
 								src.SwordName="Soul Edge"
 								src.ActiveMessage="calls forth the true form of Soul Edge, the Blade of Chaos!"
@@ -1955,9 +1960,6 @@ NEW VARIABLES
 							AutoAnger=1
 							passives = list("Maki" = 1, "Curse" = 1, "LifeGeneration" = 1, "Deflection" = 2, "AutoAnger" = 1, "Reversal" = Mastery/10)
 							CalmAnger=0
-					if(src.Mastery==1)
-						usr << "You don't have enough of a rapport to manipulate your demon at will!"
-						return
 					src.Trigger(usr)
 			Vaizard_Mask
 				SignatureTechnique=3
@@ -3012,7 +3014,7 @@ NEW VARIABLES
 				KenWaveBlend=2
 				KenWaveIcon='KenShockwavePurple.dmi'
 				IconTint=list(0.7,0.3,0.6, 0.99,0.59,0.88, 0.51,0.11,0.4, 0,0,0)
-				passives = list("ManaLeak" = 1, "MovementMastery" = 10, "SpiritSword" = 0.25, "SpiritHand" = 0.25,"Deicide" = 5)
+				passives = list("ManaLeak" = 1, "SpiritSword" = 0.25, "SpiritHand" = 0.25,"Deicide" = 5)
 				SureHitTimerLimit=30
 				ActiveMessage="breaches into a higher domain through the power of cybernetics!"
 				OffMessage="returns to the standard domain."
@@ -3021,7 +3023,7 @@ NEW VARIABLES
 					ForMult = 1.2 + (0.1*p.AscensionsAcquired)
 					StrMult = 1.2 + (0.1*p.AscensionsAcquired)
 					DefMult = 0.6 + (0.05*p.AscensionsAcquired)
-					passives = list("ManaLeak" = 1 - (p.AscensionsAcquired/10), "MovementMastery" = 4+p.AscensionsAcquired, \
+					passives = list("ManaLeak" = 1 - (p.AscensionsAcquired/10), "EndlessNine" = 0.1*p.AscensionsAcquired, \
 					"Deicide" = 5*p.AscensionsAcquired, "SpiritSword" = 0.25*p.AscensionsAcquired, "SpiritHand" = 0.25*p.AscensionsAcquired)
 
 				verb/Hilbert_Effect()
@@ -9224,6 +9226,15 @@ NEW VARIABLES
 					usr.DomainExpansion(src)
 				else
 					usr.stopDomainExapansion()
+		Domain_Lock
+			Slotless = 1
+			BuffName = "Domain Lock"
+			TimerLimit = 300
+			ActiveMessage = "is sealed from manifesting domains and duels!"
+			OffMessage = "is no longer domain locked."
+			IconLock = 'BLANK.dmi'
+			LockX = -32
+			LockY = -32
 		Dividing_Driver
 			WarpZone=1
 			Duel=1
@@ -9758,7 +9769,6 @@ NEW VARIABLES
 				HealthThreshold=0.1
 				adjust(mob/p)
 					if(!altered)
-						var/currentPot = p.Potential
 						var/secretLevel = p.secretDatum.currentTier
 						if(p.Health<50)
 							secretLevel+=1
@@ -9783,9 +9793,9 @@ NEW VARIABLES
 								SpiralPower=7
 						StrMult=1.25 + (0.03*secretLevel*secretLevel)
 						ForMult=1.25 + (0.03*secretLevel*secretLevel)
-						EndMult=1.25 + (0.03*secretLevel*secretLevel)
+						EndMult=1.25 + (0.035*secretLevel*secretLevel)
 						passives = list("SpiralPowerUnlocked" = SpiralPower, "PureDamage" = SpiralPower, "PureReduction" = SpiralPower)
-						TimerLimit= (2 * currentPot) + (10 * (p.transUnlocked ? p.transUnlocked : p.AscensionsAcquired))
+						TimerLimit= (10 * (p.transUnlocked ? p.transUnlocked : p.AscensionsAcquired))
 						Cooldown = 61 - ((5 * p.AscensionsAcquired) + (5 * secretLevel))
 				KenWave = 2
 				KenWaveIcon='SparkleGreen.dmi'
@@ -12452,6 +12462,9 @@ mob
 				if(src.absorbedBy && (B.WarpZone || B.Duel || istype(B, /obj/Skills/Buffs/SlotlessBuffs/Domain_Expansion)))
 					src << "You cannot invoke duel or domain techniques while absorbed."
 					return
+				if(src.HasDomainLock() && (B.WarpZone || B.Duel || istype(B, /obj/Skills/Buffs/SlotlessBuffs/Domain_Expansion)))
+					src << "You cannot use domain or duel techniques while <b>Domain Lock</b> is active."
+					return
 				if(B.WarpZone)
 					if(!B.WarpX||!B.WarpY||!B.WarpZ)
 						src << "Your duel location hasn't been set!"
@@ -12737,7 +12750,6 @@ mob
 				src:move_speed = MovementSpeed()
 
 		AddActiveBuff()
-
 			if(src.ActiveBuff.BuffName=="Ki Control")
 				if(src.passive_handler.Get("Anaerobic"))
 					src.ActiveBuff.passives["PUSpike"] = 25
@@ -13825,7 +13837,7 @@ mob
 				src.SenseUnlocked+=B.SenseUnlocked
 			if(B.Afterimages)
 				src.Afterimages+=1
-			if(B.AutoAnger || B.passives["AutoAnger"])
+			if((B.AutoAnger || B.passives["AutoAnger"]) && !src.AutoBerserkOptOut)
 				Anger()
 				passive_handler.Increase("EndlessAnger")
 			if(B.CalmAnger)
@@ -14326,7 +14338,7 @@ mob
 				src.SenseUnlocked-=B.SenseUnlocked
 			if(B.Afterimages)
 				src.Afterimages-=B.Afterimages
-			if(B.AutoAnger || B.passives["AutoAnger"])
+			if((B.AutoAnger || B.passives["AutoAnger"]) && !src.AutoBerserkOptOut)
 				if(passive_handler.Get("EndlessAnger"))
 					passive_handler.Decrease("EndlessAnger")
 				src.Calm()
@@ -14742,6 +14754,11 @@ mob
 
 mob
 	proc
+		HasDomainLock()
+			if(src.SlotlessBuffs && src.SlotlessBuffs["Domain Lock"])
+				return 1
+			return 0
+
 		BuffOn(var/obj/Skills/Buffs/B)
 			if(src.StanceBuff)
 				if(src.StanceBuff.type==B.type)

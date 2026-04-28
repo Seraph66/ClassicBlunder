@@ -5,7 +5,7 @@ obj/Items/Sword/Medium/Legendary/WeaponSoul/Blade_of_Ruin//Dainsleif
 	icon='Dainsleif.dmi'
 	Destructable=0
 	ShatterTier=0
-	Ascended=3
+	Ascended=6
 	passives = list("Shearing" = 1, "CursedWounds" = 1, "MortalStrike" = 0.5)
 	var/hasKilled = FALSE
 	proc/drawDainsleif(mob/p)
@@ -67,7 +67,7 @@ obj/Skills/Queue
 		HitMessage="upward slash rends their target! The trickles of ichor form into a red barrier!"
 		ActiveMessage="sword gleams blood red!"
 		ABuffNeeded="Soul Resonance"
-		DamageMult=0.75
+		DamageMult=3
 		FollowUp="/obj/Skills/AutoHit/Bloody_CravingEnhanced"
 		FollowUpDelay=1
 		Duration=5
@@ -93,7 +93,7 @@ obj/Skills/AutoHit/Bloody_CravingEnhanced
 	PostShockwave=0
 	Shockwave=2
 	Shockwaves=2
-	DamageMult=5
+	DamageMult=7
 	Knockback=0
 	Distance=8
 	HitSparkIcon='Hit Effect Vampire.dmi'
@@ -113,7 +113,7 @@ obj/Skills/AutoHit/Destined_Death
 	Area="Circle"
 	StrOffense=1
 	EndDefense=1
-	DamageMult=2
+	DamageMult=8
 	Shearing=10
 	CursedWounds=1
 	ComboMaster=1

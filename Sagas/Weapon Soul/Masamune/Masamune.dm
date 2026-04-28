@@ -2,7 +2,7 @@ obj/Items/Sword/Light/Legendary/WeaponSoul/Sword_of_Purity//Masamune
 	name="Sword of Purity"
 	icon='Masamune.dmi'
 	passives = list("Purity" = 1)
-	Ascended=3
+	Ascended=6
 	ShatterTier=0
 	Destructable=0
 

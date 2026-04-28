@@ -76,6 +76,9 @@ mob
 		DomainExpansion(obj/Skills/Buffs/SlotlessBuffs/Domain_Expansion/buff)
 			if(!buff)
 				return
+			if(HasDomainLock())
+				src << "You cannot release a Domain while <b>Domain Lock</b> is active."
+				return
 			if(!buff.customTurfIcon)
 				AdminMessage("[src] tried to use Domain Expansion but the buff has no custom turf icon set. Recreate the skill via Give Domain Expansion.")
 				src << "Your Domain Expansion is not set up. Admins alerted."
@@ -174,6 +177,9 @@ mob
 
 		UnlimitedBladeWorks()
 			if(usingUBW) return
+			if(HasDomainLock())
+				src << "You cannot unfold Unlimited Blade Works while <b>Domain Lock</b> is active."
+				return
 			if(absorbedBy)
 				src << "You cannot unfold Unlimited Blade Works while absorbed."
 				return

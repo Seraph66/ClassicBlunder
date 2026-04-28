@@ -6,7 +6,7 @@ obj/Items/Sword/Medium/Legendary/WeaponSoul/Sword_of_Faith // Kusanagi
 	passives = list("MagicSword" = 1, "QuickCast" = 3, "MovingCharge" = 1)
 	ShatterTier=0
 	Destructable=0
-	Ascended=3
+	Ascended=6
 	MagicSword=1
 	TierTechniques=list(null, null, null, null, null, "/obj/Skills/Buffs/SlotlessBuffs/Totsuka_no_Tsurugi")
 
@@ -31,7 +31,7 @@ obj/Skills/AutoHit/Gale_Slash
 	Knockback = 5
 	ActiveMessage="lets loose a sweeping gale of wind around them!"
 	adjust(mob/p)
-		DamageMult = 0.5 + (p.SagaLevel/4)
+		DamageMult = 3 + (p.SagaLevel/2)
 		Launcher = 0.5 + (p.SagaLevel/2)
 	verb/Gale_Slash()
 		set category="Skills"

@@ -2,7 +2,7 @@ obj/Skills/AutoHit/Gaze_of_Despair
 	NeedsSword=1
 	Distance=8
 	Gravity=5
-	DamageMult=3.5
+	DamageMult=7
 	DelayTime=5
 	StrOffense=1
 	Rounds = 5

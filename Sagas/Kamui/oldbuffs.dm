@@ -67,3 +67,32 @@
 					if(ks.suffix)
 						ks.AlignEquip(usr)
 					del ks
+
+// Admin escape verb for the KamuiBuffLock-stuck bug. The flag is set above
+// when Senketsu/Junketsu crumbles at the end of the saga arc but no code path
+// resets it, so any character that lost their Kamui is permanently locked out
+// of the Special Buff slot. This verb is the manual override.
+/mob/Admin1/verb/Clear_Kamui_Buff_Lock(mob/M as mob in world)
+	set category = "Admin"
+	set desc = "Reset KamuiBuffLock=0 on a target mob. Fixes 'Your special buffs are locked out!' caused by stale Kamui state."
+	if(!M)
+		return
+	if(!M.KamuiBuffLock)
+		src << "[M] does not have KamuiBuffLock set."
+		return
+	M.KamuiBuffLock = 0
+	src << "Cleared KamuiBuffLock on [M]."
+	M << "<font color=#cc6633>[src] cleared a stale Kamui lock on you. Your Special Buff slot is freed.</font>"
+
+
+// Auto-clear KamuiBuffLock if the player no longer carries a Kamui item — the
+// lock represents a literal lost-Kamui state, so when there's no Kamui obj in
+// the player's contents anymore the lock is meaningless. Called from the gain
+// loop so existing locked players unstick on their next tick. Cheap, idempotent.
+/mob/proc/AutoClearStaleKamuiLock()
+	if(!src.KamuiBuffLock)
+		return
+	for(var/obj/Items/Symbiotic/Kamui/K in src)
+		return  // still has a Kamui — lock might be valid
+	src.KamuiBuffLock = 0
+	src << "<font color=#888888>(Stale Kamui lock cleared automatically — your Special Buff slot is freed.)</font>"

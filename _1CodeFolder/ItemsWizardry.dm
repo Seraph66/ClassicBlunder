@@ -158,7 +158,7 @@ obj/Items/Enchantment
 
 	Limited_Rank_Up_Magic
 		name = "Limited Rank-Up Magic"
-		desc = "A mere fraction of the true potential of Rank-Up Magic. Only a Demon can make use of it."
+		desc = "A mere fraction of the true potential of Rank-Up Magic. Only Demons and Makaioshins can make use of it."
 		Cost = 2000
 		Grabbable = 1
 		EnchType = "BasicEnchantment"
@@ -169,8 +169,8 @@ obj/Items/Enchantment
 			set src in usr
 			if(!usr.Move_Requirements())
 				return
-			if(!usr.isRace(DEMON))
-				usr << "The magic within churns violently and rejects you. Only a Demon can withstand Limited Rank-Up."
+			if(!usr.isRace(DEMON) && !usr.isRace(MAKAIOSHIN))
+				usr << "The magic within churns violently and rejects you. Only a Demon or Makaioshin can withstand Limited Rank-Up."
 				return
 			if(usr.passive_handler && usr.passive_handler.Get("Limited Rank-Up"))
 				usr << "You already bear the magic of Limited Rank-Up."

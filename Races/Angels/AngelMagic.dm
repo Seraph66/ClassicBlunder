@@ -89,6 +89,9 @@
 							if(cd)
 								User.Activate(cd)
 								spawn(2)
+									if(User.isRace(MAKAIOSHIN) && User.passive_handler && User.passive_handler.Get("Limited Rank-Up"))
+										// Rank-Up
+										return
 									User.cooldownAllChaosSkills()
 							else
 								User << "You lack the knowledge to complete this technique."

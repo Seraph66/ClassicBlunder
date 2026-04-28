@@ -968,7 +968,7 @@ obj/Skills/Utility
 				Upgrades.Add("Silver")
 				Upgrades.Add("Ultima!?")
 				Upgrades.Add("Ultima (True)")
-					
+
 			if(Chosen:HighFrequency>=1)
 				Upgrades.Remove("Fire")
 				Upgrades.Remove("Water")
@@ -995,7 +995,7 @@ obj/Skills/Utility
 					if(Chosen:Ascended + 1 > glob.progress.maxAscension && !usr.MasterCrafts)
 						usr<<"Ascending [Chosen] is beyond your abilities."
 						return
-					Cost*=5*(3**Chosen:Ascended)
+					Cost*=5*(2**Chosen:Ascended)
 
 				//T2
 				if("Poison")
@@ -1252,7 +1252,7 @@ obj/Skills/Utility
 					if(Chosen:Ascended + 1 > glob.progress.maxAscension && !usr.MasterCrafts)
 						usr<<"Ascending [Chosen] is beyond your abilities."
 						return
-					Cost*=5*(3**Chosen:Ascended)
+					Cost*=5*(2**Chosen:Ascended)
 
 				//T2
 				if("Poison")
@@ -2642,6 +2642,9 @@ obj/Skills/Utility
 			if(src.Using)
 				usr << "You're already preparing to perform surgery!"
 				return
+			if(usr.KO)
+				usr << "You can't perform surgery while knocked out!"
+				return
 			if(usr.HasPiloting()||usr.HasPossessive())
 				usr << "You're not capable of necessary precision!"
 				return
@@ -3194,9 +3197,9 @@ obj/Skills/Utility
 					ModChoices.Add("Repair")
 				if("Singularity" in usr.knowledgeTracker.learnedKnowledge || (usr.isRace(ANDROID)))
 					ModChoices.Add("Biological Cybernetics")
-			if(M.BioAndroid)
+			if(M.BioAndroid||M.SuperAndroid)
 				ModChoices.Remove("Biological Cybernetics")
-			if(M.CyberneticMainframe)
+			if(M.CyberneticMainframe||M.isRace(ANDROID)&&M.Potential<30)
 				ModChoices.Remove("Cybernetic Mainframe")
 
 			ModChoice=input(usr, "What modification would you like to install?", "Cybernetic Augmentation") in ModChoices
@@ -3564,6 +3567,10 @@ obj/Skills/Utility
 						src.Using=0
 						return
 					M.CyberneticMainframe=1
+					if(M.isRace(ANDROID))
+						M.SuperAndroid=1
+						M.transUnlocked=1
+						M.race.transformations += new /transformation/android/super_android()
 					M.AddSkill(new/obj/Skills/Utility/Cyborg_Integration)
 				if("Repair")
 					M.Maimed=0

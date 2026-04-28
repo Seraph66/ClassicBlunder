@@ -15,6 +15,14 @@
 #define MAJIN_BASE_SKILLS_PER_VICTIM 2
 #define MAJIN_SUPER_ABSORB_BONUS 2 // Extra absorb slots for the Super class.
 #define MAJIN_SUPER_SKILL_BONUS 2 // Extra skill-per-victim slots for the Super class.
+#define MAJIN_SUPER_DIGESTED_SKILL_DMG_MULT 1.5
+
+// Digestion: 4 rolls at 24h intervals, each at 25/50/75/100% respectively.
+#define MAJIN_DIGEST_INTERVAL_HOURS 24
+#define MAJIN_DIGEST_TOTAL_ROLLS 4
+#define MAJIN_DIGEST_PERCENT_PER_ROLL 25
+// Polling cadence
+#define MAJIN_DIGEST_CHECK_CADENCE (5 MINUTES)
 
 // NOTE: MAJIN_ABSORB_Z and MAJIN_UNHINGED_POWER_MULT live in
 // _1CodeFolder/__Defines.dm because core files (Stats.dm,
@@ -49,6 +57,7 @@ majinAbsorb/New(mob/Players/p)
             p<<"You are not a Majin!"
             return
         updateVariables(p)
+        StartDigestionLoop(p)
 
 /mob/var/tmp/blobDropper/majinPassive = null
 /mob/var/majinAbsorb/majinAbsorb = null
@@ -57,6 +66,7 @@ majinAbsorb/New(mob/Players/p)
 
 /mob/var/absorbedBy = null
 /mob/var/majinRoomIndex = 0 // which room (1..MAJIN_ROOM_COUNT) they were placed into.
+/mob/var/absorbedAtTimestamp = 0
 /mob/var/tmp/majinCheatFXRunning = 0
 /mob/var/tmp/majinCheatDeathInProgress = 0
 

@@ -17,6 +17,18 @@ mob/proc/getVoidRolls(extraRolls = 0)
 			totalExtraVoidRolls--
 	return rolls
 
+mob/proc/RollVoidForAbsorb()
+	if(NoVoid) return FALSE
+	if(!glob.VoidsAllowed) return FALSE
+	var/Chance = getExtraVoidChance()
+	var/rolls = getVoidRolls()
+	while(rolls > 0)
+		var/roll = rand(Chance, 100)
+		if(roll >= 100-glob.VoidChance)
+			return TRUE
+		rolls--
+	return FALSE
+
 /mob/Admin3/verb/AdminVoid()
 	set category = "Admin"
 	set name = "Void"

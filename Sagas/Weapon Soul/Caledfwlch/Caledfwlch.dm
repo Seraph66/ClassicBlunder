@@ -5,7 +5,7 @@ obj/Items/Sword/Medium/Legendary/WeaponSoul/Sword_of_Glory//Caledfwlch
 	pixel_y=-30
 	var/caledLight = TRUE
 	passives = list("SpiritSword" = 0.25)
-	Ascended = 3
+	Ascended = 6
 	Destructable=0
 	ShatterTier=0
 
@@ -33,7 +33,7 @@ obj/Skills/Queue/Excalibur
 	PushOut=1
 	PushOutWaves=1
 	PushOutIcon='KenShockwaveGold.dmi'
-	DamageMult=1
+	DamageMult=3
 	AccuracyMult=1.5
 	KBMult=1
 	Duration=6
@@ -117,7 +117,7 @@ obj/Skills/Projectile/ExcaliburProjectile
 	Knockback=1
 	Trail='ExcaliTrail.dmi'
 	MultiHit=8
-	DamageMult=0.9
+	DamageMult=2
 	AccMult=1.5
 	Deflectable=0
 	Distance=20
@@ -153,7 +153,7 @@ obj/Skills/Projectile/Weapon_Soul
 		Distance=100
 		Cooldown = 60
 		adjust(mob/p)
-			DamageMult = 1 + (p.SagaLevel / 2)
+			DamageMult = 4 + p.SagaLevel
 			Radius = 3 + p.SagaLevel
 			IconSize = 1 + p.SagaLevel
 			Homing = 1 + p.SagaLevel
@@ -190,7 +190,7 @@ obj/Skills/Projectile/Weapon_Soul
 		Distance=100
 		Cooldown = 90
 		adjust(mob/p)
-			DamageMult = 0.25 + (p.SagaLevel / 4)
+			DamageMult = 6 + p.SagaLevel
 			Radius = 3 + p.SagaLevel
 			IconSize = 1 + p.SagaLevel
 			Homing = 1 + p.SagaLevel

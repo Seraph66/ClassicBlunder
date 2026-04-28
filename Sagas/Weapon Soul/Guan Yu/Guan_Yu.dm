@@ -5,7 +5,7 @@ obj/Items/Sword/Heavy/Legendary/WeaponSoul/Spear_of_War // "Green Dragon Crescen
 	icon = 'GreenDragonCrescentBlade_NoTrain.dmi'
 	Destructable=0
 	ShatterTier=0
-	Ascended=3
+	Ascended=6
 	passives = list("SweepingStrike" = 1)
 
 obj/Skills/Buffs/SpecialBuffs/Heavenly_Regalia/Guan_Yu

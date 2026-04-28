@@ -5562,9 +5562,9 @@ mob
 				if(Z.Area=="Around Target")
 					spawn()
 						if(Z.Falling)
-							LeaveDescendingImage(User=0, Image=i, PX=src.Target.pixel_x+Z.IconX, PY=src.Target.pixel_y+Z.IconY, PZ=src.Target.pixel_z+16+(32*Z.Rounds/10), Size=Z.Size, Under=Z.IconUnder, Time=(Z.Rounds-1*max(1,Time)), AltLoc=TrgLoc)
+							LeaveDescendingImage(User=0, Image=i, PX=src.Target.pixel_x+Z.IconX, PY=src.Target.pixel_y+Z.IconY, PZ=src.Target.pixel_z+16+(32*Z.Rounds/10), Size=Z.Size, Under=Z.IconUnder, Time=(Z.Rounds*max(1,Time)), AltLoc=TrgLoc)
 						else
-							LeaveImage(User=0, Image=i, PX=src.Target.pixel_x+Z.IconX, PY=src.Target.pixel_y+Z.IconY, PZ=src.Target.pixel_z+48, Size=Z.Size, Under=Z.IconUnder, Time=(Z.Rounds-1*max(1,Time)), AltLoc=TrgLoc)
+							LeaveImage(User=0, Image=i, PX=src.Target.pixel_x+Z.IconX, PY=src.Target.pixel_y+Z.IconY, PZ=src.Target.pixel_z+48, Size=Z.Size, Under=Z.IconUnder, Time=(Z.Rounds*max(1,Time)), AltLoc=TrgLoc)
 				else
 					if(Z.Persistent)
 						spawn()LeaveImage(User=null, Image=i, PX=src.pixel_x+Z.IconX, PY=src.pixel_y+Z.IconY, PZ=src.pixel_z+Z.IconZ, Size=Z.Size, Under=Z.IconUnder, Time=Z.Duration, AltLoc=TrgLoc)
@@ -6067,6 +6067,8 @@ obj
 			FollowUpDelay
 
 			DirectWounds
+			/// Set for all autohits built from a skill, used for on-hit hooks (currently just Enuma Elish).
+			var/obj/Skills/AutoHit/FromSkill
 
 		Update()
 			..()
@@ -6082,6 +6084,7 @@ obj
 			src.IgnoreAlreadyHit = Z.IgnoreAlreadyHit
 			toDeath = life
 			src.Owner=owner
+			src.FromSkill = Z
 			parentRounds = Z.Rounds
 
 			if(owner.Grab && !Z.GrabMaster)
@@ -6867,6 +6870,10 @@ obj
 				DEBUGMSG("FINAL TOTAL DAMAGE DEALT! [damageDealt]")
 				if(!damageDealt)
 					damageDealt = 0
+
+				if(istype(FromSkill, /obj/Skills/AutoHit/Enuma_Elish) && damageDealt)
+					var/obj/Skills/AutoHit/Enuma_Elish/ee = FromSkill
+					ee.EnumaElishOnHit(Owner, m, damageDealt)
 
 				if(ManaDrain)
 					m.LoseMana(ManaDrain)
