@@ -26,15 +26,14 @@ race
 					user.race.transformations -=HT
 					del HT
 			if(user.Class=="Underdog")
-				anger = 2
-				learning = 1.35
-				intellect = 2
-				economy=1
+				user.AngerMax = 2
+				user.RPPMult = 1.35
+				user.Intelligence = 2
+				passives += list("Motivation" = 0.75)
 			if(user.Class=="Heroic")
-				anger = 1.5
-				learning = 1.25
-				intellect = 2
-				economy=1
+				user.AngerMax = 1.5
+				user.RPPMult = 1.25
+				user.Intelligence = 2
 			if(user.Class=="Resourceful")
 				user.AngerMax= 1.25
 				user.RPPMult= 1.25

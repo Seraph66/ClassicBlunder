@@ -4,6 +4,7 @@
 		if(ElementalOffense) l |= ElementalOffense;
 		if(Infusion && InfusionElement) l |= InfusionElement;
 		if(StyleBuff && StyleBuff.ElementalOffense) l |= StyleBuff.ElementalOffense;
+		if(Class=="Reaper") l += "Death";
 		return l;
 	getElementalDefense()
 		var/list/l = list();
@@ -62,10 +63,6 @@ proc
 		for(var/element in attackElements)
 			var/DebuffRate=GetDebuffRate(element, defenseElements, ForcedDebuff)
 			var/CelestialDebuffRate=1
-			if(Attacker.isRace(CELESTIAL, DEMON, MAKAIOSHIN))
-				CelestialDebuffRate=0.2*(Attacker.AscensionsAcquired+1)
-				if(CelestialDebuffRate>1)
-					CelestialDebuffRate=1
 			if(Attacker.SenseUnlocked>5&&Attacker.SenseUnlocked>Attacker.SenseRobbed)
 				DebuffRate+=10*(Attacker.SenseUnlocked-5)
 			if(Defender.HasDebuffResistance())
@@ -179,7 +176,10 @@ proc
 						Defender.AddShock(2*DebuffIntensity*glob.SHOCK_INTENSITY, Attacker)
 					if("Death")
 						if(prob(glob.CHAOS_CHANCE))
-							Defender.AddDoom(1, Attacker)
+							if(Attacker.passive_handler.Get("Death Incarnate"))
+								Defender.AddDoom(1, Attacker, 1)
+							else
+								Defender.AddDoom(1, Attacker, 0)
 					if("Rain")
 						Defender.AddSlow(4*DebuffIntensity*glob.SLOW_INTENSITY, Attacker)
 						Defender.AddShock(4*DebuffIntensity*glob.SHOCK_INTENSITY, Attacker)
@@ -445,7 +445,8 @@ mob
 
 
 			if(Attacker)
-				if(Attacker.passive_handler["EarthHerald"] && src.Shatter >= 100)
+				var/eh = Attacker.getEarthHerald()
+				if(eh && Shatter >= (100 / eh))
 					implodeDebuff(100, "Shatter")
 
 			if(src.Shatter>100)
@@ -608,7 +609,7 @@ mob
 			if(src.Stasis)
 				return
 			src.Anger(Enraged=1)
-		AddDoom(var/Value, var/mob/Attacker=null)
+		AddDoom(var/Value, var/mob/Attacker=null, var/DI)
 			if(src.Stasis)
 				return
 			if(src.DownToEarth)
@@ -626,12 +627,14 @@ mob
 					if(src.BioArmor)
 						src.BioArmor*=0.95
 					return
-				src.Health*=0.75
 				src.VaizardHealth/=2
+				src.ManaAmount/=4
 				src.Doomed=0
 				src<<"<b><font color='red'>Death passes you by, and takes a piece of you along with it.</font color></b>"
 				OMsg(src, "<b><font color='purple'>The bell tolls for [src],</font color></b>")
 				src.DownToEarth=100
+				if(DI)
+					src.Health*=0.75
 				if(src.HasGodKi()||src.HasMaouKi())
 					src<<"<b><font color='red'>Death comes for all, even those with the power of Gods. Your divinity has been temporarily forfeit.</font color></b>"
 

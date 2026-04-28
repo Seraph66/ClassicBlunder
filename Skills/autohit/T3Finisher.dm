@@ -39,3 +39,50 @@
         HitSparkTurns=1
         HitSparkSize=3
         Instinct=3
+
+    Urda_Impulse
+        Area="Strike"
+        DamageMult=T3_DMG_MULT/2;
+        Rush=3
+        RushDelay=0.1
+        ControlledRush=1
+        Stunner=2
+        Knockback=0
+        AdaptRate=1
+        HitSparkIcon='Hit Effect.dmi'
+        HitSparkX=-32
+        HitSparkY=-32
+        ActiveMessage="glides forward and rams through everything in their path!"
+
+    Albion
+        Area="Target"
+        Distance=8
+        DamageMult=T3_DMG_MULT;
+        AdaptRate=1
+        NoLock=1
+        NoAttackLock=1
+        CanBeDodged=0
+        CanBeBlocked=0
+        Cooldown=10
+        HitSparkIcon='Hit Effect.dmi'
+        HitSparkX=-32
+        HitSparkY=-32
+        ActiveMessage="grounds themselves before shooting out a powerful blast of energy!"
+
+    Desdemona
+        Area="Target"
+        Distance=8
+        Rounds=2
+        DamageMult=T3_DMG_MULT;
+        Burning=100
+        Poisoning=100
+        AdaptRate=1
+        NoLock=1
+        NoAttackLock=1
+        CanBeDodged=0
+        CanBeBlocked=0
+        Cooldown=10
+        HitSparkIcon='Hit Effect.dmi'
+        HitSparkX=-32
+        HitSparkY=-32
+        ActiveMessage="hurls flames of darkness from their hands that carry the power of the abyss!"

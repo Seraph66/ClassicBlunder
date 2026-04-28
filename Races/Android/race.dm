@@ -14,6 +14,7 @@ race
 		economy = 3
 		regeneration = 1.5
 		statPoints = 20
+		learning = 1.25
 		anger = 1
 		imagination = 0.05
 		anger_message = "calculates the ideal path to victory."

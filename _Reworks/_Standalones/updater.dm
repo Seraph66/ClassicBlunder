@@ -17,7 +17,7 @@ proc/generateVersionDatum()
 		glob.currentUpdate = updateversion
 
 globalTracker
-	var/UPDATE_VERSION = 3
+	var/UPDATE_VERSION = 7
 	var/tmp/update/currentUpdate
 
 	proc/updatePlayer(mob/p)
@@ -97,8 +97,60 @@ update
 					mp.passives["ManaGeneration"] = 2;
 					p.passive_handler.Decrease("ManaGeneration", 3);
 					p << "Your Advanced Element Pinnacles have had their Mana Generation reduced. This should only trigger once per element."
-				
-					
+	version4
+		version = 4;
+		updateMob(mob/p)
+			. = ..()//left alone for easy copy pasting
+			if(p.isRace(NOBODY)||p.isRace(ANDROID))
+				p.refundNewMagicTree()
+				p.RPPMult*=1.25
+				if(p.isRace(NOBODY))
+					p.passive_handler.Set("Longing", 1)
+					p.passive_handler.Set("Emptiness", 1)
+					if(p.Class=="Samurai")
+						p.passive_handler.Set("EmptyFlashStep", 1)
+				if(p.isRace(ANDROID))
+					if(p.AscensionsAcquired==1)
+						p.EnhanceChipsMax +=2
+			if(p.isRace(HUMAN))
+				if(p.Class=="Underdog")
+					p.AngerMax=2
+					p.RPPMult = 1.35
+	version5
+		version = 5;
+		updateMob(mob/p)
+			. = ..()//left alone for difficult copy pasting
+			if(p.isRace(HALFSAIYAN))
+				p.stat_redo()
+			if(p.isRace(HUMAN))
+				if(p.Class=="Underdog")
+					p.passive_handler.Increase("Motivation", 0.25)
+					if(p.AscensionsAcquired==1)
+						p.passive_handler.Increase("Motivation", 0.1)
+	version6
+		version = 6;
+		updateMob(mob/p)
+			. = ..()//left alone for slightly easier copy pasting
+			if(p.isRace(HALFSAIYAN))
+				p.stat_redo()
+			if(p.isRace(HUMAN))
+				if(p.Class=="Underdog")
+					p.passive_handler.Increase("Motivation", 0.5)
+				if(!p.passive_handler.Get("Shonen"))
+					if(p.AscensionsAcquired==1)
+						p.passive_handler.Increase("Shonen", 1)
+						p.passive_handler.Increase("ShonenPower", 0.15)
+						p.passive_handler.Increase("UnderDog", 1)
+						p.passive_handler.Increase("Persistence", 1)
+						admins<< "[p] had their missed ascension passives applied. If they already had them, whoops, I fucked up"
+	version7
+		version = 7;
+		updateMob(mob/p)
+			. = ..()//left alone for easy copy pasting
+			if(p.ArmamentEnchantmentUnlocked>=5||("Soul Infusion" in p.knowledgeTracker.learnedMagic))
+				if(!locate(/obj/Skills/Utility/Enchant_Equipment, p))
+					p.AddSkill(new/obj/Skills/Utility/Enchant_Equipment)
+					p << "Your knowledge of Soul Infusion grants you the Enchant Equipment skill."
 
 /globalTracker/var/COOL_GAJA_PLAYERS = list("Thorgigamax", "Gemenilove" )
 /globalTracker/var/GAJA_PER_ASC_CONVERSION = 0.25

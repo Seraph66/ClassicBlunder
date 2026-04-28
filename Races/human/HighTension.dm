@@ -23,9 +23,11 @@
             var/mult = getHighTensionMult();
             DEBUGMSG("tension mult triggered! increased by [mult]x");
             tensionGain *= getHighTensionMult();
-        if(ants) tensionGain += ants;
 
-        src.addTension(val, maxTension);
+        if(ants) tensionGain += ants;
+        if(passive_handler.Get("Ashen One"))
+            tensionGain*=1+(Burn/glob.ASHEN_TENSION_DIVISOR)
+        src.addTension(tensionGain, maxTension);
 
     addTension(val, maxVal)
         if(val==maxVal) return

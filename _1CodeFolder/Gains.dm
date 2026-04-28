@@ -306,6 +306,11 @@ var/game_loop/mainLoop = new(0, "newGainLoop")
 	if(!client)
 		mainLoop -= src
 		return
+	// One-shot stale-Kamui-lock cleanup. Proc short-circuits on its first line
+	// once the lock clears, so per-tick cost is one var read for any player
+	// without a stuck lock. Locked players unstick on their next gain tick.
+	if(KamuiBuffLock)
+		AutoClearStaleKamuiLock()
 	if(src.KO&&src.icon_state!="KO")
 		src.icon_state="KO"
 	if(src.PureRPMode)
@@ -358,6 +363,7 @@ mob
 			var/distance = get_dist(Target, src)
 			if((glob.BREAK_TARGET_ON_Z_CHANGE && Target.z != src.z) || (glob.BREAK_TARGET_ON_DIST && distance >= glob.BREAK_TARGET_ON_DIST))
 				Target = null
+		MajinAbsorbZoneSafeguard()
 		checkHealthAlert()
 
 		if(src.Grab) src.Grab_Update()
@@ -914,7 +920,7 @@ mob
 				cursedSheathValue = clamp(0, cursedSheathValue, SagaLevel*50)
 				if(client && hudIsLive("CursedSheath", /obj/Bar))
 					client.hud_ids["CursedSheath"]?:Update()
-			
+
 
 			if(src.SureHitTimerLimit)
 				if(!src.SureHit)
@@ -1453,7 +1459,7 @@ mob
 						if(b.Engrain)
 							src.Stasis = 1
 						if(b.TimerLimit)
-							if(!(istype(b, /obj/Skills/Buffs/SlotlessBuffs/Autonomous/Debuff/Charmed) && src.PureRPMode))
+							if(!(b.PauseInRP && src.PureRPMode))
 								if(!isnum(b.Timer))
 									b.Timer=0
 								b.Timer+=world.tick_lag
@@ -1465,14 +1471,21 @@ mob
 				if(B.Using)
 					del B
 
+			// AGLock depends only on src.contents and src.passive_handler — invariant
+			// for the duration of this gain tick. Compute once before the Autonomous
+			// loop instead of recomputing per-buff. Prior code was O(N_Autonomous ×
+			// N_Contents) per tick: a player with admin-granted "all skills" walked
+			// ~30 Autonomous × ~300 contents = ~9000 inner iterations every tick.
+			var/PrecomputedAGLock = 0
+			for(var/obj/Items/omni in src.contents)
+				if(omni.LocksOutAutonomous && omni.suffix=="*Equipped*")
+					PrecomputedAGLock = 1
+					break
+			if(src.passive_handler.Get("Utterly Powerless") && !src.passive_handler.Get("Our Future"))
+				PrecomputedAGLock = 1
 			for(var/obj/Skills/Buffs/SlotlessBuffs/Autonomous/A in src.Buffs)
 				//Activations
-				var/AGLock
-				for(var/obj/Items/omni in src.contents)
-					if(omni.LocksOutAutonomous && omni.suffix=="*Equipped*")
-						AGLock=1
-				if(src.passive_handler.Get("Utterly Powerless") && !src.passive_handler.Get("Our Future"))
-					AGLock=1
+				var/AGLock = PrecomputedAGLock
 				if(!A.SlotlessOn)
 					if(A.NeedsPassword&&!AGLock)
 						if(!A.Password)
@@ -1533,6 +1546,18 @@ mob
 						if(src.AwakeningSkillUsed>=A.AwakeningRequired)
 							A.Trigger(src,Override=1)
 							continue
+					if(A.ABBuffer)
+						if(src.ActiveBuff)
+							A.Trigger(src,Override=1)
+							continue
+					if(A.SBBuffer)
+						if(src.SpecialBuff)
+							A.Trigger(src,Override=1)
+							continue
+					if(A.STBuffer)
+						if(src.StyleActive)
+							A.Trigger(src,Override=1)
+							continue
 				if(A.AlwaysOn)
 					if(!A.Using&&!A.SlotlessOn)
 						A.Trigger(src,Override=1)
@@ -1570,11 +1595,23 @@ mob
 						if(src.StyleActive!=A.StyleNeeded)
 							A.Trigger(src,Override=1)
 							continue
+					if(A.ABBuffer)
+						if(!src.ActiveBuff)
+							A.Trigger(src,Override=1)
+							continue
+					if(A.SBBuffer)
+						if(!src.SpecialBuff)
+							A.Trigger(src,Override=1)
+							continue
+					if(A.STBuffer)
+						if(!src.StyleActive)
+							A.Trigger(src,Override=1)
+							continue
 					if(A.NeedsSSJ)
 						if(src.isRace(SAIYAN)&&src.transActive!=A.NeedsSSJ)
 							A.Trigger(src,Override=1)
 					if(A.TimerLimit)
-						if(!(istype(A, /obj/Skills/Buffs/SlotlessBuffs/Autonomous/Debuff/Charmed) && src.PureRPMode) && A.Timer>=A.TimerLimit)
+						if(!(A.PauseInRP && src.PureRPMode) && A.Timer>=A.TimerLimit)
 							A.Trigger(src,Override=1)
 							continue
 					if(A.AwakeningRequired)

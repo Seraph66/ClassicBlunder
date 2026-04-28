@@ -6,6 +6,10 @@
 /mob/proc/getCritAndBlock(mob/defender, damage)
 	var/critChance = passive_handler.Get("CriticalChance")
 	var/critDMG = passive_handler.Get("CriticalDamage")
+	var/denkoCharge = DenkoSekkaCharged
+	if(denkoCharge)
+		critChance += denkoCharge * glob.DENKO_SEKKA_CRIT_CHANCE_PER_LEVEL
+		DenkoSekkaCharged = 0
 	var/blockChance = 0
 	var/critBlock = 0
 	if(passive_handler["Determination(Red)"]||passive_handler["Determination(White)"])
@@ -28,7 +32,10 @@
 			if(defender.Saga && defender.SagaLevel)
 				blockChance += 5 + (2.5 * defender.SagaLevel)
 				critBlock += 0.1 + (0.05 * defender.SagaLevel)
-	if(prob(critChance))
+	var/didCrit = prob(critChance)
+	if(didCrit && denkoCharge)
+		critDMG += denkoCharge * glob.DENKO_SEKKA_CRIT_DAMAGE_PER_LEVEL
+	if(didCrit)
 		if(!AttackQueue)
 			if(passive_handler["ThunderHerald"])
 				var/obj/Skills/s = findOrAddSkill(/obj/Skills/AutoHit/Thunder_Bolt)

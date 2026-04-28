@@ -144,7 +144,7 @@ td{padding:3px 6px;border-bottom:1px solid #1a1a2e;font-size:9pt}
 <b>Style:</b> Str +90%, For +75%, Off +60%<br>
 Passives: Heavy Hitter, Scorching, Momentum, Brutalize, Martial Magic, Pure Damage<br><br>
 <b>Buff:</b> For x1.4, Str x1.35, Off x1.3<br>
-Passives: Scorching, Momentum, Fire Herald, Brutalize, Critical Damage, Demonic Durability
+Passives: Scorching, Momentum, Fire Herald, Brutalize, Critical Chance + Damage, Tenacity
 </div>
 "}
 
@@ -224,7 +224,7 @@ Passives: Chilling, Fluid Form, Ice Herald, Control Resist, Blubber, Melee Resis
 <b>Style:</b> Spd +90%, For +75%, Off +60%<br>
 Passives: Blurring Strikes, Attack Speed, Fury, Afterimages, Flicker<br><br>
 <b>Buff:</b> For x1.4, Spd x1.35, Off x1.3<br>
-Passives: Shocking, Afterimages, Thunder Herald, Blurring Strikes, Attack Speed, Godspeed
+Passives: Shocking, Afterimages, Thunder Herald, Blurring Strikes, Attack Speed, Godspeed, Denko Sekka
 </div>
 "}
 
@@ -264,7 +264,7 @@ Passives: Shocking, Afterimages, Thunder Herald, Blurring Strikes, Attack Speed,
 <b>Style:</b> End +90%, For +75%, Def +60%<br>
 Passives: Harden, Steady, Grit, Melee Resist, Tenacity, Pure Reduction<br><br>
 <b>Buff:</b> For x1.4, End x1.35, Def x1.3<br>
-Passives: Shattering, Harden, Earth Herald, Grit, Juggernaut, Critical Block
+Passives: Shattering, Harden, Earth Herald, Grit, Juggernaut, Block Chance + Critical Block
 </div>
 "}
 
@@ -343,9 +343,9 @@ Passives: Life Generation, Buff Mastery, Restoration, Debuff Resistance, Angelic
 <h2>Gestalt (Tier 3)</h2>
 <div class='bx'>
 <b>Style:</b> For +90%, Str +75%, Off +60%<br>
-Passives: Killer Instinct, Critical Chance, Life Steal, Pressure, Momentum, Sadist<br><br>
+Passives: Killer Instinct, Critical Chance + Damage, Life Steal, Pressure, Momentum, Brutalize<br><br>
 <b>Buff:</b> Str x1.4, For x1.35, Off x1.3<br>
-Passives: Killer Instinct, Pressure, Critical Chance, Life Steal, Demonic Infusion
+Passives: Killer Instinct, Pressure, Critical Chance + Damage, Life Steal, Demonic Infusion
 </div>
 "}
 

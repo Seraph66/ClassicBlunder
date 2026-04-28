@@ -5,7 +5,16 @@
 
 /mob/proc/unlockSpellSlot(magic_node/mn)
     for(var/t in mn.grantsSkills)
-        findOrAddSkill(t);
+        var/obj/Skills/granted = findOrAddSkill(t);
+        // If the granted spell lists "Grit" among its passives (e.g. Earth Ward of
+        // Stone), also grant the active dump skill so the listed passive is functional
+        // for non-Beastheart mages instead of decorative on the buff bar.
+        if(granted && istype(granted, /obj/Skills/Buffs))
+            var/obj/Skills/Buffs/granted_buff = granted
+            if(granted_buff.passives && ("Grit" in granted_buff.passives))
+                if(!FindSkill(/obj/Skills/Buffs/SlotlessBuffs/Racial/Beastkin/The_Grit))
+                    findOrAddSkill(/obj/Skills/Buffs/SlotlessBuffs/Racial/Beastkin/The_Grit)
+                    src << "Your magical resilience can now be channeled into a Vai Health shield."
 
 /mob/proc/getSpellSlots()
     var/list/slots = list()
@@ -37,16 +46,31 @@ var/list/allSpellPassives=list();
     // Reset all spell-passive-affected vars to their initial values before accumulating
     for(var/p in allSpellPassives)
         if(p in vars) vars["[p]"] = initial(vars["[p]"])
+    // For buff-type slots, also reset the associative passives list to its compile-time
+    // base before re-merging enchant contributions. Without this reset, repeated
+    // activations would stack the same enchant entries indefinitely. Hit-only vars
+    // (Scorching, Reinforcement, PureDamage, etc.) are no-ops on a buff because buffs
+    // don't run through autohit/projectile hit hooks — buff effects flow through the
+    // associative `passives` list which the passive_handler reads on BuffOn. So for
+    // buffs we route enchant `passives` and `buffOnlyPassives` into that list instead.
+    var/obj/Skills/Buffs/buffSrc = istype(src, /obj/Skills/Buffs) ? src : null
+    if(buffSrc)
+        var/list/initialPassives = initial(buffSrc.passives)
+        buffSrc.passives = initialPassives ? initialPassives.Copy() : list()
     // Apply modifications from all enchanted passives — these now stack correctly
     for(var/spell_passive/sp in SpellPassives)
         for(var/pass in sp.passives)
-            if(pass in MULT_EXCEPTIONS)
+            if(buffSrc)
+                if(buffSrc.passives[pass]) buffSrc.passives[pass] += sp.passives[pass]
+                else buffSrc.passives[pass] = sp.passives[pass]
+            else if(pass in MULT_EXCEPTIONS)
                 vars["[pass]"] *= sp.passives["[pass]"]
             else if(pass in SET_EXCEPTIONS)
                 vars["[pass]"] = sp.passives["[pass]"]
             else
                 vars["[pass]"] += sp.passives["[pass]"]
         for(var/autoPass in sp.autohitOnlyPassives)
+            if(buffSrc) continue
             if(autoPass in MULT_EXCEPTIONS)
                 vars["[autoPass]"] *= sp.autohitOnlyPassives["[autoPass]"]
             else if(autoPass in SET_EXCEPTIONS)
@@ -54,6 +78,7 @@ var/list/allSpellPassives=list();
             else
                 vars["[autoPass]"] += sp.autohitOnlyPassives["[autoPass]"]
         for(var/projPass in sp.projectileOnlyPassives)
+            if(buffSrc) continue
             if(projPass in MULT_EXCEPTIONS)
                 vars["[projPass]"] *= sp.projectileOnlyPassives["[projPass]"]
             else if(projPass in SET_EXCEPTIONS)
@@ -61,7 +86,10 @@ var/list/allSpellPassives=list();
             else
                 vars["[projPass]"] += sp.projectileOnlyPassives["[projPass]"]
         for(var/buffPass in sp.buffOnlyPassives)
-            if(buffPass in MULT_EXCEPTIONS)
+            if(buffSrc)
+                if(buffSrc.passives[buffPass]) buffSrc.passives[buffPass] += sp.buffOnlyPassives[buffPass]
+                else buffSrc.passives[buffPass] = sp.buffOnlyPassives[buffPass]
+            else if(buffPass in MULT_EXCEPTIONS)
                 vars["[buffPass]"] *= sp.buffOnlyPassives["[buffPass]"]
             else if(buffPass in SET_EXCEPTIONS)
                 vars["[buffPass]"] = sp.buffOnlyPassives["[buffPass]"]

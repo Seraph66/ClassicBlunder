@@ -1,6 +1,11 @@
 #define GLOBAL_LEAK_REDUCTION 1.2
 #define isplayer(x) istype(x,/mob/Players)
 
+// Was previously in MajinAscensions.dm
+/mob/proc/prompt(message, title, list/options)
+	if(!islist(options)) return null
+	return input(src, message, title) in options
+
 /globalTracker/var/DEBUFF_EFFECTIVENESS = 0.004
 
 /mob/var/AbsorbingDamage = 0
@@ -285,10 +290,11 @@ mob
 
 
 			if(UnarmedAttack || SwordAttack || SpiritAttack)
+				var/Motivation=1+passive_handler.Get("Motivation")
 				if(src.StyleBuff && canGainTension())
 					src.gainTension(val);
 				if(defender && defender.StyleBuff && defender.canGainTension())
-					defender.gainTension(val*glob.DEFENDER_TENSION_REDUCER);
+					defender.gainTension((val*Motivation)*glob.DEFENDER_TENSION_REDUCER);
 
 			var/leakVal = val/GLOBAL_LEAK_REDUCTION
 			if(passive_handler.Get("Corruption"))
@@ -496,6 +502,11 @@ mob
 				HealFatigue(gen/2);
 			if(HasManaGeneration())
 				HealMana(src.GetManaGeneration()/glob.MANA_GEN_DIVISOR);
+			if(defender.DownToEarth)
+				var/gen=5/glob.ENERGY_GEN_DIVISOR;
+				HealEnergy(gen);
+				HealFatigue(gen/2);
+				HealMana(5/glob.MANA_GEN_DIVISOR);
 
 			if(src.ActiveBuff&&src.CheckActive("Keyblade")&&!src.SpecialBuff)
 				src.ManaAmount+=(0.25*src.SagaLevel)
@@ -881,8 +892,9 @@ mob
 			//	if(src.Kaioken)
 			//		if(src.Anger)
 			//			val*=src.Anger
-				if(src.PotionCD)
+				/* if(src.PotionCD)
 					val*=1.25
+					*/
 			var/PrideDrain
 			if(passive_handler.Get("Pride"))
 				PrideDrain=(100-Health)*0.01
@@ -946,8 +958,9 @@ mob
 	//		if(src.Kaioken)
 	//			if(src.Anger)
 	//				val*=src.Anger
-			if(src.PotionCD)
+			/* if(src.PotionCD)
 				val*=1.25
+			*/
 			// if(src.isRace(MAJIN))
 			// 	val*=0.25
 			if(!src.HasFatigueImmune())
@@ -959,8 +972,9 @@ mob
 			val*=src.EnergyExpenditure*src.Power_Multiplier
 			if(src.HasDrainlessMana()&&!Override)
 				return//Nope.
-			if(src.PotionCD)
+			/* if(src.PotionCD)
 				val*=1.25
+			*/
 			src.ManaAmount-=val
 			if(src.ManaAmount<=0)
 				src.ManaAmount=0
@@ -973,12 +987,13 @@ mob
 			if(src.hasMagePassive(/mage_passive/space/Linearity))
 				val *= 0.5
 			val/=src.GetManaCapMult()
-			if(src.PotionCD)
+			/* if(src.PotionCD)
 				val*=1.25
+				*/
 			src.TotalCapacity+=val
 			if(src.TotalCapacity>=100)
 				src.TotalCapacity=100
-		HealHealth(var/val, var/_isEcho=0)
+		HealHealth(val, _isEcho=0)
 			if(src.GetEffectiveShearForStackingEffects())
 				if(src.HasShearImmunity())
 					val=val
@@ -1003,13 +1018,10 @@ mob
 							val=val/4
 					else if(!src.IsDarkDragonPlayer() && src.Frenzy > 0)
 						val=val/4
-			if(src.PotionCD)
-				val/=glob.HEALTH_POTION_NERF
 			if(icon_state == "Meditate")
 				src.Tension=max(0, Tension-(val*1.5))
 			if(passive_handler["Staked"])
 				val = 0
-			// SURELY NO PROBLEMS HERE
 			if(src.AwakeningSkillUsed==1)
 				val = 0
 			if(src.VaizardHealth&&!src.passive_handler.Get("HealThroughTempHP"))
@@ -1017,8 +1029,7 @@ mob
 			if(src.CelestialAscension=="Demon" && src.transActive>=5)
 				if(src.transUnlocked<6)
 					val = 0
-			if(val > 0 && src.passive_handler.Get("AngelicInfusion"))
-				val += val * (src.passive_handler.Get("AngelicInfusion") * 0.2)
+			val *= getAngelicInfusionMult();//returns 1 if no angelicinfusion
 			src.Health+=val
 			src.MaxHealth()
 			// Light Warden: delayed heal retrigger. Each selection of the Warden mage
@@ -1045,8 +1056,8 @@ mob
 			if(!src.FusionPowered&&!StableHeal)
 				val/=src.GetPowerUpRatio()
 				val/=src.EnergyExpenditure*src.Power_Multiplier
-			if(src.PotionCD)
-				val/=1.25
+			if(src.passive_handler.Get("EnergyLeak")>1)
+				val *= 0.5
 			src.Energy+=val
 			if(Energy<0)
 				Energy=0
@@ -1056,6 +1067,8 @@ mob
 				val *= max(1,GetManaCapMult())
 			if(src.passive_handler.Get("Unrelenting Wrath"))
 				val = 0
+			if(src.passive_handler.Get("ManaLeak")>=0.25&&src.icon_state!="Meditate")
+				val *= 0.1
 			src.ManaAmount+=val
 			src.MaxMana()
 		HealWounds(var/val, var/StableHeal=0)
@@ -1072,8 +1085,6 @@ mob
 						val=val/2
 				else if(!src.IsDarkDragonPlayer() && src.Frenzy > 0)
 					val=val/2
-			if(src.PotionCD)
-				val/=1.25
 			src.TotalInjury-=val
 			if(src.TotalInjury < 0)
 				src.TotalInjury=0
@@ -1081,15 +1092,11 @@ mob
 		HealFatigue(var/val, var/StableHeal=0)
 			if(!src.FusionPowered&&!StableHeal)
 				val*=1/src.GetPowerUpRatio()
-			if(src.PotionCD)
-				val/=1.25
 			src.TotalFatigue-=val
 			if(src.TotalFatigue < 0)
 				src.TotalFatigue=0
 			src.MaxEnergy()
 		HealCapacity(var/val, var/StableHeal=0)
-			if(src.PotionCD)
-				val/=1.25
 			src.TotalCapacity-=val
 			if(src.TotalCapacity<=0)
 				src.TotalCapacity=0
@@ -1287,8 +1294,18 @@ mob
 			if(isRace(ANDROID)||CyberneticMainframe)
 				enhance = vars["Enhanced[statName]"] * 0.6
 			if(Target && ismob(Target))
-				if(Target.passive_handler["Rusting"]&&Poison>=1)
-					enhance *= (Poison * (glob.RUSTING_RATE * passive_handler["Rusting"])) / 100
+				// Rusting: when target carries the Rusting passive (mystic/hybrid styles)
+				// and the player is poisoned, debuff the player's enhance-chip stat by an
+				// amount that scales with both poison stacks and target's Rusting tier.
+				// Prior version had three bugs: (1) read self's Rusting instead of target's,
+				// which zeroed enhance for everyone without their own Rusting source;
+				// (2) formula scaled the multiplier UP with bigger Rusting/Poison, so high
+				// tiers debuffed less; (3) at extreme stacks the multiplier exceeded 1 and
+				// the debuff flipped into a buff. Rewritten as a clamped 1-x reduction.
+				var/targetRusting = Target.passive_handler["Rusting"]
+				if(targetRusting && Poison >= 1)
+					var/rustReduction = (Poison * glob.RUSTING_RATE * targetRusting) / 100
+					enhance *= max(0, 1 - rustReduction)
 			return enhance
 		BaseStr()
 			var/enhanced = getEnhanced("Strength")
@@ -1341,6 +1358,10 @@ mob
 
 			var/mult = 0
 			var/pride_bonus = 0
+			var/lustPart = 0
+			var/greedPart = 0
+			var/sinDmgPart = 0
+			var/slothPart = 0
 
 			// EnvyFactor
 			if(passive_handler && passive_handler.Get("EnvyFactor"))
@@ -1352,7 +1373,7 @@ mob
 			if(passive_handler && passive_handler.Get("LustFactor"))
 				var/targets = getTargetingMeCount()
 				if(targets > 0)
-					mult += 0.02 * passive_handler.Get("LustFactor") * targets
+					lustPart = 0.02 * passive_handler.Get("LustFactor") * targets
 
 			// GreedFactor
 			if(passive_handler && passive_handler.Get("GreedFactor"))
@@ -1360,31 +1381,38 @@ mob
 				for(var/obj/Money/m in src.contents)
 					money = m.Level
 				if(money > 0)
-					var/greed_bonus = max(0, money / glob.racials.GOLD_DRAGON_FORMULA) * passive_handler.Get("GreedFactor")
-					mult += greed_bonus
+					greedPart = max(0, money / glob.racials.GOLD_DRAGON_FORMULA) * passive_handler.Get("GreedFactor")
 
-			// Sadist / Masochist
+			// Sadist / Masochist / GluttonyFactor (feast -> DevilTriggerSinDamageBonus)
 			if(DevilTriggerSinDamageBonus > 0)
-				mult += DevilTriggerSinDamageBonus
+				sinDmgPart = DevilTriggerSinDamageBonus
 
 			// SlothFactor
 			if(DevilTriggerSlothBonus > 0)
-				mult += DevilTriggerSlothBonus
+				slothPart = DevilTriggerSlothBonus
 
-			// PrideFactor (uncapped; other sin bonuses stay capped at 3)
+			// PrideFactor (uncapped; other sin bonuses stay capped at 3 unless Limited Rank-Up)
 			if(passive_handler && passive_handler.Get("PrideFactor") && Target && istype(Target, /mob/Players))
 				var/healthDiff = Health - Target:Health
 				if(healthDiff > 0)
 					var/steps = round(healthDiff / 10)
 					if(steps > 0)
 						pride_bonus = 0.25 * steps * passive_handler.Get("PrideFactor")
+						if(passive_handler.Get("Limited Rank-Up"))
+							pride_bonus *= 3
 
 			//these aren't actually multipliers btw teehee, they are additive. They started out as multiplicative but I changed my mind after the fact
+			if(passive_handler && passive_handler.Get("Limited Rank-Up"))
+				mult = lustPart + greedPart + sinDmgPart + slothPart
+			else
+				mult = lustPart + greedPart + sinDmgPart + slothPart
+				if(mult < 0)
+					mult = 0
+				if(mult > 3)
+					mult = 3
+
 			if(mult < 0)
 				mult = 0
-
-			if(mult > 3)
-				mult = 3
 
 			mult += pride_bonus
 
@@ -1555,6 +1583,10 @@ mob
 			var/EffectiveAsc=src.StrAscension
 			if(passive_handler.Get("Half Manifestation"))
 				EffectiveAsc+=src.HandleManifestation("Str")
+			if(passive_handler.Get("SpiralPowerUnlocked"))
+				var/SP=passive_handler.Get("SpiralPowerUnlocked")
+				EffectiveAsc+=src.HandleSpiralUnlock("Str", SP)
+
 			Str+=EffectiveAsc
 			//stat ascensions gained through racial or saga improvements
 			var/enhanced = getEnhanced("Strength")
@@ -1615,7 +1647,7 @@ mob
 			if(src.InfinityModule)
 				var/obj/Skills/Buffs/ActiveBuffs/Ki_Control/ki = src.FindSkill(/obj/Skills/Buffs/ActiveBuffs/Ki_Control)
 				if(ki && "Str" in ki.selectedStats)
-					Mult += round(glob.progress.totalPotentialToDate,5) / 150 * ki.StrMult
+					Mult += (AscensionsAcquired/10) * ki.StrMult
 			if(glob.racials.DEVIL_ARM_STAT_MULTS)
 				if(src.CheckSlotless("Devil Arm")&&!src.SpecialBuff)
 					Mod+=(0.1 * AscensionsAcquired)
@@ -1636,8 +1668,8 @@ mob
 						Mod+=0.5*passive_handler.Get("BurningShot")
 					else
 						Mod+=0.75*passive_handler.Get("BurningShot")
-			if(src.Momentum)
-				Mod *= 1 + (src.Momentum * (glob.MOMENTUM_BASE_BOON * clamp(src.passive_handler.Get("Momentum"), 0.1, glob.MOMENTUM_MAX_BOON)))
+			if(Momentum)
+				Mod *= getMomentumMult();
 
 			if(src.CheckSlotless("Genesic Brave")||src.CheckSpecial("King of Braves")) //okay take two
 				if(glob.KOB_GETS_STATS_LOW_LIFE)
@@ -1691,6 +1723,13 @@ mob
 			Mod += getMazokuSinBonusMult()
 			if(IsDarkDragonPlayer() && Frenzy > 0)
 				Mod += 0.5 * (min(Frenzy, glob.DEBUFF_STACK_MAX) / glob.DEBUFF_STACK_MAX)
+			if(src.passive_handler.Get("Longing")&&src.Target)
+				if(Target.GetPowerUpRatio()>=Target.Power_Multiplier)
+					Str*=clamp(1+((Target.GetPowerUpRatio()-1)/glob.LONGING_DIVISOR),1, glob.LONGING_MAX_CLAMP)
+				else if(Target.Power_Multiplier>=Target.GetPowerUpRatio())
+					Str*=clamp(1+((Target.Power_Multiplier-1)/glob.LONGING_DIVISOR),1, glob.LONGING_MAX_CLAMP)
+				else
+					Str*=1
 			var/STM=GetStrTransMult()
 			Str*=STM
 			Str*=Mod
@@ -1703,22 +1742,12 @@ mob
 				TotalTax+=src.StrTax
 			if(src.StrCut)
 				TotalTax+=src.StrCut
+			if(HasUnbreakable())
+				TotalTax*=1-GetUnbreakable()
 			if(TotalTax>=1)
 				TotalTax=0.9
 			var/Sub=Str*TotalTax
 			Str-=Sub
-			if(src.passive_handler.Get("UnhingedForm"))
-				var/UnhingedForm = src.passive_handler.Get("UnhingedForm")
-				var/perRange = UnhingedForm/30
-				var/def = round((1 - BaseDef()) / 0.1, 1)
-				// for each 0.1 def add perRange speed
-				var/end = round((1 - BaseEnd()) / 0.1, 1)
-				// for each 0.1 end add perRange speed
-				var/total = (def + end) * perRange
-				if(total > UnhingedForm)
-					Str += UnhingedForm
-				else
-					Str += total
 			Str+=src.GetMA("Str")
 			if(src.HasAdaptation())
 				if(src.AdaptationCounter!=0&&!CheckSlotless("Great Ape"))
@@ -1750,6 +1779,10 @@ mob
 			var/EffectiveAsc=src.ForAscension
 			if(passive_handler.Get("Half Manifestation"))
 				EffectiveAsc+=src.HandleManifestation("For")
+			if(passive_handler.Get("SpiralPowerUnlocked"))
+				var/SP=passive_handler.Get("SpiralPowerUnlocked")
+				EffectiveAsc+=src.HandleSpiralUnlock("For", SP)
+
 			For+=EffectiveAsc
 			var/enhanced = getEnhanced("Force")
 			For+=src.EnhancedForce ? enhanced : 0
@@ -1805,7 +1838,7 @@ mob
 			if(src.InfinityModule)
 				var/obj/Skills/Buffs/ActiveBuffs/Ki_Control/ki = src.FindSkill(/obj/Skills/Buffs/ActiveBuffs/Ki_Control)
 				if(ki && "For" in ki.selectedStats)
-					Mult += round(glob.progress.totalPotentialToDate,5) / 150 * ki.ForMult
+					Mult += (AscensionsAcquired/10) * ki.ForMult//Mult += round(glob.progress.totalPotentialToDate,5) / 150 * ki.ForMult
 			// if((isRace(SAIYAN) || isRace(HALFSAIYAN))&&transActive&&!src.SpecialBuff)
 			// 	if(src.race.transformations[transActive].mastery==100)
 			// 		Mod+=0.1
@@ -1879,6 +1912,13 @@ mob
 				Mod += GetMangStats() // you can find this proc in Secrets\Shin\buff.dm
 			if(src.StyleRating > 0)
 				Mod += 0.1 * src.StyleRating * src.getStyleBonusMult()
+			if(src.passive_handler.Get("Longing")&&src.Target)
+				if(Target.GetPowerUpRatio()>=Target.Power_Multiplier)
+					For*=clamp(1+((Target.GetPowerUpRatio()-1)/glob.LONGING_DIVISOR),1, glob.LONGING_MAX_CLAMP)
+				else if(Target.Power_Multiplier>=Target.GetPowerUpRatio())
+					For*=clamp(1+((Target.Power_Multiplier-1)/glob.LONGING_DIVISOR),1, glob.LONGING_MAX_CLAMP)
+				else
+					For*=1
 			var/FTM=GetForTransMult()
 			For*=FTM
 			For*=Mod
@@ -1891,23 +1931,13 @@ mob
 				TotalTax+=src.ForTax
 			if(src.ForCut)
 				TotalTax+=src.ForCut
+			if(HasUnbreakable())
+				TotalTax*=1-GetUnbreakable()
 			if(TotalTax>=1)
 				TotalTax=0.9
 			var/Sub=For*TotalTax
 			For-=Sub
 			For+=src.GetMA("For")
-			if(src.passive_handler.Get("UnhingedForm"))
-				var/UnhingedForm = src.passive_handler.Get("UnhingedForm")
-				var/perRange = UnhingedForm/30
-				var/def = round((1 - BaseDef()) / 0.1, 1)
-				// for each 0.1 def add perRange speed
-				var/end = round((1 - BaseEnd()) / 0.1, 1)
-				// for each 0.1 end add perRange speed
-				var/total = (def + end) * perRange
-				if(total > UnhingedForm)
-					For += UnhingedForm
-				else
-					For += total
 			// if(src.UsingYinYang()&&src.Target&&src.Target!=src&&!src.Target.UsingYinYang()&&istype(src.Target, /mob/Players))
 			// 	For+=src.Target.GetMA("End")*0.5
 			// else
@@ -1941,6 +1971,10 @@ mob
 			var/EffectiveAsc=src.EndAscension
 			if(passive_handler.Get("Half Manifestation"))
 				EffectiveAsc+=src.HandleManifestation("End")
+			if(passive_handler.Get("SpiralPowerUnlocked"))
+				var/SP=passive_handler.Get("SpiralPowerUnlocked")
+				EffectiveAsc+=src.HandleSpiralUnlock("End", SP)
+
 			End+=EffectiveAsc
 			var/enhanced = getEnhanced("Endurance")
 			End+=EnhancedEndurance ? enhanced : 0
@@ -1980,7 +2014,7 @@ mob
 			if(src.InfinityModule)
 				var/obj/Skills/Buffs/ActiveBuffs/Ki_Control/ki = src.FindSkill(/obj/Skills/Buffs/ActiveBuffs/Ki_Control)
 				if(ki && "End" in ki.selectedStats)
-					Mult += round(glob.progress.totalPotentialToDate,5) / 150 * ki.EndMult
+					Mult += (AscensionsAcquired/10) * ki.EndMult
 			// if((isRace(SAIYAN) || isRace(HALFSAIYAN))&&transActive&&!src.SpecialBuff)
 			// 	if(src.race.transformations[transActive].mastery==100)
 			// 		Mod+=0.1
@@ -2050,6 +2084,11 @@ mob
 				Mod *= 1+ (src.HealthAnnounce10/5)
 			if(src.StyleRating > 0)
 				Mod += 0.1 * src.StyleRating * src.getStyleBonusMult()
+			if(src.passive_handler.Get("Longing")&&src.Target)
+				if(Target.Anger>1&&Anger<=1&&!src.passive_handler.Get("LunarWrath")&&!src.Target.passive_handler.Get("LunarWrath"))
+					End*=1+((Target.Anger-1)/glob.LONGING_DIVISOR)
+				else
+					End*=1
 			var/ETM=GetEndTransMult()
 			End*=ETM
 			End*=Mod
@@ -2062,6 +2101,8 @@ mob
 				TotalTax+=src.EndTax
 			if(src.EndCut)
 				TotalTax+=src.EndCut
+			if(HasUnbreakable())
+				TotalTax*=1-GetUnbreakable()
 			if(TotalTax>=1)
 				TotalTax=0.9
 			var/Sub=End*TotalTax
@@ -2097,6 +2138,10 @@ mob
 			var/EffectiveAsc=src.SpdAscension
 			if(passive_handler.Get("Half Manifestation"))
 				EffectiveAsc+=src.HandleManifestation("Spd")
+			if(passive_handler.Get("SpiralPowerUnlocked"))
+				var/SP=passive_handler.Get("SpiralPowerUnlocked")
+				EffectiveAsc+=src.HandleSpiralUnlock("Spd", SP)
+
 			Spd+=EffectiveAsc
 			var/enhanced = getEnhanced("Speed")
 			Spd+=EnhancedSpeed ? enhanced : 0
@@ -2134,7 +2179,7 @@ mob
 			if(src.InfinityModule)
 				var/obj/Skills/Buffs/ActiveBuffs/Ki_Control/ki = src.FindSkill(/obj/Skills/Buffs/ActiveBuffs/Ki_Control)
 				if(ki && "Spd" in ki.selectedStats)
-					Mult += round(glob.progress.totalPotentialToDate,5) / 150 * ki.SpdMult
+					Mult += (AscensionsAcquired/10) * ki.SpdMult
 			// if((isRace(SAIYAN) || isRace(HALFSAIYAN))&&transActive&&!src.SpecialBuff)
 			// 	if(src.race.transformations[transActive].mastery==100)
 			// 		Mod+=0.1
@@ -2200,22 +2245,12 @@ mob
 				TotalTax+=src.SpdTax
 			if(src.SpdCut)
 				TotalTax+=src.SpdCut
+			if(HasUnbreakable())
+				TotalTax*=1-GetUnbreakable()
 			if(TotalTax>=1)
 				TotalTax=0.9
 			var/Sub=Spd*TotalTax
 			Spd-=Sub
-			if(src.passive_handler.Get("UnhingedForm"))
-				var/UnhingedForm = src.passive_handler.Get("UnhingedForm")
-				var/perRange = UnhingedForm/20
-				var/def = round((1 - BaseDef()) / 0.1, 1)
-				// for each 0.1 def add perRange speed
-				var/end = round((1 - BaseEnd()) / 0.1, 1)
-				// for each 0.1 end add perRange speed
-				var/total = (def + end) * perRange
-				if(total > UnhingedForm)
-					Spd += UnhingedForm
-				else
-					Spd += total
 			Spd+=src.GetMA("Spd")
 			// if(src.UsingYinYang()&&src.Target&&src.Target!=src&&!src.Target.UsingYinYang()&&istype(src.Target, /mob/Players))
 			// 	Spd+=src.Target.GetMA("Spd")*0.5
@@ -2250,6 +2285,10 @@ mob
 			var/EffectiveAsc=src.OffAscension
 			if(passive_handler.Get("Half Manifestation"))
 				EffectiveAsc+=src.HandleManifestation("Off")
+			if(passive_handler.Get("SpiralPowerUnlocked"))
+				var/SP=passive_handler.Get("SpiralPowerUnlocked")
+				EffectiveAsc+=src.HandleSpiralUnlock("Off", SP)
+
 			Off+=EffectiveAsc
 			var/enhanced = getEnhanced("Aggression")
 			Off+=EnhancedAggression ? enhanced : 0
@@ -2306,6 +2345,13 @@ mob
 			if(IsDarkDragonPlayer() && Frenzy > 0)
 				Mod += 0.5 * (min(Frenzy, glob.DEBUFF_STACK_MAX) / glob.DEBUFF_STACK_MAX)
 			var/OTM=GetOffTransMult()
+			if(src.passive_handler.Get("Longing")&&src.Target)
+				if(Target.GetPowerUpRatio()>=Target.Power_Multiplier)
+					Off*=clamp(1+((Target.GetPowerUpRatio()-1)/glob.LONGING_DIVISOR),1, glob.LONGING_MAX_CLAMP)
+				else if(Target.Power_Multiplier>=Target.GetPowerUpRatio())
+					Off*=clamp(1+((Target.Power_Multiplier-1)/glob.LONGING_DIVISOR),1, glob.LONGING_MAX_CLAMP)
+				else
+					Off*=1
 			Off*=OTM
 			Off*=Mod
 			Off*=Mult
@@ -2317,22 +2363,12 @@ mob
 				TotalTax+=src.OffTax
 			if(src.OffCut)
 				TotalTax+=src.OffCut
+			if(HasUnbreakable())
+				TotalTax*=1-GetUnbreakable()
 			if(TotalTax>=1)
 				TotalTax=0.9
 			var/Sub=Off*TotalTax
 			Off-=Sub
-			if(src.passive_handler.Get("UnhingedForm"))
-				var/UnhingedForm = src.passive_handler.Get("UnhingedForm")
-				var/perRange = UnhingedForm/20
-				var/def = round((1 - BaseDef()) / 0.1, 1)
-				// for each 0.1 def add perRange speed
-				var/end = round((1 - BaseEnd()) / 0.1, 1)
-				// for each 0.1 end add perRange speed
-				var/total = (def + end) * perRange
-				if(total > UnhingedForm)
-					Off += UnhingedForm
-				else
-					Off += total
 			Off+=src.GetMA("Off")
 			// if(src.UsingYinYang()&&src.Target&&src.Target!=src&&!src.Target.UsingYinYang()&&istype(src.Target, /mob/Players))
 			// 	Off+=src.Target.GetMA("Def")*0.5
@@ -2367,6 +2403,10 @@ mob
 			var/EffectiveAsc=src.DefAscension
 			if(passive_handler.Get("Half Manifestation"))
 				EffectiveAsc+=src.HandleManifestation("Def")
+			if(passive_handler.Get("SpiralPowerUnlocked"))
+				var/SP=passive_handler.Get("SpiralPowerUnlocked")
+				EffectiveAsc+=src.HandleSpiralUnlock("Def", SP)
+
 			Def+=EffectiveAsc
 			var/enhanced = getEnhanced("Reflexes")
 			Def+=EnhancedReflexes ? enhanced : 0
@@ -2424,6 +2464,11 @@ mob
 			Mod += getDevilTriggerSinBonusMult()
 			Mod += getMazokuSinBonusMult()
 			var/DTM=GetDefTransMult()
+			if(src.passive_handler.Get("Longing")&&src.Target)
+				if(Target.Anger>1&&Anger<=1&&!src.Target.passive_handler.Get("LunarWrath"))
+					Def*=1+((Target.Anger-1)/glob.LONGING_DIVISOR)//clamp(1+((Target.Power_Multiplier-1)/glob.LONGING_DIVISOR),1, glob.LONGING_MAX_CLAMP)
+				else
+					Def*=1
 			Def*=DTM
 			Def*=Mod
 			Def*=Mult
@@ -2435,6 +2480,8 @@ mob
 				TotalTax+=src.DefTax
 			if(src.DefCut)
 				TotalTax+=src.DefCut
+			if(HasUnbreakable())
+				TotalTax*=1-GetUnbreakable()
 			if(TotalTax>=1)
 				TotalTax=0.9
 			var/Sub=Def*TotalTax
@@ -2502,6 +2549,8 @@ mob
 				TotalTax+=src.RecovTax
 			if(src.RecovCut)
 				TotalTax+=src.RecovCut
+			if(HasUnbreakable())
+				TotalTax*=1-GetUnbreakable()
 			if(TotalTax>=1)
 				TotalTax=0.9
 			var/Sub=Recov*TotalTax
@@ -2726,6 +2775,8 @@ mob
 			//these are all bad.
 			var/good = 0
 			var/evil = 0
+			if(src.passive_handler.Get("Emptiness"))
+				return FALSE
 			if(src.HasMaki())
 				evil = 1
 			if(!HasHolyMod())
@@ -2775,6 +2826,8 @@ mob
 			var/list/EvilSecrets=list("Vampire", "Werewolf", "Zombie")
 			var/good = 0
 			var/evil = 0
+			if(src.passive_handler.Get("Emptiness"))
+				return FALSE
 			//these are all good.
 			if(src.ShinjinAscension=="Kai")
 				good = 1
@@ -3499,10 +3552,12 @@ mob
 				Mult*=clamp(1+(flick/glob.ZANZO_FLICKER_DIVISOR),glob.ZANZO_FLICKER_LOWEST_CLAMP, glob.ZANZO_FLICKER_HIGHEST_CLAMP)
 			if(src.AfterImageStrike)
 				return
-			var/add = (glob.ZANZO_FLICKER_BASE_GAIN-(max(0.01,MovementCharges)/3)/10)*Mult
+			var/max_charges = GetMaxMovementCharges()
+			var/taper_basis = max(max_charges, 3)
+			var/add = (glob.ZANZO_FLICKER_BASE_GAIN-(max(0.01,MovementCharges)/taper_basis)/10)*Mult
 			src.MovementCharges+=add
-			if(src.MovementCharges>GetMaxMovementCharges())
-				src.MovementCharges=GetMaxMovementCharges()
+			if(src.MovementCharges>max_charges)
+				src.MovementCharges=max_charges
 			if(client&&client.hud_ids["Zanzoken"])
 				var/alteration = -36 + (36 * (MovementCharges - round(MovementCharges)))
 			//	world<<add
@@ -3555,6 +3610,10 @@ mob
 				amount = 0
 			if(passive_handler.Get("Sekizou"))
 				amount = 5
+			if(passive_handler.Get("EmptyFlashStep"))
+				amount += GetSwordAscension()
+			amount += getDenkoSekka() * glob.DENKO_SEKKA_CHARGE_PER_LEVEL
+			amount = min(amount, 10)
 			return amount
 
 		transcend(var/val)

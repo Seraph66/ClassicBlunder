@@ -156,6 +156,31 @@ obj/Magic_Circle
 
 obj/Items/Enchantment
 
+	Limited_Rank_Up_Magic
+		name = "Limited Rank-Up Magic"
+		desc = "A mere fraction of the true potential of Rank-Up Magic. Only Demons and Makaioshins can make use of it."
+		Cost = 2000
+		Grabbable = 1
+		EnchType = "BasicEnchantment"
+		SubType = "Any"
+		icon = 'Lab.dmi'
+		icon_state = "KeloPill"
+		verb/Use()
+			set src in usr
+			if(!usr.Move_Requirements())
+				return
+			if(!usr.isRace(DEMON) && !usr.isRace(MAKAIOSHIN))
+				usr << "The magic within churns violently and rejects you. Only a Demon or Makaioshin can withstand Limited Rank-Up."
+				return
+			if(usr.passive_handler && usr.passive_handler.Get("Limited Rank-Up"))
+				usr << "You already bear the magic of Limited Rank-Up."
+				return
+			if(!usr.passive_handler)
+				return
+			usr.passive_handler.Set("Limited Rank-Up", 1)
+			usr << "Crimson conqueror who unifies chaos, release the eternal seal, and in one flash blow away the darkness!"
+			del src
+
 	Cauldron
 		Cost=80
 		Grabbable=0
@@ -244,48 +269,49 @@ obj/Items/Enchantment
 							var/list/Option=list("Cancel")
 							var/Effect
 							var/Confirm
-							Option.Add(usr.PotionTypes)
-							while(Confirm!="Yes")
-								Effect=input(usr, "Brewing a potion.  Assign the first effect.", "Create Potion") in Option
-								switch(Effect)
-									if("Cancel")
-										src.Using=0
-										return
-									if("Wild Herb")
-										Confirm=alert(usr, "Wild Herbs allow you to customize a distinctive effect that the potion has on the drinker.  It does not take capacity to add to a potion.  Do you want to start your potion with Wild Herbs?", "Create Potion", "No", "Yes")
-									if("Healing Herb")
-										Confirm=alert(usr, "Healing Herbs grant the drinker a sudden spike of health.  Do you want to start your potion with Healing Herbs?", "Create Potion", "No", "Yes")
-									if("Refreshment Herb")
-										Confirm=alert(usr, "Refreshment Herbs grant the drinker a sudden spike of energy.  Do you want to start your potion with Refreshment Herbs?", "Create Potion", "No", "Yes")
-									if("Magic Herb")
-										Confirm=alert(usr, "Magic Herbs grant the drinker a sudden spike of mana.  Do you want to start your potion with Magic Herbs?", "Create Potion", "No", "Yes")
-									if("Toxic Herb")
-										Confirm=alert(usr, "Toxic Herbs predictably make a potion toxic.  This stimulates the drinker's metabolism and lets them drink another potion sooner.  It does not take capacity to add to a potion.  Do you want to start your potion with Toxic Herbs?", "Create Potion", "No", "Yes")
-									if("Hallucinogen Herb")
-										Confirm=alert(usr, "Hallucinogen Herbs induce a powerful drive in the drinker.  It causes their emotions to flare out, potentially making them a very dangerous force. They cost an extra 15 capacity. Do you want to add them to your potion?", "Add Effect", "No", "Yes")
-									if("Philter Herb")
-										Confirm=alert(usr, "Philter Herbs induce a strong feeling of infatuation towards the creator in the drinker. The instinctive attraction will be so strong, they'll instinctually hold back whenever they're in the position to inflict some harm upon the maker.  Do you want to start your potion with Philter Herbs?", "Create Potion", "No", "Yes")
-									if("Stimulant Herb")
-										Confirm=alert(usr, "Stimulant Herbs grant the drinker a form of liquid courage, increasing their damage.  They cost an extra 10 capacity.  Do you want to add them to your potion?", "Add Effect", "No", "Yes")
-									if("Relaxant Herb")
-										Confirm=alert(usr, "Relaxant Herbs grant the drinker a relaxed form which surreptitiously avoids the bulk of an attack.  They cost an extra 10 capacity.  Do you want to add them to your potion?", "Add Effect", "No", "Yes")
-									if("Numbing Herb")
-										Confirm=alert(usr, "Numbing Herbs grant the drinker the ability to endure pain.  They cost an extra 10 capacity.  Do you want to add them to your potion?", "Add Effect", "No", "Yes")
-									if("Mutagenic Herb")
-										Confirm=alert(usr, "Mutagenic Herbs twist and change the physical form and capabilities of the drinker in major ways.  Do you want to start your potion with Mutagenic Herbs?", "Create Potion", "No", "Yes")
 							var/list/HerbDictionary = list() // We use this to determine the cost of herbs
 							HerbDictionary["Wild Herb"] = 0;
 							HerbDictionary["Healing Herb"] = 300;
 							HerbDictionary["Refreshment Herb"] = 150;
 							HerbDictionary["Magic Herb"] = 150;
 							HerbDictionary["Toxic Herb"] = 500; // Legitimately the best effect ion by virtue of reducing potion CD for some dmg
-							HerbDictionary["Hallucinogen"] = 500;
+							HerbDictionary["Hallucinogen Herb"] = 500;
 							HerbDictionary["Philter Herb"] = 300;
 							HerbDictionary["Stimulant Herb"] = 500;
 							HerbDictionary["Relaxant Herb"] = 500;
 							HerbDictionary["Numbing Herb"] = 500;
 							HerbDictionary["Mutagenic Herb"] = 150;
-							var/Cost = HerbDictionary[Effect] // This takes the 'effect' var that was chosen earlier, and runs it through the dictionary.
+							var/Cost // see line 288
+							Option.Add(usr.PotionTypes)
+							while(Confirm!="Yes")
+								Effect=input(usr, "Brewing a potion.  Assign the first effect.", "Create Potion") in Option
+								Cost = HerbDictionary[Effect] // This takes the 'effect' var that was chosen earlier, and runs it through the dictionary.
+								switch(Effect)
+									if("Cancel")
+										src.Using=0
+										return
+									if("Wild Herb")
+										Confirm=alert(usr, "Wild Herbs are entirely for flavour, they do not take a potion enhancement slot. Do you want to add them to your potion?", "Add Effect", "No", "Yes")
+									if("Healing Herb")
+										Confirm=alert(usr, "Healing Herbs grant the drinker a sudden spike of health, They cost [Cost] Mana Bits.  Do you want to add them to your potion?", "Add Effect", "No", "Yes")
+									if("Refreshment Herb")
+										Confirm=alert(usr, "Refreshment Herbs grant the drinker a sudden spike of energy, They cost [Cost] Mana Bits.  Do you want to add them to your potion?", "Add Effect", "No", "Yes")
+									if("Magic Herb")
+										Confirm=alert(usr, "Magic Herbs grant the drinker a sudden spike of mana, They cost [Cost] Mana Bits.  Do you want to add them to your potion?", "Add Effect", "No", "Yes")
+									if("Toxic Herb")
+										Confirm=alert(usr, "Toxic Herbs poison the drinker, but halve the potion cooldown They cost [Cost] Mana Bits. Do you want to add them to your potion?", "Add Effect", "No", "Yes")
+									if("Hallucinogen Herb")
+										Confirm=alert(usr, "Hallucinogen Herbs make you angrier but reduce your defense, They cost [Cost] Mana Bits.", "Add Effect", "No", "Yes")
+									if("Philter Herb")
+										Confirm=alert(usr, "Philter Herbs out you as a freak to whomever drinks them, making them so disgusted at you that you take less damage from them They cost [Cost] Mana Bits.", "Add Effect", "No", "Yes")
+									if("Stimulant Herb")
+										Confirm=alert(usr, "Stimulant Herbs grant the Pure Damage passive, They cost [Cost] Mana Bits.", "Add Effect", "No", "Yes")
+									if("Relaxant Herb")
+										Confirm=alert(usr, "Releaxant herbs grant the flow passive", "Add Effect", "No", "Yes")
+									if("Numbing Herb")
+										Confirm=alert(usr, "Numbing Herbs grant the Hardening passive", "Add Effect", "No", "Yes")
+									if("Mutagenic Herb")
+										Confirm=alert(usr, "Mutagenic Herbs allow you to transform yourself in ways I can't be bothered to doccument, They cost [Cost] Mana Bits.", "Add Effect", "No", "Yes")
 							if(usr.GetMineral() > Cost)
 								var/obj/Items/Enchantment/Potion/p=new
 								switch(Effect)
@@ -325,7 +351,7 @@ obj/Items/Enchantment
 										p.TransformIcon=input(usr, "What icon will the polymorphed being use?", "Polymorph") as icon
 										p.name="Mutagen"
 								usr.TakeMineral(Cost)
-								if(!(Effect in list("Wild Herb")))
+								if(!(Effect in list("Wild Herb", "Toxic Herb")))
 									p.Slots--
 								usr << "You've created \an [p]!"
 								var/Custom=alert(usr, "Do you want to give [p] a custom name and drink message?", "Custom Potion", "No", "Yes")
@@ -383,6 +409,19 @@ obj/Items/Enchantment
 
 							var/Confirm
 							var/Effect
+							var/list/HerbDictionary = list() // We use this to determine the cost of herbs
+							HerbDictionary["Wild Herb"] = 0;
+							HerbDictionary["Healing Herb"] = 300;
+							HerbDictionary["Refreshment Herb"] = 150;
+							HerbDictionary["Magic Herb"] = 150;
+							HerbDictionary["Toxic Herb"] = 750; // Legitimately the best effect ion by virtue of reducing potion CD for some dmg
+							HerbDictionary["Hallucinogen Herb"] = 500;
+							HerbDictionary["Philter Herb"] = 300;
+							HerbDictionary["Stimulant Herb"] = 500;
+							HerbDictionary["Relaxant Herb"] = 500;
+							HerbDictionary["Numbing Herb"] = 500;
+							HerbDictionary["Mutagenic Herb"] = 150;
+							var/Cost = HerbDictionary[Effect]
 							while(Confirm!="Yes")
 								Effect=input(usr, "What effect do you want to add to your potion?", "Add Effect") in Effects
 								switch(Effect)
@@ -390,40 +429,27 @@ obj/Items/Enchantment
 										src.Using=0
 										return
 									if("Wild Herb")
-										Confirm=alert(usr, "Wild Herbs allow you to customize a distinctive effect that the potion has on the drinker.  They don't take capacity to add.  They don't fill a limited slot.  Do you want to add them to your potion?", "Add Effect", "No", "Yes")
+										Confirm=alert(usr, "Wild Herbs are entirely for flavour, they do not take a potion enhancement slot. Do you want to add them to your potion?", "Add Effect", "No", "Yes")
 									if("Healing Herb")
-										Confirm=alert(usr, "Healing Herbs grant the drinker a sudden spike of health.  Do you want to add them to your potion?", "Add Effect", "No", "Yes")
+										Confirm=alert(usr, "Healing Herbs grant the drinker a sudden spike of health, They cost [Cost] Mana Bits.  Do you want to add them to your potion?", "Add Effect", "No", "Yes")
 									if("Refreshment Herb")
-										Confirm=alert(usr, "Refreshment Herbs grant the drinker a sudden spike of energy.  Do you want to add them to your potion?", "Add Effect", "No", "Yes")
+										Confirm=alert(usr, "Refreshment Herbs grant the drinker a sudden spike of energy, They cost [Cost] Mana Bits.  Do you want to add them to your potion?", "Add Effect", "No", "Yes")
 									if("Magic Herb")
-										Confirm=alert(usr, "Magic Herbs grant the drinker a sudden spike of mana.  Do you want to add them to your potion?", "Add Effect", "No", "Yes")
+										Confirm=alert(usr, "Magic Herbs grant the drinker a sudden spike of mana, They cost [Cost] Mana Bits.  Do you want to add them to your potion?", "Add Effect", "No", "Yes")
 									if("Toxic Herb")
-										Confirm=alert(usr, "Toxic Herbs predictably make a potion toxic.  This stimulates the drinker's metabolism and lets them drink another potion sooner.  Do you want to add them to your potion?", "Add Effect", "No", "Yes")
+										Confirm=alert(usr, "Toxic Herbs poison the drinker, but halve the potion cooldown They cost [Cost] Mana Bits. Do you want to add them to your potion?", "Add Effect", "No", "Yes")
 									if("Hallucinogen Herb")
-										Confirm=alert(usr, "Hallucinogen Herbs induce a powerful drive in the drinker.  It causes their emotions to flare out, potentially making them a very dangerous force. They cost an extra 15 capacity. Do you want to add them to your potion?", "Add Effect", "No", "Yes")
+										Confirm=alert(usr, "Hallucinogen Herbs make you angrier but reduce your defense, They cost [Cost] Mana Bits.", "Add Effect", "No", "Yes")
 									if("Philter Herb")
-										Confirm=alert(usr, "Philter Herbs induce a strong feeling of infatuation towards the creator in the drinker. The instinctive attraction will be so strong, they'll instinctually hold back whenever they're in the position to inflict some harm upon the maker.  They cost an extra 10 capacity. Do you want to add them to your potion?", "Add Effect", "No", "Yes")
+										Confirm=alert(usr, "Philter Herbs out you as a freak to whomever drinks them, making them so disgusted at you that you take less damage from them They cost [Cost] Mana Bits.", "Add Effect", "No", "Yes")
 									if("Stimulant Herb")
-										Confirm=alert(usr, "Stimulant Herbs grant the drinker a form of liquid courage, increasing their damage.  They cost an extra 10 capacity.  Do you want to add them to your potion?", "Add Effect", "No", "Yes")
+										Confirm=alert(usr, "Stimulant Herbs grant the Pure Damage passive, They cost [Cost] Mana Bits.", "Add Effect", "No", "Yes")
 									if("Relaxant Herb")
-										Confirm=alert(usr, "Relaxant Herbs grant the drinker a relaxed form which surreptitiously avoids the bulk of an attack.  They cost an extra 10 capacity.  Do you want to add them to your potion?", "Add Effect", "No", "Yes")
+										Confirm=alert(usr, "Releaxant herbs grant the flow passive", "Add Effect", "No", "Yes")
 									if("Numbing Herb")
-										Confirm=alert(usr, "Numbing Herbs grant the drinker the ability to endure pain.  They cost an extra 10 capacity.  Do you want to add them to your potion?", "Add Effect", "No", "Yes")
+										Confirm=alert(usr, "Numbing Herbs grant the Hardening passive", "Add Effect", "No", "Yes")
 									if("Mutagenic Herb")
-										Confirm=alert(usr, "Mutagenic Herbs twist and change the physical form and capabilities of the drinker in major ways.  They cost an extra 15 capacity.  Do you want to add them to your potion?", "Add Effect", "No", "Yes")
-							var/list/HerbDictionary = list() // We use this to determine the cost of herbs
-							HerbDictionary["Wild Herb"] = 0;
-							HerbDictionary["Healing Herb"] = 300;
-							HerbDictionary["Refreshment Herb"] = 150;
-							HerbDictionary["Magic Herb"] = 150;
-							HerbDictionary["Toxic Herb"] = 500; // Legitimately the best effect ion by virtue of reducing potion CD for some dmg
-							HerbDictionary["Hallucinogen"] = 500;
-							HerbDictionary["Philter Herb"] = 300;
-							HerbDictionary["Stimulant Herb"] = 500;
-							HerbDictionary["Relaxant Herb"] = 500;
-							HerbDictionary["Numbing Herb"] = 500;
-							HerbDictionary["Mutagenic Herb"] = 150;
-							var/Cost = HerbDictionary[Effect]
+										Confirm=alert(usr, "Mutagenic Herbs allow you to transform yourself in ways I can't be bothered to doccument, They cost [Cost] Mana Bits.", "Add Effect", "No", "Yes")
 							if(usr.GetMineral() > Cost)
 								switch(Effect)
 									if("Wild Herb")
@@ -463,7 +489,7 @@ obj/Items/Enchantment
 										Choice.name="Polymorphic [Choice.name]"
 								usr.TakeMineral(Cost)
 								usr << "You've modified your potion into \an [Choice]!"
-								if(!(Effect in list("Wild Herb")))
+								if(!(Effect in list("Wild Herb", "Toxic Herb")))
 									Choice.Slots--
 									if(Choice.Slots<=0)
 										usr << "[Choice] has been fully enchanted!"
@@ -542,14 +568,14 @@ obj/Items/Enchantment
 				return
 			else
 				var/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Potion_Power/PP=new
-				var/CD=1800 // 3 min base cooldown
-				var/WEAK_EFFECT_CD = 100
-				var/MEDIUM_EFFECT_CD = 200
-				var/STRONG_EFFECT_CD = 300
+				var/CD= 360 // 6 min base cooldown
+				var/WEAK_EFFECT_CD = 0
+				var/MEDIUM_EFFECT_CD = 0
+				var/STRONG_EFFECT_CD = 0
 				if(src.Energy)
 					PP.InstantAffect=1
 					PP.EnergyHeal=src.Energy*10
-					CD+=(src.Energy*WEAK_EFFECT_CD) // 10
+					CD+=(src.Energy*WEAK_EFFECT_CD)
 				if(src.Mana)
 					PP.InstantAffect=1
 					PP.ManaHeal=src.Mana*10
@@ -572,7 +598,7 @@ obj/Items/Enchantment
 				if(src.Hallucinogen)
 					FoundHallucinogen=1
 					PP.AutoAnger=1
-					var/buff = 0.25 * src.Hallucinogen // 25%
+					var/buff = 0.25 * src.Hallucinogen
 					PP.AngerMult= 1 + buff
 					PP.DefMult = 1 - buff
 					PP.EndMult = 1 - buff
@@ -586,7 +612,7 @@ obj/Items/Enchantment
 				if(src.Sexy)
 					FoundSexy=1
 					PP.Infatuated=src.Sexy
-					CD+=(src.Sexy*90) // this doesn't do anything
+					CD+=(src.Sexy*90)
 				if(src.Transform)
 					switch(src.Transform)
 						if("Weak")

@@ -2,6 +2,12 @@ mob/verb/Character_Sheet()
 	set category = "Other"
 	src<<browse(src.GetAssess(),"window=Assess;size=275x650")
 
+// Unhinged Majins count their Power at MAJIN_UNHINGED_POWER_MULT (2x) in both offense and defense
+mob/proc/GetEffectivePower()
+	. = Power
+	if(isRace(MAJIN) && Class == "Unhinged")
+		. *= MAJIN_UNHINGED_POWER_MULT
+
 mob/proc/GetAssess()
 	var/PowerDisplay
 	var/PotentialPowerDisplay
@@ -916,6 +922,8 @@ mob/proc/
 						a=src.AngerMax
 						if((src.AnsatsukenAscension=="Chikara"&&src.StyleActive=="Ansatsuken"))
 							a=max(src.AngerMax,2)
+						if(Secret == "Heavenly Restriction" && secretDatum?:hasImprovement("Anger"))
+							a *= 1+(secretDatum?:getBoon(src, "Anger")/10)
 						if(src.HasAngerThreshold())
 							if(a<src.GetAngerThreshold())
 								a=src.GetAngerThreshold()
@@ -939,7 +947,10 @@ mob/proc/
 							var/missing = max(0, 100 - Health)
 							var/steps = round(missing / 10)
 							if(steps > 0)
-								a += 0.2 * steps * src.passive_handler.Get("WrathFactor")
+								var/wrathAnger = 0.2 * steps * src.passive_handler.Get("WrathFactor")
+								if(src.passive_handler.Get("Limited Rank-Up"))
+									wrathAnger *= 2
+								a += wrathAnger
 					if(src.CyberCancel>0 && !isRace(ANDROID))
 						var/ang=a-1//Usable anger.
 						var/cancel=ang*src.CyberCancel//1 Cyber Cancel = all of usable anger.
@@ -963,13 +974,30 @@ mob/proc/
 			if(isRace(SAIYAN)&&transActive&&ActiveBuff)
 				if(passive_handler.Get("SaiyanPower"))
 					Ratio*=src.GetSaiyanPower()
+			if(isRace(SAIYAN)&&passive_handler.Get("SpiralPowerUnlocked")||isRace(HALFSAIYAN)&&passive_handler.Get("SpiralPowerUnlocked"))
+				switch(transUnlocked)
+					if(0)
+						Ratio*=1.4
+					if(1)
+						Ratio*=1.2
+					if(2)
+						Ratio*=1.5
+					if(3)
+						Ratio*=2
+					if(4)
+						Ratio*=1.5
+					if(5)
+						if(HasGodKi())
+							Ratio*=1.15
+						else
+							Ratio*=1.25
+			if(passive_handler.Get("Undeterred"))
+				Ratio*=1+((StrTax+ForTax)/2)
 			if(passive_handler.Get("SSJRose"))
 				Ratio*=1.60 //this will be Different but i'm leaving it like this now
 
-			/*if(src.Target)
-				if(ismob(src.Target))
-					if(src.HasMirrorStats()&&!src.Target.HasMirrorStats()&&!src.Target.CheckSlotless("Saiyan Soul"))
-						Ratio=src.Target.Power/src.Target.GetPowerUpRatio()*/
+			if(src.Target && ismob(src.Target) && passive_handler.Get("Limited Rank-Up") && passive_handler.Get("EnvyFactor") && src.HasMirrorStats() && src.Target != src && !src.Target.HasMirrorStats() && istype(src.Target, /mob/Players) && !src.Target.passive_handler.Get("To Govern Strength"))
+				Ratio = src.Target.Power / src.Target.GetPowerUpRatio()
 
 		if(passive_handler["Rebel Heart"])
 			var/h = ((missingHealth()/glob.REBELHEARTMOD) * passive_handler["Rebel Heart"])/5
@@ -987,6 +1015,8 @@ mob/proc/
 			if(Tension>=getMaxTensionValue())
 				if(transActive==transUnlocked||passive_handler["MovementMastery"]||passive_handler["GodKi"]||passive_handler["MaouKi"])
 					Ratio*=1.5
+		if(passive_handler.Get("Ashen One"))
+			Ratio*=1+(Burn/glob.ASHEN_BURN_POWER_DIVISOR)
 		Ratio += (scalingEldritchPower() * 2 / 10);
 		Power=Ratio*GetPowerUpRatio()
 
@@ -999,6 +1029,15 @@ mob/proc/
 					Power*=GetPowerUpRatio()
 		var/nerf = GetPowerUpRatio()+EPM > 2.3 ? 1 : 0
 		power_display=get_power_tier(0, Power, nerf)
+
+		// Track the highest sustained Power this mob has ever reached.
+		if(Power > PeakPowerObserved)
+			PeakPowerObserved = Power
+
+		if(majinAbsorb)
+			if(majinAbsorb.absorbed && majinAbsorb.absorbed.len)
+				Power += majinAbsorb.SumAbsorbedPeakPower(src)
+			Power += majinAbsorb.permanentAbsorbPower
 
 		if(src.Dead&&!src.KeepBody)
 			Ratio*=0.5

@@ -4,7 +4,7 @@ blobDropper/proc/updateVars(mob/Players/p)
     var/ascen = p.AscensionsAcquired
     numBlobsMax = MAX_BLOBS + getMaxBlobs(ascen)
     blobDropRate = MAJIN_BLOB_DROP_RATE + getDropRate(ascen)
-    dropThreshold = MAJIN_BLOB_DROP_THRESHOLD + getDropThreshold(ascen)
+    dropThreshold = clamp(MAJIN_BLOB_DROP_THRESHOLD + getDropThreshold(ascen), MAJIN_BLOB_DROP_THRESHOLD, 75)
 
 blobDropper/proc/getMaxBlobs(ascen)
     return 2 *  ascen
@@ -13,6 +13,13 @@ blobDropper/proc/getDropRate(ascen)
     return ascen * 0.05
 
 blobDropper/proc/getDropThreshold(ascen)
+    // Returns the per-ascension increase to the blob drop threshold (% HP).
+    // The threshold itself is built as MAJIN_BLOB_DROP_THRESHOLD + this value
+    // in MajinBlob.New / updateVars. Higher ascension Majins get blobs at
+    // higher HP (more often) because they're meant to scale UP with ascension,
+    // not have the mechanic gate itself off. The previous formula subtracted
+    // and let the threshold go to 0 / negative at ascension 3+, which is why
+    // Innocent Majins reported their blobs never dropping.
     return ascen * 5
 
 blobDropper/proc/dropBlob(mob/Players/p, override = 0)
@@ -86,19 +93,18 @@ blobDropper/proc/resetVariables(mob/Players/p)
         blobLoop += src
 
 /obj/blob/proc/getRandValue(mob/Players/p, override)
-    // get either a random buff with health or a super health
     var/ascen = p.AscensionsAcquired
-    var/val = rand(1, 100)
+    var/roll = rand(1, 100)
+    var/val = 0
     var/buff = FALSE
-    if(val <= 10 || override)
-        // make the super heal buff
+    var/powerFloor = max(p.Power, 1)
+    if(roll <= 10 || override)
         icon_state = "superheal"
-        val = 1 + (0.1 * ascen) + (0.05 * (100 - p.Health))
+        val = 1 + (0.1 * ascen) + (0.05 * (100 - p.Health)) + (powerFloor * INNOCENT_BLOB_HEAL_FRAC)
     else
         buff = pick("PureReduction","Juggernaut","GiantForm","DemonicDurability")
-        val = 0.1 + (0.1 * ascen) + (0.05 * ((100 - p.Health)/2))
+        val = 0.1 + (0.1 * ascen) + (0.05 * ((100 - p.Health)/2)) + (powerFloor * INNOCENT_BLOB_BUFF_FRAC)
     heldBuff = new(p, val, buff)
-    // heldBuff.loc = src
 
 /obj/blob/Cross(atom/obstacle)
     ..()

@@ -43,8 +43,15 @@ obj/Skills/Queue
 		PushOutIcon='KenShockwaveGold.dmi'
 		ActiveMessage="Keyblade covers itself in magical energy!"
 		HitMessage="crushes the opponent's guard with a downward stirke!"
+		adjust(mob/P)
+			if(src.UpgradedKeybladeSkill)
+				src.Cooldown=60
+				src.DamageMult=3
+				src.Stunner=2
+				src.Quaking=8
 		verb/Ars_Arcanum()
 			set category="Skills"
+			adjust(usr)
 			usr.SetQueue(src)
 	Ars_Arcanum2
 		HitMessage="begins to rapidly pile on strikes with their keyblade!"

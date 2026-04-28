@@ -322,7 +322,8 @@ var/list/SkillTree=list(
 "ElementalStylesT3"=list(
 			"/obj/Skills/Buffs/NuStyle/MysticStyle/Oblivion_Storm"=9999,
 			"/obj/Skills/Buffs/NuStyle/MysticStyle/Annihilation"=9999,
-			"/obj/Skills/Buffs/NuStyle/MysticStyle/Omnimancer"=9999
+			"/obj/Skills/Buffs/NuStyle/MysticStyle/Omnimancer"=9999,
+			"/obj/Skills/Buffs/NuStyle/MysticStyle/Gamma_Style"=9999
 ),
 "SwordStyles"=list(
 			"/obj/Skills/Buffs/NuStyle/SwordStyle/Ittoryu_Style"=0,

@@ -153,7 +153,57 @@ obj
 				EnergyCost=8
 				HitMessage="violently spikes the opponent towards the ground!!!"
 
-
+			Crescent_Cartwheel
+				SignatureTechnique=1
+				DamageMult=1
+				SpeedStrike=4
+				AccuracyMult = 2
+				HitStep=/obj/Skills/Queue/Crescent_Cartwheel2
+				Duration=3
+				Rapid=1
+				Instinct=1
+				Cooldown=120
+				EnergyCost=2
+				HitSparkIcon='Slash - Future.dmi'
+				HitSparkX=-32
+				HitSparkY=-32
+				HitSparkTurns=1
+				HitSparkSize=1.5
+				HitMessage="releases a flurry of kicks in a single cartwheel!"
+				var/tmp/current_hits = 0
+				verb/Crescent_Cartwheel()
+					set category="Skills"
+					if(!Using)
+						current_hits = 0
+					usr.SetQueue(src)
+			Crescent_Cartwheel2
+				DamageMult=1
+				SpeedStrike=1
+				AccuracyMult=2.5
+				HitStep=/obj/Skills/Queue/Crescent_Cartwheel2
+				Duration=5
+				Warp=1
+				EnergyCost=1
+				HitSparkIcon='Slash - Future.dmi'
+				HitSparkX=-32
+				HitSparkY=-32
+				MissMessage = "is too exhausted to flip anymore...(Crescent_Cartwheel Max Hit)"
+				adjust(mob/p)
+					// find blade dance
+					var/obj/Skills/Queue/Crescent_Cartwheel/bd = p.FindSkill(/obj/Skills/Queue/Crescent_Cartwheel)
+					bd.current_hits++
+					if(bd.current_hits < 15)
+						DamageMult = 1 + (0.25 * bd.current_hits)
+						Warp = round(min(1, bd.current_hits/2))
+						EnergyCost = 0.5 + bd.current_hits/2
+						SpeedStrike = round(min(1, bd.current_hits/2))
+						Duration = 4 + round(min(1, bd.current_hits/3))
+						AccuracyMult = 2.5 - (0.1 * bd.current_hits)
+					else
+						DamageMult = 0
+						EnergyCost = 0
+						AccuracyMult=0.0001
+						HitStep = FALSE
             //SWORD
 			Blade_Dance
 				SignatureTechnique=1

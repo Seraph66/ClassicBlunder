@@ -7,6 +7,7 @@ var/list/Tier1 = list(
 	"Gale Strike" = "/obj/Skills/Queue/Gale_Strike",
 	"The Claw" = "/obj/Skills/Queue/The_Claw",
 	"Volleyball Fist" = "/obj/Skills/Queue/Volleyball_Fist",
+	"Crescent Cartwheel" = "/obj/Skills/Queue/Crescent_Cartwheel",
 	"Wolf Fang Fist" = "/obj/Skills/AutoHit/Wolf_Fang_Fist",
 	"One Inch Punch" = "/obj/Skills/AutoHit/One_Inch_Punch",
 	"Nerve Shot" = "/obj/Skills/Queue/Nerve_Shot",

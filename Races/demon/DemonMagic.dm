@@ -8,6 +8,7 @@
     return TRUE
 
 /mob/var/hasDemonCasting = FALSE
+/mob/var/lastInnovationDemonMagic = null
 
 /mob/proc/isDemonMagicCasting(checkType = null)
     if(!client?.keyQueue) return FALSE
@@ -19,6 +20,28 @@
 /mob/proc/endDemonMagicCast()
     if(!client?.keyQueue) return
     client.keyQueue.clearInfo()
+
+/obj/Skills/proc/applyDemonInnovationEffect(mob/p, can_fire_override = null)
+    // fix for style stacking even on cd
+    if(!p) return FALSE
+    if(!p.isInnovative(CELESTIAL, "Any")) return FALSE
+    if(isInnovationDisable(p)) return FALSE
+    if(!p.isDemonMagicCasting()) return FALSE
+    var/skill_can_fire = isnull(can_fire_override) ? !(Using || cooldown_remaining) : can_fire_override
+    var/curMagicType = p.client?.keyQueue?.initType
+    if(skill_can_fire && p.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/HellFire))
+        var/obj/Skills/Buffs/SlotlessBuffs/Hellraiser/hr = p.SlotlessBuffs["Hellraiser"]
+        if(!hr)
+            hr = new/obj/Skills/Buffs/SlotlessBuffs/Hellraiser()
+        hr.stackBuff(p)
+    p.endDemonMagicCast()
+    if(skill_can_fire)
+        var/styleGain = 1
+        if(curMagicType && p.lastInnovationDemonMagic && curMagicType != p.lastInnovationDemonMagic)
+            styleGain = 2
+        p.lastInnovationDemonMagic = curMagicType
+        p.gainStyleRating(styleGain)
+    return skill_can_fire
 
 /obj/Skills/Buffs/SlotlessBuffs/DemonMagic
     // VARS
@@ -96,14 +119,20 @@
                             var/obj/Skills/Buffs/SlotlessBuffs/Chaos_Soldier/cs = locate(/obj/Skills/Buffs/SlotlessBuffs/Chaos_Soldier) in User
                             if(cs)
                                 cs.Trigger(User)
-                                User.cooldownAllChaosSkills()
+                                if(User.isRace(MAKAIOSHIN) && User.passive_handler && User.passive_handler.Get("Limited Rank-Up"))
+                                    User.cooldownChaosSkillSingle(cs)
+                                else
+                                    User.cooldownAllChaosSkills()
                             else
                                 User << "You lack the knowledge to complete this technique."
                         else if(initName == "Order" && curName == "HellFire")
                             var/obj/Skills/Buffs/SlotlessBuffs/Chaos_Control/cc = locate(/obj/Skills/Buffs/SlotlessBuffs/Chaos_Control) in User
                             if(cc)
                                 User.SkillX("Chaos Control", cc)
-                                User.cooldownAllChaosSkills()
+                                if(User.isRace(MAKAIOSHIN) && User.passive_handler && User.passive_handler.Get("Limited Rank-Up"))
+                                    User.cooldownChaosSkillSingle(cc)
+                                else
+                                    User.cooldownAllChaosSkills()
                             else
                                 User << "You lack the knowledge to complete this technique."
                     if(perfect)

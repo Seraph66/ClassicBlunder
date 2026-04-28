@@ -51,8 +51,8 @@
 		TimerLimit=12
 		Cooldown=60
 		ManaCost=8
-		SpdTaxDrain=0.02
-		StrTaxDrain=0.02
+		//SpdTaxDrain=0.02 replace this with something else
+		//StrTaxDrain=0.02 replace this with something else
 		ActiveMessage="begins to decay the flow of time around their target!"
 		OffMessage="releases the temporal hex!"
 		verb/Wither()

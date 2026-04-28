@@ -28,7 +28,7 @@
 		SwordY=-4
 		SwordElement="Void"
 		SwordUnbreakable=1
-		passives = list("StealsStats" = 1)
+		passives = list("StealsStats" = 1,"VoidBlade" = 1)
 		verb/Transfigure_Void_Blade()
 			set category="Utility"
 			var/Choice

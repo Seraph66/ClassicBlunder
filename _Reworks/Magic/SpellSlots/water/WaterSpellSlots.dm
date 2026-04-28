@@ -64,7 +64,7 @@
 		Freezing=2
 		Homing=1
 		Knockback=1
-		Speed=5
+		Speed=1
 		Distance=15
 		ManaCost=5
 		Cooldown=45

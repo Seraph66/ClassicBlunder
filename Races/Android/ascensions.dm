@@ -5,13 +5,13 @@ ascension
 			passives = list("TechniqueMastery" = 0.5, "MovementMastery" = 1, "ManaCapMult" = 0.2, "PureDamage" = 1, "PureReduction" = 1)
 			on_ascension_message = "Your frame becomes more well-adjusted."
 			ecoAdd = 1
-			enhanceChips = 6
+			enhanceChips = 8
 		two
 			unlock_potential = ASCENSION_TWO_POTENTIAL
 			passives = list("TechniqueMastery" = 0.5, "MovementMastery" = 1, "ManaCapMult" = 0.2, "PureDamage" = 1, "PureReduction" = 1)
 			on_ascension_message = "Your frame becomes more well-adjusted."
 			ecoAdd = 1
-			enhanceChips = 6
+			enhanceChips = 8
 		three
 			unlock_potential = ASCENSION_THREE_POTENTIAL
 			passives = list("TechniqueMastery" = 0.5, "MovementMastery" = 4, "ManaCapMult" = 0.2, "PureDamage" = 1, "PureReduction" = 1)

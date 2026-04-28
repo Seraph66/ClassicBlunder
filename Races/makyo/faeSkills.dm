@@ -1,23 +1,47 @@
-/obj/Skills/Buffs/SlotlessBuffs/Makyo/Awaken_Star_Power
-	passives = list("StarPower" = 1)
-	VaizardHealth = 50
-	VaizardShatter = 1
-	StrTax=0.45
-	ForTax=0.45
-	SpdTax=0.25
-	EndTax=0.45
-	OffTax=0.45
-	DefTax=0.45
-	Cooldown=600
-	HealthThreshold = 75
-	StrMult=1.5
-	ForMult=1.5
-	EndMult=1.5
-	ActiveMessage="ignites the spark of the Makyo Star within them, as its power, once thought lost, shines brightly within them!!!"
-	OffMessage="shrivels up as the power of the star leaves them."
-	verb/Awaken_Star_Power()
-		set category="Skills"
-		src.Trigger(usr)
+/obj/Skills/Buffs/SlotlessBuffs/Makyo
+	Awaken_Star_Power
+		passives = list("StarPower" = 1)
+		VaizardHealth = 50
+		VaizardShatter = 1
+		StrTax=0.45
+		ForTax=0.45
+		SpdTax=0.25
+		EndTax=0.45
+		OffTax=0.45
+		DefTax=0.45
+		Cooldown=600
+		HealthThreshold = 75
+		StrMult=1.5
+		ForMult=1.5
+		EndMult=1.5
+		ActiveMessage="ignites the spark of the Makyo Star within them, as its power, once thought lost, shines brightly within them!!!"
+		OffMessage="shrivels up as the power of the star leaves them."
+		verb/Awaken_Star_Power()
+			set category="Skills"
+			src.Trigger(usr)
+/obj/Skills/Buffs/SlotlessBuffs/Autonomous
+	Inner_Malevolence
+		Cooldown = 1
+		ABBuffer=1
+		HealthThreshold = 0.1
+		adjust(mob/p)
+			if(!altered)
+				IconReplace=1
+				icon=p.ExpandBase
+				passives["GiantForm"] = round(p.AscensionsAcquired/2)
+				passives["Godspeed"] = p.AscensionsAcquired
+				AutoAnger=0
+				AngerStorage=0
+				if(p.passive_handler.Get("StarPower"))
+					AutoAnger=1
+					AngerMult=2
+					passives["Pursuer"] = 2 * p.AscensionsAcquired
+				else
+					if(p.AscensionsAcquired)
+						AngerPoint = 5 * p.AscensionsAcquired
+						passives["Pursuer"] = 0.5 * p.AscensionsAcquired
+					AngerMult = round(2/(8-p.AscensionsAcquired), 0.01)
+			..()
 /obj/Skills/Buffs/SlotlessBuffs/Makyo/Sword_of_Sunlight
 	MakesSword=1
 	FlashDraw=1

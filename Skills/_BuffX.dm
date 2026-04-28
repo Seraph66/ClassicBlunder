@@ -68,6 +68,9 @@ NEW VARIABLES
 	var/list/ABuffNeeded=null
 	var/SBuffNeeded//special buff req
 	var/UBuffNeeded//universal (slotless) buff req, not used/implemented yet
+	var/ABBuffer //activates w/ any active buff
+	var/SBBuffer //activates w/ any slotless buff
+	var/STBuffer // activates w/ any active style
 	var/NeedsAnger//Cant use the buff before youre angry.
 	var/NeedsHealth//Cant use the buff before youre below x health.
 	var/NeedsSSJ//defines if buff only can be used in SSJ and in what level
@@ -138,6 +141,8 @@ NEW VARIABLES
 	var/ArmamentGlowSize
 	var/AwakeningRequired
 	var/GatesNeeded
+
+
 
 	var/BleedHit //Makes you deal damage to yourself when you hit.
 	var/ManaLeak //Makes you spend mana when you hit
@@ -1314,7 +1319,7 @@ NEW VARIABLES
 									src.ActiveMessage="calls forth the true form of █████████████, the ███████ of ████████!"
 									src.OffMessage="conceals █████████████.."
 						if("Soul Edge")
-							passives = list("AbyssMod" = usr.SagaLevel, "Steady" = usr.SagaLevel, "Extend" = 1, "BleedHit" = 1, "PULock" = 1)
+							passives = list("AbyssMod" = usr.SagaLevel, "Steady" = usr.SagaLevel, "Extend" = 1, "BleedHit" = 0.25, "PULock" = 1)
 							if(!redacted)
 								src.SwordName="Soul Edge"
 								src.ActiveMessage="calls forth the true form of Soul Edge, the Blade of Chaos!"
@@ -1801,10 +1806,10 @@ NEW VARIABLES
 			adjust(mob/p)
 				if(src.Mastery<1)
 					src.Mastery=1
-				passives = list("KaioBuff"=1, "MirrorStats" = 1, "Flow" = 1 + p.Potential/30, "Instinct" = 1 + p.Potential/30, "LikeWater" = 2 + p.Potential/30, "FluidForm" = 1)
+				passives = list("MirrorStats" = 1, "Flow" = 1 + p.Potential/30, "Instinct" = 1 + p.Potential/30, "LikeWater" = 2 + p.Potential/30, "FluidForm" = 1)
 				if(p.isRace(SAIYAN)&&p.transActive>=1||p.isRace(HALFSAIYAN)&&p.transActive>=1||p.passive_handler.Get("SuperSaiyanSignature"))
 					if(p.race.transformations[p.transActive].mastery==100)
-						passives = list("KaioBuff"=1, "MirrorStats" = 1, "Flow" = 1 + p.Potential/20, "Instinct" = 1 + p.Potential/20, "LikeWater" = 2 + p.Potential/20, "FluidForm" = 1,"KiControlMastery" = 1+p.Potential/50, "SuperSaiyanSignature" = 1)
+						passives = list("MirrorStats" = 1, "Flow" = 1 + p.Potential/20, "Instinct" = 1 + p.Potential/20, "LikeWater" = 2 + p.Potential/20, "FluidForm" = 1,"KiControlMastery" = 1+p.Potential/50, "SuperSaiyanSignature" = 1)
 			verb/Kyoukaken()
 				set category="Skills"
 				adjust(usr)
@@ -1822,12 +1827,12 @@ NEW VARIABLES
 			adjust(mob/p)
 				if(src.Mastery<1)
 					src.Mastery=1
-				passives = list("KaioBuff"=1, "Erosion" = 0.1 + p.Potential/150, "SoulFire" = 1 + p.Potential/30, "WeaponBreaker" = 2 + p.Potential/30, "DeathField" = 5 + p.Potential/10, "VoidField" = 5 + p.Potential/10)
+				passives = list("Erosion" = 0.1 + p.Potential/150, "SoulFire" = 1 + p.Potential/30, "WeaponBreaker" = 2 + p.Potential/30, "DeathField" = 5 + p.Potential/10, "VoidField" = 5 + p.Potential/10)
 				SpdMult = 1.25 + p.Potential/300
 				DefMult = 1.25 + p.Potential/300
 				if(p.isRace(SAIYAN)&&p.transActive>=1||p.isRace(HALFSAIYAN)&&p.transActive>=1||p.passive_handler.Get("SuperSaiyanSignature"))
 					if(p.race.transformations[p.transActive].mastery==100)
-						passives = list("KaioBuff"=1, "Erosion" = 0.1 + p.Potential/150, "SoulFire" = 1 + p.Potential/20, "WeaponBreaker" = 2 + p.Potential/30, "DeathField" = 5 + p.Potential/7, "VoidField" = 5 + p.Potential/7, "SuperSaiyanSignature" = 1)
+						passives = list("Erosion" = 0.1 + p.Potential/150, "SoulFire" = 1 + p.Potential/20, "WeaponBreaker" = 2 + p.Potential/30, "DeathField" = 5 + p.Potential/7, "VoidField" = 5 + p.Potential/7, "SuperSaiyanSignature" = 1)
 						src.ActiveMessage="'s golden aura flows like wind, eroding the world around them."
 			verb/Toppuken()
 				set category="Skills"
@@ -1955,9 +1960,6 @@ NEW VARIABLES
 							AutoAnger=1
 							passives = list("Maki" = 1, "Curse" = 1, "LifeGeneration" = 1, "Deflection" = 2, "AutoAnger" = 1, "Reversal" = Mastery/10)
 							CalmAnger=0
-					if(src.Mastery==1)
-						usr << "You don't have enough of a rapport to manipulate your demon at will!"
-						return
 					src.Trigger(usr)
 			Vaizard_Mask
 				SignatureTechnique=3
@@ -2889,13 +2891,13 @@ NEW VARIABLES
 				adjust(mob/p)
 					if(altered) return
 					var/totalPot = round(p.Potential,10)
-					SpdMult = 1.3 + totalPot/100
-					StrMult = 1.3 + totalPot/100
-					EndMult = 0.6 + clamp(totalPot/150, 0.1, 0.4)
-					DefMult = 0.6 + clamp(totalPot/150, 0.1, 0.4)
+					SpdMult = 1.3 + (0.1*p.AscensionsAcquired)
+					StrMult = 1.3 + (0.1*p.AscensionsAcquired)
+					EndMult = 0.6 + (0.05*p.AscensionsAcquired)
+					DefMult = 0.6 + (0.05*p.AscensionsAcquired)
 					var/reducedPot = totalPot/10
 					ManaDrain = 0.008 - (0.001 * reducedPot)
-					passives = list("ManaLeak" = 1 - totalPot/200 )
+					passives = list("ManaLeak" = 1 - totalPot/200, "KiControl" = 1, "ManaLeak" = 1, "AllOutPU" = 1, "Overdrive" = 1)
 
 
 				verb/Overdrive()
@@ -2926,9 +2928,9 @@ NEW VARIABLES
 				adjust(mob/p)
 					if(altered) return
 					var/totalPot = round(p.Potential,10)
-					SpdMult = 1 + totalPot/100
-					OffMult = 1.1 + totalPot/100
-					DefMult = 0.4 + clamp(totalPot/150, 0.1, 0.4)
+					SpdMult = 1.2 + (0.1*p.AscensionsAcquired)
+					OffMult = 1.3 + (0.1*p.AscensionsAcquired)
+					DefMult = 0.8 + (0.05*p.AscensionsAcquired)
 					var/reducedPot = totalPot/10
 					SureHitTimerLimit = -40 + (100-totalPot)
 					passives = list("ManaLeak" = 1 - totalPot/200, "HardStyle" = 0.3 * reducedPot, \
@@ -2960,9 +2962,9 @@ NEW VARIABLES
 				adjust(mob/p)
 					if(altered) return
 					var/totalPot = round(p.Potential,10)
-					EndMult = 1.2 + totalPot/100
-					StrMult = 1.1 + totalPot/100
-					DefMult = 0.1 + clamp(totalPot/150, 0.1, 0.4)
+					EndMult = 1.2 + (0.1*p.AscensionsAcquired)
+					StrMult = 1.1 + (0.1*p.AscensionsAcquired)
+					DefMult = 0.1 + (0.05*p.AscensionsAcquired)
 					var/reducedPot = totalPot/10
 					passives = list("ManaLeak" = 1 - totalPot/200, "WeaponBreaker" = 0.3 * reducedPot, \
 					"BlockChance" = round(reducedPot/10,1), "CriticalBlock" = round(reducedPot/15), \
@@ -2987,9 +2989,9 @@ NEW VARIABLES
 				adjust(mob/p)
 					if(altered) return
 					var/totalPot = round(p.Potential,10)
-					ForMult = 1.3 + totalPot/150
-					OffMult = 1.2 + totalPot/150
-					SpdMult = 0.7 + clamp(totalPot/150, 0.1, 0.4)
+					ForMult = 1.3 + (0.1*p.AscensionsAcquired)
+					OffMult = 1.2 + (0.1*p.AscensionsAcquired)
+					SpdMult = 0.7 + (0.05*p.AscensionsAcquired)
 					var/reducedPot = totalPot/10
 					passives = list("ManaLeak" = 1 - totalPot/200, "Instinct" = 0.5 * reducedPot, \
 					"QuickCast" = round(reducedPot/10,1), "SpecialStrike" = 1, "MovingCharge" = 1, "SpiritHand" = round(totalPot/4,1))
@@ -3012,18 +3014,17 @@ NEW VARIABLES
 				KenWaveBlend=2
 				KenWaveIcon='KenShockwavePurple.dmi'
 				IconTint=list(0.7,0.3,0.6, 0.99,0.59,0.88, 0.51,0.11,0.4, 0,0,0)
-				passives = list("ManaLeak" = 1, "MovementMastery" = 10, "SpiritSword" = 0.5, "SpiritHand" = 0.5,"Deicide" = 5)
+				passives = list("ManaLeak" = 1, "SpiritSword" = 0.25, "SpiritHand" = 0.25,"Deicide" = 5)
 				SureHitTimerLimit=30
 				ActiveMessage="breaches into a higher domain through the power of cybernetics!"
 				OffMessage="returns to the standard domain."
 				adjust(mob/p)
 					if(altered) return
-					var/totalPot = round(p.Potential,10)
-					ForMult = 1.2 + totalPot/100
-					StrMult = 1.2 + totalPot/100
-					DefMult = 0.6 + clamp(totalPot/150, 0.1, 0.4)
-					passives = list("ManaLeak" = 1 - totalPot/200, "MovementMastery" = 3+round(totalPot/20,1), \
-					"Deicide" = 5* round(totalPot/25,1), "SpiritSword" = 0.5+round(totalPot/200,1), "SpiritHand" = 0.5+round(totalPot/200,1))
+					ForMult = 1.2 + (0.1*p.AscensionsAcquired)
+					StrMult = 1.2 + (0.1*p.AscensionsAcquired)
+					DefMult = 0.6 + (0.05*p.AscensionsAcquired)
+					passives = list("ManaLeak" = 1 - (p.AscensionsAcquired/10), "EndlessNine" = 0.1*p.AscensionsAcquired, \
+					"Deicide" = 5*p.AscensionsAcquired, "SpiritSword" = 0.25*p.AscensionsAcquired, "SpiritHand" = 0.25*p.AscensionsAcquired)
 
 				verb/Hilbert_Effect()
 					set category="Skills"
@@ -6302,7 +6303,7 @@ NEW VARIABLES
 					set category="Skills"
 					src.Trigger(usr)
 			Jet_Boots
-				passives = list("SuperDash" = 1, "Skimming " = 1, "Pursuer" = 1)
+				passives = list("SuperDash" = 1, "Skimming" = 1, "Pursuer" = 1)
 				SuperDash=1
 				Skimming=1
 				Pursuer=1
@@ -7239,7 +7240,7 @@ NEW VARIABLES
 			StrTax=0.1
 			SpdTax=0.1
 			EndTax=0.1
-			RecovTaxDrain=0.0030
+			RecovTax=0.1
 			SagaSignature=1
 			AngerMult=1.5
 			ManaDrain=0.1
@@ -7256,7 +7257,28 @@ NEW VARIABLES
 			verb/Mark_of_the_Crone()
 				set category="Skills"
 				if(!usr.BuffOn(src))
-					passives = list("Brutalize" = 5, "PureDamage" = 5, "PureReduction" = 5, "Pursuer" = 2, "HellPower" = 1, "Gum Gum" = 2, "Extend" = 2, "PowerReplacement" = glob.progress.totalPotentialToDate+5)
+					var/PactBoostPow=0
+					var/PactBoostDef=0
+					if(usr.EldritchPacted)
+						switch(usr.ReflectedPactType)
+							if("Devotion")
+								PactBoostPow=0.25
+								PactBoostDef=0.25
+							if("Power")
+								PactBoostPow=0.5
+								PactBoostDef=0
+							if("Knowledge")
+								PactBoostPow=0.35
+								PactBoostDef=0.15
+							if("Ambition")
+								PactBoostPow=0.15
+								PactBoostDef=0.35
+							if("Survival")
+								PactBoostPow=0
+								PactBoostDef=0.5
+					passives = list("Brutalize" = 1+(usr.AscensionsAcquired*(0.5+PactBoostDef)) , "PureDamage" = 1+(usr.AscensionsAcquired*(0.75+PactBoostPow)), \
+					"PureReduction" = 1+(usr.AscensionsAcquired*(0.75+PactBoostDef)), "Pursuer" = 2, "HellPower" = 0.1+(PactBoostPow/2), \
+					"Gum Gum" = 1, "Extend" = 1,"Unbreakable" = 0.25+PactBoostDef,"Undeterred" = 1)
 				src.Trigger(usr)
 
 		God_Ki
@@ -7627,7 +7649,7 @@ NEW VARIABLES
 			SignatureTechnique=3
 			AutoAnger=1
 			AngerThreshold=2
-			IconLock='DarknessGlow.dmi'
+			IconLock='MajinAura.dmi'
 			LockX=0
 			LockY=0
 			FlashChange=1
@@ -8379,6 +8401,9 @@ NEW VARIABLES
 
 			verb/Aria_Chant()
 				set category = "Skills"
+				if(usr.absorbedBy)
+					usr << "You cannot recite your aria while absorbed."
+					return
 				if(usr.AriaCount-2 == usr.SagaLevel && usr.UBWPath != "Feeble")
 					usr << "You try to speak more of your aria, but you don't know any more lines..."
 					return
@@ -9166,6 +9191,10 @@ NEW VARIABLES
 			var/tmp/effected = list()
 			var/range = 10
 			var/identifier = null
+			var/demonName = null
+			var/icon/customTurfIcon = null
+			var/icon/customRoofIcon = null
+			var/useShroud = TRUE
 			Cooldown = -1
 			ActiveMessage="releases their Domain!"
 			OffMessage="conceals their Domain...."
@@ -9183,23 +9212,29 @@ NEW VARIABLES
 					spawn()animate(M, color = null, time = 3)
 			verb/Domain_Expansion_Target()
 				set category = "Skills"
-				if(usr.Target==usr || !usr.Target)
-					usr << "Can't target [usr.Target == usr ? " yourself" : " not have a target"]."
-					return
 				src.Trigger(usr)
-				if(usr.BuffOn(src)) // this means it worked and its on
-					animation(usr)
-					usr.DomainExpansion(identifier, 0, 1)
+				if(usr.BuffOn(src))
+					animation(usr, range)
+					usr.DomainExpansion(src)
 				else
 					usr.stopDomainExapansion()
 			verb/Domain_Expansion_Wide()
 				set category = "Skills"
 				src.Trigger(usr)
-				if(usr.BuffOn(src)) // this means it worked and its on
+				if(usr.BuffOn(src))
 					animation(usr, range)
-					usr.DomainExpansion(identifier, range, 0)
+					usr.DomainExpansion(src)
 				else
 					usr.stopDomainExapansion()
+		Domain_Lock
+			Slotless = 1
+			BuffName = "Domain Lock"
+			TimerLimit = 300
+			ActiveMessage = "is sealed from manifesting domains and duels!"
+			OffMessage = "is no longer domain locked."
+			IconLock = 'BLANK.dmi'
+			LockX = -32
+			LockY = -32
 		Dividing_Driver
 			WarpZone=1
 			Duel=1
@@ -9734,16 +9769,33 @@ NEW VARIABLES
 				HealthThreshold=0.1
 				adjust(mob/p)
 					if(!altered)
-						var/currentPot = p.Potential
 						var/secretLevel = p.secretDatum.currentTier
-						PowerMult=1+(0.05*secretLevel*secretLevel)
-						strAdd=p.StrAscension*secretLevel
-						endAdd=p.EndAscension*secretLevel
-						forAdd=p.ForAscension*secretLevel
-						spdAdd=p.SpdAscension*secretLevel
-						offAdd=p.OffAscension*secretLevel
-						defAdd=p.DefAscension*secretLevel
-						TimerLimit= (2 * currentPot) + (20 * (p.transUnlocked ? p.transUnlocked : p.AscensionsAcquired))
+						if(p.Health<50)
+							secretLevel+=1
+						if(p.Health<25)
+							secretLevel+=2
+						if(secretLevel>7)
+							secretLevel=7
+						PowerMult=1+(0.02*secretLevel*secretLevel)
+						var/SpiralPower=1
+						switch(secretLevel)
+							if(1 to 2)
+								SpiralPower=1
+							if(3)
+								SpiralPower=2
+							if(4)
+								SpiralPower=3
+							if(5)
+								SpiralPower=4
+							if(6)
+								SpiralPower=5
+							if(7)
+								SpiralPower=7
+						StrMult=1.25 + (0.03*secretLevel*secretLevel)
+						ForMult=1.25 + (0.03*secretLevel*secretLevel)
+						EndMult=1.25 + (0.035*secretLevel*secretLevel)
+						passives = list("SpiralPowerUnlocked" = SpiralPower, "PureDamage" = SpiralPower, "PureReduction" = SpiralPower)
+						TimerLimit= (10 * (p.transUnlocked ? p.transUnlocked : p.AscensionsAcquired))
 						Cooldown = 61 - ((5 * p.AscensionsAcquired) + (5 * secretLevel))
 				KenWave = 2
 				KenWaveIcon='SparkleGreen.dmi'
@@ -12407,6 +12459,12 @@ mob
 						if(!src.passive_handler.Get("Scarlet-Overdriven"))
 							src.Death(null, "suicidal stupidity!", SuperDead=1)
 							return
+				if(src.absorbedBy && (B.WarpZone || B.Duel || istype(B, /obj/Skills/Buffs/SlotlessBuffs/Domain_Expansion)))
+					src << "You cannot invoke duel or domain techniques while absorbed."
+					return
+				if(src.HasDomainLock() && (B.WarpZone || B.Duel || istype(B, /obj/Skills/Buffs/SlotlessBuffs/Domain_Expansion)))
+					src << "You cannot use domain or duel techniques while <b>Domain Lock</b> is active."
+					return
 				if(B.WarpZone)
 					if(!B.WarpX||!B.WarpY||!B.WarpZ)
 						src << "Your duel location hasn't been set!"
@@ -12496,6 +12554,9 @@ mob
 					src << "You channel the haziness of Shadow through your style!"
 				if(src.Secret=="Zombie")
 					src << "You channel the stillness of the Underworld through your style!"
+				if(hasSecret("Eldritch (Shrouded)"))
+					src << "You channel the Origin behind your Shroud through your style!"
+					setShroudedStyle();
 				src.AddStyleBuff()
 				B.current_passives = B.passives
 				passive_handler.increaseList(B.passives)
@@ -12650,6 +12711,9 @@ mob
 				OMsg(src, "[src] takes back what belongs to them, as they call upon [src.StyleBuff]!")
 			else
 				OMsg(src, "[src] takes up the [src.StyleBuff]!")
+			if(hasSecret("Eldritch (Shrouded)"))
+				var/SecretInformation/EldritchShrouded/es = secretDatum;
+				passive_handler.increaseList(es.ShroudedPassives);
 
 		RemoveStyleBuff()
 			if(src.StyleBuff.current_passives && src.StyleBuff.current_passives.len)
@@ -12663,6 +12727,9 @@ mob
 			src.OffMultTotal-=(src.StyleBuff.OffMult-1)
 			src.DefMultTotal-=(src.StyleBuff.DefMult-1)
 			src.RecovMultTotal-=(src.StyleBuff.RecovMult-1)
+			if(hasSecret("Eldritch (Shrouded)"))
+				var/SecretInformation/EldritchShrouded/es = secretDatum;
+				passive_handler.decreaseList(es.ShroudedPassives);
 			src.AllSkillsRemove(src.StyleBuff)
 			if(StyleBuff.BuffSelf)
 				var/obj/Skills/Buffs/s = FindSkill(StyleBuff.BuffSelf)
@@ -12683,7 +12750,6 @@ mob
 				src:move_speed = MovementSpeed()
 
 		AddActiveBuff()
-
 			if(src.ActiveBuff.BuffName=="Ki Control")
 				if(src.passive_handler.Get("Anaerobic"))
 					src.ActiveBuff.passives["PUSpike"] = 25
@@ -13771,7 +13837,7 @@ mob
 				src.SenseUnlocked+=B.SenseUnlocked
 			if(B.Afterimages)
 				src.Afterimages+=1
-			if(B.AutoAnger || B.passives["AutoAnger"])
+			if((B.AutoAnger || B.passives["AutoAnger"]) && !src.AutoBerserkOptOut)
 				Anger()
 				passive_handler.Increase("EndlessAnger")
 			if(B.CalmAnger)
@@ -14156,6 +14222,16 @@ mob
 				if(s&&s.Conjured)
 					s.AlignEquip(src)
 					del s
+				else
+					// Conjured sword may have landed in the second slot if the user
+					// had NeedsSecondSword (Two Sword Style etc.) at activation —
+					// Items.dm:Equip() places it there when slot 1 is occupied.
+					// Without this branch the conjured sword leaks: slot 2 stays
+					// blocked even after the buff is toggled off.
+					var/obj/Items/Sword/s2=src.EquippedSecondSword()
+					if(s2&&s2.Conjured&&!B.MakesSecondSword)
+						s2.AlignEquip(src)
+						del s2
 				if(B.MakesSword==3)
 					for(s in src)
 						if(s.Conjured)
@@ -14262,7 +14338,7 @@ mob
 				src.SenseUnlocked-=B.SenseUnlocked
 			if(B.Afterimages)
 				src.Afterimages-=B.Afterimages
-			if(B.AutoAnger || B.passives["AutoAnger"])
+			if((B.AutoAnger || B.passives["AutoAnger"]) && !src.AutoBerserkOptOut)
 				if(passive_handler.Get("EndlessAnger"))
 					passive_handler.Decrease("EndlessAnger")
 				src.Calm()
@@ -14505,18 +14581,24 @@ mob
 
 			if(B.RecovCut)
 				src.AddRecovCut(B.RecovCut)
+			var/TaxIncrease=1
+			if("Unbreakable" in B.passives)
+				TaxIncrease+=B.passives["Unbreakable"]
 			if(B.StrTax)
-				src.AddStrTax(B.StrTax)
+				src.AddStrTax(B.StrTax*TaxIncrease)
 			if(B.EndTax)
-				src.AddEndTax(B.EndTax)
+				src.AddEndTax(B.EndTax*TaxIncrease)
 			if(B.SpdTax)
-				src.AddSpdTax(B.SpdTax)
+				src.AddSpdTax(B.SpdTax*TaxIncrease)
 			if(B.ForTax)
-				src.AddForTax(B.ForTax)
+				src.AddForTax(B.ForTax*TaxIncrease)
 			if(B.OffTax)
-				src.AddOffTax(B.OffTax)
+				src.AddOffTax(B.OffTax*TaxIncrease)
 			if(B.DefTax)
-				src.AddDefTax(B.DefTax)
+				src.AddDefTax(B.DefTax*TaxIncrease)
+			if("Unbreakable" in B.passives)
+				if(src.StrTax>=0.75||src.ForTax>=0.75||src.EndTax>=0.75||src.SpdTax>=0.75||src.OffTax>=0.75||src.DefTax>=0.75)
+					src.Maimed+=1
 			if(B.RecovTax)
 				src.AddRecovTax(B.RecovTax)
 			if(B.WaveringAngerLimit)
@@ -14672,6 +14754,11 @@ mob
 
 mob
 	proc
+		HasDomainLock()
+			if(src.SlotlessBuffs && src.SlotlessBuffs["Domain Lock"])
+				return 1
+			return 0
+
 		BuffOn(var/obj/Skills/Buffs/B)
 			if(src.StanceBuff)
 				if(src.StanceBuff.type==B.type)

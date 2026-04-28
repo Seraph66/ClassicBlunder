@@ -52,6 +52,21 @@
 					SwordIcon='GLightsaberRed.dmi'
 				else
 					SwordIcon='LightsaberRed.dmi'
+			if("Yellow")
+				if(double)
+					SwordIcon='LightsaberYellowDouble.dmi'
+				else if(cross)
+					usr << "This color is not available for this type!"
+					return
+				else if(shoto)
+					usr << "This color is not available for this type!"
+					return
+				else if(great)
+					usr << "This color is not available for this type!"
+					return
+				else
+					usr << "This color is not available for this type!"
+					return
 	proc/getImprovements()
 	Lightsaber
 		SpiritSword=0.15

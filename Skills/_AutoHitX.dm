@@ -1228,6 +1228,7 @@ obj
 				adjust(mob/p)
 				verb/Lightning_Kicks()
 					set category="Skills"
+					var/can_fire = !(Using || cooldown_remaining)
 					if(!altered)
 						if(usr.isInnovative(HUMAN, "Unarmed"))
 							if(!isInnovationDisable(usr))
@@ -1239,33 +1240,20 @@ obj
 									usr.UseProjectile(kb)
 								else
 									return
-						else if(usr.isInnovative(CELESTIAL, "Any"))
-							if(!isInnovationDisable(usr))
-								if(usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic))
-									if(!Using && usr.Energy >= 5)
-										if(!locate(/obj/Skills/Projectile/Magic/DarkMagic/Abyssal_Sphere) in usr)
-											usr.AddSkill(new/obj/Skills/Projectile/Magic/DarkMagic/Abyssal_Sphere)
-										var/obj/Skills/Projectile/Magic/DarkMagic/Abyssal_Sphere/ap = usr.FindSkill(/obj/Skills/Projectile/Magic/DarkMagic/Abyssal_Sphere)
-										ap.adjust(usr)
-										usr.UseProjectile(ap)
-										usr.endDemonMagicCast()
-										usr.gainStyleRating(1)
-									else
-										return
-								else if(usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/HellFire))
-									var/obj/Skills/Buffs/SlotlessBuffs/Hellraiser/hr = usr.SlotlessBuffs["Hellraiser"]
-									if(!hr)
-										hr = new/obj/Skills/Buffs/SlotlessBuffs/Hellraiser()
-									hr.stackBuff(usr)
-									usr.endDemonMagicCast()
-									usr.gainStyleRating(1)
-								else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption))
-									src.CorruptionDebuff = 1
-									usr.endDemonMagicCast()
-									usr.gainStyleRating(1)
-								else
-									src.CorruptionDebuff = 0
+						else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr))
+							can_fire = !(Using || cooldown_remaining)
+							if(usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic) && can_fire && usr.Energy >= 5)
+								if(!locate(/obj/Skills/Projectile/Magic/DarkMagic/Abyssal_Sphere) in usr)
+									usr.AddSkill(new/obj/Skills/Projectile/Magic/DarkMagic/Abyssal_Sphere)
+								var/obj/Skills/Projectile/Magic/DarkMagic/Abyssal_Sphere/ap = usr.FindSkill(/obj/Skills/Projectile/Magic/DarkMagic/Abyssal_Sphere)
+								ap.adjust(usr)
+								usr.UseProjectile(ap)
+							if(usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption) && can_fire)
+								src.CorruptionDebuff = 1
+							else
+								src.CorruptionDebuff = 0
 					usr.Activate(src)
+					applyDemonInnovationEffect(usr, can_fire)
 				verb/Disable_Innovate()
 					set category = "Other"
 					disableInnovation(usr)
@@ -1373,21 +1361,9 @@ obj
 						CorruptionDebuff = 0
 				verb/Spinning_Clothesline()
 					set category="Skills"
-					adjust(usr)
-					if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic))
-						usr.endDemonMagicCast()
-						usr.gainStyleRating(1)
-					else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/HellFire))
-						var/obj/Skills/Buffs/SlotlessBuffs/Hellraiser/hr = usr.SlotlessBuffs["Hellraiser"]
-						if(!hr)
-							hr = new/obj/Skills/Buffs/SlotlessBuffs/Hellraiser()
-						hr.stackBuff(usr)
-						usr.endDemonMagicCast()
-						usr.gainStyleRating(1)
-					else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption))
-						usr.endDemonMagicCast()
-						usr.gainStyleRating(1)
+					var/can_fire = !(Using || cooldown_remaining)
 					usr.Activate(src)
+					applyDemonInnovationEffect(usr, can_fire)
 				verb/Disable_Innovate()
 					set category = "Other"
 					disableInnovation(usr)
@@ -1531,21 +1507,9 @@ obj
 						CorruptionDebuff = 0
 				verb/Hyper_Crash()
 					set category="Skills"
-					adjust(usr)
-					if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic))
-						usr.endDemonMagicCast()
-						usr.gainStyleRating(1)
-					else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/HellFire))
-						var/obj/Skills/Buffs/SlotlessBuffs/Hellraiser/hr = usr.SlotlessBuffs["Hellraiser"]
-						if(!hr)
-							hr = new/obj/Skills/Buffs/SlotlessBuffs/Hellraiser()
-						hr.stackBuff(usr)
-						usr.endDemonMagicCast()
-						usr.gainStyleRating(1)
-					else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption))
-						usr.endDemonMagicCast()
-						usr.gainStyleRating(1)
+					var/can_fire = !(Using || cooldown_remaining)
 					usr.Activate(src)
+					applyDemonInnovationEffect(usr, can_fire)
 				verb/Disable_Innovate()
 					set category = "Other"
 					disableInnovation(usr)
@@ -2248,6 +2212,7 @@ obj
 				SpecialAttack=1
 				CanBeDodged=0
 				CanBeBlocked=1
+				ComboMaster=1
 				DamageMult=11
 				Stunner=3
 				MortalBlow=1
@@ -3545,21 +3510,9 @@ obj
 						CorruptionDebuff = 0
 				verb/Jet_Slicer()
 					set category="Skills"
-					adjust(usr)
-					if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic))
-						usr.endDemonMagicCast()
-						usr.gainStyleRating(1)
-					else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/HellFire))
-						var/obj/Skills/Buffs/SlotlessBuffs/Hellraiser/hr = usr.SlotlessBuffs["Hellraiser"]
-						if(!hr)
-							hr = new/obj/Skills/Buffs/SlotlessBuffs/Hellraiser()
-						hr.stackBuff(usr)
-						usr.endDemonMagicCast()
-						usr.gainStyleRating(1)
-					else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption))
-						usr.endDemonMagicCast()
-						usr.gainStyleRating(1)
+					var/can_fire = !(Using || cooldown_remaining)
 					usr.Activate(src)
+					applyDemonInnovationEffect(usr, can_fire)
 			Crowd_Cutter
 				SkillCost=TIER_3_COST
 				Copyable=5
@@ -5156,6 +5109,7 @@ mob
 					if(!src.HasSpellFocus(Z))
 						src << "You need a spell focus to use [Z]."
 						return
+			Z.adjust(src)
 			Z.SpellSlotModification();
 			if(disarmed_cut)
 				Z.DamageMult = (Z.DamageMult / 2)
@@ -5215,18 +5169,19 @@ mob
 					Z.Cooldown(1, null, src)
 					return
 				if(Z.type == /obj/Skills/AutoHit/I_Want_To_Be_Like_You)
+					var/iwtl_cd = src.passive_handler && src.passive_handler.Get("Limited Rank-Up") ? 30 : 45
 					if(src.Target == src)
 						src << "You have nothing to be envious of."
-						Z.Cooldown(45)
+						Z.Cooldown(iwtl_cd)
 						return FALSE
 					var/last_used = src.Target.last_autohit_used
 					if(!last_used || last_used == /obj/Skills/AutoHit/I_Want_To_Be_Like_You)
 						src << "You have nothing to be envious of."
-						Z.Cooldown(45)
+						Z.Cooldown(iwtl_cd)
 						return FALSE
 					var/obj/Skills/AutoHit/copied = new last_used
 					src.Activate(copied, TRUE)
-					Z.Cooldown(45)
+					Z.Cooldown(iwtl_cd)
 					return FALSE
 			if(Z.NeedsHealth)
 				if(src.Health>Z.NeedsHealth*(1-src.HealthCut))
@@ -5607,9 +5562,9 @@ mob
 				if(Z.Area=="Around Target")
 					spawn()
 						if(Z.Falling)
-							LeaveDescendingImage(User=0, Image=i, PX=src.Target.pixel_x+Z.IconX, PY=src.Target.pixel_y+Z.IconY, PZ=src.Target.pixel_z+16+(32*Z.Rounds/10), Size=Z.Size, Under=Z.IconUnder, Time=(Z.Rounds-1*max(1,Time)), AltLoc=TrgLoc)
+							LeaveDescendingImage(User=0, Image=i, PX=src.Target.pixel_x+Z.IconX, PY=src.Target.pixel_y+Z.IconY, PZ=src.Target.pixel_z+16+(32*Z.Rounds/10), Size=Z.Size, Under=Z.IconUnder, Time=(Z.Rounds*max(1,Time)), AltLoc=TrgLoc)
 						else
-							LeaveImage(User=0, Image=i, PX=src.Target.pixel_x+Z.IconX, PY=src.Target.pixel_y+Z.IconY, PZ=src.Target.pixel_z+48, Size=Z.Size, Under=Z.IconUnder, Time=(Z.Rounds-1*max(1,Time)), AltLoc=TrgLoc)
+							LeaveImage(User=0, Image=i, PX=src.Target.pixel_x+Z.IconX, PY=src.Target.pixel_y+Z.IconY, PZ=src.Target.pixel_z+48, Size=Z.Size, Under=Z.IconUnder, Time=(Z.Rounds*max(1,Time)), AltLoc=TrgLoc)
 				else
 					if(Z.Persistent)
 						spawn()LeaveImage(User=null, Image=i, PX=src.pixel_x+Z.IconX, PY=src.pixel_y+Z.IconY, PZ=src.pixel_z+Z.IconZ, Size=Z.Size, Under=Z.IconUnder, Time=Z.Duration, AltLoc=TrgLoc)
@@ -6112,6 +6067,8 @@ obj
 			FollowUpDelay
 
 			DirectWounds
+			/// Set for all autohits built from a skill, used for on-hit hooks (currently just Enuma Elish).
+			var/obj/Skills/AutoHit/FromSkill
 
 		Update()
 			..()
@@ -6127,6 +6084,7 @@ obj
 			src.IgnoreAlreadyHit = Z.IgnoreAlreadyHit
 			toDeath = life
 			src.Owner=owner
+			src.FromSkill = Z
 			parentRounds = Z.Rounds
 
 			if(owner.Grab && !Z.GrabMaster)
@@ -6701,7 +6659,7 @@ obj
 						Heal *= 0.5
 					if(Owner.passive_handler.Get("Determination(White)"))
 						Heal *= 0.15
-					FinalDmg-=Heal //negated
+					FinalDmg-=Heal*0.15 //negated
 					m.HealEnergy(Heal)
 				if(Owner.Attunement == "Fox Fire")
 					var/heal = FinalDmg * ( (1 + Owner.AscensionsAcquired + (FoxFire))/10)
@@ -6913,6 +6871,10 @@ obj
 				if(!damageDealt)
 					damageDealt = 0
 
+				if(istype(FromSkill, /obj/Skills/AutoHit/Enuma_Elish) && damageDealt)
+					var/obj/Skills/AutoHit/Enuma_Elish/ee = FromSkill
+					ee.EnumaElishOnHit(Owner, m, damageDealt)
+
 				if(ManaDrain)
 					m.LoseMana(ManaDrain)
 					src.Owner.HealMana(ManaDrain)
@@ -6958,9 +6920,6 @@ obj
 							KenShockwave(m, Size=min((src.Knockback+src.Owner.Intimidation/50)*max(2*(!src.Owner.HasNullTarget() ? src.Owner.GetGodKi() : 0),1)*GoCrand(0.04,0.4),0.2),PixelX=pick(-12,-8,8,12),PixelY=pick(-12,-8,8,12))
 						if(m!=src.Owner.Grab)
 							src.Owner.Knockback(src.Knockback+extraKnock, m, get_dir(src.Owner, m), extraKnock)
-
-				if(PullIn)
-					src.Owner.Knockback(PullIn, m, Direction=get_dir(m, Owner))
 
 				if(src.Stunner)
 					Stun(m, src.Stunner+src.Owner.GetStunningStrike())
@@ -7041,6 +7000,8 @@ obj
 
 			Life()
 				if(src.loc == null) return
+				if(PullIn && Owner)
+					Owner.ApplyPullInArea(PullIn, PullIn)
 				if(src.Circle)
 					if(src.TargetLoc)
 						if(src.Slow&&src.Distance>1)

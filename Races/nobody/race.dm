@@ -14,6 +14,7 @@ race
 		anger = 1
 		intellect = 3
 		imagination = 0.05
+		learning = 1.25
 		classes = list("Samurai", "Sorcerer", "Berserker","Imaginary", "Reaper")
 		stats_per_class = list("Samurai" = list(1.75, 1.5, 1, 1.75, 1.5, 2),"Sorcerer" = list(1,1.75,2,2,2,1),"Berserker" = list(2,2,2,1,1,1),"Imaginary" = list(2, 2, 1, 1.25, 1.25, 1.25), "Reaper" = list(1.75, 1, 1.75, 1.75, 1, 1.5))
 		onFinalization(mob/user)
@@ -22,7 +23,7 @@ race
 
 			user.race.transformations.Cut()
 			if(user.Class=="Samurai")
-				passives = list("BlurringStrikes" = 1, "SwordAscension" = 1, "SwordAscensionSecond" = 1, "SwordAscensionThird" = 1, "Flicker"=1)
+				passives = list("BlurringStrikes" = 1, "SwordAscension" = 1, "SwordAscensionSecond" = 1, "SwordAscensionThird" = 1, "Flicker"=1, "EmptyFlashStep" = 1)
 				user.AddSkill(new /obj/Skills/Buffs/SlotlessBuffs/Racial/Void_Blade)
 				user.AddSkill(new /obj/Skills/AutoHit/Desperation/FatalEnding)
 				user.NobodyOrigin()
@@ -44,6 +45,7 @@ race
 				passives = list( "SlayerMod" = 1, "FavoredPrey" = "Mortal", "Extend" = 1, "Gum Gum" = 1, "CriticalChance" = 15, "CriticalDamage" = 0.25, "Instinct" = 1 )
 				user.AddSkill(new /obj/Skills/AutoHit/Desperation/Deathscythe)
 				user.NobodyOrigin()
+			passives += list("Emptiness" = 1, "Longing" = 1)
 			..()
 /mob/proc/NobodyOrigin()
 	var/list/Choices=list("Prideful Heart", "Spirited Heart", "Simple and Clean")

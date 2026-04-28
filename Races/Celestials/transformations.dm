@@ -23,7 +23,7 @@ transformation
 
 			transform(mob/user, forceTrans)
 				var/armory_count = get_divine_armory_count(user)
-				var/add_per_stat = 0.1 + (armory_count * 0.4)
+				var/add_per_stat = 0.4 + (armory_count * 0.6)
 				strengthadd = add_per_stat
 				enduranceadd = add_per_stat
 				forceadd = add_per_stat
@@ -231,6 +231,12 @@ transformation
 				..()
 		Celestial_Devil_Trigger
 			passives = list("HellRisen" = 0.25, "DemonicDurability" = 2, "PureDamage" = 1, "PureReduction" = 1, "Brutalize" = 2, "Smokin'!" = 1)
+			speedadd = 1
+			enduranceadd = 1
+			offenseadd = 1
+			defenseadd = 1
+			strengthadd = 1
+			forceadd = 1
 			autoAnger = 1
 			unlock_potential = 55
 			form_aura_icon = 'Amazing Super Demon Aura.dmi'
@@ -249,20 +255,26 @@ transformation
 				..()
 			mastery_boons(mob/user)
 				if(mastery >= 25)
-					passives = list("GodKi" = 0.25, "HellRisen" = 0.5, "DemonicDurability" = 4, "Brutalize" = 4, "PureDamage" = 3, "PureReduction" = 3, "Smokin'!" = 1)
+					passives = list("GodKi" = 0.25, "HellPower" = 0.25, "HellRisen" = 0.5, "DemonicDurability" = 4, "Brutalize" = 4, "PureDamage" = 3, "PureReduction" = 3, "Smokin'!" = 1)
 				if(mastery >= 50)
-					passives = list("GodKi" = 0.75, "HellRisen" = 0.75, "DemonicDurability" = 6, "Brutalize" = 5, "PureDamage" = 5, "PureReduction" = 5, "MovementMastery" = 3, "BuffMastery"=3, "Smokin'!" = 1)
+					passives = list("GodKi" = 0.75, "HellPower" = 0.5, "HellRisen" = 0.75, "DemonicDurability" = 6, "Brutalize" = 5, "PureDamage" = 5, "PureReduction" = 5, "MovementMastery" = 3, "BuffMastery"= 3, "Smokin'!" = 1)
 				if(mastery >= 75)
-					passives = list("GodKi" = 1, "HellRisen" = 0.75, "DemonicDurability" = 6, "Brutalize" = 6, "PureDamage" = 6, "PureReduction" = 6, "MovementMastery" = 6, "TechniqueMastery" = 3, "Steady" = 3, "BuffMastery"=6, "Smokin'!" = 1)
+					passives = list("GodKi" = 1, "HellPower" = 0.75, "HellRisen" = 0.75, "DemonicDurability" = 6, "Brutalize" = 6, "PureDamage" = 6, "PureReduction" = 6, "MovementMastery" = 6, "TechniqueMastery" = 3, "Steady" = 3, "BuffMastery"= 6, "Smokin'!" = 1)
 				if(mastery >= 100)
-					passives = list("GodKi" = 1.5, "HellRisen" = 1, "DemonicDurability" = 6, "Brutalize" = 6, "PureDamage" = 6, "PureReduction" = 6, "MovementMastery" = 6, "TechniqueMastery" = 6, "Steady" = 6, "ManaStats" = 6, "BuffMastery"=6, "Smokin'!" = 1)
+					passives = list("GodKi" = 1.5, "HellPower" = 1, "HellRisen" = 1, "DemonicDurability" = 6, "Brutalize" = 6, "PureDamage" = 6, "PureReduction" = 6, "MovementMastery" = 6, "TechniqueMastery" = 6, "Steady" = 6, "ManaStats" = 6, "BuffMastery"= 6, "Smokin'!" = 1)
 			transform_animation(mob/user)
 				var/ShockSize=5
 				for(var/wav=5, wav>0, wav--)
 					KenShockwave(user, icon='KenShockwaveBloodlust.dmi', Size=ShockSize, Blend=2, Time=8)
 					ShockSize/=2
 		Celestial_Sin_Devil_Trigger
-			passives = list("Smokin' Sick Style!!!" = 1)
+			passives = list("Smokin' Sick Style!!!" = 1, "HellPower" = 1, "AbyssMod" = 6, "Scorching" = 6, "Poisoning" = 6, "DemonicInfusion" = 1, "CriticalChance" = 36, "CriticalDamage" = 0.6)
+			speedadd = 3
+			enduranceadd = 3
+			offenseadd = 3
+			defenseadd = 3
+			strengthadd = 3
+			forceadd = 3
 			autoAnger = 1
 			unlock_potential = 90
 			form_aura_icon = 'Amazing Super Demon Aura.dmi'

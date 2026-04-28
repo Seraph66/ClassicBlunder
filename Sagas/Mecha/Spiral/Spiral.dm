@@ -58,7 +58,7 @@ mob/tierUpSaga(path)
 
 /obj/Skills/AutoHit/Giga_Drill_Breaker
 	Area="Circle"
-	DamageMult=1.1
+	DamageMult=2
 	Rounds=10
 	Knockback = 1
 	ComboMaster=1
@@ -90,12 +90,12 @@ mob/tierUpSaga(path)
 			Size = 1 + dr
 			TurfStrike = Size
 			WindUp = 0.1 + (0.15 * sl) + (0.1 * sp)
-			DamageMult = (0.5 + (round(dr/3)) * max(0.15 + WindUp, 1))
-			Rounds = 25 - (dr * 2)
+			DamageMult = (2 + (round(dr/3)))
+			Rounds = 25
 			PullIn = max(0, dr - 4)
 			Primordial = round(dr/4)
 			Executor = max(dr, 3)
-			EnergyCost = 7 + (3 * dr)
+			EnergyCost = 1 + (3 * dr)
 	verb/Giga_Drill_Break()
 		set category="Skills"
 		adjust(usr)

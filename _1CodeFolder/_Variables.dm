@@ -49,6 +49,7 @@ mob/var
 	tmp/mob/Target
 	tmp/PoseEnhancement//Pose for 3 seconds to get a bonus to rippling.
 	tmp/PoseTime//timer
+	tmp/LastPose
 	tmp/BuffingUp=0//to stop people from pushing through weird buff behaviour
 	tmp/WindingUp//new var for autohitsu
 	tmp/PoweringUp=0
@@ -479,6 +480,7 @@ mob/var
 	EnergyAssimilators=0
 	EnhancedSmell=0
 	BioAndroid=0
+	SuperAndroid=0
 	CyberneticMainframe
 	SampleCollected=0
 	list/bio_samples = null      // collected genetic samples, list of "RaceName:Tier" strings

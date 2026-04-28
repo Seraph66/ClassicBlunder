@@ -676,8 +676,8 @@ obj
 ////Magic Shit
 			Aether_Arrow
 				Radius=0
-				DamageMult=1
-				AccMult=1
+				DamageMult=0.25
+				AccMult=0.5
 				StrRate=0.5
 				ForRate=0.5
 				EndRate=1
@@ -3314,7 +3314,7 @@ obj
 					activate(mob/player)
 						var/cooldown = 30
 						var/sagaLevel = player.SagaLevel
-						var/damage = 0.8 + 0.2 * sagaLevel
+						var/damage = 1 + (0.5 * sagaLevel)
 						var/ansatsukenPath = player.AnsatsukenPath == "Hadoken" ? 1 : 0
 						var/distance = 30
 						var/charge = 0.25
@@ -3323,7 +3323,7 @@ obj
 						Knockback = 2
 						if(ansatsukenPath)
 							cooldown -= 5
-							damage = 1 + 0.3 * sagaLevel
+							damage = 2 + (1.5 * sagaLevel)
 							Knockback = 3
 						if(player.AnsatsukenAscension == "Satsui" && src.IconLock == 'Hadoken.dmi')
 							src.IconLock = 'Hadoken - Satsui.dmi'
@@ -4206,7 +4206,7 @@ obj
 					SkillCost=120
 					Copyable=4
 					Distance=50
-					DamageMult=10
+					DamageMult=12
 					ChargeRate=2.5
 					Knockback=1
 					BeamTime=50
@@ -4222,7 +4222,7 @@ obj
 					SkillCost=120
 					Copyable=4
 					Distance=15
-					DamageMult=5
+					DamageMult=8
 					ChargeRate=0.5
 					Knockback=0
 					BeamTime=20
@@ -4238,7 +4238,7 @@ obj
 					NewCopyable = 3
 					SkillCost=120
 					Copyable=4
-					DamageMult=8
+					DamageMult=10
 					ChargeRate=1
 					Distance=50
 					Knockback=1
@@ -4254,7 +4254,7 @@ obj
 					NewCopyable = 3
 					SkillCost=120
 					Copyable=4
-					DamageMult=3
+					DamageMult=5
 					Distance=50
 					ChargeRate=1
 					Knockback=0
@@ -4675,10 +4675,10 @@ obj
 								usr.UseProjectile(src)
 					Vaizard
 						Cero
-							DamageMult=6
-							ChargeRate=3
-							Cooldown=300
-							ManaCost=2
+							DamageMult=15
+							ChargeRate=0.5
+							Cooldown=150
+							ManaCost=10
 							Distance=40
 							IconLock='Cero2.dmi'
 							IconSize=2
@@ -6188,7 +6188,7 @@ obj
 								Heal *= 0.5
 							if(Owner.passive_handler.Get("Determination(White)"))
 								Heal *= 0.15
-							EffectiveDamage-=Heal//negated
+							EffectiveDamage-=Heal*0.15//negated
 							a:HealEnergy(Heal)//and transfered into energy.
 						if(src.Burning&&!src.Owner.HasBurning())
 							EffectiveDamage*=max(1,ProjectileDamage(ElementalCheck(src.Owner, a, bonusElements=list("Fire"), damageOnly = 1))/10)

@@ -363,8 +363,8 @@ obj/Items/Magatama/Narukami
 	name = "Narukami"
 	desc = "A Magatama crackling with divine lightning. It carries the wrath of the thunder god, striking with the fury of the storm."
 	base_passives = list("ShockResist" = 1, "Shocking" = 2, "CriticalChance" = 15, "CriticalDamage" = 0.1)
-	passive_scaling = list("ShockResist" = 0.02, "Shocking" = 0.5, "CriticalChance" = 0.2, "CriticalDamage" = 0.005)
-	ascension_passives = list("1" = list("ThunderHerald" = 1))
+	passive_scaling = list("ShockResist" = 0.02, "Shocking" = 0.5, "CriticalChance" = 0.2, "CriticalDamage" = 0.005, "DenkoSekka" = 0.03, "Flicker" = 0.1)
+	ascension_passives = list("1" = list("ThunderHerald" = 1, "DenkoSekka" = 1, "Flicker" = 1))
 	magatama_skills = list(/obj/Skills/AutoHit/DemiFiend/Thunder_Breath)
 	ascension_skills = list("1" = list(/obj/Skills/AutoHit/DemiFiend/Shock))
 	craft_cost = 5000
@@ -491,7 +491,7 @@ obj/Items/Magatama/Adama
 	name = "Adama"
 	desc = "A Magatama shaped from the red clay of the first-formed. Its bearer draws down the storm — thunder surges through their veins, searing any who dare raise a hand against them."
 	base_passives = list("AirSpellDamage" = 0.2, "ShockResist" = 1, "Shocking" = 2, "ManaGeneration" = 1)
-	passive_scaling = list("AirSpellDamage" = 0.015, "ShockResist" = 0.03, "Shocking" = 0.3, "ManaGeneration" = 0.03, "ThunderHerald" = 0.05)
+	passive_scaling = list("AirSpellDamage" = 0.015, "ShockResist" = 0.03, "Shocking" = 0.3, "ManaGeneration" = 0.03)
 	ascension_passives = list("1" = list("ThunderHerald" = 1))
 	magatama_skills = list(/obj/Skills/AutoHit/DemiFiend/Bolt_Storm)
 	ascension_skills = list()

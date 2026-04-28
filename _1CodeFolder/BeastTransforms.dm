@@ -25,15 +25,15 @@
 	TransformY = -32
 	AuraLock = 'BLANK.dmi'
 	passives = list("Vulnerable Behind" = 1, "GiantForm" = 1, "NoDodge" = 1, "SweepingStrike" = 1, \
-	"Meaty Paws" = 1)
+	"Meaty Paws" = 1, "PureDamage" = 2, "PureReduction" = 2)
 	StrMult = 1.3
 	ForMult = 1.2
 	SpdMult = 0.3
 	EndMult = 1.2
 	DefMult = 0.1
-	PowerMult=1.2
+	PowerMult=1.5
 	HealthThreshold=0.01
-	AutoAnger = 0
+	AutoAnger = 1
 	TimerLimit = 360
 	verb/Ultimate_Form_Toggle()
 		set category="Other"

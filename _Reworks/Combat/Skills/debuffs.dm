@@ -1,4 +1,8 @@
 /obj/Skills/Buffs/var/IconState = ""
+// If set on a buff, its TimerLimit countdown does not advance while the target is
+// in RP Mode. Lives on the /obj/Skills/Buffs base so the generic tick loops can
+// read it off any buff type
+/obj/Skills/Buffs/var/PauseInRP = 0
 /obj/Skills/Buffs/SlotlessBuffs/Autonomous/Debuff
 	NeedsPassword = 1
 	TimerLimit = 1
@@ -177,6 +181,7 @@
 	TimerLimit = 10
 	AlwaysOn = 0
 	NeedsPassword = 0
+	PauseInRP = 1
 	ActiveMessage = "has been Charmed!"
 	OffMessage = "is no longer Charmed..."
 	var/mob/charmer

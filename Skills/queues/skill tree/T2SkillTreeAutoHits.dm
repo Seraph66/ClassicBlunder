@@ -73,7 +73,6 @@ obj
 			Distance=15
 			WindUp=1
 			ComboMaster=1
-			Guardbreak=1
 			WindupMessage="relaxes their fist into a straight palm..."
 			DamageMult=5
 			StrOffense=1
@@ -294,21 +293,9 @@ obj
 					CorruptionDebuff = 0
 			verb/Three_Thousand_Worlds()
 				set category="Skills"
-				adjust(usr)
-				if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic))
-					usr.endDemonMagicCast()
-					usr.gainStyleRating(1)
-				else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/HellFire))
-					var/obj/Skills/Buffs/SlotlessBuffs/Hellraiser/hr = usr.SlotlessBuffs["Hellraiser"]
-					if(!hr)
-						hr = new/obj/Skills/Buffs/SlotlessBuffs/Hellraiser()
-					hr.stackBuff(usr)
-					usr.endDemonMagicCast()
-					usr.gainStyleRating(1)
-				else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption))
-					usr.endDemonMagicCast()
-					usr.gainStyleRating(1)
+				var/can_fire = !(Using || cooldown_remaining)
 				usr.Activate(src)
+				applyDemonInnovationEffect(usr, can_fire)
 		Oni_Giri
 			Copyable=0
 			Area="Circle"
@@ -438,21 +425,9 @@ obj
 					CorruptionDebuff = 0
 			verb/Drill_Spin()
 				set category="Skills"
-				adjust(usr)
-				if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic))
-					usr.endDemonMagicCast()
-					usr.gainStyleRating(1)
-				else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/HellFire))
-					var/obj/Skills/Buffs/SlotlessBuffs/Hellraiser/hr = usr.SlotlessBuffs["Hellraiser"]
-					if(!hr)
-						hr = new/obj/Skills/Buffs/SlotlessBuffs/Hellraiser()
-					hr.stackBuff(usr)
-					usr.endDemonMagicCast()
-					usr.gainStyleRating(1)
-				else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption))
-					usr.endDemonMagicCast()
-					usr.gainStyleRating(1)
+				var/can_fire = !(Using || cooldown_remaining)
 				usr.Activate(src)
+				applyDemonInnovationEffect(usr, can_fire)
 		Rising_Spire
 			SkillCost=TIER_2_COST
 			Copyable=3

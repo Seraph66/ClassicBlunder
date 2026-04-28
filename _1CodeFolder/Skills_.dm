@@ -22,6 +22,34 @@ obj/Skills/proc/Cooldown(var/modify=1, var/Time, mob/p, var/announce_cd=1)
 	var/mob/m=src.loc
 	if(p)
 		m = p
+	if(MaxCharges > 0)
+		if(p) hasMagmicInfusion(p)
+		Charges--
+		if(Charges <= 0)
+			Using = 1
+		if(!Time && m)
+			if(!CooldownStatic)
+				if(glob.SPEED_COOLDOWN_MODE)
+					modify /= clamp(glob.SPEED_COOLDOWN_MIN, m.GetSpd()**glob.SPEED_COOLDOWN_EXPONENT, glob.SPEED_COOLDOWN_MAX)
+				if(m.HasTechniqueMastery())
+					var/TM = m.GetTechniqueMastery() / glob.TECHNIQUE_MASTERY_DIVISOR
+					if(TM < 0)
+						modify *= clamp(1+abs(TM), 1.1, glob.TECHNIQUE_MASTERY_LIMIT)
+					else if(TM > 0)
+						modify /= clamp((1+TM), 0.1, glob.TECHNIQUE_MASTERY_LIMIT)
+			else
+				if(m.Hustling())
+					modify *= 0.75
+			Time = src.ChargeRefresh * 10 * modify
+		if(isnull(Time) || Time == 0)
+			Time = src.ChargeRefresh * 10
+		if(m)
+			if(m.PureRPMode)
+				return
+			if(announce_cd && m.cooldownAnnounce)
+				m << "[src]: [Charges]/[MaxCharges] charges remaining. Next charge in [Time / 10]s."
+			Recharge(Time, m)
+		return
 	if(!src.Using || Time)
 		if(p) hasMagmicInfusion(p);
 		src.Using=1
@@ -106,6 +134,14 @@ obj/Skills/proc/Cooldown(var/modify=1, var/Time, mob/p, var/announce_cd=1)
 						m << "<font color='white'><b>[src] is off cooldown. ([src.CooldownNote])</b></font color>"
 					else
 						m << "<font color='white'><b>[src] is off cooldown.</b></font color>"
+
+obj/Skills/proc/Recharge(Time, mob/m)
+	spawn(Time)
+		Charges = min(Charges + 1, MaxCharges)
+		if(Charges > 0)
+			Using = 0
+		if(m && m.cooldownAnnounce)
+			m << "<font color='white'><b>[src] charge restored. ([Charges]/[MaxCharges])</b></font color>"
 #define get_turf(A) (get_step(A, 0))
 
 /mob/var/tmp/lastZanzoUsage = 0
@@ -266,7 +302,11 @@ mob/proc/SkillX(var/Wut,var/obj/Skills/Z,var/bypass=0)
 				if(src.Knockbacked)
 					return
 				if(Secret == "Heavenly Restriction" && secretDatum?:hasImprovement("Reverse Dash"))
-					GetAndUseSkill(/obj/Skills/Buffs/SlotlessBuffs/Heavenly_Reversal, Buffs, TRUE)
+					if(!locate(/obj/Skills/Buffs/SlotlessBuffs/Heavenly_Reversal, src))
+						src.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Heavenly_Reversal)
+					else
+						for(var/obj/Skills/Buffs/SlotlessBuffs/Heavenly_Reversal/W in src)
+							W.Trigger(src)
 				var/Distance=5
 				var/Delay=1
 				src.Frozen=1
@@ -491,6 +531,10 @@ mob/proc/SkillX(var/Wut,var/obj/Skills/Z,var/bypass=0)
 						src.dir=get_dir(src, src.Target)
 						src.Melee1(1, 5, accmulti=1.125+(src.GetSuperDash()/4))
 
+
+			if("Release Absorb")
+				src.releaseAbsorbedPrompt()
+				return
 
 			if("Absorb")
 				// if(Z.Using)
@@ -956,16 +1000,33 @@ mob/proc/SkillX(var/Wut,var/obj/Skills/Z,var/bypass=0)
 								src.dir=get_dir(src,src.Target)
 								src.Melee1(1, 5, accmulti=1.2, SureKB=1, BreakAttackRate=1)
 							else
-								if(HasGiantForm())
-									var/Wave=2
-									for(var/wav=Wave, wav>0, wav--)
-										KenShockwave(src, icon='fevKiai.dmi', Size=Wave)
-										Wave/=2
+								var/denko = getDenkoSekka()
+								if(denko)
+									src.MovementCharges--
+									if(MovementCharges<0)
+										MovementCharges=0
+									lastZanzoUsage = world.time + 8
+									var/denkoSavedColor = src.color
+									var/denkoSavedPixelZ = src.pixel_z
+									src.DenkoSekkaZanzoFade(denkoSavedPixelZ)
+									sleep(5)
+									src.Comboz(src.Target, FALSE, FALSE, passive_handler["Backstabber"])
+									src.dir=get_dir(src,src.Target)
+									src.DenkoSekkaZanzoLand(denkoSavedColor, denkoSavedPixelZ)
+									src.DenkoSekkaCharged = denko
+									src.Melee1(1, 5, accmulti=1.1, SureKB=1, BreakAttackRate=1)
+									return
 								else
-									VanishImage(src)
-								src.Comboz(src.Target, FALSE, FALSE, passive_handler["Backstabber"])
-								src.dir=get_dir(src,src.Target)
-								src.Melee1(1, 5, accmulti=1.1, SureKB=1, BreakAttackRate=1)
+									if(HasGiantForm())
+										var/Wave=2
+										for(var/wav=Wave, wav>0, wav--)
+											KenShockwave(src, icon='fevKiai.dmi', Size=Wave)
+											Wave/=2
+									else
+										VanishImage(src)
+									src.Comboz(src.Target, FALSE, FALSE, passive_handler["Backstabber"])
+									src.dir=get_dir(src,src.Target)
+									src.Melee1(1, 5, accmulti=1.1, SureKB=1, BreakAttackRate=1)
 						src.MovementCharges--
 						if(MovementCharges<0)
 							MovementCharges=0

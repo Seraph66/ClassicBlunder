@@ -190,9 +190,7 @@ obj/Items
 
 	proc/decreaseShatterCounter(val, mob/owner, mob/attacker, type)
 		// Entropic: equipment interacting against the Entropic player breaks faster
-		if(type == "armor" && owner && owner.passive_handler.Get("Entropic"))
-			val *= (1 + owner.passive_handler.Get("Entropic"))
-		else if((type == "sword" || type == "staff") && owner && owner.passive_handler.Get("Entropic"))
+		if(type && owner && owner.passive_handler.Get("Entropic"))
 			val *= (1 + owner.passive_handler.Get("Entropic"))
 		if(ShatterCounter > 0)
 			ShatterCounter -= val
@@ -378,14 +376,20 @@ obj/Items
 				return
 
 
+			var/manaCost = src.Cost * (glob.progress.EconomyMana / 100)
+			if(istype(src, /obj/Items/Enchantment/Limited_Rank_Up_Magic))
+				if(usr.getTotalMagicLevel() < 20)
+					usr << "Your total magic level is not high enough to craft Limited Rank-Up Magic. (Requires 20 or higher.)"
+					return
+				manaCost = src.Cost * glob.progress.EconomyCost
 			if(istype(src, /obj/Items/Enchantment/PocketDimensionGenerator))
 				if(!usr.HasFragments(src.Cost*glob.progress.EconomyCost))
 					usr << "You don't have enough fragments to buy [src]."
 					return
 				else
 					usr.TakeFragments(src.Cost*glob.progress.EconomyCost)
-			if(usr.HasManaCapacity(src.Cost*(glob.progress.EconomyMana/100)))
-				usr.TakeManaCapacity(src.Cost*(glob.progress.EconomyMana/100))
+			if(usr.HasManaCapacity(manaCost))
+				usr.TakeManaCapacity(manaCost)
 				ItemMade=new src.type
 				if(istype(src, /obj/Items/Enchantment/Tome))
 					ItemMade:init(1, usr)

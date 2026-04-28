@@ -1,3 +1,4 @@
+#define MAGICLESS_RACES list(ANDROID, NOBODY)
 globalTracker/var/
     list/WaterTreeNodes=list();
     list/FireTreeNodes=list();
@@ -266,6 +267,12 @@ globalTracker/var
 
 
 /mob/proc/canUnlockMagicTree(element)
+    if(src.race.type in MAGICLESS_RACES)
+        if(passive_handler.Get("ImbuedSoul"))
+            return 1;
+        else
+            alert(src, "You don't have the heart or soul to utilize magic.", "ERROR", "OK");
+            return 0;
     if(RPPSpendable < glob.MagicNodeRPPCost)
         alert(src, "You don't have enough RPP to unlock the [element] Magic Tree! ([RPPSpendable] / [glob.MagicNodeRPPCost])", "ERROR", "OK");
         return 0;

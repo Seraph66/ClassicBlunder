@@ -9,10 +9,12 @@ passive
 	var
 		list/passives //this list will track passives that are intended to stick to the character; racials/things sticking over relogs.
 		tmp/list/tmp_passives //this list is for buffs, or things that should fall off naturally/on a relog.
+		tmp/list/text_passive_restore_stack
 
 	New()
 		passives = list()
 		tmp_passives = list()
+		text_passive_restore_stack = list()
 	proc
 
 		Get(passive) // returns value of passive if it exists/has anything
@@ -72,7 +74,15 @@ passive
 						var/value = settingPassiveList[settingPassive]
 						if(!isnum(value))
 							if(istext(value))
-								passives[settingPassive] = 0
+								var/list/restore_stack = text_passive_restore_stack[settingPassive]
+								if(islist(restore_stack) && restore_stack.len > 0)
+									var/restore_value = restore_stack[restore_stack.len]
+									restore_stack.Cut(restore_stack.len, restore_stack.len + 1)
+									passives[settingPassive] = restore_value
+									if(restore_stack.len <= 0)
+										text_passive_restore_stack -= settingPassive
+								else
+									passives[settingPassive] = null
 							else
 								CRASH("ERROR: [settingPassive] was increased by [value] which is not a number!")
 						else
@@ -91,6 +101,10 @@ passive
 						var/value = settingPassiveList[settingPassive]
 						if(!isnum(value))
 							if(istext(value))
+								if(!islist(text_passive_restore_stack[settingPassive]))
+									text_passive_restore_stack[settingPassive] = list()
+								var/list/restore_stack = text_passive_restore_stack[settingPassive]
+								restore_stack += passives[settingPassive]
 								passives[settingPassive] = value
 							else
 								CRASH("ERROR: [settingPassive] was increased by [value] which is not a number!")

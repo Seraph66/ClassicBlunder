@@ -309,9 +309,14 @@ mob
 				return 1
 			return 0
 		GetSwordAscension()
+			var/SwordAsc=passive_handler.Get("SwordAscension")
 			if(passive_handler.Get("The Way"))
 				return glob.MAX_SWORD_ASCENSION
-			return passive_handler.Get("SwordAscension")
+			if(passive_handler.Get("VoidBlade"))
+				SwordAsc+=round((100-src.Health)/25,1)
+			if(SwordAsc>glob.MAX_SWORD_ASCENSION)
+				SwordAsc=glob.MAX_SWORD_ASCENSION
+			return SwordAsc
 		HasSwordDamageBuff()
 			if(passive_handler.Get("SwordDamage"))
 				return 1
@@ -691,6 +696,7 @@ mob
 				return 1
 			if(src.HasMaouKi())
 				return 1
+			if(scalingEldritchPower()) return 1
 		HasClarity()
 			if(passive_handler.Get("Omnipotent")) // so admins can fucking see
 				return 1
@@ -716,6 +722,7 @@ mob
 					return 1
 				if(src.HasSpiritPower()>=1)
 					return 1
+				if(scalingEldritchPower()) return 1
 			return 0
 		HasTransMimic()
 			return passive_handler.Get("TransMimic")
@@ -938,6 +945,8 @@ mob
 				for(var/obj/Skills/Buffs/SpecialBuffs/Rekkaken/rk in src.Buffs)
 					rkmast=rk.Mastery
 				Return+=(1+passive_handler.Get("BurningShot"))-rkmast
+			if(passive_handler.Get("Ashen One"))
+				Return *= 1+(src.Tension/100)
 			return Return
 		HasEnergyLeak()
 			if(passive_handler.Get("Pride")&&Health>=90)
@@ -1118,6 +1127,19 @@ mob
 			if(passive_handler.Get("You Thought"))
 				return 1
 			return 0
+		HasUnbreakable()
+			if(passive_handler.Get("Unbreakable")>=1||passive_handler.Get("The Immovable Object"))
+				return 1
+			if(Saga == "Eight Gates")
+				return 1
+			return 0
+		GetUnbreakable() //0.1=ignore 10% of stat taxes
+			var/Return=0
+			if(passive_handler.Get("Unbreakable"))
+				Return +=passive_handler.Get("Unbreakable")
+			if(Saga == "Eight Gates"&&GatesActive>SagaLevel)
+				Return = 0.375*(GatesActive-SagaLevel)
+			return Return
 		SaiyanTransPower()/*
 			if(isRace(SAIYAN) || isRace(HALFSAIYAN))
 				var/t = transActive
@@ -1205,6 +1227,8 @@ mob
 			if(passive_handler.Get("Compassion")&&Health>51)
 				if(Target.Health>Health)
 					Return += 3*clamp((proportionalHealth("Lower")/10),1,4)
+			if(DownToEarth>0)
+				Return*=1*((100-DownToEarth)/100)
 			return Return
 		Hustling()
 			if(passive_handler.Get("Hustle") || HasMythical() > 0.25 || (passive_handler["Rage"] && Health <= 25))
@@ -1321,7 +1345,7 @@ mob
 			if(Saga=="Cosmo" && !SpecialBuff)
 				Total += SagaLevel * 2.5
 			if(InfinityModule)
-				Total += round(glob.progress.totalPotentialToDate,5) / 10
+				Total += (2 * AscensionsAcquired)
 			if(Secret=="Shin")
 				Total += secretDatum.currentTier
 			if(passive_handler.Get("Hopes and Dreams")) Total += (5 * AscensionsAcquired)
@@ -1608,7 +1632,7 @@ mob
 				Extra+=1
 			Extra += scalingEldritchPower();
 			if(InfinityModule)
-				Extra += round(glob.progress.totalPotentialToDate,5) / 25
+				Extra += AscensionsAcquired
 			if(Target&&Target.passive_handler.Get("Instinct") >= Base+Extra)
 				Extra += (passive_handler.Get("LikeWater")) / 2
 			return (Base+Extra)
@@ -1632,7 +1656,7 @@ mob
 			if(round(t/4))
 				Return+=1
 			if(InfinityModule)
-				Return += round(glob.progress.totalPotentialToDate,5) / 25
+				Return += AscensionsAcquired
 			if(Target&&Target.passive_handler.Get("Flow") >= Return)
 				Return+=passive_handler.Get("LikeWater") / 2
 			Return += scalingEldritchPower();
@@ -1652,14 +1676,14 @@ mob
 				return 1
 			if(Secret == "Vampire")
 				return 1
-			if(isRace(MAJIN) && race.ascensions[1].choiceSelected == /ascension/sub_ascension/majin/unhinged)
+			if(isRace(MAJIN) && Class == "Unhinged")
 				return 1
 			return 0
 		GetLifeSteal()
 			var/extra = 0
 			if(passive_handler["Rage"] && Health <= 75)
 				extra = 5 * passive_handler["Rage"]
-			if(isRace(MAJIN) && race.ascensions[1].choiceSelected == /ascension/sub_ascension/majin/unhinged)
+			if(isRace(MAJIN) && Class == "Unhinged")
 				extra += 5 * AscensionsAcquired
 			if(Secret=="Vampire")
 				var/secretLevel = getSecretLevel()
@@ -1831,6 +1855,9 @@ mob
 			var/SaiyanPowerGod= passive_handler.Get("SaiyanPowerGod")
 			var/SaiyanPowerZenkai= passive_handler.Get("TrueZenkaiPower")
 			var/SaiyanPowerVoid= passive_handler.Get("SaiyanPowerVoid")
+			var/SEBoost=1+(passive_handler.Get("SpiralPowerUnlocked")/10)
+			if(passive_handler.Get("SpiralPowerUnlocked")&&NobodyOriginType=="Pride")
+				SaiyanPowerVoid*=SEBoost
 			var/SaiyanPower=1+(SaiyanPower1+SaiyanPower2+SaiyanPower3+SaiyanPower4+SaiyanPowerZenkai+SaiyanPowerGod+SaiyanPowerVoid)//It's like this because I intend on having Saiyan Unique buffs interact with this specifically. you'll see what i mean when i get to the grades
 			return SaiyanPower
 
@@ -2475,7 +2502,7 @@ mob
 			if(src.TarotFate=="The Emperor")
 				Return += 4
 			if(InfinityModule)
-				Return += round(glob.progress.totalPotentialToDate,5) / 50
+				Return += AscensionsAcquired/2
 			return Return
 		HasSpiritSword()//Str(0.75)+For(0.75)
 			if(passive_handler.Get("SpiritSword"))
@@ -2492,7 +2519,7 @@ mob
 		GetHybridStrike()//Str(0.75)+For(0.75)
 			var/Return = passive_handler.Get("HybridStrike")
 			if(InfinityModule)
-				Return += round(glob.progress.totalPotentialToDate,5) / 50
+				Return += AscensionsAcquired/2//round(glob.progress.totalPotentialToDate,5) / 50
 			return Return
 		HasPhysPleroma()
 			if(passive_handler.Get("PhysPleroma"))
@@ -3535,7 +3562,7 @@ mob
 							if(usingStyle("MysticStyle")) // this is a mystic style
 								return TRUE
 						if("Any")
-							if(StyleBuff)
+							if(StyleBuff || StanceBuff || ActiveBuff || SpecialBuff || (SlotlessBuffs && SlotlessBuffs.len))
 								return TRUE
 
 atom
@@ -3548,6 +3575,8 @@ atom
 			if(src.z == glob.DEATH_LOCATION[3] && !dead_use && !SP)
 				return 1
 			else if(src.z == global.ArcaneRealmZ && !arc_use)
+				return 1
+			else if(src.z == MAJIN_ABSORB_Z)
 				return 1
 			return 0
 
