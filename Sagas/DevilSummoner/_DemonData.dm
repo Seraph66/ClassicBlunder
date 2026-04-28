@@ -971,7 +971,7 @@
 	_dd49.demon_spd = 18
 	_dd49.demon_off = 12
 	_dd49.demon_def = 11
-	_dd49.demon_skills = list("None")
+	_dd49.demon_skills = list("Fire of Sinai")
 	_dd49.demon_passives = list("Victory Cry")
 	_dd49.demon_unique = TRUE
 	_dd49.demon_icon = 'Icons/DevilSummoner/Demons/Metatron.dmi'
@@ -1674,7 +1674,7 @@
 	_dd85.demon_spd = 28
 	_dd85.demon_off = 16
 	_dd85.demon_def = 14
-	_dd85.demon_skills = list("None")
+	_dd85.demon_skills = list("Megido Ark")
 	_dd85.demon_passives = list("Anti-Almighty")
 	_dd85.demon_unique = TRUE
 	_dd85.demon_icon = 'Icons/DevilSummoner/Demons/Satan.dmi'
@@ -2002,7 +2002,7 @@
 	_dd102.demon_spd = 24
 	_dd102.demon_off = 12
 	_dd102.demon_def = 12
-	_dd102.demon_skills = list("None")
+	_dd102.demon_skills = list("Die For Me!")
 	_dd102.demon_passives = list("Ultimate Hit")
 	_dd102.demon_unique = TRUE
 	_dd98.demon_icon = 'Icons/DevilSummoner/Demons/Alice.dmi'
@@ -3320,7 +3320,7 @@
 	_dd170.demon_spd = 20
 	_dd170.demon_off = 13
 	_dd170.demon_def = 13
-	_dd170.demon_skills = list("None")
+	_dd170.demon_skills = list("Tandava")
 	_dd170.demon_passives = list("Avenge")
 	_dd170.demon_unique = TRUE
 	_dd170.demon_icon = 'Icons/DevilSummoner/Demons/Shiva.dmi'
@@ -3950,7 +3950,7 @@
 	_dd202.demon_spd = 28
 	_dd202.demon_off = 15
 	_dd202.demon_def = 14
-	_dd202.demon_skills = list("None")
+	_dd202.demon_skills = list("Root of Evil")
 	_dd202.demon_unique = TRUE
 	_dd202.demon_icon = 'Icons/DevilSummoner/Demons/Lucifer.dmi'
 	_dd202.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Lucifer128.dmi'

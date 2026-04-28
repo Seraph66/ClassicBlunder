@@ -498,11 +498,11 @@
 		var/list/parent_pool = list()
 		if(pd_a.demon_skills)
 			for(var/s in pd_a.demon_skills)
-				if(s && s != "None" && !(s in base_skills) && !(s in parent_pool))
+				if(s && s != "None" && !(s in base_skills) && !(s in parent_pool) && !(s in DEMON_UNIQUE_SKILLS))
 					parent_pool += s
 		if(pd_b.demon_skills)
 			for(var/s in pd_b.demon_skills)
-				if(s && s != "None" && !(s in base_skills) && !(s in parent_pool))
+				if(s && s != "None" && !(s in base_skills) && !(s in parent_pool) && !(s in DEMON_UNIQUE_SKILLS))
 					parent_pool += s
 
 		if(parent_pool.len > 0)

@@ -12,6 +12,33 @@
 	NeedsPassword = 0
 	passives = list("Silenced" = 1)
 
+// Unique demon skill debuffs
+
+// Lucifer / Root of Evil: -25% to every stat for 60s
+/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Debuff/RootOfEvil
+	BuffName = "Root of Evil"
+	TimerLimit = 60
+	AlwaysOn = 0
+	NeedsPassword = 0
+	StrMult = 0.75
+	ForMult = 0.75
+	EndMult = 0.75
+	SpdMult = 0.75
+	OffMult = 0.75
+	DefMult = 0.75
+	ActiveMessage = "is gripped by the Root of Evil!"
+	OffMessage = "shakes off the Root of Evil."
+
+// Shiva / Tandava: -50% Endurance for 10s
+/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Debuff/Tandava
+	BuffName = "Tandava"
+	TimerLimit = 10
+	AlwaysOn = 0
+	NeedsPassword = 0
+	EndMult = 0.5
+	ActiveMessage = "reels under Tandava's cosmic dance!"
+	OffMessage = "recovers from Tandava."
+
 /datum/demon_skill_vfx
 	var/icon_file = null
 	var/icon_state = ""
@@ -29,6 +56,16 @@
 		effect_life = life
 
 var/global/list/DEMON_SKILL_VFX = list()
+
+// Unique demon skills: never enter the fusion-inheritance pool. These skills
+// only ever appear on the demons that natively know them.
+var/global/list/DEMON_UNIQUE_SKILLS = list(
+	"Die For Me!",      // Alice
+	"Root of Evil",     // Lucifer
+	"Megido Ark",       // Satan
+	"Tandava",          // Shiva
+	"Fire of Sinai"     // Metatron
+)
 
 /proc/InitDemonSkillVFX()
 	// Build into a local list and assign at the end — BYOND 516 has a quirk where
@@ -129,6 +166,13 @@ var/global/list/DEMON_SKILL_VFX = list()
 	vfx_db["Weak Kill"]    = new /datum/demon_skill_vfx('Icons/Effects/Warrior VFX3.dmi',           "", -48, -48, 1.5, 5)
 	vfx_db["Snipe"]        = new /datum/demon_skill_vfx('Icons/Effects/Warrior VFX5.dmi',           "", -48, -48, 1.5, 4)
 	vfx_db["Multi-Hit"]    = new /datum/demon_skill_vfx('Icons/Effects/Warrior VFX1.dmi',           "", -48, -48, 1,   4)
+
+	// ===== UNIQUE =====   
+	vfx_db["Die For Me!"]  = new /datum/demon_skill_vfx('BLANK.dmi', "", 0, 0, 1, 4)
+	vfx_db["Root of Evil"] = new /datum/demon_skill_vfx('BLANK.dmi', "", 0, 0, 1, 4)
+	vfx_db["Megido Ark"]   = new /datum/demon_skill_vfx('BLANK.dmi', "", 0, 0, 1, 4)
+	vfx_db["Tandava"]      = new /datum/demon_skill_vfx('BLANK.dmi', "", 0, 0, 1, 4)
+	vfx_db["Fire of Sinai"] = new /datum/demon_skill_vfx('BLANK.dmi', "", 0, 0, 1, 4)
 
 	DEMON_SKILL_VFX = vfx_db
 
@@ -365,7 +409,104 @@ var/global/list/DEMON_SKILL_VFX = list()
 				return DemonPhysDamage(target, StrMod * 0.5)
 			if("Multi-Hit")
 				return DemonPhysMultiHit(target, StrMod * 0.12, 2, 4)
+			// Unique demon skills (cannot be inherited via fusion)
+			if("Die For Me!")
+				return DemonDieForMe(target)
+			if("Root of Evil")
+				return DemonRootOfEvil(target)
+			if("Megido Ark")
+				return DemonMegidoArk(target)
+			if("Tandava")
+				return DemonTandava(target)
+			if("Fire of Sinai")
+				return DemonFireOfSinai(target)
 		return FALSE
+
+
+	// Alice / Die For Me!
+	proc/DemonDieForMe(mob/target)
+		if(!DemonValidTarget(target)) return FALSE
+		var/hits = rand(2, 6)
+		var/normal_dmg = DemonComputeKernelDamage(target, ForMod * 0.45) * glob.DevilSummonerDemonSkillMod
+		spawn()
+			for(var/i = 1, i <= hits, i++)
+				if(!src || !target || !ai_owner) return
+				if(target.z != src.z) return
+				var/this_dmg = normal_dmg
+				if(i == 1 && prob(20))
+					this_dmg = 5  // flat-5 special opener
+					if(ai_owner) ai_owner << "<font color='#cc66ff'>Alice's whisper lands true!</font>"
+				DemonDealDamage(target, TrueDamage(this_dmg))
+				DemonHitVisual(target)
+				target.AddPoison(2, src)
+				target.AddSlow(1, src)
+				DemonFlash(target, "Almighty")
+				DemonSpawnVFX(target)
+				if(i < hits) sleep(7)
+		return TRUE
+
+	// Lucifer / Root of Evil
+	proc/DemonRootOfEvil(mob/target)
+		if(!DemonValidTarget(target)) return FALSE
+		var/final_dmg = DemonComputeKernelDamage(target, ForMod * 0.85) * glob.DevilSummonerDemonSkillMod
+		DemonDealDamage(target, TrueDamage(final_dmg))
+		DemonHitVisual(target)
+		var/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Debuff/RootOfEvil/d = target.findOrAddSkill(/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Debuff/RootOfEvil)
+		if(d && !target.BuffOn(d))
+			d.TimerLimit = 60
+			d.Trigger(target, TRUE)
+		DemonFlash(target, "Almighty")
+		DemonSpawnVFX(target)
+		if(ai_owner) ai_owner << "<font color='#aa00ff'>[name] unleashes the Root of Evil upon [target]!</font>"
+		return TRUE
+
+	// Satan / Megido Ark
+	proc/DemonMegidoArk(mob/target)
+		if(!DemonValidTarget(target)) return FALSE
+		var/list/targets = DemonGetAoeTargets(target, 6)
+		for(var/mob/t in targets)
+			var/stages = 0
+			if(isnum(t.transActive) && t.transActive > 0)
+				stages = t.transActive
+			var/coeff = 0.10 + (stages * 0.40)
+			var/final_dmg = DemonComputeKernelDamage(t, ForMod * coeff) * glob.DevilSummonerDemonSkillMod
+			DemonDealDamage(t, TrueDamage(final_dmg))
+			DemonHitVisual(t)
+			DemonFlash(t, "Almighty")
+			DemonSpawnVFX(t)
+		if(ai_owner) ai_owner << "<font color='#ff6666'>[name] casts Megido Ark!</font>"
+		return TRUE
+
+	// Shiva / Tandava
+	proc/DemonTandava(mob/target)
+		if(!DemonValidTarget(target)) return FALSE
+		var/final_dmg = DemonComputeKernelDamage(target, ForMod * 0.7) * glob.DevilSummonerDemonSkillMod
+		DemonDealDamage(target, TrueDamage(final_dmg))
+		DemonHitVisual(target)
+		var/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Debuff/Tandava/d = target.findOrAddSkill(/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Debuff/Tandava)
+		if(d && !target.BuffOn(d))
+			d.TimerLimit = 10
+			d.Trigger(target, TRUE)
+		DemonFlash(target, "Almighty")
+		DemonSpawnVFX(target)
+		if(ai_owner) ai_owner << "<font color='#ffaa44'>[name] performs Tandava, [target]'s endurance shatters!</font>"
+		return TRUE
+
+	// Metatron / Fire of Sinai
+	proc/DemonFireOfSinai(mob/target)
+		if(!DemonValidTarget(target)) return FALSE
+		var/hits = rand(3, 7)
+		var/per_hit = DemonComputeKernelDamage(target, ForMod * 0.25) * glob.DevilSummonerDemonSkillMod
+		spawn()
+			for(var/i = 1, i <= hits, i++)
+				if(!src || !target || !ai_owner) return
+				if(target.z != src.z) return
+				DemonDealDamage(target, TrueDamage(per_hit))
+				DemonHitVisual(target)
+				DemonFlash(target, "Almighty")
+				DemonSpawnVFX(target)
+				if(i < hits) sleep(6)
+		return TRUE
 
 	proc/DemonValidTarget(mob/target)
 		if(!target) return FALSE
