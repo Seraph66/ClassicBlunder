@@ -3,11 +3,11 @@ globalTracker/var/list/IGNORE_POWER_CLAMP_PASSIVES = list("Wrathful", "LimitBrok
 
 
 /mob/proc/ignoresPowerClamp(mob/defender)
-    if(defender.passive_handler.Get("Justice"))
+    if(!defender) return
+    if(defender.passive_handler && defender.passive_handler.Get("Justice"))
         return FALSE
     if(isRace(MAJIN))
         return TRUE
-    if(!defender) return
     if(istype(src, /mob/Player/AI) || istype(defender, /mob/Player/AI))
         return TRUE
     if(!src.passive_handler || !defender.passive_handler)

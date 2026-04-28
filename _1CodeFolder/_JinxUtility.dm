@@ -878,7 +878,7 @@ mob
 				if(src.GetPowerUpRatio()>1)
 					var/PUSpike=1
 					if(passive_handler.Get("PUSpike"))
-						PUSpike=passive_handler.Get("PUSpike")/100
+						PUSpike=max(1, passive_handler.Get("PUSpike")/100)
 
 					var/PowerUpPercent=GetPowerUpRatio()-1
 					if(src.HasMovementMastery()>=1) // this run timed a 0 somehow
@@ -949,7 +949,7 @@ mob
 					PowerUpPercent/=1+(src.GetMovementMastery()/8)
 				var/PUSpike=1
 				if(passive_handler.Get("PUSpike"))
-					PUSpike=passive_handler.Get("PUSpike")/100
+					PUSpike=max(1, passive_handler.Get("PUSpike")/100)
 				if(passive_handler.Get("DrainlessPUSpike")||passive_handler.Get("DoubleHelix"))
 					PowerUpPercent=0
 
