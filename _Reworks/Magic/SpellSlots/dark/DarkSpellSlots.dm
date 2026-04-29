@@ -2,7 +2,9 @@
 /obj/Skills/AutoHit/Magic/Dark
 	SpellElement="Dark"
 	SpellSlot=1
+	MagicNeeded=1
 	Shadow_Cleave
+		ElementalOffense="Dark"
 		Area="Arc"
 		Distance=3
 		DamageMult=6
@@ -30,8 +32,9 @@
 	SpellElement="Dark"
 	SpellSlot=1
 	Arachnae_Touch
+		ElementalOffense="Dark"
 		DamageMult=4
-		Speed=6
+		Speed=0.5
 		Distance=12
 		ManaCost=5
 		Cooldown=40
@@ -42,7 +45,9 @@
 			usr.UseProjectile(src)
 
 	Void_Blast
+		ElementalOffense="Dark"
 		DamageMult=5
+		Speed=1
 		Homing=1
 		Explode=2
 		Knockback=2

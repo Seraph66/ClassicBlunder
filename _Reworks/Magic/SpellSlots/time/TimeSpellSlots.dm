@@ -2,7 +2,9 @@
 /obj/Skills/AutoHit/Magic/Time
 	SpellElement="Time"
 	SpellSlot=1
+	MagicNeeded=1
 	Tempus_Cessat
+		ElementalOffense="Time"
 		Area="Circle"
 		Distance=5
 		DamageMult=3

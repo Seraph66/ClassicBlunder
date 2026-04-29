@@ -2,7 +2,9 @@
 /obj/Skills/Buffs/SlotlessBuffs/Magic/Water
 	SpellElement="Water"
 	SpellSlot=1
+	MagicNeeded=1
 	Wetten_Socks
+		ElementalOffense="Water"
 		AffectTarget=1
 		Range=12
 		TimerLimit=12
@@ -28,6 +30,7 @@
 	SpellElement="Water"
 	SpellSlot=1
 	Riptide
+		ElementalOffense="Water"
 		Area="Target"
 		Distance=5
 		DamageMult=5
@@ -60,6 +63,7 @@
 	SpellElement="Water"
 	SpellSlot=1
 	Frost_Shamshir
+		ElementalOffense="Water"
 		DamageMult=4
 		Freezing=2
 		Homing=1
