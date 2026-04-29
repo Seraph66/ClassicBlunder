@@ -45,7 +45,7 @@
 			usr.UseProjectile(src)
 
 	Void_Blast
-		ElementalOffense="Dark"
+		ElementalClass="Dark"
 		DamageMult=5
 		Speed=1
 		Homing=1
