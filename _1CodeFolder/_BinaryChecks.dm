@@ -2370,7 +2370,7 @@ mob
 				if("Secret") if(!enemy.Secret || (enemy.race.type in INHERENT_SECRET)) invalid++;
 				if("Saga") if(!enemy.Saga) invalid++;
 				if("Transformations") if(!enemy.transActive) invalid++
-				if("ckey") if(!enemy.ckey==preytype) invalid++
+				if("ckey") if(!enemy.ckey==preyType) invalid++
 				if("Mortal") if((enemy.race.type in DEPTHS_RACES) || (enemy.race.type in BEYOND_RACES)) invalid++;
 				if("Depths") if(!(enemy.race.type in DEPTHS_RACES)) invalid++;
 				if("Beyond") if(!(enemy.race.type in BEYOND_RACES)) invalid++;
