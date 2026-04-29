@@ -105,11 +105,23 @@ transformation
 		form_icon_1_y
 		form_icon_1_layer = 3
 
+		image/form_underlay_1
+		form_underlay_1_icon
+		form_underlay_1_icon_state
+		form_underlay_1_x
+		form_underlay_1_y
+
 		image/form_icon_2
 		form_icon_2_icon
 		form_icon_2_icon_state
 		form_icon_2_x
 		form_icon_2_y
+
+		image/form_underlay_2
+		form_underlay_2_icon
+		form_underlay_2_icon_state
+		form_underlay_2_x
+		form_underlay_2_y
 
 		image/form_glow
 		form_glow_icon
@@ -140,7 +152,9 @@ transformation
 			form_aura_underlay = image(icon = form_aura_underlay_icon, icon_state = form_aura_underlay_icon_state, pixel_x = form_aura_underlay_x, pixel_y = form_aura_underlay_y)
 			form_hair = image(icon = form_hair_icon, pixel_x = form_hair_x, pixel_y = form_hair_y, layer = FLOAT_LAYER-2)
 			form_icon_1 = image(icon = form_icon_1_icon, icon_state = form_icon_1_icon_state, pixel_x = form_icon_1_x, pixel_y = form_icon_1_y, layer = form_icon_1_layer)
+			form_underlay_1 = image(icon = form_underlay_1_icon, icon_state = form_underlay_1_icon_state, pixel_x = form_underlay_1_x, pixel_y = form_underlay_1_y)
 			form_icon_2 = image(icon = form_icon_2_icon, icon_state = form_icon_2_icon_state,pixel_x = form_icon_2_x, pixel_y = form_icon_2_y)
+			form_underlay_2 = image(icon = form_underlay_2_icon, icon_state = form_underlay_2_icon_state, pixel_x = form_underlay_2_x, pixel_y = form_underlay_2_y)
 
 		transform_animation(mob/user)
 
@@ -150,11 +164,14 @@ transformation
 		class_boons(mob/user)
 
 		apply_visuals(mob/user, aura = 1, hair = 1, extra = 1)
+			liveDebugMsg("[user] is applying trans visuals ([aura ? "aura" : ""]) ([hair ? "hair" : ""]) ([extra ? "extra" : ""])")
 			adjust_transformation_visuals(user)
 			if(extra)
 				user.overlays += form_icon_1
 				user.overlays += form_icon_2
 				user.overlays += form_glow
+				user.underlays += form_underlay_1;
+				user.underlays += form_underlay_2;
 			if(aura)
 				user.overlays += form_aura
 				user.underlays += form_aura_underlay
@@ -168,6 +185,8 @@ transformation
 				user.overlays -= form_icon_1
 				user.overlays -= form_icon_2
 				user.overlays -= form_glow
+				user.underlays -= form_underlay_1;
+				user.underlays -= form_underlay_2;
 			if(aura)
 				user.overlays -= form_aura
 				user.underlays -= form_aura_underlay
@@ -254,6 +273,7 @@ transformation
 
 			user.Hairz("Add")
 			user.Auraz("Add")
+			user.AppearanceOn();
 
 			if(transformation_message)
 				var/text=replacetext(transformation_message, "usrName", "[user]")

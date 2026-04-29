@@ -596,7 +596,7 @@ mob/Players/verb
 					if(istype(t, Choice))
 						transSelected = t
 						break
-				var/list/transVisualOptions = list("Cancel", "Base", "Hair", "Icon 1", "Icon 2", "Aura", "Aura Underlay", "Profile")
+				var/list/transVisualOptions = list("Cancel", "Base", "Hair", "Icon 1", "Underlay 1", "Icon 2", "Underlay 2", "Aura", "Aura Underlay", "Profile")
 				var/aspectPicked=input(usr, "What aspect of your forms do you wish to edit?", "Change Form Icons") in transVisualOptions
 				switch(aspectPicked)
 					if("Base")
@@ -616,12 +616,24 @@ mob/Players/verb
 							transSelected.form_icon_1_x = input(usr, "X offset?", "Aura Underlay X") as num|null
 							transSelected.form_icon_1_y = input(usr, "Y offset?", "Aura Underlay Y") as num|null
 							transSelected.form_icon_1_layer = input(usr, "Layer?", "Layer") as num|null
+					if("Underlay 1")
+						transSelected.form_underlay_1_icon = input(usr, "What extra underlay icon would you like to use in this form?", "Underlay 1") as icon|null
+						if(transSelected.form_underlay_1_icon)
+							transSelected.form_underlay_1_icon_state = input(usr, "State?", "State", transSelected.form_underlay_1_icon_state) as message|null
+							transSelected.form_underlay_1_x = input(usr, "X offset?", "Aura Underlay X") as num|null
+							transSelected.form_underlay_1_y = input(usr, "Y offset?", "Aura Underlay Y") as num|null
 					if("Icon 2")
 						transSelected.form_icon_2_icon = input(usr, "What extra overlay would you like to use in this form?", "Icon 2") as icon|null
 						if(transSelected.form_aura_underlay_icon)
 							transSelected.form_icon_2_icon_state = input(usr, "State?", "State", transSelected.form_icon_2_icon_state) as message|null
 							transSelected.form_icon_2_x = input(usr, "X offset?", "Aura Underlay X") as num|null
 							transSelected.form_icon_2_y = input(usr, "Y offset?", "Aura Underlay Y") as num|null
+					if("Underlay 2")
+						transSelected.form_underlay_2_icon = input(usr, "What extra underlay icon would you like to use in this form?", "Underlay 2") as icon|null
+						if(transSelected.form_underlay_2_icon)
+							transSelected.form_underlay_2_icon_state = input(usr, "State?", "State", transSelected.form_underlay_2_icon_state) as message|null
+							transSelected.form_underlay_2_x = input(usr, "X offset?", "Aura Underlay X") as num|null
+							transSelected.form_underlay_2_y = input(usr, "Y offset?", "Aura Underlay Y") as num|null
 					if("Aura")
 						transSelected.form_aura_icon = input(usr, "What aura would you like to use in this form?", "Aura") as icon|null
 						if(transSelected.form_aura_icon)

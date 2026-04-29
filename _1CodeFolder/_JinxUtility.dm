@@ -2984,9 +2984,15 @@ mob
 				defender.checkDuplicate(src)
 			src << "You've gained [Commas(round(Value))] [glob.progress.MoneyName]."
 		GiveMineral(val)
+			var/found=0;
 			for(var/obj/Items/mineral/m in src)
 				m.Add(val);
+				found=1;
 				break;
+			if(!found)
+				var/obj/Items/mineral/m = new();
+				m.Add(val);
+				src.contents += m;
 		TakeManaCapacity(var/Value, ignorePhiloStone = FALSE)
 			var/Remaining=Value
 			if(!ignorePhiloStone)
