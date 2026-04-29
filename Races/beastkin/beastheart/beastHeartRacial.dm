@@ -10,6 +10,30 @@
         if("reset")
             passive_handler["Grit"] = 1
 
+// TRUE if any active source still grants Grit. Used after a Grit-bearing buff
+// turns off to decide whether combat-accumulated Grit should persist or get
+// cleared. Sources: Beastkin Heart racial baseline, plus any active buff
+// (Active/Special/Stance/Style/Slotless) that lists "Grit" in its passives.
+/mob/proc/hasActiveGritSource()
+    if(isRace(BEASTKIN) && istype(race, /race/beastkin))
+        var/race/beastkin/bk = race
+        if(bk.Racial == "Heart of The Beastkin")
+            return TRUE
+    if(ActiveBuff && BuffOn(ActiveBuff) && ActiveBuff.passives && ("Grit" in ActiveBuff.passives))
+        return TRUE
+    if(SpecialBuff && BuffOn(SpecialBuff) && SpecialBuff.passives && ("Grit" in SpecialBuff.passives))
+        return TRUE
+    if(StanceBuff && BuffOn(StanceBuff) && StanceBuff.passives && ("Grit" in StanceBuff.passives))
+        return TRUE
+    if(StyleBuff && BuffOn(StyleBuff) && StyleBuff.passives && ("Grit" in StyleBuff.passives))
+        return TRUE
+    if(SlotlessBuffs && SlotlessBuffs.len)
+        for(var/b in SlotlessBuffs)
+            var/obj/Skills/Buffs/SlotlessBuffs/sb = SlotlessBuffs[b]
+            if(sb && sb.passives && ("Grit" in sb.passives))
+                return TRUE
+    return FALSE
+
 /obj/Skills/Buffs/SlotlessBuffs/Racial/Beastkin/The_Grit
 	BuffName = "The Grit"
 	Cooldown = -1

@@ -13283,10 +13283,6 @@ mob
 						s.pixel_x=B.ArmorX
 					if(B.ArmorY)
 						s.pixel_y=B.ArmorY
-				if(B?:ArmorIconDT && src.isInDemonDevilTrigger())
-					s.icon=B?:ArmorIconDT
-					s.pixel_x=B?:ArmorXDT
-					s.pixel_y=B?:ArmorYDT
 				if(B.ArmorName)
 					s.name=B.ArmorName
 				if(B.ArmorAscension)
@@ -13328,10 +13324,6 @@ mob
 						s.pixel_x=B.StaffX
 					if(B.StaffY)
 						s.pixel_y=B.StaffY
-				if(B?:StaffIconDT && src.isInDemonDevilTrigger())
-					s.icon=B?:StaffIconDT
-					s.pixel_x=B?:StaffXDT
-					s.pixel_y=B?:StaffYDT
 				if(B.StaffName)
 					s.name=B.StaffName
 				if(B.StaffAscension)
@@ -13376,10 +13368,6 @@ mob
 					s.UnderlayIcon=B.SwordIconUnder
 					s.UnderlayX=B.SwordXUnder
 					s.UnderlayY=B.SwordYUnder
-				if(B?:SwordIconDT && src.isInDemonDevilTrigger())
-					s.icon=B?:SwordIconDT
-					s.pixel_x=B?:SwordXDT
-					s.pixel_y=B?:SwordYDT
 				if(B.SwordName)
 					s.name=B.SwordName
 				if(B.SwordUnbreakable)
@@ -14613,6 +14601,7 @@ mob
 			if("Unbreakable" in B.passives)
 				if(src.StrTax>=0.75||src.ForTax>=0.75||src.EndTax>=0.75||src.SpdTax>=0.75||src.OffTax>=0.75||src.DefTax>=0.75)
 					src.Maimed+=1
+					src.recordMaim(src, "Unbreakable Taxation")
 			if(B.RecovTax)
 				src.AddRecovTax(B.RecovTax)
 			if(B.WaveringAngerLimit)
@@ -14674,6 +14663,7 @@ mob
 
 			if(B.MaimCost)
 				src.Maimed+=B.MaimCost
+				src.recordMaim(src, "Skill Cost: [B]")
 				src << "You have been maimed by using the overwhelming power of [B]!"
 
 			if(B.Imitate)

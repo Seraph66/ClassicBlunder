@@ -736,6 +736,7 @@ obj/Skills/Utility
 				Consent=alert(Choice, "Do you want to accept [usr]'s Jagan Eye?", "Jagan Grant", "No", "Yes")
 				if(Consent=="Yes")
 					usr.Maimed++
+					usr.recordMaim(usr, "Jagan Eye Grant")
 					for(var/obj/Skills/Buffs/SlotlessBuffs/Regeneration/r in usr)
 						if(r.RegenerateLimbs)
 							r.RegenerateLimbs=0
@@ -1465,6 +1466,7 @@ obj/Skills/Utility
 					OMsg(usr, "[usr] loses control of their forbidden spell and has a core part of their being claimed by the transmutation!")
 					OMsg(usr, "The magic chaotically lashes out and sends [Choice] hurtling into the void!")
 					usr.Maimed++
+					usr.recordMaim(usr, "Philosopher Stone Backfire")
 					var/obj/Items/Enchantment/PhilosopherStone/Fake/f = new
 					f.SoulStrength = round(Choice.Potential/20,1)
 					f.SoulIdentity = Choice?:UniqueID

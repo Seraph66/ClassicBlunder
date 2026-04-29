@@ -9,8 +9,8 @@ transformation
 			form_glow_icon = 'Ripple Radiance.dmi'
 			form_glow_x = -32
 			form_glow_y = -32
-			//Automatically unlocked at 30, intended to be unlocked around 20
-			unlock_potential = 30
+			//Automatically unlocked at 25, intended to be unlocked around 20
+			unlock_potential = 25
 			passives = list("Instinct" = 1, "Flow" = 1, "Flicker" = 1, "Pursuer" = 2,  "PureDamage" = 1, "PureReduction" = 1, "SaiyanPower"=1, "SaiyanPower1"=0.4)
 			angerPoint = 75
 			speedadd = 0.3 //these are additive. base is 1, so 0.3=1.3x

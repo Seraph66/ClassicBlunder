@@ -482,6 +482,7 @@ mob/Admin2/verb
 					m.Maimed = 4
 				m.BPPoisonTimer = Time
 				m.BPPoison = 0.5
+				m.recordMaim(usr, "Admin")
 				Log("Admin", "[ExtractInfo(usr)] gave [ExtractInfo(m)] a maim wound.")
 				m << "You have been maimed!"
 	EditPassiveHandler(mob/m in world)

@@ -1546,18 +1546,15 @@ mob
 						if(src.AwakeningSkillUsed>=A.AwakeningRequired)
 							A.Trigger(src,Override=1)
 							continue
-					if(A.ABBuffer)
+					if(A.ABBuffer&&!A.Using&&!src.KO&&!AGLock)
 						if(src.ActiveBuff)
 							A.Trigger(src,Override=1)
-							continue
-					if(A.SBBuffer)
+					if(A.SBBuffer&&!A.Using&&!src.KO&&!AGLock)
 						if(src.SpecialBuff)
 							A.Trigger(src,Override=1)
-							continue
-					if(A.STBuffer)
+					if(A.STBuffer&&!A.Using&&!src.KO&&!AGLock)
 						if(src.StyleActive)
 							A.Trigger(src,Override=1)
-							continue
 				if(A.AlwaysOn)
 					if(!A.Using&&!A.SlotlessOn)
 						A.Trigger(src,Override=1)

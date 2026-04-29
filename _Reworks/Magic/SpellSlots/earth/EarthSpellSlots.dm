@@ -54,6 +54,18 @@
 					EndMult=1.25
 					PureReduction=3
 					ActiveMessage="wraps themselves in a barrier of living stone!"
+		// Combat damage grows passive_handler["Grit"] beyond the buff's listed
+		// value of 1 via AdjustGrit. The stock decreaseList call only knocks
+		// off that listed +1 on toggle-off, so the combat-accumulated portion
+		// would otherwise leak past the buff and keep Grit visibly active for
+		// the player long after the buff itself has expired. Clear it here if
+		// no other Grit source is still up.
+		Trigger(mob/User, Override = 0)
+			var/was_on = User.BuffOn(src)
+			..()
+			if(was_on && !User.BuffOn(src))
+				if(!User.hasActiveGritSource())
+					User.passive_handler.Set("Grit", 0)
 		verb/Ward_of_Stone()
 			set category="Skills"
 			adjust(usr)

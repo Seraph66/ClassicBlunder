@@ -44,7 +44,7 @@ ArmamentEnchantment -> tome creation (articact manufactioning + ArmamentEnchantm
     if(src.Secret == "Eldritch")
         var/SecretInformation/Eldritch/s = src.secretDatum
         total += s.secretVariable["Power From Blood"];
-    TotalMagicLevel = total
+    TotalMagicLevel = 20
     return total
 
 
@@ -90,7 +90,7 @@ ArmamentEnchantment -> tome creation (articact manufactioning + ArmamentEnchantm
     requires = list("Stimulant Herbs", "Relaxant Herbs")
 /knowledgePaths/magic/Mutagenic_Herbs
     name = "Mutagenic Herbs"
-    requires = list("Numbing Herbs") 
+    requires = list("Numbing Herbs")
 
 // END ALCHEMY TREE //
 

@@ -5409,6 +5409,7 @@ mob
 						src.LoseCapacity(Z.CapacityCost/Drain)
 					if(Z.MaimCost)
 						src.Maimed+=Z.MaimCost
+						src.recordMaim(src, "Skill Cost: [Z]")
 						src << "You have been maimed by using the overwhelming power of [Z]!"
 					if(Z.AssociatedGear)
 						if(!Z.AssociatedGear.InfiniteUses)
@@ -5447,6 +5448,7 @@ mob
 							src.LoseCapacity(Z.CapacityCost/Drain)
 						if(Z.MaimCost)
 							src.Maimed+=Z.MaimCost
+							src.recordMaim(src, "Skill Cost: [Z]")
 							src << "You have been maimed by using the overwhelming power of [Z]!"
 						if(Z.AssociatedGear)
 							if(!Z.AssociatedGear.InfiniteUses)

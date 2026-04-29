@@ -96,6 +96,7 @@ mob/proc/RollVoidForAbsorb()
 		return
 	if(glob.VoidMaim||!src)
 		Maimed++
+		recordMaim(null, "Survived Void")
 		src << "After managing to survive, you're left with a maim."
 	if(glob.VoidCut)
 		var/highestStat = 0

@@ -59,9 +59,13 @@ mob/Players
 		client.perspective=MOB_PERSPECTIVE
 		players += usr
 		OverwatchNotifyLogin(usr, "logged in")
-		if(isRace(CELESTIAL) && CelestialAscension == "Demon")
+		// StyleRating decay runs in spawn(); the loop dies on disconnect and
+		// leaves the persistent StyleRating var stuck above zero on the next
+		// login, with Stylish multipliers locked in and no decay timer to
+		// retire them. Wipe any leftover rating now so reconnects start clean.
+		if(StyleRating > 0)
 			resetStyleRating()
-			StyleRatingDecaying = FALSE
+		StyleRatingDecaying = FALSE
 		usr.density=1
 		usr.client.view=8
 		if(in_tmp_map)

@@ -33,6 +33,8 @@ ascension
 					passives += list("Steady" = 1, "PureDamage" = 1)
 			onAscension(mob/owner)
 				simulateChoiceMutation(owner)
+				if(owner.transUnlocked<1)
+					owner.transUnlocked=1
 				..()
 		three
 			unlock_potential = ASCENSION_THREE_POTENTIAL

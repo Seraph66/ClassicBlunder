@@ -293,7 +293,7 @@
         if(!usr.BuffOn(src))
             adjust(usr)
         src.Trigger(usr)
-        if(usr.BuffOn(src) && usr.isInDemonDevilTrigger())
+        if(usr.BuffOn(src) && usr.isInDevilTriggerLikeForm())
             applyDTIcons(usr)
 
     proc/checkPassiveAmt(list/theList, input)

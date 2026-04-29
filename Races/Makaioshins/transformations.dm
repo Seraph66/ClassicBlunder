@@ -19,6 +19,30 @@ transformation
 					form_hair_icon = x
 					form_icon_2_icon = x
 				..()
+			transform(mob/user, forceTrans)
+				var/was_active = is_active
+				..()
+				if(!was_active && is_active)
+					var/obj/Skills/Buffs/SlotlessBuffs/Devil_Arm2/da
+					for(var/obj/Skills/Buffs/SlotlessBuffs/Devil_Arm2/candidate in user)
+						if(user.BuffOn(candidate))
+							da = candidate
+							break
+					if(!da)
+						da = user.FindSkill(/obj/Skills/Buffs/SlotlessBuffs/Devil_Arm2)
+					if(da)
+						da.applyDTIcons(user)
+			revert(mob/user)
+				var/obj/Skills/Buffs/SlotlessBuffs/Devil_Arm2/da
+				for(var/obj/Skills/Buffs/SlotlessBuffs/Devil_Arm2/candidate in user)
+					if(user.BuffOn(candidate))
+						da = candidate
+						break
+				if(!da)
+					da = user.FindSkill(/obj/Skills/Buffs/SlotlessBuffs/Devil_Arm2)
+				if(da)
+					da.revertDTIcons(user)
+				..()
 			mastery_boons(mob/user)
 				if(mastery >= 25)
 					passives = list("GodKi" = 0.25, "AngerAdaptiveForce" = 0.25, "TechniqueMastery" = 2, "Juggernaut" = 1, "HellRisen" = 0.25)
@@ -71,11 +95,33 @@ transformation
 			endurance = 2
 			transformation_message = "Between Heaven and Hell... usrName appears from Purgatory."
 			transform(mob/user, forceTrans)
+				var/was_active = is_active
 				..()
 				if(!locate(/obj/Skills/AutoHit/Purgatorial_Flame) in user)
 					user.AddSkill(new/obj/Skills/AutoHit/Purgatorial_Flame)
 				if(!locate(/obj/Skills/Projectile/Beams/Divine_Atonement) in user)
 					user.AddSkill(new/obj/Skills/Projectile/Beams/Divine_Atonement)
+				if(!was_active && is_active)
+					var/obj/Skills/Buffs/SlotlessBuffs/Devil_Arm2/da
+					for(var/obj/Skills/Buffs/SlotlessBuffs/Devil_Arm2/candidate in user)
+						if(user.BuffOn(candidate))
+							da = candidate
+							break
+					if(!da)
+						da = user.FindSkill(/obj/Skills/Buffs/SlotlessBuffs/Devil_Arm2)
+					if(da)
+						da.applyDTIcons(user)
+			revert(mob/user)
+				var/obj/Skills/Buffs/SlotlessBuffs/Devil_Arm2/da
+				for(var/obj/Skills/Buffs/SlotlessBuffs/Devil_Arm2/candidate in user)
+					if(user.BuffOn(candidate))
+						da = candidate
+						break
+				if(!da)
+					da = user.FindSkill(/obj/Skills/Buffs/SlotlessBuffs/Devil_Arm2)
+				if(da)
+					da.revertDTIcons(user)
+				..()
 			adjust_transformation_visuals(mob/user)
 				if(!form_hair_icon&&user.Hair_Base)
 					var/icon/x=new(user.Hair_Base)

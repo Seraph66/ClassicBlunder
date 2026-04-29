@@ -343,6 +343,7 @@ mob
 			if(src.HasMaimStrike()&&FightingSeriously(src, 0))
 				if(val>(6*glob.WorldDamageMult/src.GetMaimStrike())&&defender.Maimed<4 && world.realtime > MaimCooldown+Day(0.75))
 					defender.Maimed+=1
+					defender.recordMaim(src, "Combat")
 					OMsg(defender, "<font color='red'><font size=+2><b>[src] maimed [defender] with a brutal attack!</b></font size></font color>")
 				else if(val>(3*glob.WorldDamageMult/src.GetMaimStrike())&&defender.Tail)
 					defender.Tail=0
@@ -1330,11 +1331,21 @@ mob
 			return (src.RecovMod+src.RecovAscension)*RecovChaos
 
 		isInDemonDevilTrigger()
-			if(!isRace(DEMON) && !isRace(MAKAIOSHIN)) return FALSE
+			if(!isRace(DEMON)) return FALSE
 			if(!transActive || !race || !race.transformations || transActive > race.transformations.len) return FALSE
 			var/transformation/current = race.transformations[transActive]
 			if(!istype(current, /transformation/demon/devil_trigger)) return FALSE
 			return TRUE
+
+		// Used by the Devil Arm icon-swap path. Demon-only sins / disguise stay
+		// gated by isInDemonDevilTrigger; this one also covers makaioshin forms.
+		isInDevilTriggerLikeForm()
+			if(!transActive || !race || !race.transformations || transActive > race.transformations.len) return FALSE
+			var/transformation/current = race.transformations[transActive]
+			if(istype(current, /transformation/demon/devil_trigger)) return TRUE
+			if(istype(current, /transformation/makaioshin/falldown_mode)) return TRUE
+			if(istype(current, /transformation/makaioshin/satan_mode)) return TRUE
+			return FALSE
 
 		resetDevilTriggerSinBonuses()
 			DevilTriggerSinDamageBonus = 0
