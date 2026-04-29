@@ -888,7 +888,9 @@ mob
 			if(Target) if(Target.HasNull() && !HasMaouKi()) return 1;
 			return 0;
 		HasBleedHit()
-			if(passive_handler.Get("Full Manifestation"))
+			if(passive_handler.Get("Half Manifestation")&&AscensionsAcquired<3)
+				return 1
+			if(passive_handler.Get("Full Manifestation")&&AscensionsAcquired<5)
 				return 1
 			if(passive_handler.Get("BleedHit"))
 				return 1
@@ -908,8 +910,10 @@ mob
 			var/Return=0
 			var/kkmast=0
 			Return+=passive_handler.Get("BleedHit")
-			if(passive_handler.Get("Full Manifestation")&&AscensionsAcquired<4)
-				Return += (5-AscensionsAcquired)*0.2
+			if(passive_handler.Get("Half Manifestation")&&AscensionsAcquired<3)
+				Return += (4-AscensionsAcquired)*0.1
+			if(passive_handler.Get("Full Manifestation")&&AscensionsAcquired<5)
+				Return += (6-AscensionsAcquired)*0.3
 			if(src.Kaioken)
 				for(var/obj/Skills/Buffs/SpecialBuffs/Kaioken/kk in src.Buffs)
 					kkmast=kk.Mastery
@@ -958,6 +962,8 @@ mob
 					return 1
 			if(src.DoubleHelix>=1)
 				return 1
+			if(passive_handler.Get("Half Manifestation")&&AscensionsAcquired<3)
+				return 1
 			if(passive_handler.Get("Full Manifestation")&&AscensionsAcquired<5)
 				return 1
 			return 0
@@ -986,6 +992,8 @@ mob
 				Total = 0
 			if(src.DoubleHelix<1&&passive_handler.Get("DoubleHelix"))
 				Total = 0
+			if(passive_handler.Get("Half Manifestation")&&AscensionsAcquired<3)
+				Total += (3-AscensionsAcquired)*0.15
 			if(passive_handler.Get("Full Manifestation")&&AscensionsAcquired<5)
 				Total += (5-AscensionsAcquired)*0.5
 			return Total
@@ -997,6 +1005,8 @@ mob
 			if(src.GatesActive && src.GatesActive < 8)
 				return 1
 			if(src.DoubleHelix>=1)
+				return 1
+			if(passive_handler.Get("Half Manifestation")&&AscensionsAcquired<3)
 				return 1
 			if(passive_handler.Get("Full Manifestation")&&AscensionsAcquired<5)
 				return 1
@@ -1021,8 +1031,10 @@ mob
 				Total*=PrideDrain
 			if(src.DoubleHelix<1&&passive_handler.Get("DoubleHelix"))
 				Total = 0
+			if(passive_handler.Get("Half Manifestation")&&AscensionsAcquired<3)
+				Total += (3-AscensionsAcquired)*0.1
 			if(passive_handler.Get("Full Manifestation")&&AscensionsAcquired<5)
-				Total += (5-AscensionsAcquired)*0.2
+				Total += (5-AscensionsAcquired)*0.3
 			return Total
 		HasSoftStyle()
 			if(passive_handler.Get("SoftStyle"))
