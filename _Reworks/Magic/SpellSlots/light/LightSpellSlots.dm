@@ -2,6 +2,7 @@
 /obj/Skills/Buffs/SlotlessBuffs/Magic/Light
 	SpellElement="Light"
 	SpellSlot=1
+	MagicNeeded=1
 	Bless
 		TimerLimit=20
 		Cooldown=90
@@ -22,7 +23,9 @@
 	SpellElement="Light"
 	SpellSlot=1
 	Lightspeed
+		ElementalOffense="Light"
 		DamageMult=3
+		Speed=0.1
 		Distance=15
 		ManaCost=5
 		Cooldown=35
@@ -33,7 +36,9 @@
 			usr.UseProjectile(src)
 
 	Solar_Burst
+		ElementalOffense="Light"
 		DamageMult=5
+		Speed=1
 		Homing=1
 		Explode=2
 		Knockback=2

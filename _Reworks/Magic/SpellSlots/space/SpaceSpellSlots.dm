@@ -2,7 +2,9 @@
 /obj/Skills/AutoHit/Magic/Space
 	SpellElement="Space"
 	SpellSlot=1
+	MagicNeeded=1
 	Flux
+		ElementalOffense="Space"
 		Area="Circle"
 		Distance=5
 		DamageMult=4
@@ -28,6 +30,7 @@
 			usr.Activate(src)
 
 	Flow
+		ElementalOffense="Space"
 		Area="Target"
 		Distance=6
 		DamageMult=5

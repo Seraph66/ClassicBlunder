@@ -2,7 +2,9 @@
 /obj/Skills/AutoHit/Magic/Earth
 	SpellElement="Earth"
 	SpellSlot=1
+	MagicNeeded=1
 	Seismic_Entry
+		ElementalOffense="Earth"
 		Area="Circle"
 		Distance=4
 		DamageMult=5
