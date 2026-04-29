@@ -105,6 +105,8 @@ ascension
 							defense = 1
 							endurance = 1
 							speed = 0.4
+							if(!owner.passive_handler.Get("FavoredPrey"))
+								passives  += list("FavoredPrey" = "Transformations")
 							//TO DO - Something that makes them scale with SSj1. Passives? Inherent buff? hm.
 						if("Resourceful")
 							offense = 0.1
