@@ -25,13 +25,13 @@ transformation
 			transform_animation(mob/user)
 				LightningStrike2(user)
 				DarknessFlash(user, SetTime=5)
-				var/list/targets = list(user)
+			/*	var/list/targets = list(user)
 				for(var/mob/M in view(user))
 					if(M.client && M != src)
 						targets += M
 
 				for(var/mob/M in targets)
-					ScreenShatter(M)
+					ScreenShatter(M)*/
 /mob/proc/HandleManifestation(Stat)
 	var/CA=AscensionsAcquired
 	var/TA=3
