@@ -48,7 +48,7 @@
     var/StaffUnderlayStackDT = 0
     var/ArmorUnderlayStackDT = 0
     proc/Input_Underlay_Stack(mob/m)
-        var/num/n = input(m, "Enter the underlay layer number. Higher values draw the underlay further behind. Use decimals for fine tuning.", "Underlay layer") as num|null
+        var/n = input(m, "Enter the underlay layer number. Higher values draw the underlay further behind. Use decimals for fine tuning.", "Underlay layer") as num|null
         if(isnull(n))
             return 0
         if(n < 0)
