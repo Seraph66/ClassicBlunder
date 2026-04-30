@@ -75,7 +75,7 @@ obj/Skills/Buffs/SpecialBuffs/Heavenly_Regalia/Kusanagi
 		HitSparkY=-32
 		InstantStrikes=5
 		BuffSelf="/obj/Skills/Buffs/SlotlessBuffs/Autonomous/QueueBuff/Finisher/Divine_Rain"
-		HitMessage = "channels the divine rage of Susanoo and lets loose a flurry of slashes!"
+		HitMessage = "delivers a Divine storm upon their foe!"
 /obj/Skills/Buffs/SlotlessBuffs/Autonomous/QueueBuff/Finisher
 	Divine_Rain
 		StrMult=1.3
