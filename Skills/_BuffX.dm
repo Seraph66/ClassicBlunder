@@ -3744,17 +3744,27 @@ NEW VARIABLES
 			ABuffNeeded=list("Keyblade")
 			ManaLeak=1
 			ManaThreshold=1
-			passives = list("ManaLeak"= 1, "TechniqueMastery" = 5, "PureDamage" = 3, "PureReduction" = 3, "StunningStrike" = 1, "LifeGeneration" = 5, "Conductor" = 20)
+			passives = list("ManaLeak"= 1, "TechniqueMastery" = 5, "PureDamage" = 3, "PureReduction" = 3, "StunningStrike" = 1, "LifeSteal" = 20, "Conductor" = 20)
 			StrMult=1.5
 			EndMult=1.5
 			KenWaveIcon='SparkleRed.dmi'
 			KenWaveSize=3
 			KenWaveX=105
 			KenWaveY=105
-			ActiveMessage="glows with limitless valor!"
+			ActiveMessage="glows with limitless potential!"
 			OffMessage="de-syncs their keyblade..."
 			verb/Limit_Form()
 				set category="Skills"
+				if(!usr.BuffOn(src))
+					if(usr.CheckActive("Keyblade"))
+						if(!src.Using)
+							if(prob(7.5*usr.LimitCounter) && usr.SagaLevel < 6||usr.passive_handler.Get("Two Become One") && prob(50+(usr.LimitCounter*10)))
+								if(!usr.passive_handler.Get("Controlled Darkness"))
+									usr.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Autonomous/AntiForm)
+								usr.LimitCounter=0
+								return
+							usr.LimitCounter+=1
+				src.Trigger(usr)
 		Wisdom_Form
 			FlashChange=1
 			ABuffNeeded=list("Keyblade")
