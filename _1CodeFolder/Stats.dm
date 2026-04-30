@@ -121,6 +121,7 @@ mob/proc/GetAssess()
 	<tr><td>Transformation Potential:</td><td>[src.potential_trans]/100</td></tr>
 	<tr><td>Average Stats: [StatAverage]</td></tr>
 	<tr><td>Magic Level: [getTotalMagicLevel()]</td></tr>
+	<tr><td>Stat Enhancement Chips Installed(Max): [src.EnhanceChips]([src.EnhanceChipsMax])</td></tr>
 			</table></html>"}
 /*	<tr><td>True Tier:</td><td>[POWER_TIERS[potential_power_tier]]</td></tr>
 	<tr><td>Display Tier:</td><td>[POWER_TIERS[power_display]]</td></tr>*/
