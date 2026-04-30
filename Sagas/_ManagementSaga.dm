@@ -1595,16 +1595,21 @@ mob
 							if(src.KeybladeType=="Shield")
 								src.AddSkill(new/obj/Skills/Buffs/SpecialBuffs/Valor_Form)
 								src.ChooseKeychain()
+								src.ChooseMartialSkill(3)
+								src.ChooseMartialSkill(2)
 								src << "You learn to imbue every action with valor!"
 								src << "Use the Attach Keychain verb to set your sync keyblade for Valor Form."
 							else if(src.KeybladeType=="Staff")
 								src.AddSkill(new/obj/Skills/Buffs/SpecialBuffs/Wisdom_Form)
 								src << "You learn to imbue every action with wisdom!"
 							else if(src.KeybladeType=="Sword")
+								src.ChooseMartialSkill(4)
+								src.ChooseMartialSkill(3)
 								src.AddSkill(new/obj/Skills/Buffs/SpecialBuffs/Limit_Form)
+								src << "You have honed your base skillset to its limit, unlocking Limit Form!"
 						else
 							src.AddSkill(new/obj/Skills/Buffs/SpecialBuffs/Dark_Mode)
-							src << "Your reliance on darkness will empower you when pressed to your limits!"
+							src << "You can now tap into your inner darkness at will!"
 						switch(src.KeybladePath)
 							if("Magic")
 								AddSkill(new/obj/Skills/AutoHit/Magic/Holy)
