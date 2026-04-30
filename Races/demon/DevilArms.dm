@@ -48,16 +48,45 @@
     var/StaffUnderlayStackDT = 0
     var/ArmorUnderlayStackDT = 0
     proc/Input_Underlay_Stack(mob/m)
-        var/n = input(m, "Enter the underlay layer number. Higher values draw the underlay further behind. Use decimals for fine tuning.", "Underlay layer") as num|null
+        var/n = input(m, "Depth 0–1000: higher = further back.", "Underlay layer") as num|null
         if(isnull(n))
             return 0
         if(n < 0)
-            m << "Layer cannot be negative."
+            m << "Layer cannot be negative, using 0."
             n = 0
-        else if(n > 5)
-            m << "Layer cannot go over 5."
-            n = 5
+        else if(n > 1000)
+            m << "Capped at 1000."
+            n = 1000
         return n
+    proc/SyncConjuredItemUnderFromBuff(mob/m, pick)
+        switch(pick)
+            if("Sword")
+                var/obj/Items/Sword/s = m.EquippedSword()
+                if(s && s.Conjured)
+                    s.UnderlayIcon = SwordIconUnder
+                    s.UnderlayX = SwordXUnder
+                    s.UnderlayY = SwordYUnder
+                    s.UnderlayStack = SwordUnderlayStack
+            if("Staff")
+                var/obj/Items/Enchantment/Staff/s = m.EquippedStaff()
+                if(s && s.Conjured)
+                    s.UnderlayIcon = StaffIconUnder
+                    s.UnderlayX = StaffXUnder
+                    s.UnderlayY = StaffYUnder
+                    s.UnderlayStack = StaffUnderlayStack
+            if("Armor")
+                var/obj/Items/Armor/s = m.EquippedArmor()
+                if(s && s.Conjured)
+                    s.UnderlayIcon = ArmorIconUnder
+                    s.UnderlayX = ArmorXUnder
+                    s.UnderlayY = ArmorYUnder
+                    s.UnderlayStack = ArmorUnderlayStack
+    proc/RefreshConjuredArmAfterUnderChange(mob/m, pick)
+        SyncConjuredItemUnderFromBuff(m, pick)
+        m.AppearanceOff()
+        m.AppearanceOn()
+        if(m.isInDemonDevilTrigger())
+            applyDTIcons(m)
     verb/Examine_Devil_Arm()
         set src in usr
         var/devilArmDetail = "<html><head><title>Devil Arm Detail ([src.name])</title></head>"
@@ -118,6 +147,7 @@
                                 ArmorXUnder = newUnderX
                                 ArmorYUnder = newUnderY
                                 ArmorUnderlayStack = stackTier
+                        RefreshConjuredArmAfterUnderChange(usr, armPick)
                 else if(underAction == "Clear")
                     switch(armPick)
                         if("Sword")
@@ -135,6 +165,7 @@
                             ArmorXUnder = 0
                             ArmorYUnder = 0
                             ArmorUnderlayStack = 0
+                    RefreshConjuredArmAfterUnderChange(usr, armPick)
         else if(thing == "Name")
             var/armPick = input(usr, "Sword, Staff, or Armor Name?") in list("Sword","Armor","Staff")
             var/newName = input(usr, "Change to what?") as text
@@ -226,6 +257,12 @@
                         ArmorXUnderDT = 0
                         ArmorYUnderDT = 0
                         ArmorUnderlayStackDT = 0
+        if(usr.BuffOn(src))
+            if(usr.isInDemonDevilTrigger())
+                applyDTIcons(usr)
+            else
+                usr.AppearanceOff()
+                usr.AppearanceOn()
 
     proc/swapItemIcon(mob/user, obj/Items/s, newIcon, newX, newY, useUnderOverride = FALSE, newUnderIcon = null, newUnderX = 0, newUnderY = 0, newUnderStack = 0)
         if(!s || !s.suffix || s.loc != user) return

@@ -243,11 +243,14 @@ obj/Items
 		if(Equipped)
 			src.ObjectUse(usr)
 
-	proc/UnderlayDisplayLayer()
-		. = FLOAT_LAYER-3
-		if(LayerPriority) . -= LayerPriority
-		. -= 0.01
-		. -= UnderlayStack
+	proc/ItemUnderlayMobImage()
+		if(!UnderlayIcon) return null
+		var/ul = UnderlayStack
+		if(ul < 0) ul = 0
+		if(ul > 1000) ul = 1000
+		var/ly = 0.99 - 0.98 * (ul / 1000)
+		if(ly < 0.01) ly = 0.01
+		. = image(icon=UnderlayIcon, pixel_x=UnderlayX, pixel_y=UnderlayY, layer=ly)
 		return
 
 	proc/Drop()
@@ -1390,8 +1393,8 @@ obj/Items/proc/UnEquip(mob/A)
 			A.overlays-=im2
 		A.overlays-=im
 	if(src.UnderlayIcon)
-		var/image/im=image(icon=src.UnderlayIcon, pixel_x=src.UnderlayX, pixel_y=src.UnderlayY, layer=src.UnderlayDisplayLayer())
-		A.overlays-=im
+		var/image/im = src.ItemUnderlayMobImage()
+		if(im) A.underlays -= im
 
 
 obj/Items/proc/Equip(mob/A)
@@ -1492,8 +1495,8 @@ obj/Items/proc/Equip(mob/A)
 				im.appearance_flags += 512
 		A.overlays+=im
 	if(src.UnderlayIcon)
-		var/image/im=image(icon=src.UnderlayIcon, pixel_x=src.UnderlayX, pixel_y=src.UnderlayY, layer=src.UnderlayDisplayLayer())
-		A.overlays+=im
+		var/image/im = src.ItemUnderlayMobImage()
+		if(im) A.underlays += im
 	return 1
 
 
