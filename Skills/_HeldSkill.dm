@@ -140,9 +140,6 @@
 
 /mob/proc/ChargeLoop(var/obj/Skills/Z)
 	while(held_skill == Z)
-		sleep(2)
-		if(held_skill != Z) return
-
 		// Interrupt conditions
 		var/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Debuff/Charmed/charm_skill = locate(/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Debuff/Charmed) in src
 		if(Stunned || Launched || Stasis > 0 || (charm_skill && BuffOn(charm_skill)))
@@ -154,8 +151,10 @@
 			FizzleHeldSkill(Z)
 			return
 
-		// Continuous shockwaves for the duration of the hold
+		// closing the visual gap after BeginHeldSkill's initial pulse.
 		KenShockwave(src, icon=Z.ChargeWaveIcon, Size=0.5, Blend=Z.ChargeWaveBlend, Time=8)
+
+		sleep(2)
 
 // ReleaseHeldSkill is called by the Release_Held_Skill verb (KEY+UP macro)
 
@@ -194,13 +193,13 @@
 // Cleanup
 
 /mob/proc/ClearHeldChargeState()
-	clearHeldReleaseMacro()
+	held_skill        = null
+	held_charge_start = 0
 	held_skill_macro_key = null
 	if(held_charge_overlay_ref)
 		overlays -= held_charge_overlay_ref
 		held_charge_overlay_ref = null
-	held_skill        = null
-	held_charge_start = 0
+	clearHeldReleaseMacro()
 
 // HeldSkillBlocksAction returns TRUE if a held skill is currently
 // charging and the requested skill would conflict.
