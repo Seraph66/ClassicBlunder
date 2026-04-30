@@ -2706,7 +2706,7 @@ obj
 				CanBeDodged=1
 				Distance=20
 				DistanceAround=15
-				DamageMult=0.5
+				DamageMult=2
 				WindUp=2
 				DelayTime=70
 				Rounds=40
