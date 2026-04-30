@@ -284,8 +284,8 @@ mob/proc/Hairz(var/Z)
 				HairB.Blend(src.Hair_Color, ICON_ADD)
 			Hair = image(icon=HairB)
 
-		//else if(transActive)
-		//	race.transformations[transActive].apply_visuals(src,0,1,0)
+		else if(transActive)
+			race.transformations[transActive].apply_visuals(src,0,1,0)
 
 		else
 			if(HairB&&src.Hair_Color)

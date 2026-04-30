@@ -3368,7 +3368,7 @@ obj/Skills/Utility
 					ModDesc="Overdrive allows the augmented to overclock every cybernetically enhanced aspect in exchange for battery life."
 				if("Cybernetic Mainframe")
 					Cost=glob.progress.EconomyCost*300
-					ModDesc="A cybernetic mainframe allows someone to become a complete cyborg, forsaking most of their natural abilities in exchange for opening up more avenues of cybernetic customization."
+					ModDesc="A cybernetic mainframe allows someone to become a complete cyborg, forsaking most of their natural abilities (such as signature skills) in exchange for opening up more avenues of cybernetic customization. For regular Androids, it unlocks a powerful new transformation based on your cybernetic enhancements."
 				if("Biological Cybernetics")
 					Cost=glob.progress.EconomyCost*1000
 					ModDesc="Converts an Android or someone with an enhanced cybernetic mainframe into a Biological Android."

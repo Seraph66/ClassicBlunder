@@ -164,7 +164,6 @@ transformation
 		class_boons(mob/user)
 
 		apply_visuals(mob/user, aura = 1, hair = 1, extra = 1)
-			// liveDebugMsg("[user] is applying trans visuals ([aura ? "aura" : ""]) ([hair ? "hair" : ""]) ([extra ? "extra" : ""])")
 			adjust_transformation_visuals(user)
 			if(extra)
 				user.overlays += form_icon_1
