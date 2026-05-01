@@ -70,6 +70,7 @@ mob/tierUpSaga(Path)
 						src << "Yata No Kagami lends it's mirrored frame to you, promising to reflect any attacks."
 						src.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Yata_no_Kagami/Mirror_Protection)
 						src.AddSkill(new/obj/Skills/Yata_no_Kagami/Mirror_Prison)
+						src.AddSkill(new/obj/Skills/Buffs/NuStyle/SwordStyle/Imperial_Heritage)
 
 					if("Durendal")
 						src << "A horn made of some unidentified substance manifests in your hand, an Oilphant."
@@ -77,14 +78,17 @@ mob/tierUpSaga(Path)
 						src.AddSkill(new/obj/Skills/AutoHit/Blow_The_Horn)
 						src.AddSkill(new/obj/Skills/Companion/PlayerCompanion/Squad/Oilphant)
 
+
 					if("Dainsleif")
 						src << "Dainsleif's sheath grows with the power of the damage you inflict on others. . ."
 						passive_handler.Increase("CursedSheath")
 						AddSkill(new/obj/Skills/AutoHit/Destined_Death)
+						src.AddSkill(new/obj/Skills/Buffs/NuStyle/SwordStyle/Might_of_Dainn)
 
 					if("Caledfwlch")
 						src << "A sheath manifests in your soul, capable of healing any injuries; Avalon."
 						src.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Avalon)
+						src.AddSkill(new/obj/Skills/Buffs/NuStyle/SwordStyle/Knight_Of_Camelot)
 
 					if("Muramasa")
 						src << "The blade of assured Death whispers the arts of Death to you..."
@@ -102,10 +106,12 @@ mob/tierUpSaga(Path)
 						src << "Soul Edge's chaotic power crawls up your frame...!"
 						passive_handler.Increase("Reversal", 0.5)
 						AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Symbiotic_Edge)
+						src.AddSkill(new/obj/Skills/Buffs/NuStyle/SwordStyle/Stained_Memories)
 
 					if("Soul Calibur")
 						src << "Soul Calibur's Order becomes far easier to sink into..."
 						AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Defrost)
+						src.AddSkill(new/obj/Skills/Buffs/NuStyle/SwordStyle/Soul_Conviction)
 
 					if("Ryui Jingu Bang")
 						src << "Yeoui unveils the secrets to proper footwork..."

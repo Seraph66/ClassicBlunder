@@ -68,7 +68,7 @@ proc
 
 		if(onlyTheseElements)
 			attackElements = onlyTheseElements
-		
+
 		if(armr && armr.Element)
 			defenseElements |= armr.Element
 
@@ -108,7 +108,8 @@ proc
 				if("Ultima")
 					DamageMod+=2
 				if("Death")
-					DamageMod+=3
+					if(Attacker.passive_handler.Get("Death Incarnate"))
+						DamageMod+=3
 				if("Love")
 					DamageMod+=3
 				if("Mirror")

@@ -1902,7 +1902,7 @@ mob/proc/SpeedDelay(var/Modifier=1)
 	var/Spd=src.GetSpd()**glob.ATTACK_DELAY_EXPONENT
 	var/Delay=glob.ATTACK_DELAY_DIVISOR/Spd
 	if(passive_handler["Speed Force"])
-		Delay = glob.ATTACK_DELAY_DIVISOR/(GetSpd()**2)
+		Delay = glob.ATTACK_DELAY_DIVISOR/(GetSpd()*2)
 	// Inevitable (Makyo)
 	Delay += passive_handler.Get("Inevitable")
 	if(Delay>=glob.ATTACK_DELAY_MAX)

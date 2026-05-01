@@ -385,7 +385,7 @@ transformation
 		gainMastery(mob/user)
 			if(mastery >= 100) return
 			if(user.isRace(SAIYAN)||user.isRace(HALFSAIYAN))
-				if(user.transActive==1)
+				if(user.transActive==1&&user.oozaru_type!="Demonic")
 					if(user.Potential>=22&&mastery<25)
 						mastery=25
 					if(user.Potential>=27&&mastery<50)
@@ -394,7 +394,7 @@ transformation
 						mastery=75
 					if(user.Potential>=35&&mastery<75)
 						mastery=100
-				if(user.transActive==2)
+				if(user.transActive==2||user.transActive==1&&user.oozaru_type=="Demonic")
 					if(user.Potential>=37&&mastery<25)
 						mastery=25
 					if(user.Potential>=39&&mastery<50)
