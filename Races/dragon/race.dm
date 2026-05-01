@@ -29,7 +29,7 @@ race
 					passives["Harden"] = 1
 					passives["KBRes"] = 1
 				if("Wind")
-					skills = list(/obj/Skills/AutoHit/Dragon_Roar, /obj/Skills/Projectile/Beams/Static_Stream, /obj/Skills/Buffs/SlotlessBuffs/Autonomous/Dragon_Rage/Wind_Supremacy)
+					skills = list(/obj/Skills/AutoHit/Dragon_Roar, /obj/Skills/Projectile/Static_Stream, /obj/Skills/Buffs/SlotlessBuffs/Autonomous/Dragon_Rage/Wind_Supremacy)
 					passives["Godspeed"] = 1
 					passives["Flicker"] = 1
 				if("Water")
