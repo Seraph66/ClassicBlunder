@@ -4736,7 +4736,7 @@ obj
 			Static_Stream
 				Dodgeable=0
 				DamageMult=5
-				Beamtime=5
+				BeamTime=5
 				Distance=20
 				Paralyzing=2
 				Cooldown=90
@@ -4754,7 +4754,7 @@ obj
 						Radius = clamp(usr.AscensionsAcquired, 1, 5)
 						Paralyzing = 2 + clamp(usr.AscensionsAcquired*2, 0.5, 2.5)
 						Cooldown = 60 - ( 5 * usr.AscensionsAcquired)
-						Beamtime = 5 + (usr.AscensionsAcquired * 5)
+						BeamTime = 5 + (usr.AscensionsAcquired * 5)
 					usr.UseProjectile(src)
 
 				Ice_Dragon
