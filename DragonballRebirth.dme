@@ -337,6 +337,7 @@
 #include "_1CodeFolder\SkillTreeMerge.dm"
 #include "_1CodeFolder\sound.dm"
 #include "_1CodeFolder\Spawns.dm"
+#include "_1CodeFolder\Stars.dm"
 #include "_1CodeFolder\statpointsystems.dm"
 #include "_1CodeFolder\Stats.dm"
 #include "__log_system\_main_.dm"
