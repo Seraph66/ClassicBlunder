@@ -4733,20 +4733,30 @@ obj
 
 
 ////Racials
-				Static_Stream
-					Dodgeable=0
-					BeamTime=5
-					DamageMult=5
-					Distance=20
-					Paralyzing=2
-					Cooldown=90
-					StrRate=0.5
-					EndRate=1
-					ForRate=0.5
-					IconLock='LightningWave.dmi'
-					verb/Static_Stream()
-						set category="Skills"
-						usr.UseProjectile(src)
+			Static_Stream
+				Dodgeable=0
+				DamageMult=5
+				Beamtime=5
+				Distance=20
+				Paralyzing=2
+				Cooldown=90
+				StrRate=0.5
+				EndRate=1
+				ForRate=0.5
+				Delay=1
+				Blasts=1
+				Stream=1
+				IconLock='LightningWave.dmi'
+				verb/Static_Stream()
+					set category="Skills"
+					if(!altered)
+						DamageMult = 5 + (usr.AscensionsAcquired * 3)
+						Radius = clamp(usr.AscensionsAcquired, 1, 5)
+						Paralyzing = 2 + clamp(usr.AscensionsAcquired*2, 0.5, 2.5)
+						Cooldown = 60 - ( 5 * usr.AscensionsAcquired)
+						Beamtime = 5 + (usr.AscensionsAcquired * 5)
+					usr.UseProjectile(src)
+
 				Ice_Dragon
 					Dodgeable=0
 					BeamTime=5
