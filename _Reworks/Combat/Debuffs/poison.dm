@@ -17,7 +17,7 @@ globalTracker/var/BurnStackDivisor = BURN_STACK_DIVISOR
 globalTracker/var/BurnNerf = BURN_NERF
 globalTracker/var/DEBUFF_STACK_RESISTANCE = 100
 globalTracker/var/HELLFIRE_VALUE_MOD = 2
-globalTracker/var/MAX_DEBUFF_CLAMP = 0.1
+globalTracker/var/MAX_DEBUFF_CLAMP = 0.05
 globalTracker/var/LOWER_DEBUFF_CLAMP = 0.001
 
 /mob/proc/getDebuffDamage(typeOfDebuff)
