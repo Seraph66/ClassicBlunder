@@ -1458,6 +1458,11 @@ mob/proc/Get_Sense_Reading(mob/A)
 		. +=" (Fading)"
 
 mob/proc/Get_Scouter_Reading(mob/B)
+	if(B.Imitating)
+		for(var/obj/Skills/Utility/Imitate/i in B.Skills)
+			if(i.imitating_info) 
+				return i.imitating_info.powerToCopy
+
 	var/Ratio=B.EnergyUniqueness
 
 	var/EPM=B.Power_Multiplier//effective power multiplier
