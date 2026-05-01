@@ -345,7 +345,7 @@ obj/Skills/Grapple
 				EnergyDamage=0
 			else
 				Effect="Suplex"
-				DamageMult=3
+				DamageMult=5.5
 				EffectMult=1
 				Stunner=3
 				StrRate=1
