@@ -15,7 +15,7 @@
 	ManaGlowSize=3
 	KenWaveIcon='KenShockwavePurple.dmi'
 	adjust(mob/p)
-		var/AscBonus=p.AscensionsAcquired+0.1
+		var/AscBonus=p.AscensionsAcquired*0.1
 		StrMult=1.5+AscBonus
 		ForMult=1.5+AscBonus
 		SpdMult=1.5+AscBonus
