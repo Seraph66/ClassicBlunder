@@ -535,6 +535,8 @@ mob
 				src.Revert()
 			if(passive_handler.Get("LunarWrath")&&PowerControl>100&&!passive_handler.Get("Unrelenting Wrath"))
 				var/ManaRando=rand(6,15)
+				if(src.Health<50)
+					ManaRando*=2
 				src.ManaAmount+=0.5*(ManaRando/10)
 			if(passive_handler.Get("LunarAnger")&&!passive_handler.Get("Unrelenting Wrath"))
 				if(ManaAmount>50)

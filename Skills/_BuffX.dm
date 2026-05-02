@@ -1389,19 +1389,22 @@ NEW VARIABLES
 					if(usr.KeychainAttached=="Moogle O Glory"||usr.KeychainAttached=="Prismatic Dreams"||usr.KeychainAttached=="Ebony Slumber")
 						src.SwordX=-64
 						src.SwordY=-64
+					var/ImaginaryBonus=0
+					if(usr.Class=="Imaginary")
+						ImaginaryBonus=0.05*usr.AscensionsAcquired
 					switch(usr.KeybladeType)
 						if("Sword")
-							src.StrMult=1.2
-							src.SpdMult=1.2
-							src.OffMult=1.2
+							src.StrMult=1.2+ImaginaryBonus
+							src.SpdMult=1.2+ImaginaryBonus
+							src.OffMult=1.2+ImaginaryBonus
 						if("Shield")
-							src.EndMult=1.2
-							src.DefMult=1.2
-							src.StrMult=1.2
+							src.EndMult=1.2+ImaginaryBonus
+							src.DefMult=1.2+ImaginaryBonus
+							src.StrMult=1.2+ImaginaryBonus
 						if("Staff")
-							src.ForMult=1.2
-							src.OffMult=1.2
-							src.DefMult=1.2
+							src.ForMult=1.2+ImaginaryBonus
+							src.OffMult=1.2+ImaginaryBonus
+							src.DefMult=1.2+ImaginaryBonus
 							// passives["ManaCapMult"] = 0.1 * usr.SagaLevel
 							// passives["SpiritFlow"] = 0.15 * usr.SagaLevel
 					passives["SpiritSword"] = 0.2 * usr.SagaLevel
