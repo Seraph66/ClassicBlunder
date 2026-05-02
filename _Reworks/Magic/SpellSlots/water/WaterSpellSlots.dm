@@ -65,6 +65,7 @@
 	Frost_Shamshir
 		ElementalOffense="Water"
 		DamageMult=4
+		AccMult=1.1
 		Freezing=2
 		Homing=1
 		Knockback=1
