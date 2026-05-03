@@ -115,6 +115,12 @@ mob/proc/isMazokuHuman()
 	if(!passive_handler.Get("DeathDefied")) return FALSE
 	return TRUE
 
+mob/proc/isMazokuPathHuman()
+	if(!isRace(HUMAN)) return FALSE
+	if(!passive_handler) return FALSE
+	if(!passive_handler.Get("DormantDemon")) return FALSE
+	return TRUE
+
 mob/proc/isInMazokuDT()
 	if(!isMazokuHuman()) return FALSE
 	if(!race || !race.transformations || transActive < 1) return FALSE

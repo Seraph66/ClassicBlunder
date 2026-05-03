@@ -262,7 +262,7 @@ mob/proc/Unconscious(mob/P,var/text)
 				P.Health+=HealthRecovery/2
 				src.HealthAnnounce10+=1
 				return
-	if(src.race in list(HUMAN, CELESTIAL) && !src.isMazokuHuman())
+	if(src.race in list(HUMAN, CELESTIAL) && !src.isMazokuPathHuman())
 		if(src.transActive==1&&src.transUnlocked>=2)
 			src.KO=0
 			src.OMessage(15, "...<b>but [src] evolves one final time, pushing out every last bit of their potential!!!!</b>", "<font color=red>[src]([src.key]) activates Unlimited High Tension!!!")
