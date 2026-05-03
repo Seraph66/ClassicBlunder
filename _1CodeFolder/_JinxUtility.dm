@@ -1200,6 +1200,13 @@ mob
 			if(EnergyCut>=1) src.Death(null, "exhausting their life force!", SuperDead=1, NoRemains=1);
 		AddManaCut(Val)
 			ManaCut = clamp(ManaCut+Val, 0, 1);//This one doesn't kill
+		AddOmniTax(Val)
+			AddStrTax(Val)
+			AddForTax(Val)
+			AddEndTax(Val)
+			AddOffTax(Val)
+			AddDefTax(Val)
+			AddSpdTax(Val)
 		AddStrTax(Val)
 			if(src.HasTaxThreshold())
 				if(src.StrTax>=src.GetTaxThreshold())
@@ -1331,7 +1338,14 @@ mob
 
 		BaseRecov()
 			return (src.RecovMod+src.RecovAscension)*RecovChaos
+		HandleEldritchTax()
+			var/TaxVal=glob.racials.FULL_MANIFESTATION_TAX/glob.racials.FULL_MANIFESTATION_TAX_DIVISOR
+			if(passive_handler.Get("Full Manifestation")&&AscensionsAcquired<5)
+				TaxVal *= (6-AscensionsAcquired)*0.3
 
+			if(passive_handler.Get("Full Manifestation")&&AscensionsAcquired>=5)
+				TaxVal=0
+			AddOmniTax(TaxVal)
 		isInDemonDevilTrigger()
 			if(!isRace(DEMON)) return FALSE
 			if(!transActive || !race || !race.transformations || transActive > race.transformations.len) return FALSE
@@ -1580,7 +1594,7 @@ mob
 		GetStr(var/Mult=1)
 			var/Str=src.StrMod
 			var/EldritchMod=0
-			if(src.EldritchPacted)
+/*			if(src.EldritchPacted)
 				switch(src.ReflectedPactType)
 					if("Devotion")
 						EldritchMod=0.5
@@ -1591,7 +1605,7 @@ mob
 					if("Ambition")
 						EldritchMod=0
 					if("Survival")
-						EldritchMod=0.25
+						EldritchMod=0.25*/
 			Str+=EldritchMod
 			var/EffectiveAsc=src.StrAscension
 			if(passive_handler.Get("Half Manifestation"))
@@ -1719,8 +1733,10 @@ mob
 			if(passive_handler["Rebel Heart"])
 				var/h = (((missingHealth())/glob.REBELHEARTMOD) * passive_handler["Rebel Heart"])/10
 				Mod+=h
+			if(passive_handler.Get("TensionPowered"))
+				Mod+=(passive_handler.Get("TensionPowered")/4)
 			if(passive_handler.Get("TensionPowered")&&transActive>=2)
-				Mod+=(passive_handler.Get("TensionPowered")/2)
+				Mod+=(passive_handler.Get("TensionPowered")/4)
 			if(passive_handler.Get("TensionPowered")&&transActive>=4)
 				Mod+=(passive_handler.Get("TensionPowered")/2)
 				if(isRace(HUMAN))
@@ -1776,7 +1792,7 @@ mob
 		GetFor(var/Mult=1)
 			var/For=src.ForMod
 			var/EldritchMod=0
-			if(src.EldritchPacted)
+/*			if(src.EldritchPacted)
 				switch(src.ReflectedPactType)
 					if("Devotion")
 						EldritchMod=0.5
@@ -1787,7 +1803,7 @@ mob
 					if("Ambition")
 						EldritchMod=0.25
 					if("Survival")
-						EldritchMod=0
+						EldritchMod=0*/
 			For+=EldritchMod
 			var/EffectiveAsc=src.ForAscension
 			if(passive_handler.Get("Half Manifestation"))
@@ -1913,8 +1929,10 @@ mob
 				if(BaseFor() == BaseStr())
 					// lol
 					Mod += clamp(adaptive/2,0.05, 0.5)
+			if(passive_handler.Get("TensionPowered"))
+				Mod+=(passive_handler.Get("TensionPowered")/4)
 			if(passive_handler.Get("TensionPowered")&&transActive>=2)
-				Mod+=(passive_handler.Get("TensionPowered")/2)
+				Mod+=(passive_handler.Get("TensionPowered")/4)
 			if(passive_handler.Get("TensionPowered")&&transActive>=4)
 				Mod+=(passive_handler.Get("TensionPowered")/2)
 				if(isRace(HUMAN))
@@ -1968,7 +1986,7 @@ mob
 		GetEnd(var/Mult=1)
 			var/End=src.EndMod
 			var/EldritchMod=0
-			if(src.EldritchPacted)
+/*			if(src.EldritchPacted)
 				switch(src.ReflectedPactType)
 					if("Devotion")
 						EldritchMod=0.5
@@ -1979,7 +1997,7 @@ mob
 					if("Ambition")
 						EldritchMod=0
 					if("Survival")
-						EldritchMod=1
+						EldritchMod=1*/
 			End+=EldritchMod
 			var/EffectiveAsc=src.EndAscension
 			if(passive_handler.Get("Half Manifestation"))
@@ -2135,7 +2153,7 @@ mob
 		GetSpd(Mult=1)
 			var/Spd=src.SpdMod
 			var/EldritchMod=0
-			if(src.EldritchPacted)
+/*			if(src.EldritchPacted)
 				switch(src.ReflectedPactType)
 					if("Devotion")
 						EldritchMod=0.5
@@ -2146,7 +2164,7 @@ mob
 					if("Ambition")
 						EldritchMod=1
 					if("Survival")
-						EldritchMod=0
+						EldritchMod=0*/
 			Spd+=EldritchMod
 			var/EffectiveAsc=src.SpdAscension
 			if(passive_handler.Get("Half Manifestation"))
@@ -2282,7 +2300,7 @@ mob
 		GetOff(var/Mult=1)
 			var/Off=src.OffMod
 			var/EldritchMod=0
-			if(src.EldritchPacted)
+/*			if(src.EldritchPacted)
 				switch(src.ReflectedPactType)
 					if("Devotion")
 						EldritchMod=0.5
@@ -2293,7 +2311,7 @@ mob
 					if("Ambition")
 						EldritchMod=0
 					if("Survival")
-						EldritchMod=0
+						EldritchMod=0*/
 			Off+=EldritchMod
 			var/EffectiveAsc=src.OffAscension
 			if(passive_handler.Get("Half Manifestation"))
@@ -2400,7 +2418,7 @@ mob
 		GetDef(var/Mult=1)
 			var/Def=src.DefMod
 			var/EldritchMod=0
-			if(src.EldritchPacted)
+/*			if(src.EldritchPacted)
 				switch(src.ReflectedPactType)
 					if("Devotion")
 						EldritchMod=0.5
@@ -2411,7 +2429,7 @@ mob
 					if("Ambition")
 						EldritchMod=0.5
 					if("Survival")
-						EldritchMod=0.5
+						EldritchMod=0.5*/
 			Def+=EldritchMod
 			var/EffectiveAsc=src.DefAscension
 			if(passive_handler.Get("Half Manifestation"))

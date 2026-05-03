@@ -2071,7 +2071,10 @@ mob
 						if(Target.GetGodKi() > Total)
 							Total=Target.GetGodKi()*src.GodKiCopyValue()
 						else
-							Total+=(Potential/100)*src.GodKiCopyValue()
+							if(src.passive_handler.Get("AbsoluteDespair"))
+								Total+=0.1
+							else
+								Total+=(Potential/100)*src.GodKiCopyValue()
 					else
 						Total+=(Potential/100)*src.GodKiCopyValue()
 			if(passive_handler.Get("GodCloth"))
@@ -2092,6 +2095,8 @@ mob
 				Total+=3
 			return Total
 		HasGodKiCopy()
+			if(passive_handler.Get("AbsoluteDespair"))
+				return 1
 			if(passive_handler.Get("CreateTheHeavens")&&isRace(HUMAN))
 				return 1
 			if(passive_handler.Get("Hidden Potential")||passive_handler.Get("Orange Namekian"))
@@ -2102,6 +2107,8 @@ mob
 			return 0
 		GodKiCopyValue()//multiplicative
 			var/Total=0
+			if(passive_handler.Get("AbsoluteDespair"))
+				Total=1.1
 			if(passive_handler.Get("CreateTheHeavens")&& !HasGodKiBuff()&&isRace(HUMAN))
 				Total=1
 			if(passive_handler.Get("Hidden Potential"))
@@ -2400,6 +2407,8 @@ mob
 						. = 5000
 			if(passive_handler.Get("FavoredPrey") == "Gender")
 				. = 0 //All of your violence is structural. You have no power outside of the system that gives it to you.
+			if(passive_handler.Get("FavoredPrey") == "Secret" && Secret)
+				. /= 4
 			. = clamp(., glob.SLAYER_DAMAGE_MIN, glob.SLAYER_DAMAGE_MAX);
 //----------------------------------------------------------------------
 
@@ -2466,7 +2475,7 @@ mob
 		GetErosion()
 			return passive_handler.Get("Erosion")
 		HasMirrorStats()
-			if(passive_handler.Get("MirrorStats"))
+			if(passive_handler.Get("MirrorStats")||passive_handler.Get("Absolute Despair"))
 				return 1
 			return 0
 		HasManaPU()

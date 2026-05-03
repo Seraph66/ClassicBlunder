@@ -290,11 +290,6 @@ transformation
 				user.AddEndTax(user.UnstoppableForceCounter/10)
 				user.AddSpdTax(user.UnstoppableForceCounter/10)
 				user.UnstoppableForceCounter=0
-			if(user.passive_handler.Get("Full Manifestation"))
-				if(user.AscensionsAcquired<5)
-					user.AddStrTax((5-user.AscensionsAcquired)/5)
-					user.AddEndTax((5-user.AscensionsAcquired)/5)
-					user.AddSpdTax((5-user.AscensionsAcquired)/5)
 			user.transActive--
 			if(!isnull(revertToTrans))
 				user.transActive = revertToTrans

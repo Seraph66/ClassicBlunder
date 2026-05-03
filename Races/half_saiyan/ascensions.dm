@@ -51,6 +51,8 @@ ascension
 			onAscension(mob/owner)
 				if(!applied)
 					simulateChoiceMutation(owner)
+				if(owner.transUnlocked<1)
+					owner.transUnlocked=1
 				..()
 		three
 			unlock_potential = ASCENSION_THREE_POTENTIAL // ?

@@ -36,6 +36,14 @@ transformation
 				form_icon_2.color=list(1,0,0, 0,0.82,0, 0,0,0, -0.26,-0.26,-0.26)
 
 			mastery_boons(mob/user)
+				if(user.Potential>=22&&mastery<25)
+					mastery=25
+				if(user.Potential>=27&&mastery<50)
+					mastery=50
+				if(user.Potential>=30&&mastery<75)
+					mastery=75
+				if(user.Potential>=35&&mastery<75)
+					mastery=100
 				if(mastery >= 50)
 					if(!locate(/obj/Skills/Buffs/SpecialBuffs/SuperSaiyanGrade2, user)&&user.isRace(SAIYAN))
 						user.AddSkill(new/obj/Skills/Buffs/SpecialBuffs/SuperSaiyanGrade2)
@@ -146,6 +154,14 @@ transformation
 			strengthadd = 0.2
 			forceadd = 0.2
 			mastery_boons(mob/user)
+				if(user.Potential>=37&&mastery<25)
+					mastery=25
+				if(user.Potential>=39&&mastery<50)
+					mastery=50
+				if(user.Potential>=41&&mastery<75)
+					mastery=75
+				if(user.Potential>=43&&mastery<100)
+					mastery=100
 				if(mastery >= 100 && user.Class == "Justice")
 					if(user.race.ascensions[1].choiceSelected == /ascension/sub_ascension/half_saiyan/adaptive)
 						if(mastery >= 100)

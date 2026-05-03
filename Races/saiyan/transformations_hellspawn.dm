@@ -17,6 +17,14 @@ transformation
 			strengthadd = 0.3
 			forceadd = 0.3
 			mastery_boons(mob/user)
+				if(user.Potential>=37&&mastery<25)
+					mastery=25
+				if(user.Potential>=39&&mastery<50)
+					mastery=50
+				if(user.Potential>=41&&mastery<75)
+					mastery=75
+				if(user.Potential>=43&&mastery<100)
+					mastery=100
 				var/MasteryBoost=round(mastery/4, 25)
 				passives = list("Instinct" = 1+(MasteryBoost/4), "Flow" = 1+(MasteryBoost/4), "Flicker" = 1+(MasteryBoost/4), "Pursuer" = 2,  "PureDamage" = 3+(MasteryBoost/2), "PureReduction" = -4+MasteryBoost, "SaiyanPower"=1, "SaiyanPower1"=0.5)
 				if(mastery >= 50)
@@ -29,7 +37,7 @@ transformation
 						user << "You can strain past the limits of your Super Saiyan form! Grade 3 Unlocked!"
 				if(mastery >= 100)
 					passives = list("Instinct" = 1+(MasteryBoost/2), "Flow" = 1+(MasteryBoost/2), "Flicker" = 1+(MasteryBoost/2), "Pursuer" = 2,  "PureDamage" = 3+(MasteryBoost/2), "PureReduction" = -4+MasteryBoost, "SaiyanPower"=1, "SaiyanPower1"=0.5)
-				
+
 			class_boons(mob/user) //pride stats as a baseline no matter what
 				if(user.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/zeal)
 					class_passives = list("EnergyGeneration" = 3, "Instinct" = 2, "Flow" = 2)

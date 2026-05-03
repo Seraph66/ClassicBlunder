@@ -17,7 +17,7 @@ proc/generateVersionDatum()
 		glob.currentUpdate = updateversion
 
 globalTracker
-	var/UPDATE_VERSION = 9
+	var/UPDATE_VERSION = 10
 	var/tmp/update/currentUpdate
 
 	proc/updatePlayer(mob/p)
@@ -193,6 +193,19 @@ update
 			MoveToSpawn(p)
 			p.KO = 0
 			p << "<font color='purple'>You've been digested and sent back to spawn.</font>"
+	version10
+		version = 10;
+		updateMob(mob/p)
+			. = ..()//slightly altered for inconvenient copypasting
+			if(p.isRace(MAKYO))
+				if(p.AscensionsAcquired>=1)
+					p.NewAnger(p.AngerMax+0.1)
+				if(p.AscensionsAcquired>=2)
+					p.NewAnger(p.AngerMax+0.1)
+			if(p.isRace(BEASTKIN))
+				if(p.Class=="Feather Cowl"&&p.AscensionsAcquired>=1)
+					if(p.StrAscension<0)
+						p.StrAscension=0
 /globalTracker/var/COOL_GAJA_PLAYERS = list("Thorgigamax", "Gemenilove" )
 /globalTracker/var/GAJA_PER_ASC_CONVERSION = 0.25
 /globalTracker/var/GAJA_MAX_EXCHANGE = 1

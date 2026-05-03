@@ -1,6 +1,6 @@
 mob/verb/Character_Sheet()
 	set category = "Other"
-	src<<browse(src.GetAssess(),"window=Assess;size=275x650")
+	src<<browse(src.GetAssess(),"window=Assess;size=275x700")
 
 // Unhinged Majins count their Power at MAJIN_UNHINGED_POWER_MULT (2x) in both offense and defense
 mob/proc/GetEffectivePower()
@@ -1029,10 +1029,12 @@ mob/proc/
 		if(Power < 1)
 			Power = 1
 		if(passive_handler["Hidden Potential"] && Target)
-			if(!Target.passive_handler.Get("Hidden Potential")&&!Target.passive_handler.Get("To Govern Strength"))
+			if(!Target.passive_handler.Get("Hidden Potential")&&!Target.passive_handler.Get("To Govern Strength")&&!Target.passive_handler.Get("AbsoluteDespair"))
 				if(Target.Power > Power)
 					Power = Target.Power
 					Power*=GetPowerUpRatio()
+		if(passive_handler.Get("AbsoluteDespair"))
+			Power=(Target.Power*1.1)
 		var/nerf = GetPowerUpRatio()+EPM > 2.3 ? 1 : 0
 		power_display=get_power_tier(0, Power, nerf)
 
@@ -1465,7 +1467,7 @@ mob/proc/Get_Sense_Reading(mob/A)
 mob/proc/Get_Scouter_Reading(mob/B)
 	if(B.Imitating)
 		for(var/obj/Skills/Utility/Imitate/i in B.Skills)
-			if(i.imitating_info) 
+			if(i.imitating_info)
 				return i.imitating_info.powerToCopy
 
 	var/Ratio=B.EnergyUniqueness

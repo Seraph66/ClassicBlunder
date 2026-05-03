@@ -23,6 +23,15 @@
 	// Override in individual skills to execute the charged attack.
 
 /client/var/tmp/SweetSpotHeldSkillDebug = FALSE
+/client/var/tmp/list/held_skill_key_cache = null
+/client/var/tmp/held_skill_cache_build_start = 0
+/client/var/tmp/held_skill_macro_set = "macro"
+
+/client/New(topicdata)
+	..()
+	// Kick off the initial macro scan shortly after connect so it's ready before
+	// the player reaches gameplay. Runs every 5 minutes in the background after that.
+	spawn(5) RebuildHeldSkillKeyCache()
 
 // Charge state
 
@@ -81,14 +90,25 @@
 	var/client/C = client
 	if(!C) return
 
+	// All guards run before touching any charge state.
+
+	if(!C.held_skill_key_cache)
+		var/elapsed_s = C.held_skill_cache_build_start > 0 ? round((world.time - C.held_skill_cache_build_start) / 10) : 0
+		var/remaining_s = max(0, 10 - elapsed_s) + 30
+		src << "<font color='red'>Macro bindings are still loading. Try again in [remaining_s] seconds.</font>"
+		return
+
+	// Key binding check also gates verb-list clicks on unbound skills (maybe?)
+	var/key = findHeldSkillKey(C, Z)
+	if(!key)
+		src << "<font color='red'>Bind [Z.name] to a key first.</font>"
+		return
+
 	// re-entry guard
-	// BeginHeldSkill call that lands within ~0.5s of a release so the
-	// stray fire can't start a second charge or trip findHeldSkillKey.
 	if(held_skill_last_release && world.time - held_skill_last_release < 5)
 		return
 
-	// Cooldown / in-use check, the held effect must not start if the
-	// underlying skill itself isn't allowed to fire.
+	// Cooldown / in-use check
 	if(Z.Using || Z.cooldown_remaining)
 		src << "<font color='red'>[Z.name] is on cooldown.</font>"
 		return
@@ -99,14 +119,13 @@
 			src << "<font color='red'>You need a sword equipped to use [Z.name]!</font>"
 			return
 
-	// Close the re-entry window immediately so a second verb fire
-	// during the slow winget/winset calls below can't spawn a second charge.
+	// reinstalls the +UP macro for this exact key right now.
+	winset(C, "heldskill_up_[key]", "parent=[C.held_skill_macro_set];name=[key]+UP;command=Release-Held-Skill")
+
 	held_skill        = Z
 	held_charge_start = world.time
 	Z.ChargeBenefit   = 0
 
-	// Visual feedback placement, needs a little bit of tweaking, not quite where I want it
-	// the player should see the charge the instant the key is pressed.
 	if(Z.ChargeOverlay && !held_charge_overlay_ref)
 		var/image/I = image(Z.ChargeOverlay)
 		I.layer = MOB_LAYER + 0.1
@@ -115,15 +134,6 @@
 	ShowHeldChargeBar(Z)
 	KenShockwave(src, icon=Z.ChargeWaveIcon, Size=0.5, Blend=Z.ChargeWaveBlend, Time=8)
 
-	// Find which key the player has bound this skill to
-	var/key = findHeldSkillKey(C, Z)
-	if(!key)
-		ClearHeldChargeState()
-		src << "<font color='red'>Bind [Z.name] to a key first.</font>"
-		return
-
-	// Install the KEY+UP release macro for the duration of the charge
-	installHeldReleaseMacro(C, key)
 	held_skill_macro_key = key
 
 	spawn() ChargeLoop(Z)
@@ -134,29 +144,83 @@
 	if(!raw_search) return null
 	var/search = _normalizeHeldName(raw_search)
 
-	for(var/k in _heldSkillCandidateKeys())
-		var/cmd = winget(C, k, "command")
-		if(!cmd) continue
-		if(findtext(_normalizeHeldName(cmd), search))
-			return k
+	if(!C.held_skill_key_cache) return null
+
+	var/list/cache = C.held_skill_key_cache
+	for(var/cmd_key in cache)
+		if(findtext(cmd_key, search))
+			return cache[cmd_key]
 
 	return null
 
-// installHeldReleaseMacro installs a KEY+UP macro in every macro
-// container, pointing to the Release Held Skill verb. Uses a unique
-// id so it doesn't collide with any existing player macro.
+// Builds (or rebuilds) the client's macro key cache and schedules a refresh
+// every 5 minutes so macro changes mid-session are picked up automatically.
+// On first login this fires once from client/New(), after which it reschedules
+// itself. The old cache remains valid during background refreshes.
+/client/proc/RebuildHeldSkillKeyCache()
+	if(!src) return
+	held_skill_cache_build_start = world.time
 
-/mob/proc/installHeldReleaseMacro(client/C, key)
-	var/list/sets = params2list(winget(C, null, "macro"))
-	for(var/set_name in sets)
-		winset(C, "heldskill_release_[set_name]", "parent=[set_name];name=[key]+UP;command=Release-Held-Skill")
+	// Only macros whose command matches one of these names will enter the cache,
+	// which means movement keys, hotbar slots, and all other macros are ignored
+	var/list/held_names = list()
+	for(var/T in subtypesof(/obj/Skills))
+		if(!initial(T:HeldSkill)) continue
+		var/raw = initial(T:HeldVerbName) ? initial(T:HeldVerbName) : initial(T:name)
+		if(raw) held_names += _normalizeHeldName(raw)
 
+	var/list/new_cache = list()
 
-/mob/proc/clearHeldReleaseMacro()
-	if(!client) return
-	var/list/sets = params2list(winget(client, null, "macro"))
-	for(var/set_name in sets)
-		winset(client, "heldskill_release_[set_name]", "name=")
+	var/macro_set_str = winget(src, null, "macro")
+	var/macro_params = params2list(macro_set_str)
+	var/set_name = "macro"
+	for(var/k in macro_params)
+		set_name = k
+		break
+
+	var/children_str = winget(src, set_name, "children")
+	if(children_str)
+		for(var/child_id in splittext(children_str, "\n"))
+			if(!child_id) continue
+
+			if(copytext(child_id, 1, 14) == "heldskill_up_")
+				winset(src, child_id, "parent=[set_name];name=[child_id]_off")
+				continue
+
+			var/key_name = winget(src, child_id, "name")
+			if(!key_name || findtext(key_name, "+UP")) continue
+
+			var/cmd = winget(src, child_id, "command")
+			if(!cmd) continue
+
+			var/norm_cmd = _normalizeHeldName(cmd)
+			for(var/held_name in held_names)
+				if(findtext(norm_cmd, held_name))
+					new_cache[norm_cmd] = key_name
+					break
+	else
+		// Fallback, probe candidate keys by name (children unavailable)
+		for(var/k in _heldSkillCandidateKeys())
+			var/cmd = winget(src, k, "command")
+			if(!cmd) continue
+			var/norm_cmd = _normalizeHeldName(cmd)
+			for(var/held_name in held_names)
+				if(findtext(norm_cmd, held_name))
+					new_cache[norm_cmd] = k
+					break
+
+	// Because new_cache is filtered to held skills only, this loop never touches
+	// movement keys, hotbar slots, or any other binding.
+	for(var/cmd_key in new_cache)
+		var/bound_key = new_cache[cmd_key]
+		winset(src, "heldskill_up_[bound_key]", "parent=[set_name];name=[bound_key]+UP;command=Release-Held-Skill")
+
+	// both vars become visible together, after all +UP macros are set.
+	held_skill_macro_set = set_name
+	held_skill_key_cache = new_cache
+
+	spawn(3000) RebuildHeldSkillKeyCache()
+
 
 /mob/proc/ShowHeldChargeBar(var/obj/Skills/Z)
 	var/client/C = client
@@ -265,7 +329,6 @@
 		if(held_charge_bar_fill_refs)
 			for(var/image/fill in held_charge_bar_fill_refs)
 				if(fill) C.images -= fill
-		clearHeldReleaseMacro()
 
 	held_charge_bar_bg_ref = null
 	held_charge_bar_sweet_ref = null
@@ -345,7 +408,6 @@
 		overlays -= held_charge_overlay_ref
 		held_charge_overlay_ref = null
 	spawn() HideHeldChargeBar()
-	clearHeldReleaseMacro()
 
 // HeldSkillBlocksAction returns TRUE if a held skill is currently
 // charging and the requested skill would conflict.
@@ -355,8 +417,6 @@
 		src << "<font color='red'>You can't do that while charging [held_skill.name].</font>"
 		return TRUE
 	return FALSE
-
-// Internal verb fired by the temporary KEY+UP macro the system installs.
 
 /mob/verb/Release_Held_Skill()
 	set name = "Release Held Skill"

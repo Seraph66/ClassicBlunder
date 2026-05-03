@@ -53,7 +53,6 @@ Or was it Infi, with the brand of the ring, endlessly energetic?"};
 							passives["CriticalBlock"] = 0.15
 							endurance = 0.5
 							defense = 0.5
-							strength = -0.25
 						if("Feather Knife")
 							passives["CriticalChance"] = 25
 							passives["CriticalDamage"] = 0.15

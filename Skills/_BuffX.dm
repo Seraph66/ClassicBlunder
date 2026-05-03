@@ -1389,19 +1389,22 @@ NEW VARIABLES
 					if(usr.KeychainAttached=="Moogle O Glory"||usr.KeychainAttached=="Prismatic Dreams"||usr.KeychainAttached=="Ebony Slumber")
 						src.SwordX=-64
 						src.SwordY=-64
+					var/ImaginaryBonus=0
+					if(usr.Class=="Imaginary")
+						ImaginaryBonus=0.05*usr.AscensionsAcquired
 					switch(usr.KeybladeType)
 						if("Sword")
-							src.StrMult=1.2
-							src.SpdMult=1.2
-							src.OffMult=1.2
+							src.StrMult=1.2+ImaginaryBonus
+							src.SpdMult=1.2+ImaginaryBonus
+							src.OffMult=1.2+ImaginaryBonus
 						if("Shield")
-							src.EndMult=1.2
-							src.DefMult=1.2
-							src.StrMult=1.2
+							src.EndMult=1.2+ImaginaryBonus
+							src.DefMult=1.2+ImaginaryBonus
+							src.StrMult=1.2+ImaginaryBonus
 						if("Staff")
-							src.ForMult=1.2
-							src.OffMult=1.2
-							src.DefMult=1.2
+							src.ForMult=1.2+ImaginaryBonus
+							src.OffMult=1.2+ImaginaryBonus
+							src.DefMult=1.2+ImaginaryBonus
 							// passives["ManaCapMult"] = 0.1 * usr.SagaLevel
 							// passives["SpiritFlow"] = 0.15 * usr.SagaLevel
 					passives["SpiritSword"] = 0.2 * usr.SagaLevel
@@ -4713,7 +4716,7 @@ NEW VARIABLES
 			adjust(mob/user)
 				var/zenkaiLevel = user.AscensionsAcquired
 				EnergyThreshold = 25-(5*zenkaiLevel)
-				TimerLimit = 50 + (5 * zenkaiLevel)
+				TimerLimit = 60 + (10 * zenkaiLevel)
 				var/healthDiff = 0
 				//scales off how bad your losing
 				if(user.Target && ismob(user.Target))
@@ -4722,15 +4725,15 @@ NEW VARIABLES
 					if(-100 to 2)
 						PowerMult = 1
 					if(3 to 15)
-						PowerMult = 1.05
-					if(16 to 25)
 						PowerMult = 1.1
+					if(16 to 25)
+						PowerMult = 1.25
 					if(26 to 50)
-						PowerMult = 1.15
+						PowerMult = 1.35
 					if(51 to 75)
-						PowerMult = 1.2
+						PowerMult = 1.5
 					if(76 to 100)
-						PowerMult = 1.3
+						PowerMult = 2
 			verb/Saiyan_Dominance()
 				set category="Skills"
 				if(!usr.BuffOn(src))
@@ -4761,7 +4764,7 @@ NEW VARIABLES
 						usr << "Your rage hasn't spiked high enough yet!"
 						return
 					else
-						src.VaizardHealth=(usr.DefianceCounter)
+						src.VaizardHealth=(usr.DefianceCounter*2)
 						src.VaizardShatter=1
 						src.FINISHINGMOVE=1
 						src.DefianceRetaliate=1
@@ -4780,8 +4783,8 @@ NEW VARIABLES
 			adjust(mob/user)
 				var/zenkaiLevel = user.AscensionsAcquired
 				passives = list()
-				passives["TechniqueMastery"] = 0.5*zenkaiLevel
-				passives["MovementMastery"] = 2*zenkaiLevel
+				passives["TechniqueMastery"] = 0.75*zenkaiLevel
+				passives["MovementMastery"] = 2.5*zenkaiLevel
 				var/passiveLimit = zenkaiLevel
 				var/passiveNumber = 0
 				for(var/x in user.Target.StyleBuff.passives)
@@ -9780,14 +9783,37 @@ NEW VARIABLES
 				adjust(mob/p)
 					if(!altered)
 						var/secretLevel = p.secretDatum.currentTier
-						if(p.Health<50)
-							secretLevel+=1
-						if(p.Health<25)
-							secretLevel+=2
+						var/Tyrant=0
+						var/TyrantBonus=1
+						var/healthDiff=0
 						if(secretLevel>7)
 							secretLevel=7
+						if(p.Target && ismob(p.Target))
+							healthDiff = p.Target.Health-p.Health
+						switch(healthDiff)
+							if(-100 to 2)
+								secretLevel += 0
+								if(p.passive_handler.Get("SpiralTyrant"))
+									secretLevel += 2
+									Tyrant=1
+									TyrantBonus=4
+							if(3 to 15)
+								secretLevel += 0
+							if(16 to 25)
+								secretLevel += 1
+							if(26 to 50)
+								secretLevel += 2
+							if(51 to 75)
+								secretLevel += 3
+							if(76 to 100)
+								secretLevel += 4
+						if(secretLevel>7)
+							secretLevel=7
+						if(Tyrant&&secretLevel>5)
+							secretLevel=5
 						PowerMult=1+(0.02*secretLevel*secretLevel)
 						var/SpiralPower=1
+						var/SpiralPotential=1
 						switch(secretLevel)
 							if(1 to 2)
 								SpiralPower=1
@@ -9801,11 +9827,14 @@ NEW VARIABLES
 								SpiralPower=5
 							if(7)
 								SpiralPower=7
+						SpiralPotential=SpiralPower
+						if(Tyrant)
+							SpiralPotential=1
 						StrMult=1.25 + (0.03*secretLevel*secretLevel)
 						ForMult=1.25 + (0.03*secretLevel*secretLevel)
 						EndMult=1.25 + (0.035*secretLevel*secretLevel)
-						passives = list("SpiralPowerUnlocked" = SpiralPower, "PureDamage" = SpiralPower, "PureReduction" = SpiralPower)
-						TimerLimit= (10 * (p.transUnlocked ? p.transUnlocked : p.AscensionsAcquired)*secretLevel)
+						passives = list("SpiralPowerUnlocked" = SpiralPotential, "PureDamage" = SpiralPower, "PureReduction" = SpiralPower)
+						TimerLimit= (10 * (p.transUnlocked ? p.transUnlocked : p.AscensionsAcquired)*secretLevel)*TyrantBonus
 						Cooldown = 61 - ((5 * p.AscensionsAcquired) + (5 * secretLevel))
 				KenWave = 2
 				KenWaveIcon='SparkleGreen.dmi'

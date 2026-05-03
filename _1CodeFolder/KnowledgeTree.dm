@@ -48,7 +48,7 @@ knowledge
 mob
 	var
 		//Technology
-		ForgingUnlocked
+		ForgingUnlocked=1
 		RepairAndConversionUnlocked
 		MedicineUnlocked
 		ImprovedMedicalTechnologyUnlocked

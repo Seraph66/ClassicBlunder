@@ -42,7 +42,7 @@ obj/Skills/AutoHit/Soul_Drain
 obj/Skills/AutoHit/Dark_Reconquista
 	NeedsSword=1
 	Copyable=2
-	Area="Wave"
+	Area="Wide Wave"
 	ComboMaster=1
 	Distance=2
 	StrOffense=1
@@ -74,6 +74,7 @@ obj/Skills/AutoHit/Dark_Reconquista
 	OnHeldRelease(mob/p, var/benefit)
 		adjust(p)
 		DamageMult *= benefit
+		Distance = (benefit * 3)
 		p.Activate(src)
 
 	verb/Dark_Reconquista()

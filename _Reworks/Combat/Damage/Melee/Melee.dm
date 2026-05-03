@@ -941,6 +941,19 @@
 							AddSkill(p)
 						p.adjust(src)
 						src.UseProjectile(p)
+				if(passive_handler["Tossing"] && passive_handler["Extra Secret Knives"])
+					var/sk = passive_handler["Extra Secret Knives"]
+					if(prob(passive_handler["Tossing"] * glob.SECRET_KNIFE_CHANCE))
+						var/path = "/obj/Skills/Projectile/[sk]"
+						var/obj/Skills/Projectile/p = FindSkill(path)
+						if(!ispath(text2path(path)))
+							path = /obj/Skills/Projectile/Secret_Knives
+							world.log << "[sk] PATH FOR SECRET KNIVES DOESN'T EXIST!"
+						if(!p)
+							p = new path
+							AddSkill(p)
+						p.adjust(src)
+						src.UseProjectile(p)
 
 				if(delay<=0.5)
 					delay = 0.5
