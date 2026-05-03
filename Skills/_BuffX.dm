@@ -11330,10 +11330,10 @@ NEW VARIABLES
 				//doubles god ki values
 			Symbiote_Infection
 				NeedsHealth=50
-				NeedsVary=1
+				NeedsVary=0
 				TooMuchHealth=99
 				VaizardHealth=2
-				VaizardShatter=1
+				VaizardShatter=0
 				Unstoppable=1
 				Possessive=1
 				TextColor=rgb(75, 0, 85)
@@ -11360,7 +11360,7 @@ NEW VARIABLES
 						if(!locate(/obj/Skills/Queue/Symbiote_Hammer, p.Queues))
 							p.AddSkill(new/obj/Skills/Queue/Symbiote_Hammer)
 
-				Trigger(mob/User, Override = FALSE)
+				Trigger(mob/User, Override = TRUE)
 					if(!User.BuffOn(src))
 						adjust(User)
 					..()
