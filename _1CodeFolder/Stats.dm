@@ -1178,7 +1178,7 @@ mob/proc/
 				src.Auraz("Remove")
 				src<<"You are too tired to power up."
 				src.PoweringUp=0
-				if(isRace(HUMAN)||isRace(CELESTIAL))
+				if((isRace(HUMAN)||isRace(CELESTIAL)) && !isMazokuPathHuman())
 					if(Health<=30&&src.transActive==4&&src.transUnlocked>=5)
 						src.race.transformations[5].transform(src, TRUE)
 				if(isRace(SAIYAN)||isRace(HALFSAIYAN))

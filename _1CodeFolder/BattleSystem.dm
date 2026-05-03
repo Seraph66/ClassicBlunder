@@ -262,7 +262,7 @@ mob/proc/Unconscious(mob/P,var/text)
 				P.Health+=HealthRecovery/2
 				src.HealthAnnounce10+=1
 				return
-	if(src.race in list(HUMAN, CELESTIAL) && !src.isMazokuHuman())
+	if(src.race in list(HUMAN, CELESTIAL) && !src.isMazokuPathHuman())
 		if(src.transActive==1&&src.transUnlocked>=2)
 			src.KO=0
 			src.OMessage(15, "...<b>but [src] evolves one final time, pushing out every last bit of their potential!!!!</b>", "<font color=red>[src]([src.key]) activates Unlimited High Tension!!!")
@@ -318,6 +318,7 @@ mob/proc/Unconscious(mob/P,var/text)
 	src.Health=1
 	src.Energy=1
 	src.PowerControl=100
+	src.ClearFrenzyOnKO()
 	src.Burn=0
 	src.AfterImageStrike=0
 	src.VaizardHealth=0
@@ -683,6 +684,7 @@ mob/proc/Death(mob/P,var/text,var/SuperDead=0, var/NoRemains=0, var/Zombie, extr
 		if(src.NoDeath)
 			if(src.HealthCut<0.5&&!SuperDead)
 				src.KO=1
+				src.ClearFrenzyOnKO()
 				src.Stasis=2000
 				src.icon_state="KO"
 				if(passive_handler.Get("VenomBlood"))
