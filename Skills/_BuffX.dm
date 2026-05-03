@@ -4123,17 +4123,17 @@ NEW VARIABLES
 				src.Trigger(usr)
 				if(usr.BuffOn(src))
 					for(var/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Symbiote_Infection/s in usr)
-						s.NeedsHealth=101
+						s.NeedsHealth=50
 						s.NeedsVary=0
-						s.TooMuchHealth=0
+						s.TooMuchHealth=99
 						s.VaizardShatter=0
 						s.Curse=0
 				else
 					for(var/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Symbiote_Infection/s in usr)
-						s.NeedsHealth=25
-						s.NeedsVary=1
-						s.TooMuchHealth=75
-						s.VaizardShatter=1
+						s.NeedsHealth=50
+						s.NeedsVary=0
+						s.TooMuchHealth=99
+						s.VaizardShatter=0
 						if(usr.AscensionsAcquired>=2)
 							s.Curse=1
 
@@ -11297,11 +11297,11 @@ NEW VARIABLES
 				Cooldown=10800
 				//doubles god ki values
 			Symbiote_Infection
-				NeedsHealth=25
-				NeedsVary=1
-				TooMuchHealth=75
+				NeedsHealth=50
+				NeedsVary=0
+				TooMuchHealth=99
 				VaizardHealth=2
-				VaizardShatter=1
+				VaizardShatter=0
 				Unstoppable=1
 				Possessive=1
 				TextColor=rgb(75, 0, 85)
@@ -11319,8 +11319,8 @@ NEW VARIABLES
 				adjust(mob/p)
 					if(altered) return
 					var/asc = p.AscensionsAcquired
-					passives = list("Unstoppable" = 1, "Harden" = 1 + (0.5 * asc), "LifeSteal" = 1.5*asc, "Godspeed" = 1+(asc), "SweepingStrike" = 1)
-					VaizardHealth = 1.5 + p.GetEnd() + (p.TotalInjury/25) + (asc)
+					passives = list("Unstoppable" = 1, "Harden" = 1 + (0.5 * asc), "LifeSteal" = 2*asc, "Godspeed" = 1+(asc), "SweepingStrike" = 1, "Gum Gum" = 1 + (0.5 * asc), "Blubber" = 1 + (0.5 * asc), "KillerInstinct" = 0.1 + (0.1 * asc),)
+					VaizardHealth = 5 + p.GetEnd() + (p.TotalInjury/25) + (asc)
 					// this was 17.5% guys lol
 					if(asc>=1)
 						if(!locate(/obj/Skills/AutoHit/Symbiote_Tendril_Wave, p.AutoHits))
@@ -11328,7 +11328,7 @@ NEW VARIABLES
 						if(!locate(/obj/Skills/Queue/Symbiote_Hammer, p.Queues))
 							p.AddSkill(new/obj/Skills/Queue/Symbiote_Hammer)
 
-				Trigger(mob/User, Override = FALSE)
+				Trigger(mob/User, Override = TRUE)
 					if(!User.BuffOn(src))
 						adjust(User)
 					..()
