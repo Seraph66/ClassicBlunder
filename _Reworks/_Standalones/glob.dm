@@ -520,6 +520,8 @@ globalTracker
 
 		AUTOHIT_WHIFF_DAMAGE = 2
 		AUTOHIT_MISS_DAMAGE = 5
+		/// Fraction of AutoHit FinalDmg dealt to the attacker on auto-reversal.
+		AUTOHIT_REVERSAL_DAMAGE_FRAC = 0.28
 
 
 		AUTOHIT_WAVE_OFFSHOOT_DAMAGE_DIVISOR = 1
