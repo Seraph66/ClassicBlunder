@@ -2155,7 +2155,6 @@ mob/proc/Grab_Mob(var/mob/P, var/Forced=0)
 	if(HasGiantForm()) return 0;
 	if(HasMythical()>=1) return 0;
 	if(passive_handler.Get("Fishman")) return 0;
-	if(hasEldritchRacial()) return 0;
 	return 1;
 
 
