@@ -4126,16 +4126,16 @@ NEW VARIABLES
 				src.Trigger(usr)
 				if(usr.BuffOn(src))
 					for(var/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Symbiote_Infection/s in usr)
-						s.NeedsHealth=101
+						s.NeedsHealth=50
 						s.NeedsVary=0
 						s.TooMuchHealth=0
 						s.VaizardShatter=0
 						s.Curse=0
 				else
 					for(var/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Symbiote_Infection/s in usr)
-						s.NeedsHealth=25
-						s.NeedsVary=1
-						s.TooMuchHealth=75
+						s.NeedsHealth=50
+						s.NeedsVary=0
+						s.TooMuchHealth=99
 						s.VaizardShatter=1
 						if(usr.AscensionsAcquired>=2)
 							s.Curse=1
@@ -11300,7 +11300,7 @@ NEW VARIABLES
 				Cooldown=10800
 				//doubles god ki values
 			Symbiote_Infection
-				NeedsHealth=75
+				NeedsHealth=50
 				NeedsVary=1
 				TooMuchHealth=99
 				VaizardHealth=2
