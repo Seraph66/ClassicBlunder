@@ -45,13 +45,26 @@ transformation
 				if(user.Potential>=35&&mastery<75)
 					mastery=100
 				if(mastery >= 50)
-					if(!locate(/obj/Skills/Buffs/SpecialBuffs/SuperSaiyanGrade2, user)&&user.isRace(SAIYAN))
+					if(!locate(/obj/Skills/Buffs/SpecialBuffs/SuperSaiyanGrade2, user))
 						user.AddSkill(new/obj/Skills/Buffs/SpecialBuffs/SuperSaiyanGrade2)
 						user << "You can draw out greater power from your mastery over super Saiyan - Grade 2 unlocked!"
 				if(mastery >= 75)
-					if(!locate(/obj/Skills/Buffs/SpecialBuffs/SuperSaiyanGrade3, user)&&user.isRace(SAIYAN))
+					if(!locate(/obj/Skills/Buffs/SpecialBuffs/SuperSaiyanGrade3, user))
 						user.AddSkill(new/obj/Skills/Buffs/SpecialBuffs/SuperSaiyanGrade3)
 						user << "You can strain past the limits of your Super Saiyan form! Grade 3 Unlocked!"
+				if(mastery >= 100)
+					if(user.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/zeal)
+						if(!locate(/obj/Skills/Buffs/SpecialBuffs/SaiyanFervor, user))
+							user.AddSkill(new/obj/Skills/Buffs/SpecialBuffs/SaiyanFervor)
+							user << "You have fully mastered Super Saiyan, rendering the Grades obsolete and unlocking a new Signature buff! (Saiyan Fervor)"
+					if(user.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/pride)
+						if(!locate(/obj/Skills/Buffs/SpecialBuffs/RoyalLineage, user))
+							user.AddSkill(new/obj/Skills/Buffs/SpecialBuffs/RoyalLineage)
+							user << "You have fully mastered Super Saiyan, rendering the Grades obsolete and unlocking a new Signature buff! (Royal Lineage)"
+					if(user.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/honor)
+						if(!locate(/obj/Skills/Buffs/SpecialBuffs/SaiyanRoar, user))
+							user.AddSkill(new/obj/Skills/Buffs/SpecialBuffs/SaiyanRoar)
+							user << "You have fully mastered Super Saiyan, rendering the Grades obsolete and unlocking a new Signature buff! (Saiyan Roar)"
 			class_boons(mob/user)
 				if(user.race.ascensions[1].choiceSelected == /ascension/sub_ascension/saiyan/zeal)
 					class_passives = list("EnergyGeneration" = 3, "Instinct" = 2, "Flow" = 2)
