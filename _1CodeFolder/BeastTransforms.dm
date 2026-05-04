@@ -25,7 +25,7 @@
 	TransformY = -32
 	AuraLock = 'BLANK.dmi'
 	passives = list("Vulnerable Behind" = 1, "GiantForm" = 1, "NoDodge" = 1, "SweepingStrike" = 1, \
-	"Meaty Paws" = 1, "PureDamage" = 2, "PureReduction" = 2)
+	"Meaty Paws" = 1, "PureDamage" = 2, "PureReduction" = 2, "GiantSwings" = 1)
 	StrMult = 1.3
 	ForMult = 1.2
 	SpdMult = 0.3
@@ -63,7 +63,7 @@
 		if(!p.oozaru_type)
 			p.oozaru_type = input(p, "What type of Oozaru are you?") in list("Wrathful", "Enlightened", "Instinctual")
 		passives = list("Vulnerable Behind" = 1, "GiantForm" = 1, "NoDodge" = 1, "SweepingStrike" = 1, \
-			"Meaty Paws" = 1)
+			"Meaty Paws" = 1, "PureDamage" = 2, "PureReduction" = 2, "GiantSwings" = 1)
 		switch(p.oozaru_type)
 			if("Wrathful")
 				passives["Manic"] = 4 - p.AscensionsAcquired

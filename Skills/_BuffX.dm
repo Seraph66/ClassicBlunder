@@ -2127,7 +2127,8 @@ NEW VARIABLES
 			EndMult=1.3
 			DefMult = 0.5
 			Enlarge=3
-			passives = list("KBMult" = 3, "KBRes" = 3, "GiantForm" = 1, "SweepingStrike" = 1)
+			GiantSwings=1
+			passives = list("KBMult" = 3, "KBRes" = 3, "GiantForm" = 1, "SweepingStrike" = 1, "GiantSwings" = 1)
 			KBMult=3
 			KBRes=3
 			GiantForm=1
@@ -9775,6 +9776,10 @@ NEW VARIABLES
 				Cooldown= 61
 				HealthThreshold=0.1
 				adjust(mob/p)
+					var/healthDiff
+					var/Tyrant
+					var/TyrantBonus
+					var/SpiralPotential
 					if(!altered)
 						var/secretLevel = p.secretDatum.currentTier
 						if(p.Health<50)
