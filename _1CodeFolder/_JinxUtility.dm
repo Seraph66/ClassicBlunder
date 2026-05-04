@@ -584,6 +584,8 @@ mob
 					val/=defender.secretDatum.currentTier
 				if(!CursedBlood)
 					var/amtHeal = val*(src.GetLifeSteal() + innateLifeSteal)*Effectiveness/100;
+					if(src.passive_handler["Undying Rage"])
+						src.LifeStolen=0
 					amtHeal*=1*((100-src.LifeStolen)/100)
 					src.HealHealth(amtHeal)
 					if(defender.passive_handler.Get("The Inkstone") && src.LifeStolen>=50)
