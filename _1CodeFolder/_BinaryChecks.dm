@@ -1738,7 +1738,7 @@ mob
 			return 0
 		GetLifeGeneration()
 			var/LifeGen=passive_handler.Get("LifeGeneration")
-			LifeGenValue=0.75+(LifeGen-(LifeGen*0.75))
+			var/LifeGenValue=0.75+(LifeGen-(LifeGen*0.75))
 			return LifeGenValue
 		HasEnergyGeneration()
 			if(passive_handler.Get("EnergyGeneration"))

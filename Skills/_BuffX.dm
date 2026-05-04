@@ -14611,7 +14611,7 @@ mob
 			if(B.HitSpark)
 				src.ClearHitSpark()
 			if(B.ExplosiveFinish)
-				src.Activate(new/obj/Skills/AutoHit/Explosive_Finish)
+				src.Activate(new/obj/Skills/AutoHit/Explosive_Finish, ignoreCuck = TRUE)
 			if(B.FINISHINGMOVE)
 				src.Unconscious()
 			if(B.HealthCut)
