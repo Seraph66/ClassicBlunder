@@ -166,12 +166,19 @@ transformation
 		apply_visuals(mob/user, aura = 1, hair = 1, extra = 1)
 			adjust_transformation_visuals(user)
 			if(extra)
+				user.overlays -= form_icon_1
+				user.overlays -= form_icon_2
+				user.overlays -= form_glow
+				user.underlays -= form_underlay_1
+				user.underlays -= form_underlay_2
 				user.overlays += form_icon_1
 				user.overlays += form_icon_2
 				user.overlays += form_glow
 				user.underlays += form_underlay_1;
 				user.underlays += form_underlay_2;
 			if(aura)
+				user.overlays -= form_aura
+				user.underlays -= form_aura_underlay
 				user.overlays += form_aura
 				user.underlays += form_aura_underlay
 			if(hair)

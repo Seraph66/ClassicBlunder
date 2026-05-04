@@ -6841,7 +6841,7 @@ obj
 					if(FromSkill.HolyMod) specDmgTypes["Holy"] = FromSkill.HolyMod
 					if(FromSkill.AbyssMod) specDmgTypes["Abyss"] = FromSkill.AbyssMod
 					if(FromSkill.SlayerMod) specDmgTypes["Slayer"] = FromSkill.SlayerMod
-					if(specDmgTypes.len) FinalDmg *= Owner.attackModifiers(m, specDmgTypes)
+					if(specDmgTypes.len) FinalDmg *= 1 + Owner.attackModifiers(m, specDmgTypes)
 				if(src.AngelMagicCompatible && m.passive_handler.Get("Judged"))
 					FinalDmg *= 1.25
 				var/reversalChance = m.GetAutoReversal()
@@ -6878,7 +6878,7 @@ obj
 				else if(src.FixedDamage)
 					var/fixedAmt = src.FixedDamage
 					if(specDmgTypes.len)
-						fixedAmt *= Owner.attackModifiers(m, specDmgTypes)
+						fixedAmt *= 1 + Owner.attackModifiers(m, specDmgTypes)
 					m.LoseHealth(fixedAmt)
 					damageDealt = fixedAmt
 					if(m.Health <= 0 && !m.KO)

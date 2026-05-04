@@ -67,6 +67,8 @@ globalTracker/var/LOWER_DEBUFF_CLAMP = 0.001
 			if(glob.TRACKING_POISON)
 				currentPoi+=dmg
 	if(!src.GetDebuffReversal())
+		if(typeOfDebuff == "Frenzy" && Health <= 0)
+			dmg = 0
 		Health-=dmg
 		if(typeOfDebuff == "Frenzy" && !IsDarkDragonPlayer() && dmg > 0)
 			WoundSelf(dmg * 0.5)

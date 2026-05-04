@@ -149,7 +149,7 @@ mob/proc/PowerDown()
     for(var/obj/Skills/Buffs/SpecialBuffs/Kaioken/kk in src)
         . = kk.Mastery;
 /mob/proc/canKaiokenPU()
-    if(!ActiveBuff) return 0;
+    if(!passive_handler.Get("Kaioken")) return 0;
     if(Kaioken==6) return 0;
     if(Kaioken+1 <= getKaiokenMastery()+2) return 1;
     return 0;
