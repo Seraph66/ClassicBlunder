@@ -354,8 +354,8 @@ obj
 				NoAttackLock=1
 				StrOffense=1
 				DamageMult = T2_DMG_MULT / 2 / 10;
-				AbyssMod=3
-				HolyMod=3
+				AbyssMod=5
+				HolyMod=5
 				Distance=5
 				DistanceAround=4
 				Rounds=10
@@ -1016,14 +1016,13 @@ obj
 
 			Symbiote_Tendril_Wave
 				Distance=10
-				Knockback=1
-				Slow=1
+				Knockback=5
+				Slow=5
 				Area="Wave"
 				ActiveMessage="bursts out with tendrils of symbiotic matter!"
-				StrOffense = 0.5
-				ForOffense = 0.5
+				StrOffense = 1
 				Cooldown = 60
-				DamageMult= 4
+				DamageMult= 5
 				GuardBreak=1
 				TurfStrike=3
 				HitSparkIcon='Slash - Vampire.dmi'
@@ -3280,7 +3279,7 @@ obj
 					SignatureName="Holy Magic"
 					Area="Target"
 					Distance=7
-					HolyMod=20
+					HolyMod=5
 					Purity=1
 					DamageMult=18
 					WindUp=1
@@ -3550,7 +3549,7 @@ obj
 				Area="Around Target"
 				AdaptRate=1.5
 				DamageMult=0.5
-				HolyMod=2.5
+				HolyMod=5
 				Distance=5
 				DistanceAround=3
 				EnergyCost=10
@@ -3581,7 +3580,7 @@ obj
 				Area="Around Target"
 				AdaptRate=1.5
 				DamageMult=0.5
-				AbyssMod=2.5
+				AbyssMod=5
 				Distance=5
 				DistanceAround=3
 				EnergyCost=10
@@ -4070,7 +4069,7 @@ obj
 				Area="Circle"
 				GuardBreak=1
 				DamageMult=11
-				HolyMod=20
+				HolyMod=5
 				Distance=6
 				Knockback=10
 				DelayTime=5
@@ -4620,7 +4619,7 @@ obj
 				SpecialAttack=1
 				StrOffense=1
 				DamageMult=7.5
-				HolyMod=10
+				HolyMod=5
 				Distance=5
 				Rush=5
 				RushDelay=2
@@ -4734,7 +4733,7 @@ obj
 				TurfShift='IceGround.dmi'
 				TurfShiftDuration=500
 				DamageMult=10
-				HolyMod=10
+				HolyMod=5
 				Purity=1
 				StrOffense=1
 				ActiveMessage="encases their target in a tomb of soul-infused crystal!  They are forced into perfect stasis!"
@@ -6603,30 +6602,6 @@ obj
 
 				if(WearingArmor)//Reduced delay and accuracy
 					Precision*=src.Owner.GetArmorAccuracy(WearingArmor)
-				var/reversalChance = m.GetAutoReversal()
-				if(prob(reversalChance * 100) && currentRounds == 1)
-					if(m.HasAutoReversal())
-						if(!src.SpecialAttack||m.passive_handler.Get("TotalReversal"))
-							if(Accuracy_Formula(src.Owner, m, AccMult=Precision, BaseChance=glob.WorldDefaultAcc, IgnoreNoDodge=1) == (HIT || WHIFF))
-								if(m.hasMagmicShield())
-									Stun(Owner, 3, FALSE);
-									m.MagmicShieldOff();
-								if(src.Damage>0.1)
-									KenShockwave(m, icon='KenShockwave.dmi', Size=dmgRoll, Time=3)
-									m.Knockback(src.Knockback+(reversalChance*2.5) , src.Owner, Direction=get_dir(m, src.Owner))
-								m.DoDamage(src.Owner, (FinalDmg/5), UnarmedAttack=src.UnarmedTech, SwordAttack=src.SwordTech, SpiritAttack=src.SpecialAttack, Autohit = TRUE)
-								if(src.Bang)
-									Bang(src.Owner.loc, src.Bang)
-								if(src.Scratch)
-									Scratch(src.Owner)
-								if(src.Bolt)
-									LightningBolt(src.Owner, src.Bolt, src.BoltOffset)
-								if(src.Punt)
-									Hit_Effect(src.Owner, Size=src.Punt)
-								src.Owner.HitEffect(src.Owner, src.UnarmedTech, src.SwordTech)
-								OMsg(m, "[m] redirected the force of the attack back at [src.Owner]!")
-								m << "You redirected the force of the attack back at [src.Owner]!"
-								return
 
 				if(src.CanBeBlocked||m.passive_handler.Get("YataNoKagami")||m.passive_handler.Get("The Crownless King"))
 					if(Accuracy_Formula(src.Owner, m, AccMult=Precision, BaseChance=glob.WorldDefaultAcc, IgnoreNoDodge=0) == WHIFF)
@@ -6845,14 +6820,67 @@ obj
 					spawn()
 						LaunchEnd(m)
 				DEBUGMSG("FINAL TOTAL DAMAGE DEALT before do damage! [FinalDmg]")
+				var/skipPureDamage = 0
+				if(Owner && FromSkill)
+					if(Owner.HasPurity()||FromSkill.Purity)
+						var/found=0
+						if(Owner.HasBeyondPurity()||FromSkill.BeyondPurity)
+							if(Owner.HasHolyMod()||FromSkill.HolyMod)
+								if(m.IsGood())
+									found=1
+							if(found)
+								skipPureDamage = 1
+						else
+							if(Owner.HasHolyMod()||FromSkill.HolyMod)
+								if(m.IsEvil())
+									found=1
+							if(!found)
+								skipPureDamage = 1
+				var/list/specDmgTypes = list()
+				if(!skipPureDamage && Owner && FromSkill)
+					if(FromSkill.HolyMod) specDmgTypes["Holy"] = FromSkill.HolyMod
+					if(FromSkill.AbyssMod) specDmgTypes["Abyss"] = FromSkill.AbyssMod
+					if(FromSkill.SlayerMod) specDmgTypes["Slayer"] = FromSkill.SlayerMod
+					if(specDmgTypes.len) FinalDmg *= Owner.attackModifiers(m, specDmgTypes)
 				if(src.AngelMagicCompatible && m.passive_handler.Get("Judged"))
 					FinalDmg *= 1.25
+				var/reversalChance = m.GetAutoReversal()
+				if(prob(min(reversalChance * 100, 100)))
+					if(m.HasAutoReversal())
+						if(!src.SpecialAttack||m.passive_handler.Get("TotalReversal"))
+							var/reversalAcc = Accuracy_Formula(src.Owner, m, AccMult=Precision, BaseChance=glob.WorldDefaultAcc, IgnoreNoDodge=1)
+							if(reversalAcc == HIT || reversalAcc == WHIFF)
+								if(m.hasMagmicShield())
+									Stun(Owner, 3, FALSE);
+									m.MagmicShieldOff();
+								if(src.Damage>0.1)
+									KenShockwave(m, icon='KenShockwave.dmi', Size=dmgRoll, Time=3)
+									m.Knockback(src.Knockback+(reversalChance*2.5) , src.Owner, Direction=get_dir(m, src.Owner))
+								var/reversalDmg = FinalDmg * glob.AUTOHIT_REVERSAL_DAMAGE_FRAC / max(1, src.parentRounds)
+								m.DoDamage(src.Owner, reversalDmg, UnarmedAttack=src.UnarmedTech, SwordAttack=src.SwordTech, SpiritAttack=src.SpecialAttack, Autohit = TRUE)
+								if(src.Bang)
+									Bang(src.Owner.loc, src.Bang)
+								if(src.Scratch)
+									Scratch(src.Owner)
+								if(src.Bolt)
+									LightningBolt(src.Owner, src.Bolt, src.BoltOffset)
+								if(src.Punt)
+									Hit_Effect(src.Owner, Size=src.Punt)
+								src.Owner.HitEffect(src.Owner, src.UnarmedTech, src.SwordTech)
+								OMsg(m, "[m] redirected the force of the attack back at [src.Owner]!")
+								m << "You redirected the force of the attack back at [src.Owner]!"
+								return
 				if(src.DirectWounds)
 					src.Owner.DealWounds(m, src.DirectWounds);
 				var/damageDealt
-				if(src.FixedDamage)
-					m.LoseHealth(src.FixedDamage)
-					damageDealt = src.FixedDamage
+				if(skipPureDamage)
+					damageDealt = 0
+				else if(src.FixedDamage)
+					var/fixedAmt = src.FixedDamage
+					if(specDmgTypes.len)
+						fixedAmt *= Owner.attackModifiers(m, specDmgTypes)
+					m.LoseHealth(fixedAmt)
+					damageDealt = fixedAmt
 					if(m.Health <= 0 && !m.KO)
 						m.Unconscious(src.Owner)
 				else
@@ -6880,7 +6908,7 @@ obj
 					m.LoseMana(ManaDrain)
 					src.Owner.HealMana(ManaDrain)
 
-				if(CorruptionGain)
+				if(CorruptionGain && !skipPureDamage)
 					Owner.gainCorruption((FinalDmg * 2) * glob.CORRUPTION_GAIN)
 				if(src.ApplyJudged)
 					m.applyJudged(120)

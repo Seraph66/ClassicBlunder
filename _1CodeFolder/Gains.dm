@@ -549,7 +549,7 @@ mob
 			if(passive_handler.Get("Unrelenting Wrath"))
 				src.Anger=src.AngerMax
 				src.AngerMax=5
-			if(passive_handler["TensionPowered"] && !src.isMazokuHuman())
+			if(passive_handler["TensionPowered"] && !src.isMazokuPathHuman())
 				if(src.canHTM())
 					src.race.transformations[2].transform(src, TRUE)
 			if(src.transActive==1&&src.isRace(NAMEKIAN))
@@ -587,7 +587,7 @@ mob
 						src.DoDamage(src, (rand(1,5)/30))
 			if(passive_handler["Grit"])
 				AdjustGrit("sub", glob.racials.GRITSUBTRACT)
-			if((isRace(HUMAN)||isRace(CELESTIAL)&&CelestialAscension=="Angel") && !isMazokuHuman())
+			if((isRace(HUMAN)||isRace(CELESTIAL)&&CelestialAscension=="Angel") && !isMazokuPathHuman())
 				if(Health<=30)
 					if(transActive==4&&transUnlocked>=5&&DoubleHelix>=4)
 						src.race.transformations[5].transform(src, TRUE)
@@ -1763,7 +1763,7 @@ mob
 									src.Death(null,"oxygen deprivation!")
 			else if(loc:Deluged||istype(loc,/turf/Waters)||istype(loc,/turf/Special/Ichor_Water)||istype(loc,/turf/Special/Midgar_Ichor))
 				var/IgnoresWater=0
-				if(passive_handler.Get("Fishman")||passive_handler.Get("SpaceWalk")||src.race in list(MAJIN,DRAGON))
+				if(passive_handler.Get("Fishman")||passive_handler.Get("SpaceWalk")||src.race in list(MAJIN,DRAGON,ELDRITCH))
 					BreathingMaskOn=1
 				for(var/obj/Items/Tech/SpaceMask/SM in src)
 					if(SM.suffix)
