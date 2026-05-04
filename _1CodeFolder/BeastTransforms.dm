@@ -92,9 +92,9 @@
 				IconTransform = 'DTRed.dmi'
 				TransformX = 0
 				TransformY = 0
-				StrMult = 1.25
-				ForMult = 1.25
-				OffMult = 1.4
+				StrMult = 1.35
+				ForMult = 1.35
+				OffMult = 1.5
 				if(p.transUnlocked==1)
 					TimerLimit = 4800
 					IconTransform = 'SDTBlue.dmi'
@@ -105,8 +105,8 @@
 					if(SS1pot<5)
 						SS1pot=5
 					passives["Transformation Power"] = SS1pot //MATH COMES LATER
-					passives["BuffMastery"] = 5 + (p.AscensionsAcquired / 10)
-					VaizardHealth =25// 1 + (p.AscensionsAcquired/1.5)
+					passives["BuffMastery"] = 5 + p.AscensionsAcquired
+					VaizardHealth =25
 		if(p.Potential > OOZARU_POTENTIAL_TRANS&&p.oozaru_type!="Demonic")
 			passives["Transformation Power"] = p.AscensionsAcquired
 		if(length(p.race.transformations) >= 4 && p.race.transformations[4].type == /transformation/saiyan/super_saiyan_4 && p.Potential>=55||length(p.race.transformations) >= 2 && p.race.transformations[2].type == /transformation/saiyan/hellspawn_super_saiyan_2 && p.Potential>=55)
